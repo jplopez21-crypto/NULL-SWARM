@@ -33,7 +33,7 @@ jobs:
       - name: Import and configure Android exporter
         run: |
           godot --headless --editor --import --quit 2>&1 | tee /tmp/import.log
-          if rg 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
+          if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
           mkdir -p "$HOME/.config/godot"
           cat > "$HOME/.config/godot/editor_settings-4.6.tres" <<SETTINGS
           [gd_resource type="EditorSettings" format=3]
