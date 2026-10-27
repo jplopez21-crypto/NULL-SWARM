@@ -18,6 +18,10 @@ var offered: Array[String] = []
 var shake: float = 0.0
 var result_recorded: bool = false
 var boot_smoke: bool = false
+var run_token: String = ""
+var checkpoint_time: float = 0.0
+var run_unlocks: Array[String] = []
+var result_won: bool = false
 
 func _ready() -> void:
 	input_router.setup()
@@ -45,6 +49,9 @@ func _ready() -> void:
 	ui.dash.connect(func(): input_router.dash_requested = true)
 	ui.upgrade_selected.connect(select_upgrade)
 	ui.reroll_requested.connect(reroll_upgrades)
+	ui.lab_requested.connect(open_lab)
+	ui.research_requested.connect(purchase_research)
+	ui.kit_selected.connect(select_kit)
 	ui.setting_changed.connect(change_setting)
 	ui.show_menu(save.data)
 	if "--capture" in OS.get_cmdline_user_args():
@@ -64,6 +71,9 @@ func start_run() -> void:
 	input_router.reset()
 	progress = RunProgression.new()
 	result_recorded = false
+	run_unlocks.clear()
+	checkpoint_time = 30.0
+	run_token = save.begin_run()
 	ui.damage_texts.clear()
 	run_root = Node3D.new()
 	add_child(run_root)
@@ -73,6 +83,8 @@ func start_run() -> void:
 	run_root.add_child(combat)
 	pickups = PickupSystem.new()
 	run_root.add_child(pickups)
+	Research.apply(save.data, player, combat, progress)
+	ui.operative_title = Research.KITS[save.data["selected_kit"]]["title"]
 	combat.enemy_destroyed.connect(func(at: Vector3, amount: int):
 		pickups.drop(at, amount)
 		if Engine.get_physics_frames() % 3 == 0:
@@ -83,17 +95,21 @@ func start_run() -> void:
 		pickups.vacuum()
 		player.health.current = minf(player.health.maximum, player.health.current + 30.0)
 		player.health.shield = player.health.max_shield
-		progress.pending += 1)
+		progress.pending += 1
+		shake = 0.5
+		_checkpoint_progress())
 	combat.player_hit.connect(func():
 		shake = 0.3
 		audio.play("damage"))
 	combat.impact.connect(func(at: Vector3, amount: float, critical: bool):
-		ui.add_damage(at, amount, critical, int(save.data["settings"]["quality"]) > 0))
+		ui.add_damage(at, amount, critical, int(save.data["settings"]["quality"]) > 0)
+		if critical:
+			audio.play("hit"))
 	player.health.depleted.connect(func(): finish_run(false))
 	ui.hide_panel()
 	ui.set_hud(true)
 	state = State.PLAYING
-	ui.toast("LINK ESTABLISHED", "COLLECT MEMORY // BUILD YOUR ARSENAL", Color("78f8d4"))
+	ui.toast("%s // LINK ESTABLISHED" % Research.KITS[save.data["selected_kit"]]["title"], "SALVAGE IS BANKED THROUGHOUT YOUR RUN", Color("78f8d4"))
 	camera.position = Vector3(0, 32, 23)
 
 func _physics_process(delta: float) -> void:
@@ -114,6 +130,9 @@ func _physics_process(delta: float) -> void:
 	if state != State.PLAYING:
 		return
 	progress.add_xp(pickups.tick(delta, player))
+	if combat.director.elapsed >= checkpoint_time:
+		_checkpoint_progress()
+		checkpoint_time = combat.director.elapsed + 30.0
 	if combat.director.elapsed >= RUN_SECONDS and combat.encounters.boss_defeated:
 		finish_run(true)
 	elif progress.pending > 0:
@@ -157,13 +176,17 @@ func _notification(what: int) -> void:
 		if state == State.PLAYING:
 			pause_run()
 		if save != null:
-			save.persist()
+			if is_instance_valid(combat) and not run_token.is_empty() and state in [State.PAUSED, State.UPGRADING, State.PLAYING]:
+				_checkpoint_progress()
+			else:
+				save.persist()
 
 func pause_run() -> void:
 	if state != State.PLAYING:
 		return
 	state = State.PAUSED
 	input_router.reset()
+	_checkpoint_progress()
 	ui.show_pause(save.data["settings"])
 
 func resume_run() -> void:
@@ -190,8 +213,9 @@ func go_menu() -> void:
 func _record_result(won: bool) -> void:
 	if result_recorded:
 		return
+	_checkpoint_progress()
 	result_recorded = true
-	var error := save.record_run(combat.director.elapsed, combat.kills, won)
+	var error := save.record_run(combat.director.elapsed, combat.kills, won, run_token, _warden_down(), _architect_down())
 	if error != OK:
 		push_error("Could not save run statistics: " + error_string(error))
 
@@ -199,9 +223,10 @@ func finish_run(won: bool) -> void:
 	if state == State.RESULTS:
 		return
 	state = State.RESULTS
+	result_won = won
 	input_router.reset()
 	_record_result(won)
-	ui.show_results(won, combat.director.elapsed, combat.kills, progress.level, pickups.total_collected)
+	show_results()
 
 func show_upgrade() -> void:
 	state = State.UPGRADING
@@ -284,6 +309,9 @@ func _capture_session() -> void:
 	await get_tree().create_timer(1.0).timeout
 	DirAccess.make_dir_recursive_absolute("res://builds/screenshots")
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/menu.png")
+	ui.show_lab(save.data, func(): ui.show_menu(save.data))
+	await get_tree().create_timer(0.4).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/foundry.png")
 	start_run()
 	# Automated staged capture for visual QA, not a claim of human gameplay.
 	progress.ranks = {"orbit": 3, "thermal": 3, "arc": 3, "damage": 3}
@@ -310,5 +338,60 @@ func _capture_session() -> void:
 	player.health.invulnerable = 2.0
 	await get_tree().create_timer(0.7).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/architect.png")
+	combat._damage(combat.encounters.boss, 999999.0)
+	finish_run(false)
+	await get_tree().create_timer(0.4).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/results.png")
 	audio.shutdown()
 	get_tree().quit()
+
+func _warden_down() -> bool:
+	return is_instance_valid(combat) and combat.encounters.mini != null and not combat.encounters.mini.active
+
+func _architect_down() -> bool:
+	return is_instance_valid(combat) and combat.encounters.boss != null and not combat.encounters.boss.active
+
+func _checkpoint_progress() -> void:
+	if run_token.is_empty() or result_recorded:
+		return
+	var before := Research.unlocked(save.data)
+	var error := save.checkpoint(run_token, combat.director.elapsed, combat.kills, _warden_down(), _architect_down())
+	if error != OK:
+		ui.toast("SALVAGE SAVE FAILED", "STORAGE ERROR // " + error_string(error), Color("ff9274"))
+		return
+	for id in Research.unlocked(save.data):
+		if not before.has(id):
+			run_unlocks.append(id)
+			ui.toast("STARTING KIT UNLOCKED", Research.KITS[id]["title"] + " // AVAILABLE IN THE FOUNDRY", Color("ffe39b"))
+
+func show_results() -> void:
+	ui.show_results(result_won, combat.director.elapsed, combat.kills, progress.level, pickups.total_collected, int(save.data["ledger"].get("awarded", 0)), int(save.data["salvage"]), combat.damage_by_weapon, run_unlocks)
+
+func open_lab(message: String = "") -> void:
+	if state not in [State.MENU, State.RESULTS]:
+		return
+	ui.show_lab(save.data, _return_from_lab, message)
+
+func _return_from_lab() -> void:
+	if state == State.RESULTS:
+		show_results()
+	else:
+		ui.show_menu(save.data)
+
+func purchase_research(id: String) -> void:
+	if state not in [State.MENU, State.RESULTS]:
+		return
+	var error := save.purchase(id)
+	if error == OK:
+		audio.play("level", "UI")
+	else:
+		push_warning("Research purchase failed: " + error_string(error))
+	open_lab("RESEARCH SAVED" if error == OK else "RESEARCH NOT SAVED // " + error_string(error))
+
+func select_kit(id: String) -> void:
+	if state not in [State.MENU, State.RESULTS]:
+		return
+	var error := save.choose_kit(id)
+	if error == OK:
+		audio.play("ui", "UI")
+	open_lab("STARTING KIT SAVED" if error == OK else "KIT NOT SAVED // " + error_string(error))

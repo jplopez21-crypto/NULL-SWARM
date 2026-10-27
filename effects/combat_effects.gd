@@ -28,7 +28,7 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 	if live.size() >= limit or pool.is_empty() or (not flashes and kind == "spark"):
 		return
 	var mesh: MeshInstance3D = pool.pop_back()
-	mesh.mesh = beam_mesh if kind in ["beam", "spark"] else ring_mesh
+	mesh.mesh = beam_mesh if kind in ["beam", "spark", "shard"] else ring_mesh
 	mesh.material_override = SwarmVisuals.material(color, true)
 	mesh.rotation = Vector3.ZERO
 	mesh.position = at + Vector3(0, 0.12, 0)
@@ -37,14 +37,14 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 		if at.distance_to(to) > 0.01:
 			mesh.look_at(to + Vector3(0, 0.8, 0))
 		mesh.scale = Vector3(size, size, maxf(0.1, at.distance_to(to)))
-	elif kind == "spark":
+	elif kind in ["spark", "shard"]:
 		mesh.position.y = 0.8
 		mesh.scale = Vector3(size, size * 0.3, size)
 		mesh.rotation.y = randf() * TAU
 	else:
 		mesh.scale = Vector3(size * 0.4, 0.4, size * 0.4)
 	mesh.visible = true
-	live.append({"mesh": mesh, "life": 0.0, "duration": 0.12 if kind == "beam" else 0.38, "size": size, "kind": kind})
+	live.append({"mesh": mesh, "life": 0.0, "duration": 0.12 if kind == "beam" else (0.65 if kind == "shard" else 0.38), "size": size, "kind": kind, "velocity": Vector3(randf_range(-4.0, 4.0), randf_range(2.0, 5.0), randf_range(-4.0, 4.0))})
 
 func tick(delta: float) -> void:
 	for i in range(live.size() - 1, -1, -1):
@@ -56,8 +56,22 @@ func tick(delta: float) -> void:
 			mesh.visible = false
 			pool.append(mesh)
 			live.remove_at(i)
-		elif fx["kind"] not in ["beam", "spark"]:
+		elif fx["kind"] not in ["beam", "spark", "shard"]:
 			var radius: float = fx["size"] * lerpf(0.4, 1.0, fraction)
 			mesh.scale = Vector3(radius, (1.0 - fraction) * 0.4, radius)
+		elif fx["kind"] == "shard":
+			fx["velocity"].y -= delta * 12.0
+			mesh.position += fx["velocity"] * delta
+			mesh.rotate_x(delta * 7.0)
+			mesh.rotate_z(delta * 4.0)
+			mesh.scale *= 1.0 - delta * 1.7
 		elif fx["kind"] == "spark":
 			mesh.scale *= 1.0 - delta * 5.0
+
+func destruction(at: Vector3, color: Color, large: bool) -> void:
+	emit_fx("ring", at, at, color, 5.0 if large else 1.2)
+	if not flashes:
+		return
+	var count: int = [2, 4, 6][quality] * (2 if large else 1)
+	for i in range(count):
+		emit_fx("shard", at, at, color.lightened(0.2), 0.45 if large else 0.22)

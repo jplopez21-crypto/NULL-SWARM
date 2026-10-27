@@ -6,6 +6,7 @@ var definition: EnemyDefinition
 var hp: float
 var max_hp: float
 var visual_scale: float = 1.0
+var exposed_time: float = 0.0
 var velocity: Vector3
 var cooldown: float = 0.0
 var windup: float = 0.0
@@ -60,6 +61,7 @@ func activate(at: Vector3, health_scale: float) -> void:
 	windup = 0.0
 	charging = 0.0
 	flash = 0.0
+	exposed_time = 0.0
 	scale = Vector3.ONE
 	body.position = Vector3.ZERO
 	body.visible = true
@@ -73,6 +75,9 @@ func deactivate() -> void:
 
 # Called in staggered batches at 10 Hz; movement stays at fixed tick frequency.
 func think(player: Vector3) -> void:
+	if exposed_time > 0.0:
+		velocity = Vector3.ZERO
+		return
 	if windup > 0.0 or charging > 0.0:
 		return
 	var offset := player - position
@@ -94,6 +99,7 @@ func think(player: Vector3) -> void:
 
 # Returns a sentry shot direction only at the end of its visible warning.
 func tick(delta: float) -> Vector3:
+	exposed_time = maxf(0.0, exposed_time - delta)
 	cooldown -= delta
 	flash = maxf(0.0, flash - delta)
 	body.scale = Vector3.ONE * visual_scale * (1.15 if flash > 0.0 and effects_enabled else 1.0)

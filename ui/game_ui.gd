@@ -9,6 +9,9 @@ signal pause_run
 signal dash
 signal upgrade_selected(id: String)
 signal reroll_requested
+signal lab_requested
+signal research_requested(id: String)
+signal kit_selected(id: String)
 signal setting_changed(key: String, value: Variant)
 const CYAN := Color("78f8d4")
 const MUTED := Color("8cabb9")
@@ -23,6 +26,7 @@ var shield_bar: ProgressBar
 var xp_bar: ProgressBar
 var status_label: Label
 var health_label: Label
+var operative_title: String = "VANGUARD"
 var weapons_label: Label
 var perf_label: Label
 var hint_label: Label
@@ -219,10 +223,11 @@ func show_menu(data: Dictionary) -> void:
 	label_at(box, "REACTOR ZERO  /  SURVIVAL", 23)
 	label_at(box, "Ten minutes. Four weapon slots. One machine god.\nWeapons fire automatically. Collect blue memory shards.", 19, MUTED)
 	label_at(box, "WARDEN 03:00     //     ARCHITECT 09:00", 16, Color("ffb35c"))
-	var play := button_at(box, "DEPLOY VANGUARD     →", func(): deploy.emit())
+	var play := button_at(box, "DEPLOY %s     →" % Research.KITS[data["selected_kit"]]["title"], func(): deploy.emit())
+	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
-	label_at(box, "BUILD 0.2  •  OFFLINE DEPLOYMENT", 13, MUTED)
+	label_at(box, "BUILD 0.3  •  SALVAGE PERSISTS AFTER DEFEAT", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
@@ -246,14 +251,23 @@ func show_pause(settings: Dictionary) -> void:
 	button_at(box, "END DEPLOYMENT", func(): return_menu.emit())
 	resume_button.grab_focus()
 
-func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: int) -> void:
+func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: int, salvage: int = 0, wallet: int = 0, breakdown: Dictionary = {}, unlocks: Array[String] = []) -> void:
 	set_hud(false)
 	var box := _panel()
 	box.custom_minimum_size.x = 530
 	label_at(box, "EXTRACTION COMPLETE" if won else "SIGNAL LOST", 39, CYAN if won else Color("ff8e7b"))
 	label_at(box, "The sector holds. Your telemetry survived." if won else "Operative offline. Your telemetry survived.", 18, MUTED)
 	label_at(box, "%s   /   %d DESTROYED   /   LEVEL %d" % [clock(elapsed), kills, level], 22)
-	label_at(box, "%d memory recovered" % total_xp, 18, MUTED)
+	label_at(box, "%d memory recovered   //   +%d SALVAGE BANKED" % [total_xp, salvage], 18, CYAN)
+	var rows: Array = breakdown.keys()
+	rows.sort_custom(func(a: String, b: String): return float(breakdown[a]) > float(breakdown[b]))
+	var summary: Array[String] = []
+	for id in rows.slice(0, 3):
+		summary.append("%s %d" % [Arsenal.title(id), int(breakdown[id])])
+	label_at(box, "DAMAGE  /  " + "   /   ".join(summary), 14, MUTED)
+	for id in unlocks:
+		label_at(box, "UNLOCKED // " + Research.KITS[id]["title"], 17, Color("ffe39b"))
+	button_at(box, "FOUNDRY  /  %d SALVAGE AVAILABLE" % wallet, func(): lab_requested.emit())
 	var again := button_at(box, "REDEPLOY     →", func(): restart.emit())
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
@@ -325,7 +339,7 @@ func show_settings(settings: Dictionary, back: Callable) -> void:
 	back_button.grab_focus()
 
 func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWorld) -> void:
-	health_label.text = "VANGUARD  /  %d HP  + %d SHIELD" % [ceili(player.health.current), ceili(player.health.shield)]
+	health_label.text = "%s / %d HP + %d SHIELD" % [operative_title, ceili(player.health.current), ceili(player.health.shield)]
 	health_bar.value = 100.0 * player.health.current / player.health.maximum
 	shield_bar.value = 100.0 * player.health.shield / maxf(1.0, player.health.max_shield)
 	xp_bar.value = 100.0 * progress.xp / progress.threshold()
@@ -341,8 +355,10 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	boss_label.visible = boss_active
 	if boss_active:
 		boss_label.text = boss.definition.title + "  //  PHASE %d" % combat.encounters.phase
+		if boss.exposed_time > 0.0:
+			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
-	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  20 TO OVERCLOCK" % combat.streak if combat.streak > 1 else "")
+	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
 	dash_button.text = "DASH / %.1fs" % player.dash_cooldown if player.dash_cooldown > 0.0 else "DASH / READY"
 	var time := combat.director.elapsed
 	hint_label.visible = time < 22.0
@@ -405,3 +421,37 @@ func _draw_brand() -> void:
 	for i in range(12):
 		var y: float = i * 70.0
 		backdrop.draw_line(Vector2(0, y), Vector2(size.x, y), Color(0.2, 0.4, 0.5, 0.06), 1)
+
+func show_lab(data: Dictionary, back: Callable, message: String = "") -> void:
+	set_hud(false)
+	var box := _panel()
+	label_at(box, "THE FOUNDRY  //  %d SALVAGE" % int(data["salvage"]), 32, CYAN)
+	label_at(box, message if not message.is_empty() else "Banked every 30s, at boss recovery and on exit. Defeat keeps earned salvage.", 16, MUTED)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	box.add_child(row)
+	for id in Research.UPGRADES:
+		var definition: Dictionary = Research.UPGRADES[id]
+		var card := VBoxContainer.new()
+		card.custom_minimum_size.x = 280
+		row.add_child(card)
+		label_at(card, definition["title"], 18, CYAN)
+		label_at(card, definition["description"], 15, MUTED)
+		var rank: int = int(data["research"].get(id, 0))
+		var cost := Research.cost(data, id)
+		label_at(card, "RANK %d / %d" % [rank, definition["costs"].size()], 15)
+		var purchase := button_at(card, "MAXED" if cost < 0 else "RESEARCH // %d" % cost, func(): research_requested.emit(id))
+		purchase.disabled = cost < 0 or cost > int(data["salvage"])
+	label_at(box, "STARTING KITS // EACH HAS A TRADEOFF", 19, Color("ffe39b"))
+	var unlocked := Research.unlocked(data)
+	for id in Research.KITS:
+		var kit: Dictionary = Research.KITS[id]
+		var requirement := ""
+		if not unlocked.has(id):
+			requirement = "  LOCKED: %d/150 lifetime kills" % mini(150, int(data["salvaged_kills"])) if id == "conductor" else "  LOCKED: defeat the Warden"
+		var text: String = kit["title"] + ("  [SELECTED]" if data["selected_kit"] == id else "") + requirement + "\n" + kit["description"]
+		var select := button_at(box, text, func(): kit_selected.emit(id))
+		select.add_theme_font_size_override("font_size", 16)
+		select.disabled = not unlocked.has(id) or data["selected_kit"] == id
+	var back_button := button_at(box, "BACK", back)
+	back_button.grab_focus()

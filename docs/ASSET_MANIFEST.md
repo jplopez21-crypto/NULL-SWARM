@@ -12,3 +12,7 @@ No third-party downloaded artwork, music or proprietary game content is included
 ## Reactor Zero additions
 
 All reactor tiles, warning geometry, towers, weapons, drones, boss embellishments, rings, beams and UI branding are original procedural meshes/drawing code authored in this project. New weapon cues and sequenced music are original synthesized PCM. No third-party art or music was downloaded. These assets remain development artwork/audio pending commercial art direction review.
+
+## Foundry additions
+
+Destruction debris is pooled original primitive geometry; research/starting-kit UI and boss-core feedback use original project drawing/mesh code and existing generated audio. No new external artwork or audio was downloaded. These remain development assets.

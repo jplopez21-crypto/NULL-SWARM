@@ -40,3 +40,12 @@
 - Fixed upgrade-card feedback layering and cancelled pending boss attacks across encounter transitions.
 - Independently verified downloaded artifact/APK checksums and excluded QA captures from the APK.
 - Physical-device playtesting and profiling remain required; intermittent CI smoke shutdown warning remains.
+
+## 0.3.0 — Foundry
+
+- Added banked salvage, bounded permanent research and earned starting-kit sidegrades.
+- Added version 1 → 2 save migration and an idempotent checkpoint/reward ledger; failed research writes refund cost and rank.
+- Added pooled destruction debris and timed boss-core vulnerability during phase changes.
+- Added actual per-weapon damage totals to results; excludes overkill and damage to dead targets.
+- Narrowly reduced Solar Halo area-pulse damage and corrected Overclock threshold copy.
+- Added Foundry/results CI captures and a separate Foundry debug application package.

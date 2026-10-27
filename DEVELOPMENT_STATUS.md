@@ -1,51 +1,38 @@
-# Development status — Reactor Zero 0.2 / 2026-10-27
+# Development status — Foundry 0.3 / 2026-10-27
 
 ## Confirmed baseline
 
-The owner reports that the original Milestone 1 APK works on their Android device. Its source and successful build remain available in repository history.
+The owner reports that Milestone 1 and Reactor Zero 0.2 APKs work on their Android device. This is not a measured frame-rate or balance result.
 
-## Completed in this iteration
+## Completed in 0.3
 
-- Six weapon behaviors with four equipment slots, ranked upgrades and two rerolls.
-- Arcstorm Rifle and Solar Halo mutations with explicit prerequisite descriptions.
-- Kill-chain Overclock, boss-core repair/vacuum/bonus upgrade rewards.
-- Five regular enemy archetypes, Warden mini-boss at 03:00 and three-phase Architect at 09:00.
-- Ten-minute survival with extraction requiring Architect defeat.
-- Reactor floor tiles batched with MultiMesh, peripheral machinery and stronger operative silhouettes/animation.
-- Pooled weapon/death effects, distinct generated weapon sounds and an original sequenced combat loop.
-- Revised menus, colored upgrade cards, boss health/phase, equipment HUD and encounter announcements.
+- Salvage earned from survival, kills, bosses and victory; defeat retains earned salvage.
+- Checkpoint ledger every 30 seconds and on pause/background/core recovery/results; repeated checkpoints/settlement cannot duplicate rewards.
+- Foundry research: bounded HP, attraction and reroll upgrades, with immediate purchase persistence and failure rollback.
+- Conductor and Sentinel starting-kit unlocks with explicit tradeoffs; Vanguard remains available.
+- Version 1 → 2 save migration, existing backup recovery, results/unlock feedback.
+- Pooled destruction debris, brief exposed boss cores and exact per-weapon damage totals on results.
+- Narrow Solar Halo area-pulse adjustment and corrected Overclock threshold HUD copy.
 
 ## Verification
 
-- Local automated suite: 100 checks passed, zero failures.
-- Scene smoke: passed with active enemies/projectiles.
-- Coverage includes each weapon's damage, slot restrictions, mutations, reroll bounds, Overclock, effect-pool limits/reclamation, boss warnings, extraction gating and full ten-minute lifecycle.
-- Lifecycle simulation uses invulnerability and explicit final-boss damage; it does not establish human survivability or balance.
-- GitHub Actions: import, all 100 checks, scene smoke, rendered captures, Android export and signature verification passed.
-- Inspected menu/combat/upgrade/boss captures; fixed feedback drawing over upgrade cards.
-- Artifact ZIP/APK checksums and archive integrity independently verified locally; QA screenshots are excluded from the APK.
-- No physical-device profiling or playtest of 0.2 yet.
+- Local automated suite: 121 checks passed, zero failures.
+- Includes migration, corruption recovery, checkpoint/settlement idempotency, currency/purchase/rank caps, failed-write refund, kit unlocks/tradeoffs, damage attribution and exposed-core bonus, plus the ten-minute lifecycle.
+- Scene smoke passed during development. Final CI export/captures are pending.
+- Lifecycle harness uses invulnerability and explicit boss damage; human survivability and balance are unverified.
 
-## Delivery / limitations
+## Delivery / known limitations
 
-- Installs alongside original as NULL SWARM Reactor, package com.nullswarm.game.slice.
-- Debug signing is ephemeral per CI run; persistent signing is required before future in-place updates.
-- Procedural art and synthesized audio remain development assets.
-- Original-system expansion (adaptive swarm/corruption), permanent progression, release signing and full commercial content remain deferred.
-- Mid-run process-death recovery remains unimplemented; focus loss pauses and persists saved settings/statistics.
-- Android performance targets and reduced-effects readability require physical-device validation.
+- New package: com.nullswarm.game.foundry, display name NULL SWARM Foundry, installs alongside older test APKs.
+- Ephemeral debug signing still prevents reliable in-place test updates. Stable protected signing must be configured before production upgrades; no keys/passwords are committed.
+- Android-private saves in older differently signed packages cannot be automatically transferred by this new package.
+- Currency already checkpointed persists after interruption, but the active combat run does not resume after process death.
+- Procedural artwork/generated audio remain development assets. Android performance and reduced-effects readability require physical validation.
+- Previous CI smoke runs reported an intermittent ObjectDB shutdown warning; investigate before commercial acceptance.
+- Adaptive swarm/corruption, full permanent-progression content, final art and commercial release work remain deferred.
 
 ## Next priorities
 
-1. Human-playtest first-minute weapon acquisition, Warden difficulty and Architect readability on S23 Ultra.
-2. Profile combat before expanding content further.
-
-## Verified 0.2 APK
-
-- Workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40432471369
-- Download: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40432471369/artifacts/12701948224
-- Build commit: `2ef467a76662711af75f5a39f2045877606ac227`.
-- APK: `builds/android/null-swarm-reactor-0.2-debug.apk`, ARM64, 27,694,594 bytes.
-- SHA256: `b51d9d7e65243343883454e2f28fa663ca2ab9a5abfd90429b0363915c067f7d`.
-- CI smoke still reports an intermittent ObjectDB shutdown warning; tests/captures/export pass. Investigate before commercial acceptance.
-- The virtual display reports unsupported V-Sync configuration during capture; these images are visual QA, not performance measurements.
+1. Inspect Foundry/results renders and verify a signed debug APK.
+2. Playtest earning/spending salvage, starting kit tradeoffs, Halo adjustment and core-exposure feedback on Android.
+3. Use damage reports and physical frame-time measurements to guide further balance/performance work.

@@ -25,6 +25,7 @@ var rng := RandomNumberGenerator.new()
 var director := SpawnDirector.new()
 var weapon := WeaponController.new()
 var kills: int = 0
+var damage_by_weapon: Dictionary = {}
 var tick_index: int = 0
 var target: Node3D
 var active_enemies: int = 0
@@ -38,7 +39,7 @@ func _ready() -> void:
 	add_child(effects)
 	rig = WeaponRig.new()
 	add_child(rig)
-	# Large enough to accommodate the complete fixed five-minute spawn schedule.
+	# Large enough to accommodate the complete fixed initial pool reserve.
 	# Pools grow if exhausted; no spawns are discarded to change difficulty.
 	for i in range(ENEMY_RESERVE):
 		_create_enemy(i % 5)
@@ -116,6 +117,8 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		if enemy.position.distance_squared_to(player.position) < pow(enemy.definition.radius + 0.45, 2):
 			if player.health.take_damage(enemy.definition.damage):
 				player_hit.emit()
+			if player.health.current <= 0.0:
+				return false
 	grid.rebuild(enemies)
 	target = grid.nearest(player.position, weapon.definition.range_m)
 	var fired := weapon.ready_to_fire(delta * (1.6 if overclock > 0.0 else 1.0), target != null)
@@ -145,7 +148,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			var amount := shot.damage * (1.8 if critical else 1.0)
 			_damage(enemy, amount, shot.velocity.normalized() * 0.2, critical)
 			if mutations.has("arcstorm"):
-				chain(enemy.position, weapon.damage * 0.5, 2, 6.0, [enemy.index])
+				chain(enemy.position, weapon.damage * 0.5, 2, 6.0, [enemy.index], "arcstorm")
 			if shot.piercing <= 0:
 				shot.deactivate()
 				break
@@ -170,9 +173,11 @@ func update_build(ranks: Dictionary) -> void:
 			notice.emit("WEAPON MUTATION", "ARCSTORM RIFLE // ROUNDS NOW CHAIN" if id == "arcstorm" else "SOLAR HALO // ORBITALS RADIATE HEAT", Color("ffe39b"))
 			weapon_fired.emit("mutation")
 
-func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO, critical: bool = false) -> void:
+func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO, critical: bool = false, weapon_id: String = "pulse") -> void:
 	if not enemy.active:
 		return
+	amount = maxf(0.0, amount) * (1.25 if enemy.exposed_time > 0.0 else 1.0)
+	damage_by_weapon[weapon_id] = float(damage_by_weapon.get(weapon_id, 0.0)) + minf(maxf(0.0, enemy.hp), amount)
 	impact.emit(enemy.position, amount, critical)
 	effects.emit_fx("spark", enemy.position, enemy.position, enemy.definition.color.lightened(0.3), 0.45 if critical else 0.22)
 	if not enemy.hit(amount, knockback if enemy.definition.radius < 1.3 else Vector3.ZERO):
@@ -184,21 +189,21 @@ func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO
 	streak_time = 3.0
 	if streak % 20 == 0:
 		overclock = 6.0
-		notice.emit("OVERCLOCK // %d CHAIN" % streak, "FIRE RATE +60%% FOR 6 SECONDS", Color("b9f66b"))
+		notice.emit("OVERCLOCK // %d CHAIN" % streak, "FIRE RATE +60% FOR 6 SECONDS", Color("b9f66b"))
 		weapon_fired.emit("overclock")
 	enemy_destroyed.emit(at, enemy.definition.xp)
-	effects.emit_fx("ring", at, at, enemy.definition.color, enemy.definition.radius * 1.8)
+	effects.destruction(at, enemy.definition.color, enemy.definition.radius > 1.3)
 	if enemy.definition.id in [&"warden", &"architect"]:
-		cache_recovered.emit()
 		notice.emit("CORE RECOVERED", "MEMORY VACUUM // REPAIR // BONUS UPGRADE", Color("ffe39b"))
+		cache_recovered.emit()
 		weapon_fired.emit("mutation")
 
-func area(at: Vector3, radius: float, damage: float, push: float = 0.0) -> void:
+func area(at: Vector3, radius: float, damage: float, push: float = 0.0, weapon_id: String = "thermal") -> void:
 	for enemy in grid.query(at, radius + 3.0):
 		if enemy.position.distance_to(at) <= radius + enemy.definition.radius:
-			_damage(enemy, damage, (enemy.position - at).normalized() * push)
+			_damage(enemy, damage, (enemy.position - at).normalized() * push, false, weapon_id)
 
-func chain(at: Vector3, damage: float, jumps: int, reach: float, ignore: Array = []) -> void:
+func chain(at: Vector3, damage: float, jumps: int, reach: float, ignore: Array = [], weapon_id: String = "arc") -> void:
 	var used: Array = ignore.duplicate()
 	var previous := at
 	for i in range(jumps):
@@ -217,7 +222,7 @@ func chain(at: Vector3, damage: float, jumps: int, reach: float, ignore: Array =
 		var point := closest.position
 		used.append(closest.index)
 		effects.emit_fx("beam", previous, point, Arsenal.color("arc"), 0.10)
-		_damage(closest, damage)
+		_damage(closest, damage, Vector3.ZERO, false, weapon_id)
 		previous = point
 
 func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
@@ -235,9 +240,9 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 		match id:
 			"orbit":
 				for point in rig.orbital_points:
-					area(point, 0.8, damage)
+					area(point, 0.8, damage, 0.0, "orbit")
 				if mutations.has("halo"):
-					area(player.position, 4.2, damage * 0.45)
+					area(player.position, 4.2, damage * 0.35, 0.0, "halo")
 					effects.emit_fx("ring", player.position, player.position, Color("ffe39b"), 4.2)
 			"arc":
 				if ready:
@@ -250,7 +255,7 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 					for enemy in grid.query(start, 29.0):
 						var closest := Geometry3D.get_closest_point_to_segment(enemy.position, start, end)
 						if enemy.position.distance_to(closest) < enemy.definition.radius + 0.45:
-							_damage(enemy, damage)
+							_damage(enemy, damage, Vector3.ZERO, false, "rail")
 			"thermal":
 				ready = not grid.query(player.position, 6.0).is_empty()
 				if ready:
@@ -261,7 +266,7 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 					var victim := grid.nearest(point, 19.0)
 					if victim != null:
 						effects.emit_fx("beam", point, victim.position, Arsenal.color("drone"), 0.07)
-						_damage(victim, damage)
+						_damage(victim, damage, Vector3.ZERO, false, "drone")
 		if ready:
 			timers[id] = float(definition["cooldown"]) * pow(0.94, rank - 1)
 			weapon_fired.emit(id)

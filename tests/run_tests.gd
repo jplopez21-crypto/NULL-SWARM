@@ -73,8 +73,51 @@ func run() -> void:
 	check(reload.data["runs"] == 1, "corrupted save recovers backup")
 	for suffix in ["", ".bak", ".tmp"]:
 		DirAccess.remove_absolute(store.path + suffix)
+	# Checkpoint ledger: rewards are monotonic and idempotent across interruptions.
+	store.data = SaveStore.defaults()
+	var token := store.begin_run()
+	check(store.checkpoint(token, 90, 40) == OK, "checkpoint writes salvage")
+	check(store.data["salvage"] == 4, "salvage formula rewards time and kills")
+	store.checkpoint(token, 90, 40)
+	check(store.data["salvage"] == 4 and store.data["salvaged_kills"] == 40, "repeated checkpoint cannot duplicate rewards")
+	store.checkpoint(token, 45, 20)
+	check(store.data["salvage"] == 4, "older checkpoints do not reverse rewards")
+	check(store.checkpoint("wrong-token", 90, 40) != OK, "stale run tokens rejected")
+	store.checkpoint(token, 180, 150, true)
+	check(Research.unlocked(store.data).has("conductor") and Research.unlocked(store.data).has("sentinel"), "kill and boss milestones unlock starting kits")
+	var previous_wallet: int = int(store.data["salvage"])
+	store.record_run(180, 150, false, token, true)
+	store.record_run(180, 150, false, token, true)
+	check(store.data["runs"] == 1 and store.data["salvage"] == previous_wallet, "run settlement is idempotent and defeat keeps salvage")
+	reload.load_data()
+	check(reload.data["salvage"] == previous_wallet and reload.data["wardens"] == 1, "checkpoint progression survives reload")
+	check(store.purchase("chassis") == OK, "affordable research can be purchased")
+	check(store.data["research"]["chassis"] == 1 and store.data["salvage"] == previous_wallet - 8, "purchase deducts exact cost")
+	store.data["salvage"] = 0
+	check(store.purchase("tether") != OK and int(store.data["research"].get("tether", 0)) == 0, "unaffordable research cannot be purchased")
+	store.data["salvage"] = 100
+	store.purchase("logistics")
+	check(store.purchase("logistics") != OK, "research rank cap enforced")
+	var saved_path: String = store.path
+	store.path = "user://nonexistent-parent/failed-save.json"
+	var wallet_before_failure: int = int(store.data["salvage"])
+	check(store.purchase("tether") != OK and store.data["salvage"] == wallet_before_failure and int(store.data["research"].get("tether", 0)) == 0, "failed purchase write refunds currency and rank")
+	store.path = saved_path
+	check(store.choose_kit("conductor") == OK and store.choose_kit("invalid") != OK, "only earned starting kits selectable")
+	# Version 1 saves migrate without losing statistics/settings or inventing currency.
+	var legacy := {"version": 1, "runs": 3, "kills": 200, "best_time": 120.0, "wins": 1, "settings": SaveStore.defaults()["settings"]}
+	var legacy_file := FileAccess.open(store.path, FileAccess.WRITE)
+	legacy_file.store_string(JSON.stringify(legacy))
+	legacy_file.close()
+	reload.load_data()
+	check(reload.data["version"] == 2 and reload.data["kills"] == 200 and reload.data["salvage"] == 0, "v1 save migrates without free salvage")
+	check(Research.unlocked(reload.data).has("conductor"), "legacy lifetime kills qualify for kit unlock")
+	for suffix in ["", ".bak", ".tmp"]:
+		DirAccess.remove_absolute(store.path + suffix)
 	var game = load("res://scenes/main.tscn").instantiate()
 	root.add_child(game)
+	game.save.path = "user://scene_test_progress.json"
+	game.save.data = SaveStore.defaults()
 	game.set_process(false)
 	game.set_physics_process(false)
 	game.start_run()
@@ -93,6 +136,18 @@ func run() -> void:
 	shot.activate(Vector3.ZERO, Vector3.RIGHT, 27, 18, 22)
 	check(shot.struck.is_empty(), "projectile reuse resets hit history")
 	shot.deactivate()
+	var accounting_victim: SwarmEnemy = game.combat.spawn(0, Vector3(4, 0, 0))
+	accounting_victim.hp = 10.0
+	game.combat._damage(accounting_victim, 1000.0, Vector3.ZERO, false, "rail")
+	check(game.combat.damage_by_weapon.get("rail", 0) == 10.0, "damage totals exclude overkill")
+	game.combat._damage(accounting_victim, 1000.0, Vector3.ZERO, false, "rail")
+	check(game.combat.damage_by_weapon.get("rail", 0) == 10.0, "dead targets cannot inflate damage totals")
+	var exposed: SwarmEnemy = game.combat.spawn(0, Vector3(4, 0, 0))
+	exposed.exposed_time = 1.2
+	var before_hp: float = exposed.hp
+	game.combat._damage(exposed, 8.0)
+	check(before_hp - exposed.hp == 10.0, "exposed core takes exactly 25 percent bonus damage")
+	exposed.deactivate()
 	for id in Arsenal.DATA:
 		game.combat.loadout = {id: 1}
 		game.combat.timers.clear()
@@ -102,6 +157,13 @@ func run() -> void:
 		game.combat._tick_arsenal(0.0, game.player)
 		check(victim.hp < victim.max_hp, "%s weapon damages enemies" % id)
 		victim.deactivate()
+	var kit_data := SaveStore.defaults()
+	kit_data["salvaged_kills"] = 150
+	kit_data["selected_kit"] = "conductor"
+	kit_data["research"] = {"chassis": 3, "tether": 3, "logistics": 1}
+	Research.apply(kit_data, game.player, game.combat, game.progress)
+	check(game.player.health.maximum == 100.0 and game.player.magnet == 3.35 and game.progress.rerolls == 3, "bounded research benefits applied to starting kit")
+	check(game.combat.weapon.damage == 9.0 and game.progress.ranks["arc"] == 1 and game.progress.equipped() == 2, "Conductor trades rifle damage and a slot for Arc Emitter")
 	game.combat.update_build({"damage": 3, "arc": 3})
 	game.combat.update_build({"damage": 3, "arc": 3})
 	check(game.combat.mutations.count("arcstorm") == 1, "mutation activates exactly once")

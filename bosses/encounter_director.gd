@@ -44,7 +44,13 @@ func tick(delta: float, world: Node3D, player: SwarmPlayer) -> void:
 	var next_phase: int = 1 + (1 if source.hp < source.max_hp * 0.66 else 0) + (1 if source.hp < source.max_hp * 0.33 else 0)
 	if next_phase > phase:
 		phase = next_phase
-		world.notice.emit("CORE FRACTURE // PHASE %d" % phase, "ATTACK PATTERNS ACCELERATING", Color("ffb35c"))
+		_clear_warnings()
+		attack_cooldown = 2.0
+		source.exposed_time = 1.2
+		source.velocity = Vector3.ZERO
+		world.effects.emit_fx("ring", source.position, source.position, Color("ffe39b"), 4.5)
+		world.weapon_fired.emit("mutation")
+		world.notice.emit("CORE EXPOSED // PHASE %d" % phase, "+25% DAMAGE FOR 1.2s // ATTACK PATTERNS CHANGING", Color("ffe39b"))
 	if warning_time > 0.0:
 		warning_time -= delta
 		for warning in warnings:

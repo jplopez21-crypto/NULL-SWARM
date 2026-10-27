@@ -1,18 +1,5 @@
-Godot 4.6.3 / Reactor Zero 0.2 / 2026-10-27
-Build commit: 2ef467a76662711af75f5a39f2045877606ac227
-Workflow run: 40432471369 — success
-TEST_RESULT checks=100 failures=0
-SCENE_SMOKE_OK enemies=5 projectiles=2
-Rendered captures: menu, combat, upgrade cards and Architect — success
-Inspected Compatibility renders; corrected overlay layering before final build.
-Android debug export: success
-apksigner verify: success (exit 0)
-Local artifact ZIP digest matches GitHub artifact digest.
-Local APK SHA256 matches CI SHA256SUMS.
-APK archive integrity verified; manifest, DEX and ARM64 engine present.
-QA screenshots excluded from APK resources.
-APK SHA256: b51d9d7e65243343883454e2f28fa663ca2ab9a5abfd90429b0363915c067f7d
-CI warning: intermittent ObjectDB leak at smoke shutdown; not resolved.
-Virtual display warning: V-Sync mode unsupported.
-Physical Android playtest/performance of 0.2: NOT TESTED.
-Lifecycle harness uses invulnerability and explicit final-boss damage.
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TEST_RESULT checks=121 failures=0
+
+0.3 CI build and rendered layout checks: pending.

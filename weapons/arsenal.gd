@@ -15,7 +15,7 @@ static func color(id: String) -> Color:
 	return DATA.get(id, {}).get("color", Color("78f8d4"))
 
 static func title(id: String) -> String:
-	return DATA.get(id, {}).get("title", "PULSE RIFLE")
+	return {"arcstorm": "ARCSTORM", "halo": "SOLAR HALO"}.get(id, DATA.get(id, {}).get("title", "PULSE RIFLE"))
 
 static func mutation(ranks: Dictionary) -> Array[String]:
 	var result: Array[String] = []
