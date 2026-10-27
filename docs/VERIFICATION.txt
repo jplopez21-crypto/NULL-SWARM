@@ -12,3 +12,14 @@ APK SHA256: e1fa5e937ebd073fc4b16dc7ddf80803a80bdd2c301b09788e58cbf508e2eefc
 CI capture warnings: ObjectDB shutdown leak; virtual-display V-Sync unsupported.
 0.3 physical Android playtest/performance: NOT TESTED.
 Lifecycle harness uses invulnerability/explicit boss damage; not a balance test.
+
+Repeatable gameplay QA at d6206ffff31f6e521bd507c4e483c571535de7c6:
+Workflow 40437672314 — success
+TEST_RESULT checks=121 failures=0
+BOT_REPORT cases=8 failures=0; victories=7 defeats=1 timeouts=0
+90-second seed-909 replay: matched
+All eight CI gameplay traces matched local traces excluding timing fields.
+STRESS_REPORT scenarios=6 failures=0
+Selected low/high gameplay counters/fingerprints and retained enemy loads: matched
+600 synthetic enemies / 400 peak shots: p95 CPU step low 22.611ms, high 22.444ms.
+These are headless host CPU timings, not phone frame rates or human balance results.

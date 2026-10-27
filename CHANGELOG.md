@@ -63,3 +63,9 @@
 - Added low/high synthetic stress scenarios at 100/300/600 enemies with gameplay-state parity checks and CPU percentiles.
 - Added a dedicated Actions workflow publishing JSON, Markdown and diagnostic logs on pushes/PRs/manual runs.
 - Gameplay code and APK version remain unchanged.
+
+### QA baseline verification
+
+- CI passed 121 checks, eight normal-rules bot cases and replay verification, and six synthetic benchmark scenarios.
+- Seven bot victories/one defeat reproduced across local and CI machines; no invariant failures.
+- Committed canonical JSON/Markdown reports; retained CPU-vs-device and bot-vs-human limits.

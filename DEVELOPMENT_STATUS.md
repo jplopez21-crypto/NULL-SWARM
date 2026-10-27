@@ -48,13 +48,21 @@ The owner reports that Milestone 1 and Reactor Zero 0.2 APKs work on their Andro
 - CI rendered capture still reported an ObjectDB shutdown warning and unsupported V-Sync setting on the virtual display. The pipeline passed; these are not physical-device performance measurements.
 - 0.3 installation, progression pacing and combat balance await owner playtesting.
 
-## Repeatable gameplay QA — implementation complete, CI pending
+## Repeatable gameplay QA — verified in CI
 
 - Added normal-rules bot playtests: three strategies × two seeds on fresh Vanguard, plus Conductor/Sentinel earned-kit fixtures, all without research.
 - Local eight-case matrix: seven victories, one Kinetic/Vanguard defeat at 511.05s. A 90-second seeded replay matched exactly; no invariant failures.
 - Fresh Vanguard acquired its first additional weapon in approximately 11–16s.
 - Kinetic seed 101 collected 3,045 XP and left 7,505 XP uncollected; investigate bot collection path/progression before changing weapon balance.
 - Local synthetic benchmark completed six low/high scenarios at 100/300/600 enemies, retaining the requested loads and identical gameplay fingerprints across effect qualities.
-- Local benchmark ran alongside bots; timing samples are preliminary/noisy. Canonical sequential CI results are pending. No Android FPS claim is made.
+- Sequential CI benchmark completed: 600 enemies/400 peak shots measured p95 CPU simulation steps of 22.611ms low and 22.444ms high on the reported CI host. No Android FPS claim is made.
 - Dedicated QA workflow now runs on pushes/PRs/manual dispatch and uploads reports. No unattended calendar schedule was configured.
 - No gameplay changes or new APK are needed for these test tools; phone input/rendering/thermals and human enjoyment still require device playtesting.
+
+### QA delivery
+
+- Workflow https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437672314 succeeded: 121 system checks, eight normal-rules bot scenarios plus repeatability pair, six synthetic stress scenarios.
+- All eight CI gameplay outcomes/traces matched local results, excluding timing fields.
+- Report artifact: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437672314/artifacts/12705035805 — ZIP digest/integrity verified locally.
+- Canonical report snapshots and methods are in docs/qa and docs/AUTOMATED_QA.md.
+- Android regression build also passed: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437670838. The earlier 0.3 artifact remains the installed-game reference; gameplay was not changed by this QA pass.
