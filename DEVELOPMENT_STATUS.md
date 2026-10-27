@@ -54,3 +54,9 @@
 
 - Owner reports the development APK works. Installation/run is confirmed by owner feedback; quantitative device performance remains unmeasured.
 - Mobile opening HUD now explains dragging the left side and tapping Dash. Desktop keyboard/controller instructions remain available.
+
+## Targeting and teardown follow-up
+
+- Removed nearest-target candidate arrays and shared exclusion-aware cell scanning with chains. Added 205 targeting parity/boundary checks.
+- Six all-links stress scenarios retain exact gameplay fingerprints; local timings are mixed, so heavy-combat performance remains an open priority. Evidence under docs/qa/targeting.
+- Fixed immediate startup/shutdown audio playback leak reproduced by strict CI; 40 repeated isolated probes passed after cancellable first-tick music startup.

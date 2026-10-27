@@ -13,6 +13,48 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
+	# Compare the optimized selector against the previous query-based algorithm.
+	var spatial := SpatialGrid.new()
+	var targets: Array = []
+	var targeting_rng := RandomNumberGenerator.new()
+	targeting_rng.seed = 91827
+	for i in range(80):
+		var target := SwarmEnemy.new()
+		target.index = i
+		target.active = i % 7 != 0
+		target.position = Vector3(targeting_rng.randf_range(-30, 30), 0, targeting_rng.randf_range(-30, 30))
+		targets.append(target)
+	spatial.rebuild(targets)
+	# Include inactive stale cell entries, as enemies may die between grid rebuilds.
+	targets[1].active = false
+	for i in range(200):
+		var point := Vector3(targeting_rng.randf_range(-35, 35), 0, targeting_rng.randf_range(-35, 35))
+		var radius := targeting_rng.randf_range(0, 35)
+		var excluded: Array = [i % 80, (i + 1) % 80] if i % 2 == 0 else []
+		var expected: Node3D
+		var best := radius * radius
+		for target in spatial.query(point, radius):
+			if excluded.has(target.index):
+				continue
+			var distance: float = target.position.distance_squared_to(point)
+			if distance < best:
+				expected = target
+				best = distance
+		check(spatial.nearest(point, radius, excluded) == expected, "nearest matches legacy ordering, range and exclusions")
+	for target in targets:
+		target.active = false
+	targets[0].active = true
+	targets[1].active = true
+	targets[0].position = Vector3(1, 0, 0)
+	targets[1].position = Vector3(-1, 0, 0)
+	spatial.rebuild(targets)
+	check(spatial.nearest(Vector3.ZERO, 2) == targets[1], "equal-distance tie keeps ascending cell order")
+	check(spatial.nearest(Vector3.ZERO, 2, [1]) == targets[0], "chain exclusion selects next eligible target")
+	check(spatial.nearest(Vector3.ZERO, 1) == null, "exact-radius boundary retains legacy strict comparison")
+	check(spatial.nearest(Vector3.ZERO, 0) == null, "zero range has no target")
+	check(spatial.nearest(Vector3.ZERO, 2, [0, 1]) == null, "all excluded produces no target")
+	for target in targets:
+		target.free()
 	var health := HealthComponent.new()
 	check(health.take_damage(40), "damage accepted")
 	check(health.current == 90 and health.shield == 0, "shield absorbs damage first")

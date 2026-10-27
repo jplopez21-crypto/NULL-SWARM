@@ -25,12 +25,20 @@ func query(point: Vector3, radius: float) -> Array:
 					result.append(entity)
 	return result
 
-func nearest(point: Vector3, radius: float) -> Node3D:
+func nearest(point: Vector3, radius: float, excluded: Array = []) -> Node3D:
+	# Visit cells in query order to preserve deterministic equal-distance ties.
+	# No candidate array or repeated distance calculation on this hot path.
 	var found: Node3D
 	var best: float = radius * radius
-	for entity in query(point, radius):
-		var distance: float = entity.position.distance_squared_to(point)
-		if distance < best:
-			best = distance
-			found = entity
+	var low := Vector2i(floori((point.x - radius) / CELL), floori((point.z - radius) / CELL))
+	var high := Vector2i(floori((point.x + radius) / CELL), floori((point.z + radius) / CELL))
+	for x in range(low.x, high.x + 1):
+		for z in range(low.y, high.y + 1):
+			for entity in cells.get(Vector2i(x, z), []):
+				if not entity.active or (not excluded.is_empty() and excluded.has(entity.index)):
+					continue
+				var distance: float = entity.position.distance_squared_to(point)
+				if distance < best:
+					best = distance
+					found = entity
 	return found

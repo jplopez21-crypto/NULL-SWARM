@@ -26,7 +26,14 @@ func _ready() -> void:
 	var drone := score_loop()
 	music.stream = drone
 	add_child(music)
-	music.play()
+	# Start on the first process tick so same-frame scene teardown can cancel it.
+	# Registering then stopping a WAV before the audio thread sees it leaks playback.
+	set_process(true)
+
+func _process(_delta: float) -> void:
+	set_process(false)
+	if is_instance_valid(music) and music.stream != null:
+		music.play()
 
 func tone(hz: float, duration: float, ambient: bool = false) -> AudioStreamWAV:
 	var rate: int = 22050
@@ -65,6 +72,8 @@ func apply(settings: Dictionary) -> void:
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index(pair[0]), linear_to_db(maxf(0.0001, float(settings[pair[1]]))))
 
 func shutdown() -> void:
+	# Cancel startup as well as already running playback.
+	set_process(false)
 	# Release playbacks before the audio server shuts down, including dummy/headless audio.
 	for voice in voices:
 		if is_instance_valid(voice):

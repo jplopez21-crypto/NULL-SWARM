@@ -225,16 +225,8 @@ func chain(at: Vector3, damage: float, jumps: int, reach: float, ignore: Array =
 	var used: Array = ignore.duplicate()
 	var previous := at
 	for i in range(jumps):
-		var closest: SwarmEnemy
 		var local_reach: float = reach if i == 0 else minf(reach, 7.0)
-		var distance: float = local_reach * local_reach
-		for enemy in grid.query(previous, local_reach):
-			if used.has(enemy.index):
-				continue
-			var squared: float = enemy.position.distance_squared_to(previous)
-			if squared < distance:
-				closest = enemy
-				distance = squared
+		var closest: SwarmEnemy = grid.nearest(previous, local_reach, used)
 		if closest == null:
 			break
 		var point := closest.position

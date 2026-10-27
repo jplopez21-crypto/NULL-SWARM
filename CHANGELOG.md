@@ -156,3 +156,9 @@
 
 - Show touch movement/dash instructions on mobile during the opening 22 seconds.
 - Record owner confirmation that the development APK installs and runs.
+
+### Target selection and rapid teardown
+
+- Select nearest enemies directly from spatial cells; share exclusion-aware targeting with chain attacks, preserving ordering and combat outcomes.
+- Add seeded targeting parity and boundary regressions and preserve before/after stress evidence.
+- Cancel pending music startup when a scene shuts down immediately, fixing the intermittent probe-test WAV playback leak; add startup/cancellation audio regressions.

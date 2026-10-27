@@ -73,3 +73,11 @@ The documentation-tip repeat (Android runtime run 40538534378) failed its moveme
 ### Owner device confirmation
 
 After installing the final pipeline APK, the owner reported “Works.” This confirms a successful owner install/run, without measured frame rate, session length, device model, or thermal data. Android now shows touch movement/dash onboarding instead of keyboard instructions. All nine isolated headless suites passed locally after this UI change, including resource loading, GUI dispatch, gameplay, input, corruption, UI geometry and scene smoke. The development branch CI also validates the update.
+
+### Targeting and immediate audio teardown follow-up
+
+- Previous onboarding QA run 40547866604 failed strict shutdown validation: probe assertions passed, but verbose reproduction found one WAV/playback leak in 12 attempts. Native export and Android runtime checks passed at that revision.
+- Music startup now waits for the first process tick; shutdown cancels pending startup. The same probe passed 40 consecutive verbose isolated runs after this fix, with no leak warning. Dedicated audio checks cover cancelled startup and normal startup.
+- Nearest-target selection scans grid cells directly without a candidate array or duplicate distance calculation. Chain attacks reuse the same selector with explicit exclusions. Added 200 seeded comparisons with the previous algorithm and five boundary/tie/exclusion cases.
+- Six all-links stress scenarios preserved exact before/after gameplay fingerprints and fixed loads. Reports: docs/qa/targeting/before.json and after.json. Local CPU p95 results are mixed: 600/high 46.024 → 36.405 ms; 600/low 39.019 → 43.176 ms. This is a single shared-host comparison, not a reliable overall speedup or Android FPS measurement. Baseline overlapped short probe repetitions, so timing conclusions are limited.
+- Full updated branch build/runtime/QA results are linked in PR #1; all nine updated local suites passed (370 system checks, 9 audio checks, 41 corruption checks, 12 input checks, 8 GUI checks, 5 probe checks, 49 resources, 504 UI checks and scene smoke), with zero strict error/leak failures.

@@ -39,6 +39,21 @@ func run() -> void:
 	check(tone.loop_mode == AudioStreamWAV.LOOP_DISABLED and not tone.stereo and tone.data.size() > 0, "one-shot effects stay non-looping mono PCM")
 	tone = null
 	builder.free()
+	var cancelled := SwarmAudio.new()
+	root.add_child(cancelled)
+	check(not cancelled.music.playing and cancelled.is_processing(), "music waits until the first process tick")
+	cancelled.shutdown()
+	await process_frame
+	check(not cancelled.is_processing() and cancelled.music.stream == null, "same-frame shutdown cancels pending music startup")
+	cancelled.queue_free()
+	var started := SwarmAudio.new()
+	root.add_child(started)
+	await process_frame
+	await process_frame
+	check(started.music.playing and not started.is_processing(), "normal scene starts music once on its first tick")
+	started.shutdown()
+	await create_timer(0.20).timeout
+	started.queue_free()
 	await process_frame
 	QAReport.write("res://builds/qa/audio-tests.json", {"checks": checks, "failures": failures})
 	print("AUDIO_RESULT checks=", checks, " failures=", failures.size())
