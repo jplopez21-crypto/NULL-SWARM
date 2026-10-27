@@ -11,3 +11,7 @@ InputRouter merges keyboard/controller/touch movement. Camera movement and scree
 SaveStore writes versioned JSON through a temporary file and retains a verified backup. Invalid or unsupported saves fall back to backup/defaults without crashing. Settings and completed/abandoned run totals persist. Mid-run recovery after process termination is not implemented; Android focus loss pauses and writes current saved data.
 
 The completion test uses explicit invulnerability to isolate lifecycle and schedule correctness from bot skill. It is not evidence of balance or human survivability. Physical-device gameplay, touch feel, safe areas and performance remain acceptance gates.
+
+## Foundry progression
+
+Research describes capped upgrades and starting-kit sidegrades independently of combat. SaveStore v2 migrates v1 data and owns the tokenized salvage ledger. Checkpoints award only the positive difference from the already-banked total; settlement closes a token once. Purchases persist immediately with in-memory rollback on write failure. Main composes research at deployment and checkpoints periodically and at lifecycle/encounter boundaries. Combat damage attribution records actual HP removed, excluding overkill; it is displayed in results and performs no online telemetry.

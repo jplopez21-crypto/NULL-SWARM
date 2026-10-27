@@ -29,7 +29,7 @@ godot --headless --export-debug Android builds/android/null-swarm-foundry-0.3-de
 adb install -r builds/android/null-swarm-foundry-0.3-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3-apk`. The 0.3 APK build is pending verification. Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3-apk`. The [verified 0.3 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064/artifacts/12703736664) contains its APK under `android/` and staged QA captures under `screenshots/`. All 121 checks and APK signature verification passed. Physical-device testing and balance remain required for this new version.
 
 This build installs alongside the original as **NULL SWARM Foundry** (`com.nullswarm.game.foundry`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 

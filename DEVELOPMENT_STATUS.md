@@ -18,7 +18,9 @@ The owner reports that Milestone 1 and Reactor Zero 0.2 APKs work on their Andro
 
 - Local automated suite: 121 checks passed, zero failures.
 - Includes migration, corruption recovery, checkpoint/settlement idempotency, currency/purchase/rank caps, failed-write refund, kit unlocks/tradeoffs, damage attribution and exposed-core bonus, plus the ten-minute lifecycle.
-- Scene smoke passed during development. Final CI export/captures are pending.
+- Final GitHub Actions run passed all 121 checks, scene smoke, rendered captures, Android debug export and APK signature verification.
+- Inspected menu, Foundry and results captures: controls/requirements/costs and damage/salvage totals are visible.
+- Downloaded artifact/APK digests and archive integrity independently verified locally.
 - Lifecycle harness uses invulnerability and explicit boss damage; human survivability and balance are unverified.
 
 ## Delivery / known limitations
@@ -33,6 +35,15 @@ The owner reports that Milestone 1 and Reactor Zero 0.2 APKs work on their Andro
 
 ## Next priorities
 
-1. Inspect Foundry/results renders and verify a signed debug APK.
-2. Playtest earning/spending salvage, starting kit tradeoffs, Halo adjustment and core-exposure feedback on Android.
-3. Use damage reports and physical frame-time measurements to guide further balance/performance work.
+1. Playtest earning/spending salvage, starting kit tradeoffs, Halo adjustment and core-exposure feedback on Android.
+2. Use damage reports and physical frame-time measurements to guide further balance/performance work.
+
+## Verified APK
+
+- Workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064
+- Download: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064/artifacts/12703736664
+- Build commit: `82a45e9a6649807af819b8a3fe4bdc1fa2656d32`.
+- APK: `builds/android/null-swarm-foundry-0.3-debug.apk`, ARM64, 27,711,129 bytes.
+- SHA256: `e1fa5e937ebd073fc4b16dc7ddf80803a80bdd2c301b09788e58cbf508e2eefc`.
+- CI rendered capture still reported an ObjectDB shutdown warning and unsupported V-Sync setting on the virtual display. The pipeline passed; these are not physical-device performance measurements.
+- 0.3 installation, progression pacing and combat balance await owner playtesting.

@@ -1,5 +1,14 @@
-Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
-
+Godot 4.6.3 / Foundry 0.3 / 2026-10-27
+Build commit: 82a45e9a6649807af819b8a3fe4bdc1fa2656d32
+Workflow run: 40435364064 — success
 TEST_RESULT checks=121 failures=0
-
-0.3 CI build and rendered layout checks: pending.
+SCENE_SMOKE_OK enemies=5 projectiles=2
+Menu/Foundry/results captures inspected; layout fits the 1280x720 QA viewport.
+Android debug export and apksigner verify: success.
+Artifact ZIP hash matches GitHub digest; APK hash matches SHA256SUMS.
+APK ZIP integrity, manifest, DEX, ARM64 engine verified locally.
+QA screenshots excluded from APK resources.
+APK SHA256: e1fa5e937ebd073fc4b16dc7ddf80803a80bdd2c301b09788e58cbf508e2eefc
+CI capture warnings: ObjectDB shutdown leak; virtual-display V-Sync unsupported.
+0.3 physical Android playtest/performance: NOT TESTED.
+Lifecycle harness uses invulnerability/explicit boss damage; not a balance test.

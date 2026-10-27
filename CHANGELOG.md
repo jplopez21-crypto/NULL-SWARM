@@ -49,3 +49,9 @@
 - Added actual per-weapon damage totals to results; excludes overkill and damage to dead targets.
 - Narrowly reduced Solar Halo area-pulse damage and corrected Overclock threshold copy.
 - Added Foundry/results CI captures and a separate Foundry debug application package.
+
+### 0.3 verification
+
+- Passed 121 checks, scene smoke, rendered capture, Android export and APK signature verification in workflow 40435364064.
+- Inspected the Foundry/results screens and verified downloaded ZIP/APK integrity and hashes.
+- Owner playtesting of 0.3 and physical-device profiling remain pending.
