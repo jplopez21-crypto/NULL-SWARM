@@ -6,6 +6,7 @@ var live: Array[Dictionary] = []
 var quality: int = 1
 var flashes: bool = true
 var ring_mesh: TorusMesh
+var impact_materials: Dictionary = {}
 var impact_mesh: ArrayMesh
 var beam_mesh: BoxMesh
 
@@ -45,7 +46,14 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 		return
 	var mesh: MeshInstance3D = pool.pop_back()
 	mesh.mesh = impact_mesh if kind == "spark" else (beam_mesh if kind in ["beam", "shard"] else ring_mesh)
-	mesh.material_override = SwarmVisuals.material(color, true)
+	if kind == "spark":
+		if not impact_materials.has(color):
+			var material: StandardMaterial3D = SwarmVisuals.material(color, true).duplicate()
+			material.cull_mode = BaseMaterial3D.CULL_DISABLED
+			impact_materials[color] = material
+		mesh.material_override = impact_materials[color]
+	else:
+		mesh.material_override = SwarmVisuals.material(color, true)
 	mesh.rotation = Vector3.ZERO
 	mesh.position = at + Vector3(0, 0.12, 0)
 	if kind == "beam":
@@ -54,7 +62,7 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 			mesh.look_at(to + Vector3(0, 0.8, 0))
 		mesh.scale = Vector3(size, size, maxf(0.1, at.distance_to(to)))
 	elif kind in ["spark", "shard"]:
-		mesh.position.y = 0.8
+		mesh.position.y = at.y + 0.8
 		mesh.scale = Vector3(size, size * 0.3, size * (2.4 if kind == "shard" else 1.0))
 		mesh.rotation.y = randf() * TAU
 	else:

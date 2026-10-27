@@ -376,10 +376,10 @@ func _capture_session() -> void:
 	state = State.PAUSED
 	combat.effects.tick(0.12)
 	for i in range(3):
-		var sample := combat.spawn(i, player.position + Vector3(-3 + i * 3, 0, -3))
+		var sample := combat.spawn(i, player.position + Vector3(-6 + i * 6, 0, -5))
 		sample.hit(1, Vector3.ZERO)
 		sample.tick(0.015)
-		combat.effects.emit_fx("spark", sample.position, sample.position, sample.definition.color.lightened(0.3), 0.65)
+		combat.effects.emit_fx("spark", sample.position + Vector3.UP * sample.visual_scale, sample.position, sample.definition.color.lightened(0.3), 0.65)
 	combat.effects.destruction(player.position + Vector3(3, 0, 2), Color("ff9274"), false)
 	combat.effects.tick(0.025)
 	await get_tree().create_timer(0.2).timeout

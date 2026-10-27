@@ -197,7 +197,7 @@ func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO
 	amount = maxf(0.0, amount) * (1.25 if enemy.exposed_time > 0.0 else 1.0)
 	damage_by_weapon[weapon_id] = float(damage_by_weapon.get(weapon_id, 0.0)) + minf(maxf(0.0, enemy.hp), amount)
 	impact.emit(enemy.position, amount, critical)
-	effects.emit_fx("spark", enemy.position, enemy.position, enemy.definition.color.lightened(0.3), 0.45 if critical else 0.22)
+	effects.emit_fx("spark", enemy.position + Vector3.UP * enemy.visual_scale, enemy.position, enemy.definition.color.lightened(0.3), 0.45 if critical else 0.22)
 	if not enemy.hit(amount, knockback if enemy.definition.radius < 1.3 else Vector3.ZERO):
 		return
 	var at := enemy.position

@@ -90,3 +90,7 @@ After installing the final pipeline APK, the owner reported “Works.” This co
 - No combat damage, spawn rate, targeting, health, collision size, dash timing, effect budget or gameplay RNG changes are intended. Android phone performance and human satisfaction require device playtesting.
 
 Local post-fix verification: all nine isolated suites passed, including 380 system checks, 9 audio checks, 41 corruption checks, 12 input checks, 8 GUI checks, 5 probe checks, 49 resource checks, 504 UI checks and scene smoke; strict error/leak scan clean. Snapshot: docs/qa/combat-feedback/headless-results.json. Final CI evidence is linked in PR #1.
+
+First CI render review found hit impacts obscured by enemy bodies and confirmation text crossing silhouettes. Raised impacts above each enemy’s visual scale, enabled two-sided rendering only on cached impact materials, and outlined toast text. Revised staged sample separates silhouettes for inspection. The first native APK passed signature/export and downloaded integrity checks; final-tip results remain authoritative in PR #1.
+
+Post-render correction: updated system suite passed 382 checks with a clean strict log scan; the two additional checks cover two-sided impact rendering and cached material/height reuse. Results: docs/qa/combat-feedback/visibility-regressions.json.

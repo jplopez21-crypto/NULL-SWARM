@@ -375,6 +375,10 @@ func run() -> void:
 	feedback.flashes = true
 	feedback.emit_fx("spark", Vector3.ZERO, Vector3.ZERO, Color.WHITE)
 	check(feedback.live[0]["mesh"].mesh == feedback.impact_mesh, "impacts reuse shared star mesh")
+	var first_impact: MeshInstance3D = feedback.live[0]["mesh"]
+	check(first_impact.material_override.cull_mode == BaseMaterial3D.CULL_DISABLED, "flat impact silhouette renders from either camera side")
+	feedback.emit_fx("spark", Vector3(0, 2, 0), Vector3.ZERO, Color.WHITE)
+	check(is_equal_approx(feedback.live[1]["mesh"].position.y, 2.8) and feedback.live[1]["mesh"].material_override == first_impact.material_override, "raised impacts retain height and reuse their cached material")
 	feedback.tick(1)
 	feedback.emit_fx("uplink", Vector3.ZERO, Vector3.ZERO, Color.WHITE, 3)
 	feedback.tick(0.2)
