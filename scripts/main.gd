@@ -323,16 +323,23 @@ func _capture_session() -> void:
 	await get_tree().create_timer(2.0).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/combat.png")
 	# Staged presentation QA of the warning and new enemy silhouette.
+	combat.director.elapsed = SwarmAdaptation.FIRST_ANALYSIS
+	combat.adaptation.elapsed = SwarmAdaptation.FIRST_ANALYSIS
 	combat.adaptation.pending = "insulators"
 	combat.adaptation.starts_at = combat.adaptation.elapsed + 8.0
 	combat.adaptation.changed.emit("warning", "insulators")
 	await get_tree().create_timer(0.3).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/adaptation_warning.png")
 	combat.adaptation.tick(8.1, player.position, combat.damage_by_weapon, false)
+	combat.director.elapsed += 8.1
+	state = State.PAUSED
+	ui.damage_texts.clear()
+	ui.toast("INSULATOR FORMATION ACTIVE", "AMBER BRACED CORES // ARC RESISTANCE 20%", Color("ffcf85"))
 	for i in range(3):
 		combat.spawn(5, Vector3(-5 + i * 5, 0, -4))
 	await get_tree().create_timer(0.3).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/adaptation_active.png")
+	state = State.PLAYING
 	progress.pending = 1
 	show_upgrade()
 	await get_tree().create_timer(0.5).timeout
@@ -340,6 +347,8 @@ func _capture_session() -> void:
 	ui.hide_panel()
 	progress.pending = 0
 	state = State.PLAYING
+	combat.director.elapsed = EncounterDirector.FINAL_BOSS_TIME
+	combat.adaptation.elapsed = EncounterDirector.FINAL_BOSS_TIME
 	combat.encounters.mini_spawned = true
 	combat.encounters.boss_spawned = true
 	combat.encounters.boss = combat.encounters._spawn(combat, player.position, true)
