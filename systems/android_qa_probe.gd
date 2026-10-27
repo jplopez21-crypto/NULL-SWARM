@@ -62,6 +62,11 @@ func snapshot() -> void:
 		for item in game.pickups.items:
 			if not item["attract"]:
 				data["targets"].append([item["mesh"].position.x, item["mesh"].position.z])
+	data["backup_code_length"] = 0
+	for field in game.ui.root.find_children("*", "TextEdit", true, false):
+		if field.is_visible_in_tree():
+			data["backup_code_length"] = field.text.length()
+	data["backup_recovery_available"] = FileAccess.file_exists(game.save.path + ".pre-import")
 	data["salvage"] = game.save.data["salvage"]
 	data["settings"] = game.save.data["settings"].duplicate(true)
 	var file := FileAccess.open("user://qa-runtime.tmp", FileAccess.WRITE)

@@ -13,6 +13,36 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
+	var source_save := SaveStore.new()
+	source_save.data["salvage"] = 42
+	source_save.data["salvaged_kills"] = 180
+	source_save.data["research"] = {"chassis": 1}
+	source_save.data["selected_kit"] = "conductor"
+	source_save.data["settings"]["shake"] = false
+	var code := source_save.backup_code()
+	var imported := SaveStore.inspect_backup(code)
+	check(imported["salvage"] == 42 and imported["selected_kit"] == "conductor" and not imported["settings"]["shake"], "portable backup retains earned progress and settings")
+	check(SaveStore.inspect_backup(code + "x").is_empty(), "backup checksum rejects corruption")
+	check(SaveStore.inspect_backup("NS1.!!!!." + "0".repeat(64)).is_empty(), "invalid base64 fails without decoding")
+	check(SaveStore.inspect_backup("x".repeat(16385)).is_empty(), "oversized backup rejected")
+	check(SaveStore.inspect_backup("NS2.x.y").is_empty(), "unknown backup version rejected")
+	var invalid_save := source_save.data.duplicate(true)
+	invalid_save["version"] = 99
+	var invalid_text := JSON.stringify(invalid_save)
+	check(SaveStore.inspect_backup("NS1." + Marshalls.raw_to_base64(invalid_text.to_utf8_buffer()) + "." + invalid_text.sha256_text()).is_empty(), "future save schema rejected")
+	var receiver := SaveStore.new()
+	receiver.path = "user://backup_restore_test.json"
+	receiver.data["salvage"] = 7
+	check(receiver.persist() == OK and receiver.restore_backup(code) == OK, "valid backup restores to disk")
+	check(receiver._read(receiver.path)["salvage"] == 42 and receiver._read(receiver.path + ".pre-import")["salvage"] == 7, "restore preserves previous save and writes replacement")
+	check(receiver.restore_backup(code) == OK and receiver.data["salvage"] == 42, "repeated restores replace rather than add currency")
+	var before_restore := receiver.data.duplicate(true)
+	check(receiver.restore_backup("broken") != OK and receiver.data == before_restore, "invalid restore leaves current data unchanged")
+	receiver.path = "user://nonexistent_backup_directory/save.json"
+	check(receiver.restore_backup(code) != OK and receiver.data == before_restore, "write failure leaves in-memory progress untouched")
+	var active_save := SaveStore.new()
+	active_save.begin_run()
+	check(SaveStore.inspect_backup(active_save.backup_code())["ledger"].is_empty(), "portable backup cannot resume or replay an active reward ledger")
 	# Compare the optimized selector against the previous query-based algorithm.
 	var spatial := SpatialGrid.new()
 	var targets: Array = []

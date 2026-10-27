@@ -78,3 +78,9 @@
 
 - Added actual in-place emulator update and changed-settings/salvage retention checks (two additional runtime checks). Python compilation and workflow YAML/shell syntax validated locally; Android execution is through CI.
 - Uses one disposable test signer for two successive APK versions in the same run. Persistent cross-run Preview signing still requires owner environment secrets.
+
+## Portable progress backups
+
+- Implemented offline progression/settings codes, checksum/size/schema validation, main-menu-only preview/confirmation and one-level pre-import recovery. No current-run equipment or ledger transfer.
+- Added 12 backup system checks, four GUI-dispatch checks and eight UI layouts (52 total / 584 checks). Android driver adds clipboard and restore checks before its update test.
+- Documentation: docs/android/PROGRESS_BACKUPS.md. Older installed APKs without this feature cannot export through it; owner key provisioning remains blocked.

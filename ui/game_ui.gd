@@ -15,6 +15,11 @@ signal reroll_requested
 signal lab_requested
 signal research_requested(id: String)
 signal kit_selected(id: String)
+signal backup_requested
+signal backup_export_requested
+signal backup_preview_requested(code: String)
+signal backup_recovery_requested
+signal backup_restore_requested
 signal setting_changed(key: String, value: Variant)
 const CYAN := Color("78f8d4")
 const MUTED := Color("8cabb9")
@@ -246,7 +251,10 @@ func show_menu(data: Dictionary) -> void:
 	label_at(box, "WARDEN 03:00     //     ARCHITECT 09:00", 16, Color("ffb35c"))
 	var play := button_at(box, "DEPLOY %s     →" % Research.KITS[data["selected_kit"]]["title"], func(): deploy.emit())
 	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
-	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	button_at(actions, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
+	button_at(actions, "PROGRESS BACKUP", func(): backup_requested.emit())
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
 	label_at(box, "BUILD 0.5  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
 	play.grab_focus()
@@ -545,3 +553,32 @@ func show_lab(data: Dictionary, back: Callable, message: String = "") -> void:
 		select.disabled = not unlocked.has(id) or data["selected_kit"] == id
 	var back_button := button_at(box, "BACK", back)
 	back_button.grab_focus()
+
+func show_backup(code: String = "", message: String = "") -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 560
+	label_at(box, "PROGRESS BACKUP", 30, CYAN)
+	label_at(box, "Transfer salvage, research, unlocks and settings.\nCurrent deployment equipment is not included.", 17, MUTED)
+	var field := TextEdit.new()
+	field.text = code
+	field.custom_minimum_size = Vector2(560, 100)
+	field.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	field.placeholder_text = "Paste a NULL//SWARM backup code here"
+	box.add_child(field)
+	var row := HBoxContainer.new()
+	box.add_child(row)
+	button_at(row, "EXPORT MY PROGRESS", func(): backup_export_requested.emit())
+	button_at(row, "PASTE CODE", func(): field.text = DisplayServer.clipboard_get())
+	button_at(box, "PREVIEW RESTORE", func(): backup_preview_requested.emit(field.text))
+	button_at(box, "PREVIEW PREVIOUS SAVE", func(): backup_recovery_requested.emit())
+	label_at(box, message, 16, CYAN)
+	button_at(box, "COMMAND MENU", func(): return_menu.emit())
+
+func show_backup_confirmation(current: Dictionary, imported: Dictionary) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 560
+	label_at(box, "RESTORE THIS PROGRESS?", 29, CYAN)
+	label_at(box, "Current: %d salvage / %d deployments\nBackup: %d salvage / %d deployments" % [current["salvage"], current["runs"], imported["salvage"], imported["runs"]], 20)
+	label_at(box, "Replaces progression and settings. Values are not added.\nA local recovery copy is kept before applying the backup.", 17, MUTED)
+	button_at(box, "RESTORE THIS BACKUP", func(): backup_restore_requested.emit())
+	button_at(box, "CANCEL", func(): backup_requested.emit())

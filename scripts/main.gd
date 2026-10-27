@@ -2,6 +2,7 @@ extends Node3D
 
 const RUN_SECONDS: float = 600.0
 enum State { MENU, PLAYING, UPGRADING, PAUSED, RESULTS }
+var pending_backup_code: String = ""
 var state: State = State.MENU
 var input_router := InputRouter.new()
 var save := SaveStore.new()
@@ -57,6 +58,11 @@ func _ready() -> void:
 	ui.research_requested.connect(purchase_research)
 	ui.kit_selected.connect(select_kit)
 	ui.setting_changed.connect(change_setting)
+	ui.backup_requested.connect(open_backup)
+	ui.backup_export_requested.connect(export_backup)
+	ui.backup_preview_requested.connect(preview_backup)
+	ui.backup_restore_requested.connect(restore_backup)
+	ui.backup_recovery_requested.connect(preview_recovery)
 	ui.show_menu(save.data)
 	if OS.is_debug_build() and OS.has_feature("android") and ProjectSettings.get_setting("qa/android_runtime_probe", false):
 		var probe: Node = load("res://systems/android_qa_probe.gd").new()
@@ -360,6 +366,12 @@ func _capture_session() -> void:
 	await get_tree().create_timer(1.0).timeout
 	DirAccess.make_dir_recursive_absolute("res://builds/screenshots")
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/menu.png")
+	open_backup()
+	await get_tree().create_timer(0.3).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/progress_backup.png")
+	preview_backup(save.backup_code())
+	await get_tree().create_timer(0.3).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/progress_restore.png")
 	ui.show_lab(save.data, func(): ui.show_menu(save.data))
 	await get_tree().create_timer(0.4).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/foundry.png")
@@ -495,3 +507,52 @@ func select_kit(id: String) -> void:
 	if error == OK:
 		audio.play("ui", "UI")
 	open_lab("STARTING KIT SAVED" if error == OK else "KIT NOT SAVED // " + error_string(error))
+
+func open_backup() -> void:
+	if state != State.MENU:
+		return
+	pending_backup_code = ""
+	ui.show_backup()
+
+func export_backup() -> void:
+	if state != State.MENU:
+		return
+	var code := save.backup_code()
+	if code.is_empty():
+		ui.show_backup("", "Unable to create a valid backup.")
+		return
+	DisplayServer.clipboard_set(code)
+	ui.show_backup(code, "Backup copied. Keep the code somewhere safe.")
+
+func preview_backup(code: String) -> void:
+	if state != State.MENU:
+		return
+	var imported := SaveStore.inspect_backup(code)
+	if imported.is_empty():
+		pending_backup_code = ""
+		ui.show_backup(code.left(16384), "Invalid or damaged backup. Progress was not changed.")
+		return
+	pending_backup_code = code.strip_edges()
+	ui.show_backup_confirmation(save.data, imported)
+
+func restore_backup() -> void:
+	if state != State.MENU or pending_backup_code.is_empty():
+		return
+	var error := save.restore_backup(pending_backup_code)
+	pending_backup_code = ""
+	if error != OK:
+		ui.show_backup("", "Restore failed. Current progress was kept.")
+		return
+	audio.apply(save.data["settings"])
+	ui.show_backup("", "Progress restored. Previous save kept locally.")
+
+func preview_recovery() -> void:
+	if state != State.MENU:
+		return
+	var previous := save._read(save.path + ".pre-import")
+	if previous.is_empty():
+		ui.show_backup("", "No previous restore is available.")
+		return
+	var recovery := SaveStore.new()
+	recovery.data = previous
+	preview_backup(recovery.backup_code())

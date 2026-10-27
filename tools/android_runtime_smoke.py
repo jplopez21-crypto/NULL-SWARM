@@ -244,6 +244,28 @@ try:
     check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
     capture('relaunched')
     check(True, 'relaunch menu is visibly rendered')
+    backup_before = s
+    tap('PROGRESS BACKUP', s)
+    s = wait(lambda x: any(b['text'] == 'EXPORT MY PROGRESS' for b in x['buttons']))
+    tap('EXPORT MY PROGRESS', s)
+    s = wait(lambda x: x.get('backup_code_length', 0) > 100)
+    tap('COMMAND MENU', s)
+    s = wait(lambda x: any('DEPLOY' in b['text'] for b in x['buttons']))
+    tap('PROGRESS BACKUP', s)
+    s = wait(lambda x: any(b['text'] == 'PASTE CODE' for b in x['buttons']) and x.get('backup_code_length', 0) == 0)
+    tap('PASTE CODE', s)
+    s = wait(lambda x: x.get('backup_code_length', 0) > 100)
+    check(True, 'Android backup code survives real clipboard export and paste')
+    capture('progress-backup')
+    tap('PREVIEW RESTORE', s)
+    s = wait(lambda x: any(b['text'] == 'RESTORE THIS BACKUP' for b in x['buttons']))
+    tap('RESTORE THIS BACKUP', s)
+    s = wait(lambda x: x.get('backup_recovery_available', False) and any(b['text'] == 'EXPORT MY PROGRESS' for b in x['buttons']))
+    check(s['settings'] == backup_before['settings'] and s['salvage'] == backup_before['salvage'],
+          'touch-confirmed backup restore preserves progress and creates recovery copy')
+    capture('progress-restored')
+    tap('COMMAND MENU', s)
+    s = wait(lambda x: any('DEPLOY' in b['text'] for b in x['buttons']))
     if args.upgrade_apk:
         before_update = s
         package_info = adb('shell', 'dumpsys', 'package', args.package)

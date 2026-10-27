@@ -107,3 +107,12 @@ Post-render correction: updated system suite passed 382 checks with a clean stri
 - Added optional --upgrade-apk to the Android driver. After real play, touch settings and force-stop checks, installs a newer APK over the existing package and asserts an increased installed version, a new process, and unchanged saved settings/salvage. Captures updated-install.png.
 - Emulator CI now exports two versions with one temporary signer and passes the second to the driver. Only the first APK is uploaded; the second stays in /tmp. This tests Android update/save retention, not persistent owner-key provisioning or Play Protect.
 - Local verification: Python bytecode compilation, YAML parse and bash syntax check passed. Runtime results are linked in PR #1 once executed; no local emulator/KVM is available.
+
+### Portable progress backup development
+
+- Initial run found a duplicated parameter/local variable in shared save validation; renamed the parameter. A smoke run was also interrupted while cleaning up an older parser-failed process, so that run was not counted as passed. Subsequent clean suites passed.
+- Added 12 backup system checks covering round-trip progression/settings, checksum/base64/size/schema rejection, replacement semantics, recovery copy, repeat imports, write failure and ledger stripping. Four GUI checks cover opening, preview, cancel and confirmed restore. UI geometry coverage expands to 584 checks / 52 layouts.
+- Android smoke now exports a real code to the clipboard, leaves/reopens the screen, pastes, previews/confirms restore, checks exact settings/salvage and recovery existence, then runs the existing in-place APK update. Probe reports only code length, not its content.
+- Final CI results and screenshots are linked in PR #1 after execution. Physical cross-app transfer, old-app export and persistent Preview signing are not claimed.
+
+Local final verification: all nine isolated suites passed with no strict errors/leaks: 394 system, 12 GUI, 9 audio, 5 probe, 49 resources, 12 input, 41 corruption, 584 UI checks and scene smoke. Snapshot: docs/qa/progress-backup/headless-results.json.

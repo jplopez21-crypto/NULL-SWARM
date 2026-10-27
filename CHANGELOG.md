@@ -181,3 +181,10 @@
 
 - Build a second higher-version emulator APK with the same test signer; install it using adb install -r and check saved settings/salvage after relaunch.
 - Keep the second APK outside uploaded artifacts; no real signing credentials or phone installation changes.
+
+### Portable progress backups
+
+- Added command-menu code export/paste, restore preview/confirmation and previous-save recovery.
+- Added bounded checksummed versioned progression transfer, shared save validation, ledger removal and rollback on write failure.
+- Added backup persistence/invalid-input checks, real GUI dispatch tests and 52 UI layouts. Android smoke covers real clipboard round-trip, confirmed restore and subsequent APK update.
+- This cannot access older installed apps without export support; no signing-key or billing changes.
