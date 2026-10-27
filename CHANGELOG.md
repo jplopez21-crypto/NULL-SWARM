@@ -123,4 +123,5 @@
 
 - Added reproducible UI lifecycle/window geometry checks and software-rendered captures for eight screens at four window sizes.
 - Added six separately labelled seeded sessions across builds/earned kits to recurring CI.
-- Local UI suite: 352 checks / 32 layouts / zero failures. Expanded CI verification pending; installed gameplay unchanged.
+- Local UI suite: 352 checks / 32 layouts / zero failures. Expanded CI passed: 352 UI checks, 32 viewport captures and six extra seeded sessions (five wins/one loss), alongside the existing checks/matrix/comparisons/stress suite. Installed gameplay unchanged.
+- Configured daily QA at 03:23 UTC and 14-day artifact retention; archived follow-up reports and preserved bot defeats.

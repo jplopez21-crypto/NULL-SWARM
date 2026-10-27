@@ -41,5 +41,7 @@ Eight local collector comparisons passed all invariants and reproduced four caut
 
 - Added a dedicated UI lifecycle/window suite: 352 local checks across 32 staged screen states passed. Physical window sizes are verified separately from the unchanged KEEP-scaled 1280×720 canvas.
 - Added pause/focus/upgrade/results guidance checks, touch/dash reset and restart cleanup.
-- Added six normal-rules sessions on new fixed seeds; rendered 32-screen CI captures and expanded seeded verification pending.
+- CI 40500767947 passed: 352 UI checks/32 captures, six additional normal-rules sessions (five victories/one early Halo defeat), existing ten-case matrix/replay, six pickup comparisons and six stress scenarios.
+- Existing bot/pickup case fields exactly match 0.4.1 excluding timings. Representative viewport captures inspected; they omit letterbox bars. Reports: docs/qa/0.4.1/followup/RESULTS.md.
+- Daily unattended QA scheduled at 03:23 UTC, 14-day artifact retention. GitHub may delay starts; this is CI automation, not a background chat process.
 - These additions change QA tooling only. The verified 0.4.1 APK remains the current gameplay build.

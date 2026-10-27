@@ -85,6 +85,12 @@ This probe is explicit/manual rather than an extra mandatory build step. It does
 
 `godot --headless --script tests/run_ui_tests.gd` exercises menu, settings, combat, adaptation warning, pause, upgrades, results and Foundry at four requested window sizes: 1280×720, 1600×720, 1280×960 and 960×600. It verifies actual requested window sizes independently from the logical canvas, visible-button/panel containment, touch/dash reset, frozen simulation clock, focus-loss pause, guidance suppression/reacquisition and stale-target cleanup on restart. The project’s KEEP scaling preserves the 1280×720 logical canvas with letterboxing at other ratios; this is not coverage of four independent responsive canvas sizes.
 
-CI runs the same suite with `--capture-ui` under Xvfb/software OpenGL and uploads 32 staged PNGs plus `ui-report.json` in the QA artifact. These captures are desktop renders, not Android safe-area, real touch, device FPS or process-death validation. Synthetic lifecycle actions and seeded/staged state setup are test fixtures.
+CI runs the same suite with `--capture-ui` under Xvfb/software OpenGL and uploads 32 staged PNGs plus `ui-report.json` in the QA artifact. These captures are desktop renders, not Android safe-area, real touch, device FPS or process-death validation. Viewport PNGs omit outer letterbox bars; their pixel dimensions can differ from requested window dimensions. Synthetic lifecycle actions and seeded/staged state setup are test fixtures.
 
 `godot --headless --script tests/run_playtests.gd -- --extended-seeds` adds six cautious-bot sessions on seeds 303/404/505 covering all four builds and both earned-kit fixtures. It retains normal combat, legal offered upgrades and all existing invariants; defeats remain valid observations. Results are separate from the canonical ten-case matrix (`extended-seeds.json`), preserving prior comparisons. Both suites now run on each QA workflow invocation.
+
+## Daily unattended runs
+
+The QA workflow is scheduled daily at **03:23 UTC**, in addition to push/PR/manual runs. GitHub runs this on the default branch; scheduled start times can be delayed by GitHub. QA reports, diagnostic logs and staged screenshots are retained for 14 days in `null-swarm-gameplay-qa`. This is an actual CI schedule, not a background chat process. The scheduled job does not publish or install a new APK and needs no signing credentials. A failed invariant or UI geometry check fails the job; bot defeats are retained as observations.
+
+The first expanded run passed all checks; [recorded results and limitations](qa/0.4.1/followup/RESULTS.md).

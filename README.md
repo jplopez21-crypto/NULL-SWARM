@@ -39,7 +39,7 @@ See [development status](DEVELOPMENT_STATUS.md), [architecture](docs/ARCHITECTUR
 
 ## Repeatable gameplay QA
 
-The separate **Repeatable gameplay QA** Actions workflow runs normal-rules bot cases and a synthetic combat CPU benchmark on pushes/PRs or manual dispatch. Reports and diagnostic logs are uploaded as `null-swarm-gameplay-qa`, with tables in the workflow summary. See [QA methods and limits](docs/AUTOMATED_QA.md).
+The separate **Repeatable gameplay QA** Actions workflow runs normal-rules bot cases and a synthetic combat CPU benchmark on pushes/PRs, manual dispatch, and daily at 03:23 UTC. Reports and diagnostic logs are uploaded as `null-swarm-gameplay-qa`, with tables in the workflow summary. The expanded QA also exercises UI lifecycle/window geometry, uploads staged software-rendered captures, and runs six additional fixed-seed sessions. Scheduled QA retains artifacts for 14 days and does not export a new APK. See [QA methods and limits](docs/AUTOMATED_QA.md).
 
 ```sh
 godot --headless --script tests/run_playtests.gd
