@@ -100,3 +100,9 @@
 - CI passed 156 checks, scene smoke, ten normal bot cases/180-second deterministic replay, six pickup comparisons and six stress scenarios. Seven bot wins/three losses retained in reports.
 - Verified signed APK export, downloaded ZIP/APK hashes, archive integrity and Adaptive package contents; inspected staged warning/active renders.
 - Archived canonical reports under docs/qa/0.4. Physical-device performance and human balance remain unverified.
+
+### 0.4 collector investigation
+
+- Added optional eight-case Arcstorm/Kinetic navigation comparison with normal combat rules.
+- Reproduced all four cautious baseline fields and documented mixed gap results; preserved full traces.
+- Re-ran 156 system checks. Installed gameplay and APK unchanged.

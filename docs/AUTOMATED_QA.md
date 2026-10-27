@@ -70,3 +70,9 @@ Legacy replay compatibility was true; both numeric baselines matched. All six A/
 Current reports include adaptation warning/activation/expiry histories, underlying metrics, spawned types and resisted hits. The Conductor fixture now prioritizes the Electric build, explicitly labelled by profile, while other established profiles remain available. Ten normal cases run (four strategies × two fresh Vanguard seeds, plus Conductor/Sentinel fixtures). The replay extends past the first 02:00 analysis.
 
 Synthetic fixture version 2 mixes all six regular enemy types; compare timing only within the same fixture/hardware/Godot context. The frozen 0.3 pickup numeric baseline is expected to be incompatible after these combat changes; the report states this rather than pretending it was replayed. Current-game pickup conservation and labelled collector comparisons remain enabled.
+
+## Upgrade-gap collector probe
+
+Run `godot --headless --script tests/run_playtests.gd -- --collector-probe` to compare Arcstorm and Kinetic on seeds 101/202, each with cautious and value-aware navigation. Combat, pickup merging, upgrade priorities and new-player stats are identical; only collector navigation differs. The eight runs write `builds/qa/collector-probe.json`, including upgrade timestamps, minute snapshots, earned/left XP and the longest upgrade gap. Invariant failures return a nonzero exit code; defeats remain observations. Use isolated XDG directories as with other scene integration tests.
+
+This probe is explicit/manual rather than an extra mandatory build step. It does not replace the canonical cautious-bot matrix or retroactively change its reported outcomes.

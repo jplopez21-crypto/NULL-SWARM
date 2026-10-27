@@ -33,6 +33,13 @@
 
 ## Next priorities
 
-1. Inspect Arcstorm upgrade gaps with alternative collector traces before balance changes.
+1. Instrument pickup distances/collection rates during stalled intervals; evaluate readable collection guidance.
 2. Review normal-rule outcomes and composition telemetry alongside phone playtests.
 3. Validate on-device readability/performance and proceed toward informed corruption choices as the next original system.
+
+## Follow-up collector investigation
+
+- Added explicit eight-case `--collector-probe`; full data and analysis in docs/qa/0.4/COLLECTOR_PROBE.md.
+- All eight local runs completed with zero invariant failures. Four cautious cases exactly reproduced canonical outcome/level/XP/gap fields. All 156 system checks passed again.
+- Alternate Arcstorm collector won both seeds but still stalled for 249–320 seconds; Kinetic gap changes were mixed. Collection affects outcomes, but a universal pacing improvement is not established.
+- Gameplay and the verified 0.4 APK are unchanged; this checkpoint adds reproducible diagnostic tooling.

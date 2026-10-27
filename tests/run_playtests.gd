@@ -121,6 +121,21 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--collector-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("upgrade-gap collector investigation")
+		var cases: Array[Dictionary] = []
+		for profile in ["arcstorm", "kinetic"]:
+			for seed_value in [101, 202]:
+				for policy in ["cautious", "value_aware"]:
+					var result: Dictionary = await simulate(seed_value, profile, "vanguard", MAX_SECONDS, "local", policy)
+					cases.append(result)
+					print("COLLECTOR_CASE ", profile, " seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " level=", result["level"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Same normal combat and upgrade policy; only collection navigation differs.", "Two fixed seeds and geometric bots do not establish human pacing or balance."]
+		QAReport.write("res://builds/qa/collector-probe.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--adaptation-probe" in OS.get_cmdline_user_args():
 		var probe_cases: Array[Dictionary] = []
 		for kit in ["vanguard", "conductor"]:
