@@ -213,7 +213,7 @@ try:
     capture('relaunched')
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
-    fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal'])]
+    fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]
     game_anrs = [line for line in log.splitlines() if 'ANR in ' + args.package in line]
     check(not fatal and not game_anrs, 'no script errors, game ANRs or Android fatal crashes in logcat')
     report['status'] = 'passed'

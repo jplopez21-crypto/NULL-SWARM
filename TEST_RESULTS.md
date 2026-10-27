@@ -51,3 +51,5 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 - Emulator boot and Android Compatibility initialization passed. First gameplay touch was blocked by Android fullscreen onboarding and a Pixel Launcher ANR; added explicit OS-only dialog handling, activity-focus checks and emulator settling. Game ANRs remain failures. Rerun pending.
 
 - Post-fix shutdown repetition: eight fresh-process smoke runs passed with zero leak warnings (before fix: one of eight leaked audio playback references). Full hosted rerun pending.
+
+- Android logcat revealed real GLES shader-link failures: the emulator exceeded its fragment uniform limit. Configured Compatibility rendering for eight renderable lights/two lights per object; the current arena has one directional light, so no existing lighting or gameplay quantities are removed. Mobile/Vulkan settings remain unchanged. Runtime now fails on Godot engine errors as well as script/native crashes. Hosted rerun pending.
