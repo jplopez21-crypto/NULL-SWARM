@@ -274,6 +274,10 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerol
 		button.add_theme_font_size_override("font_size", 17)
 		button.add_theme_color_override("font_color", Arsenal.color(id))
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		var card_style: StyleBoxFlat = button.get_theme_stylebox("normal").duplicate()
+		card_style.border_width_left = 4
+		card_style.border_color = Arsenal.color(id)
+		button.add_theme_stylebox_override("normal", card_style)
 		if first == null:
 			first = button
 	var footer := HBoxContainer.new()
@@ -367,7 +371,7 @@ func _process(delta: float) -> void:
 	joystick_canvas.queue_redraw()
 
 func _draw_feedback() -> void:
-	if not hud_visible:
+	if not hud_visible or screen != null:
 		return
 	if input_router != null:
 		var center := input_router.origin if input_router.touch_id >= 0 else Vector2(120, root.size.y - 110)

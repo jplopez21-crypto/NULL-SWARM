@@ -298,5 +298,17 @@ func _capture_session() -> void:
 	show_upgrade()
 	await get_tree().create_timer(0.5).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/upgrades.png")
+	ui.hide_panel()
+	progress.pending = 0
+	state = State.PLAYING
+	combat.encounters.mini_spawned = true
+	combat.encounters.boss_spawned = true
+	combat.encounters.boss = combat.encounters._spawn(combat, player.position, true)
+	combat.encounters.boss.position = Vector3(0, 0, -7)
+	combat.encounters.boss.hp *= 0.5
+	combat.encounters.attack_cooldown = 0.1
+	player.health.invulnerable = 2.0
+	await get_tree().create_timer(0.7).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/architect.png")
 	audio.shutdown()
 	get_tree().quit()
