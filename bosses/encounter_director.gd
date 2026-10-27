@@ -81,6 +81,9 @@ func tick(delta: float, world: Node3D, player: SwarmPlayer) -> void:
 					warnings.append(SwarmVisuals.ring(world, 3.3, location + Vector3(0, 0.08, 0), Color("ff7652"), 0.18))
 
 func _spawn(world: Node3D, player_at: Vector3, major: bool) -> SwarmEnemy:
+	_clear_warnings()
+	attack_cooldown = 3.0
+	attack_index = 0
 	var definition := EnemyDefinition.new()
 	definition.id = &"architect" if major else &"warden"
 	definition.title = "THE ARCHITECT" if major else "THE WARDEN"
@@ -105,6 +108,7 @@ func _spawn(world: Node3D, player_at: Vector3, major: bool) -> SwarmEnemy:
 	return enemy
 
 func _clear_warnings() -> void:
+	warning_time = 0.0
 	for warning in warnings:
 		if is_instance_valid(warning):
 			warning.queue_free()

@@ -136,6 +136,10 @@ func run() -> void:
 		if projectile.active:
 			hostile_count += 1
 	check(hostile_count > 0, "boss fires after telegraph expires")
+	game.combat.encounters.attack_cooldown = 0.0
+	game.combat.encounters.tick(0.01, game.combat, game.player)
+	game.combat.encounters._clear_warnings()
+	check(game.combat.encounters.warning_time == 0.0 and game.combat.encounters.warnings.is_empty(), "encounter cleanup cancels pending attacks")
 	game.start_run()
 	game.set_physics_process(false)
 	game.combat.director.elapsed = 599.99
