@@ -29,7 +29,7 @@ godot --headless --export-debug Android builds/android/null-swarm-corruption-0.5
 adb install -r builds/android/null-swarm-corruption-0.5-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-corruption-0.5-apk`. The 0.5 build is pending verification. [Previous verified 0.4.1 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606/artifacts/12730444055) (sign into GitHub, extract the ZIP, install the APK in `android/`). Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-corruption-0.5-apk`. [Download the verified 0.5 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40504064445/artifacts/12734700412) (sign into GitHub, extract the ZIP, install the APK in `android/`). Physical-device testing and balance remain required for this new version.
 
 The 0.5 build installs separately as **NULL SWARM Corruption** (`com.nullswarm.game.corruption`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 

@@ -1,17 +1,15 @@
-NULL//SWARM Memory 0.4.1 — verified 2026-10-27
-Code commit: 2ed509490f70fe9bf6568ff024be6e8e81ef7e0a
+NULL//SWARM Corruption 0.5 — verified 2026-10-27
+Gameplay commit: 4ee60487877978c58a5f8dc48d670a5eb399a89e
 Godot 4.6.3
-Local and CI: TEST_RESULT checks=165 failures=0
-CI scene smoke: SCENE_SMOKE_OK
-Normal bots: 10 cases, 7 victories / 3 defeats, zero invariant failures.
-Deterministic 180-second replay: passed.
-Pickup comparisons: 6 cases, zero failures; historic numeric baseline skipped (changed combat source).
-All non-timing gameplay fields in ten bot and six pickup cases exactly match canonical 0.4.
-Stress: 6 fixed-load scenarios, low/high gameplay parity passed. CPU timings exclude rendering/locator UI and are not device FPS.
-Android workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606
-QA workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218604
-APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606/artifacts/12730444055
-Extract android/null-swarm-memory-0.4.1-debug.apk.
-CI apksigner verification passed. Downloaded ZIP/APK hashes and CRCs checked; DEX, ARM64 runtime, compiled pickup resources and Memory package ID present; test fixtures excluded.
-APK SHA256: 014cacb6009c14581dfa53a132237873870143624543b6b732881f6b6042deb8
-Staged locator render inspected; physical Android testing, thermals, aspect-ratio coverage and human pacing not performed here.
+CI: TEST_RESULT checks=165 failures=0; CORRUPTION_RESULT checks=41 failures=0 (206 total)
+CI: UI_RESULT checks=504 layouts=44 failures=0
+20 normal-policy bot sessions, 180-second deterministic replay, six pickup comparisons and six clean stress scenarios: zero invariant failures. Four corruption probes won; clean losses retained.
+Clean pre-existing case fields match 0.4.1 excluding timing and new link telemetry.
+Local all-links stress fixture 3: six scenarios passed parity/load checks; ~36.6–38.4ms p95 CPU at 600 enemies. Excludes rendering/UI/thermals; not Android FPS. Future daily CI step added, first CI execution pending.
+Android workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40504064445
+QA workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40504064446
+APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40504064445/artifacts/12734700412
+Extract android/null-swarm-corruption-0.5-debug.apk.
+CI apksigner verification passed. Downloaded ZIP/APK hashes and CRCs checked; DEX, ARM64 runtime, compiled corruption and manifest package present; test fixtures/build captures excluded.
+APK SHA256: b7ccc9b4f4179e63762f8093c8747069b95b8526301a0eb49673c42d9711ea40
+Staged corruption/entry/HUD/small-window renders inspected. Physical Android testing, thermals, safe areas and human balance not performed here.

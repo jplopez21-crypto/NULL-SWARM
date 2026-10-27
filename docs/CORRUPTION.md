@@ -21,3 +21,7 @@ Dedicated tests cover eligibility, level spacing, duplicates, limits, exact card
 A separate normal-rules bot probe accepts advertised links only at legal pending-upgrade opportunities and consumes those choices. Existing clean bots decline all links and preserve their established navigation/upgrade strategy. The tests use the same effective speeds a player sees when predicting motion. Human fun, tradeoff balance, readability and phone performance still need playtesting.
 
 Development graphics/audio remain original procedural assets, not final commercial artwork. This is the first corruption implementation, not the full planned roster or final balance.
+
+## Verified 0.5 delivery
+
+206 combined system/modifier checks and 504 UI checks passed in CI. Four legal-link normal sessions won, with all-links acceptance recorded across separate level gates. Existing clean bot/pickup gameplay fields matched 0.4.1 after excluding timing and new metadata. Preview/entry/HUD renders were inspected; signed APK export, hashes, archive integrity and package/module contents were verified. Full data and a separately labelled local heavy-load performance concern: [0.5 verification](qa/0.5/RESULTS.md).

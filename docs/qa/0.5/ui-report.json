@@ -1,0 +1,759 @@
+{
+  "captured": true,
+  "checks": 504,
+  "failures": [],
+  "layouts": [
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "menu",
+      "visible_buttons": 3,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "settings",
+      "visible_buttons": 4,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "combat",
+      "visible_buttons": 2,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "adaptation",
+      "visible_buttons": 2,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "pause",
+      "visible_buttons": 5,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "upgrades",
+      "visible_buttons": 6,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "unstable_offer",
+      "visible_buttons": 7,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "corruption",
+      "visible_buttons": 6,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "corrupted",
+      "visible_buttons": 2,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "results",
+      "visible_buttons": 3,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "foundry",
+      "visible_buttons": 7,
+      "window": [
+        1280,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "menu",
+      "visible_buttons": 3,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "settings",
+      "visible_buttons": 4,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "combat",
+      "visible_buttons": 2,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "adaptation",
+      "visible_buttons": 2,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "pause",
+      "visible_buttons": 5,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "upgrades",
+      "visible_buttons": 6,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "unstable_offer",
+      "visible_buttons": 7,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "corruption",
+      "visible_buttons": 6,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "corrupted",
+      "visible_buttons": 2,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "results",
+      "visible_buttons": 3,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1600,
+        720
+      ],
+      "scale_aspect": 1,
+      "stage": "foundry",
+      "visible_buttons": 7,
+      "window": [
+        1600,
+        720
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "menu",
+      "visible_buttons": 3,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "settings",
+      "visible_buttons": 4,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "combat",
+      "visible_buttons": 2,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "adaptation",
+      "visible_buttons": 2,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "pause",
+      "visible_buttons": 5,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "upgrades",
+      "visible_buttons": 6,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "unstable_offer",
+      "visible_buttons": 7,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "corruption",
+      "visible_buttons": 6,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "corrupted",
+      "visible_buttons": 2,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "results",
+      "visible_buttons": 3,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        1280,
+        960
+      ],
+      "scale_aspect": 1,
+      "stage": "foundry",
+      "visible_buttons": 7,
+      "window": [
+        1280,
+        960
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "menu",
+      "visible_buttons": 3,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "settings",
+      "visible_buttons": 4,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "combat",
+      "visible_buttons": 2,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "adaptation",
+      "visible_buttons": 2,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "pause",
+      "visible_buttons": 5,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "upgrades",
+      "visible_buttons": 6,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "unstable_offer",
+      "visible_buttons": 7,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "corruption",
+      "visible_buttons": 6,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "corrupted",
+      "visible_buttons": 2,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "results",
+      "visible_buttons": 3,
+      "window": [
+        960,
+        600
+      ]
+    },
+    {
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "observed_window": [
+        960,
+        600
+      ],
+      "scale_aspect": 1,
+      "stage": "foundry",
+      "visible_buttons": 7,
+      "window": [
+        960,
+        600
+      ]
+    }
+  ],
+  "limitations": [
+    "Project KEEP scaling preserves a 1280x720 logical canvas and letterboxes differing window ratios; window sizes are verified separately.",
+    "Desktop/software rendering; does not emulate Android cutouts, lifecycle process death, real multitouch latency or device performance."
+  ]
+}

@@ -132,3 +132,10 @@
 - Added five-level cadence, one-time links, three-link cap, prerequisites, guarded transactions, HUD meter, reset and non-persistent modifiers.
 - Wired cooldown rate, real extra rifle round, regular-enemy pace, extra visible/attacking drone and separate walking multiplier. Striker warning lanes now match travel distance.
 - Added dedicated modifier/transaction tests, legal-link normal bot sessions and corruption panels to recurring rendered UI QA. No billing, progression-save schema or commercial-art claims.
+
+### 0.5 verified delivery
+
+- CI passed 206 system/modifier checks, 504 UI checks/44 captures, 20 normal-policy sessions, deterministic replay, six pickup comparisons and six clean stress scenarios.
+- Four legal corruption probes won; clean pre-existing case fields exactly match 0.4.1 excluding timing/new telemetry. Preserved all clean-bot defeats.
+- Verified signed APK, downloaded integrity/package/module contents and rendered panels/HUD. Archived reports in docs/qa/0.5.
+- Added separate local all-links stress fixture 3 and future daily CI step; six local scenarios passed parity/load checks. Recorded ~36.6–38.4ms p95 CPU at 600 enemies as an optimization concern, not Android FPS.
