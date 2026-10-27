@@ -207,7 +207,8 @@ func _build_hud() -> void:
 
 func _panel() -> VBoxContainer:
 	if screen != null:
-		overlay.remove_child(screen)
+		# Keep the current GUI dispatch target in-tree until the frame ends.
+		screen.hide()
 		screen.queue_free()
 	screen = PanelContainer.new()
 	var style := StyleBoxFlat.new()
@@ -256,7 +257,8 @@ func set_hud(value: bool) -> void:
 
 func hide_panel() -> void:
 	if screen != null:
-		overlay.remove_child(screen)
+		# Keep the current GUI dispatch target in-tree until the frame ends.
+		screen.hide()
 		screen.queue_free()
 		screen = null
 

@@ -58,3 +58,6 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 
 - Source inspection showed the GLES global uniform array is hardcoded in this Godot renderer, so project light/buffer limits do not solve the legacy emulator driver bug. Reverted those capacity changes; switched the emulator from deprecated SwiftShader-indirect to SWANGLE and enforced observed emulator/image version pins. Game rendering budgets remain unchanged.
 - Audio regression passed six checks, including 24 seconds of real offline WAV mixing across multiple loop boundaries. Hosted AudioTrack validation remains pending.
+
+- Latest Android run passed all nine functional touch/lifecycle checks, including persistent settings, with no shader-link failure or audio crash. Its final engine-log gate correctly failed on four `can_process` errors from panels detached inside synchronous button callbacks. Added a GUI-input regression reproducing four failures, changed panel retirement to hidden/deferred free, and reran it. Final hosted verification pending.
+- Native and full-QA push triggers now target main plus PR updates, avoiding redundant branch push runs; manual dispatch remains available.

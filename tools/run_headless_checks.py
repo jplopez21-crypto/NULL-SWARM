@@ -11,6 +11,7 @@ root = Path(__file__).resolve().parents[1]
 out = root / 'builds/qa'
 out.mkdir(parents=True, exist_ok=True)
 suites = [
+    ('gui-input', ['--script', 'tests/run_gui_input_tests.gd'], r'GUI_INPUT_RESULT checks=(\d+) failures=0'),
     ('audio', ['--script', 'tests/run_audio_tests.gd'], r'AUDIO_RESULT checks=(\d+) failures=0'),
     ('android-probe', ['--script', 'tests/run_probe_tests.gd'], r'PROBE_RESULT checks=(\d+) failures=0'),
     ('resources', ['--script', 'tests/validate_resources.gd'], r'RESOURCE_RESULT checks=(\d+) failures=0'),

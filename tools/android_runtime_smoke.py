@@ -51,6 +51,7 @@ def wait(predicate, timeout=30):
 
 def check(ok, name):
     checks.append({'name': name, 'passed': bool(ok)})
+    print('ANDROID_CHECK', 'passed' if ok else 'failed', name, flush=True)
     if not ok:
         raise AssertionError(name)
 
