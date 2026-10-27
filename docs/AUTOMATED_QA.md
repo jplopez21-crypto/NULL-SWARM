@@ -46,3 +46,11 @@ Preliminary local cases completed 7/8 runs, with one Kinetic/Vanguard defeat at 
 - [Download reports/logs](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437672314/artifacts/12705035805).
 
 At 600 synthetic enemies/400 peak shots, p95 simulation-step time was 22.611ms low and 22.444ms high on the recorded CI host. This is a CPU baseline, not proof of Android 30/60 FPS. Small low/high timing differences are shared-runner noise. Normal bot runs peaked at 41–79 active enemies depending on build/seed, a different workload.
+
+## Pickup A/B regression
+
+`godot --headless --script tests/run_playtests.gd -- --xp-comparison` runs Kinetic/Vanguard seeds 101 and 202 through the test-only legacy pickup fixture, the local-merge game with the original cautious bot, and the local-merge game with a separately labelled value-aware collector. The alternate collector uses visible packet tiers, target hysteresis and legal proactive dashes; it grants no stats or immunity. Its outcomes must not be conflated with the unchanged-bot A/B.
+
+Legacy numeric results are checked against the frozen Foundry 0.3 fixture when combat/bot source hashes match. If those inputs intentionally change in future, the report explicitly skips that numeric comparison while still running the same-current-combat A/B and conservation checks. Local merges must stay within 3m and all modes must conserve XP. A defeat remains a valid bot observation.
+
+Local diagnosis: unchanged-bot outcomes were mixed (seed 101 improved, seed 202 worsened); the alternate collector won both with local merging. The merge-distance bug is real, but this is not evidence of a universal difficulty improvement or a required weapon buff.

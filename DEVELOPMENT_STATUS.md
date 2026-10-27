@@ -66,3 +66,15 @@ The owner reports that Milestone 1 and Reactor Zero 0.2 APKs work on their Andro
 - Report artifact: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437672314/artifacts/12705035805 — ZIP digest/integrity verified locally.
 - Canonical report snapshots and methods are in docs/qa and docs/AUTOMATED_QA.md.
 - Android regression build also passed: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437670838. The earlier 0.3 artifact remains the installed-game reference; gameplay was not changed by this QA pass.
+
+## 0.3.1 pickup investigation — local checks passed, CI pending
+
+- Confirmed FIFO merging could move old XP 80m in a regression fixture and up to 48.26m in the original Kinetic seed-101 replay.
+- Local merging preserves existing packet locations, moves newly merged XP at most 3m, skips attracted/in-flight packets, and conserves all XP. A soft 300-packet budget permits sparse drops rather than teleporting them.
+- Shared packet geometry and bounded blue/mint/gold value visuals implemented.
+- 130 system checks passed; six local A/B/collector scenarios passed invariants and reproduced the old numeric baseline.
+- Cautious bot: seed 101 changed from defeat/level24 to victory/level54; seed 202 changed from victory/level54 to defeat/level31.
+- Separately labelled value-aware test collector won both local-merge seeds. No combat buffs or bot-policy substitution are hidden in the A/B.
+- Local packet peaks were 314–315 for the cautious-bot fixed cases, versus the old 300. Physical rendering cost remains unmeasured.
+- Full updated bot matrix, synthetic benchmark, visual captures and signed debug APK are pending CI.
+- New test package is com.nullswarm.game.foundry.xp (NULL SWARM Foundry XP) to avoid signature conflicts and preserve existing installs; Android-private saves remain separate until stable protected signing is configured.

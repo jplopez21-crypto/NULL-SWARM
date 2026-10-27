@@ -114,6 +114,47 @@ func run() -> void:
 	check(Research.unlocked(reload.data).has("conductor"), "legacy lifetime kills qualify for kit unlock")
 	for suffix in ["", ".bak", ".tmp"]:
 		DirAccess.remove_absolute(store.path + suffix)
+	# Pickup merge regression: FIFO neighbours may be on opposite sides of the arena.
+	var local_pickups := PickupSystem.new()
+	var legacy_pickups := LegacyPickupFixture.new()
+	root.add_child(local_pickups)
+	root.add_child(legacy_pickups)
+	for i in range(300):
+		var at := Vector3(-40 if i % 2 == 0 else 40, 0, 0)
+		local_pickups.drop(at, 5)
+		legacy_pickups.drop(at, 5)
+	local_pickups.drop(Vector3(-40, 0, 0), 7)
+	legacy_pickups.drop(Vector3(-40, 0, 0), 7)
+	check(legacy_pickups.max_merge_distance == 80.0, "legacy fixture reproduces cross-arena XP relocation")
+	check(local_pickups.max_merge_distance <= PickupSystem.MERGE_RADIUS and local_pickups.items.size() == 300, "local merge stays nearby without increasing clustered pickup count")
+	check(local_pickups.outstanding_xp() == 1507 and legacy_pickups.outstanding_xp() == 1507, "merge conserves total XP")
+	local_pickups.drop(Vector3(0, 0, 40), 5)
+	check(local_pickups.items.size() == 301, "sparse drops retain a separate collectible beyond soft budget")
+	local_pickups.drop(Vector3(-40, 0, 0), 100)
+	var large_packet: bool = false
+	for item in local_pickups.items:
+		if int(item["xp"]) >= 100:
+			large_packet = item["mesh"].scale.x > 1.0
+	check(large_packet, "high-value memory packets are visibly larger")
+	local_pickups.vacuum()
+	var before_count: int = local_pickups.items.size()
+	local_pickups.drop(Vector3(-40, 0, 0), 5)
+	check(local_pickups.items.size() == before_count + 1, "fresh XP never merges into an in-flight pickup")
+	var collector := SwarmPlayer.new()
+	root.add_child(collector)
+	local_pickups.vacuum()
+	for i in range(240):
+		local_pickups.tick(1.0 / 60.0, collector)
+	check(local_pickups.items.is_empty() and local_pickups.total_collected == local_pickups.total_dropped, "vacuum collects all merged XP exactly once")
+	local_pickups.drop(Vector3.ZERO, 5)
+	check(local_pickups.items[0]["mesh"].scale == Vector3.ONE, "reused pickup resets value-dependent size")
+	var dropped_before: int = local_pickups.total_dropped
+	local_pickups.drop(Vector3.ZERO, 0)
+	local_pickups.drop(Vector3.ZERO, -5)
+	check(local_pickups.total_dropped == dropped_before, "invalid pickup amounts cannot change XP accounting")
+	collector.queue_free()
+	local_pickups.queue_free()
+	legacy_pickups.queue_free()
 	var game = load("res://scenes/main.tscn").instantiate()
 	root.add_child(game)
 	game.save.path = "user://scene_test_progress.json"

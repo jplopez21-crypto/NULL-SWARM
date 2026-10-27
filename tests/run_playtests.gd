@@ -12,7 +12,7 @@ func _check(condition: bool, message: String) -> void:
 		failures.append(message)
 		push_error(message)
 
-func _game(seed_value: int, kit: String) -> Node3D:
+func _game(seed_value: int, kit: String, pickup_mode: String = "local") -> Node3D:
 	var game: Node3D = load("res://scenes/main.tscn").instantiate()
 	game.save.path = "user://qa_bot_%s_%d.json" % [kit, seed_value]
 	for suffix in ["", ".bak", ".tmp"]:
@@ -28,13 +28,19 @@ func _game(seed_value: int, kit: String) -> Node3D:
 		game.save.data["wardens"] = 1
 	game.save.data["selected_kit"] = kit
 	game.start_run()
+	if pickup_mode == "legacy":
+		game.run_root.remove_child(game.pickups)
+		game.pickups.free()
+		game.pickups = LegacyPickupFixture.new()
+		game.run_root.add_child(game.pickups)
 	game.combat.rng.seed = seed_value
 	game.audio.shutdown()
 	return game
 
-func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS) -> Dictionary:
-	var game := _game(seed_value, kit)
-	var bot := PlaytestBot.new()
+func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious") -> Dictionary:
+	var starting_failures: int = failures.size()
+	var game := _game(seed_value, kit, pickup_mode)
+	var bot: PlaytestBot = ValueAwareBot.new() if bot_policy == "value_aware" else PlaytestBot.new()
 	bot.profile = profile
 	var steps: int = 0
 	var max_enemies: int = 0
@@ -66,8 +72,11 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		_check(game.progress.equipped() <= Arsenal.MAX_SLOTS, "bot obtained too many weapons")
 		_check(game.player.health.current >= 0.0 and game.player.health.current <= game.player.health.maximum, "health escaped valid bounds")
 		_check(game.player.health.shield >= 0.0 and game.player.health.shield <= game.player.health.max_shield, "shield escaped valid bounds")
+		_check(game.pickups.total_dropped == game.pickups.total_collected + game.pickups.outstanding_xp(), "pickup XP was lost or duplicated")
+		if pickup_mode == "local":
+			_check(game.pickups.max_merge_distance <= PickupSystem.MERGE_RADIUS + 0.001, "pickup merge exceeded local radius")
 		_check(game.player.dash_cooldown >= 0.0 and int(game.save.data["salvage"]) >= 0, "negative cooldown or wallet")
-		if not failures.is_empty():
+		if failures.size() > starting_failures:
 			break
 		# Flush queued nodes/UI tweens regularly, without waiting for simulated real time.
 		if steps % 300 == 0:
@@ -83,7 +92,7 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 			last_upgrade = float(choice["at"])
 	longest_gap = maxf(longest_gap, game.combat.director.elapsed - last_upgrade)
 	var completed: bool = game.state == game.State.RESULTS
-	var result := {"seed": seed_value, "profile": profile, "kit": kit, "research": {}, "fixture": "new player" if kit == "vanguard" else "earned kit / no research",
+	var result := {"bot_policy": bot_policy, "pickup_mode": pickup_mode, "pickup_merges": game.pickups.merged_count, "max_merge_distance": game.pickups.max_merge_distance, "peak_pickups": game.pickups.peak_count, "seed": seed_value, "profile": profile, "kit": kit, "research": {}, "fixture": "new player" if kit == "vanguard" else "earned kit / no research",
 		"outcome": "victory" if completed and game.result_won else ("defeat" if completed else "time_limit"),
 		"survived_seconds": snappedf(game.combat.director.elapsed, 0.01), "level": game.progress.level, "kills": game.combat.kills,
 		"health": snappedf(game.player.health.current, 0.01), "minimum_health": snappedf(minf(bot.minimum_health, game.player.health.current), 0.01), "dashes": bot.dashes,
@@ -111,6 +120,9 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--xp-comparison" in OS.get_cmdline_user_args():
+		await compare_pickups()
+		return
 	var report := QAReport.metadata("normal-rules bot playtests")
 	report["limitations"] = ["No invulnerability injection, teleporting, forced boss kills or mid-run stat grants.", "Bot uses normal controls, legal upgrades, and normal dash invulnerability.", "Privileged geometric sensors within 16m plus visible artillery markers; not human reaction/skill.", "Small fixed seed sample; bot wins/losses do not establish human balance or fun.", "All profiles share cautious collector movement; this biases damage comparisons against close-range weapons.", "Headless CPU timings exclude rendering and do not predict phone FPS."]
 	var cases: Array[Dictionary] = []
@@ -147,5 +159,40 @@ func run() -> void:
 	markdown += "\nDeterministic replay: %s. Failures: %d.\n\nFull choices, damage, mutations, health snapshots and limitations are in bot-report.json.\n" % [report["deterministic_replay"]["matches"], failures.size()]
 	QAReport.text_file("res://builds/qa/BOT_REPORT.md", markdown)
 	print("BOT_REPORT cases=", cases.size(), " failures=", failures.size())
+	await create_timer(0.1).timeout
+	quit(0 if failures.is_empty() else 1)
+
+func compare_pickups() -> void:
+	var report := QAReport.metadata("XP merge A/B / unchanged bot strategy")
+	var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/bot-baseline-foundry-0.3.json"))
+	var baseline_compatible: bool = true
+	for path in baseline["combat_files_sha256"]:
+		if FileAccess.get_sha256("res://" + path) != baseline["combat_files_sha256"][path]:
+			baseline_compatible = false
+	report["pinned_baseline_compatible"] = baseline_compatible
+	report["pinned_baseline_note"] = "Numeric legacy replay checked" if baseline_compatible else "Numeric legacy replay skipped because combat/bot source changed; A/B still uses the same current combat and bot."
+	var cases: Array[Dictionary] = []
+	for seed_value in [101, 202]:
+		for mode in ["legacy", "local"]:
+			var result: Dictionary = await simulate(seed_value, "kinetic", "vanguard", MAX_SECONDS, mode)
+			cases.append(result)
+			if mode == "legacy" and baseline_compatible:
+				for old in baseline["cases"]:
+					if old["seed"] == seed_value and old["profile"] == "kinetic" and old["kit"] == "vanguard":
+						for key in ["outcome", "survived_seconds", "kills", "level", "weapons_and_ranks", "xp_collected", "uncollected_xp"]:
+							_check(JSON.parse_string(JSON.stringify(result[key])) == old[key], "legacy fixture did not reproduce baseline: " + key)
+			print("XP_CASE seed=", seed_value, " mode=", mode, " outcome=", result["outcome"], " level=", result["level"], " xp=", result["xp_collected"], " max_merge_m=", result["max_merge_distance"])
+		var collector: Dictionary = await simulate(seed_value, "kinetic", "vanguard", MAX_SECONDS, "local", "value_aware")
+		cases.append(collector)
+		print("XP_COLLECTOR seed=", seed_value, " outcome=", collector["outcome"], " level=", collector["level"], " xp=", collector["xp_collected"])
+	report["cases"] = cases
+	report["failures"] = failures
+	report["limitations"] = ["Cautious rows hold the bot strategy fixed. Explicit value_aware rows change only navigation; no combat buffs.", "Two seeds diagnose this mechanism; they do not establish overall human balance."]
+	QAReport.write("res://builds/qa/xp-comparison.json", report)
+	var markdown := "# XP merge A/B\n\nUnchanged bot strategy and normal combat rules. Legacy fixtures must match the committed baseline.\n\n| Seed | Merge mode | Bot | Outcome | Seconds | Level | Collected XP | Left XP | Max merge distance | Peak orbs |\n|---:|---|---|---|---:|---:|---:|---:|---:|---:|\n"
+	for row in cases:
+		markdown += "| %d | %s | %s | %s | %.1f | %d | %d | %d | %.2fm | %d |\n" % [row["seed"], row["pickup_mode"], row["bot_policy"], row["outcome"], row["survived_seconds"], row["level"], row["xp_collected"], row["uncollected_xp"], row["max_merge_distance"], row["peak_pickups"]]
+	QAReport.text_file("res://builds/qa/XP_COMPARISON.md", markdown)
+	print("XP_REPORT cases=", cases.size(), " failures=", failures.size())
 	await create_timer(0.1).timeout
 	quit(0 if failures.is_empty() else 1)

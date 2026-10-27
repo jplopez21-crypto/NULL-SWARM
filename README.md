@@ -1,6 +1,6 @@
 # NULL//SWARM
 
-An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Foundry progression and feedback pass (0.3); development art and generated audio are not final commercial assets.
+An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Foundry memory-packet fix (0.3.1); development art and generated audio are not final commercial assets.
 
 Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. Deploy VANGUARD, survive ten minutes and destroy The Architect, collect blue memory shards, and select upgrades. Weapons target automatically.
 
@@ -25,13 +25,13 @@ Install matching Godot 4.6.3 export templates, Java 21 and Android SDK platform-
 
 ```sh
 mkdir -p builds/android
-godot --headless --export-debug Android builds/android/null-swarm-foundry-0.3-debug.apk
-adb install -r builds/android/null-swarm-foundry-0.3-debug.apk
+godot --headless --export-debug Android builds/android/null-swarm-foundry-0.3.1-debug.apk
+adb install -r builds/android/null-swarm-foundry-0.3.1-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3-apk`. The [verified 0.3 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064/artifacts/12703736664) contains its APK under `android/` and staged QA captures under `screenshots/`. All 121 checks and APK signature verification passed. Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3.1-apk`. The [verified 0.3 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064/artifacts/12703736664) contains its APK under `android/` and staged QA captures under `screenshots/`. All 121 checks and APK signature verification passed. Physical-device testing and balance remain required for this new version.
 
-This build installs alongside the original as **NULL SWARM Foundry** (`com.nullswarm.game.foundry`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
+This build installs alongside the original as **NULL SWARM Foundry XP** (`com.nullswarm.game.foundry.xp`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 
@@ -47,3 +47,5 @@ godot --headless --script tests/run_benchmark.gd
 ```
 
 Bots do not receive injected invulnerability or forced boss kills. Stress fixtures deliberately do; their headless CPU timings are not Android FPS. These additions are test tooling and do not change the installed 0.3 game.
+
+The 0.3.1 patch fixes pickup merging across distant positions and marks valuable packets with larger mint/gold visuals. Its updated CI verification is pending. The separately labelled XP comparison is described in [QA methods](docs/AUTOMATED_QA.md).

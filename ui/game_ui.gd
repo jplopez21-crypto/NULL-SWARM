@@ -221,13 +221,13 @@ func show_menu(data: Dictionary) -> void:
 	label_at(box, "NULL//SWARM", 64)
 	label_at(box, "THE NETWORK IS LOST. YOU ARE STILL ONLINE.", 16, MUTED)
 	label_at(box, "REACTOR ZERO  /  SURVIVAL", 23)
-	label_at(box, "Ten minutes. Four weapon slots. One machine god.\nWeapons fire automatically. Collect blue memory shards.", 19, MUTED)
+	label_at(box, "Ten minutes. Four weapon slots. One machine god.\nWeapons auto-fire. Large gold packets hold more XP.", 19, MUTED)
 	label_at(box, "WARDEN 03:00     //     ARCHITECT 09:00", 16, Color("ffb35c"))
 	var play := button_at(box, "DEPLOY %s     →" % Research.KITS[data["selected_kit"]]["title"], func(): deploy.emit())
 	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
-	label_at(box, "BUILD 0.3  •  SALVAGE PERSISTS AFTER DEFEAT", 13, MUTED)
+	label_at(box, "BUILD 0.3.1  •  SALVAGE PERSISTS AFTER DEFEAT", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:

@@ -69,3 +69,11 @@
 - CI passed 121 checks, eight normal-rules bot cases and replay verification, and six synthetic benchmark scenarios.
 - Seven bot victories/one defeat reproduced across local and CI machines; no invariant failures.
 - Committed canonical JSON/Markdown reports; retained CPU-vs-device and bot-vs-human limits.
+
+## 0.3.1 — Local memory packets
+
+- Replaced FIFO pickup merging, which could relocate XP across the arena, with nearby stationary merges limited to 3m. Sparse drops remain separate; earned XP is conserved.
+- Added larger mint/gold high-value packets and a shared sphere mesh.
+- Added regression tests, a pinned legacy replay fixture and a separate value-aware test collector.
+- Added six-case XP A/B/collector comparison to repeatable CI; original cautious bot remains unchanged.
+- No combat-stat buffs or spawn/difficulty reductions. Uses a separate Foundry XP package to preserve older test installs/saves.

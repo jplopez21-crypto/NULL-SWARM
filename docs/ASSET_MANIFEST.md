@@ -16,3 +16,7 @@ All reactor tiles, warning geometry, towers, weapons, drones, boss embellishment
 ## Foundry additions
 
 Destruction debris is pooled original primitive geometry; research/starting-kit UI and boss-core feedback use original project drawing/mesh code and existing generated audio. No new external artwork or audio was downloaded. These remain development assets.
+
+## 0.3.1 memory packets
+
+Pickup spheres now share one original procedural mesh. Value tiers use blue/mint/gold shared materials and bounded scale; no external art or sounds were added.
