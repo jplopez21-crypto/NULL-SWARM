@@ -46,3 +46,8 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 - Added a real touchscreen settings toggle and process-death persistence assertion; ARM64 development APK now has an isolated application ID.
 
 - Probe unit test initially failed on strict dictionary equality after JSON converted integer numeric values to floats. Corrected the comparison to validate numeric values semantically while preserving boolean types; reran the full probe checks.
+
+- Strict CI detected an intermittent smoke shutdown leak despite a success marker. Verbose local repetition identified AudioStreamWAV/AudioStreamPlaybackWAV references; shutdown drain increased before engine exit, retaining strict leak failure checks.
+- Emulator boot and Android Compatibility initialization passed. First gameplay touch was blocked by Android fullscreen onboarding and a Pixel Launcher ANR; added explicit OS-only dialog handling, activity-focus checks and emulator settling. Game ANRs remain failures. Rerun pending.
+
+- Post-fix shutdown repetition: eight fresh-process smoke runs passed with zero leak warnings (before fix: one of eight leaked audio playback references). Full hosted rerun pending.

@@ -45,7 +45,11 @@ func run() -> void:
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["state"] == "paused", "probe observes normal pause transition")
+	game.audio.shutdown()
+	# Drain queued UI tweens and audio-thread releases before destroying the scene.
+	await create_timer(0.20).timeout
 	game.queue_free()
+	await process_frame
 	await create_timer(0.05).timeout
 	QAReport.write("res://builds/qa/probe-tests.json", {"checks": checks, "failures": failures})
 	print("PROBE_RESULT checks=", checks, " failures=", failures.size())

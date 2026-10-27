@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 		snapshot()
 
 func snapshot() -> void:
-	var data: Dictionary = {"schema": 1, "state": ["menu", "playing", "upgrading", "paused", "results"][game.state],
+	var data: Dictionary = {"schema": 1, "process": OS.get_process_id(), "sample_ticks": Time.get_ticks_msec(), "state": ["menu", "playing", "upgrading", "paused", "results"][game.state],
 		"canvas": [game.ui.root.size.x, game.ui.root.size.y], "touches": touches, "drags": drags, "dashes": dashes,
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
 	for node in game.ui.root.find_children("*", "Button", true, false):

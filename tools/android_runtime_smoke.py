@@ -7,6 +7,8 @@ from pathlib import Path
 import struct
 import subprocess
 import time
+import re
+import xml.etree.ElementTree as ET
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -88,8 +90,45 @@ def move(dx, dz, state, duration=800):
     actions.append({'swipe': [*begin, *end, duration]})
 
 
+def dismiss_system_dialogs():
+    # Only emulator OS onboarding/launcher failures may be dismissed. Never game ANRs.
+    for _ in range(3):
+        try:
+            adb('shell', 'uiautomator', 'dump', '/sdcard/null-swarm-system-ui.xml')
+            xml = adb('shell', 'cat', '/sdcard/null-swarm-system-ui.xml')
+            if "isn't responding" in xml and ('NULL SWARM' in xml or args.package in xml):
+                raise AssertionError('Android reports a game ANR')
+            nodes = list(ET.fromstring(xml).iter('node'))
+            target = None
+            reason = None
+            if 'Pixel Launcher' in xml and "responding" in xml:
+                target = next((n for n in nodes if n.get('resource-id') == 'android:id/aerr_close'), None)
+                reason = 'Pixel Launcher ANR'
+            if target is None:
+                target = next((n for n in nodes if n.get('text') == 'Got it'), None)
+                reason = 'Android fullscreen onboarding'
+            if target is None:
+                return
+            numbers = list(map(int, re.findall(r'\d+', target.get('bounds', ''))))
+            if len(numbers) != 4:
+                return
+            adb('shell', 'input', 'tap', str((numbers[0]+numbers[2])//2), str((numbers[1]+numbers[3])//2))
+            actions.append({'dismissed_system_ui': reason})
+            time.sleep(.5)
+        except (subprocess.SubprocessError, ET.ParseError):
+            return
+
+
 def launch():
-    adb('shell', 'monkey', '-p', args.package, '-c', 'android.intent.category.LAUNCHER', '1')
+    resolved = adb('shell', 'cmd', 'package', 'resolve-activity', '--brief', '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER', '-p', args.package)
+    component = next(line.strip() for line in resolved.splitlines() if '/' in line and args.package in line)
+    for _ in range(2):
+        adb('shell', 'am', 'start', '-W', '-n', component)
+        dismiss_system_dialogs()
+        foreground = adb('shell', 'dumpsys', 'activity', 'activities')
+        if any(args.package in line and ('mResumedActivity' in line or 'topResumedActivity' in line) for line in foreground.splitlines()):
+            return
+    raise AssertionError('Game did not become foreground activity after Android system-dialog handling')
 
 
 report = {'checks': checks, 'actions': actions, 'package': args.package,
@@ -165,16 +204,18 @@ try:
     new_shake = s['settings']['shake']
     capture('settings-changed')
     tap('BACK', s)
+    old_process = s['process']
     adb('shell', 'am', 'force-stop', args.package)
     launch()
-    s = wait(lambda x: x['state'] == 'menu')
+    s = wait(lambda x: x['state'] == 'menu' and x['process'] != old_process)
     check(s['salvage'] >= salvage, 'force-stop/relaunch retains banked progression and opens menu')
     check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
     capture('relaunched')
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal'])]
-    check(not fatal, 'no script errors or Android fatal crashes in logcat')
+    game_anrs = [line for line in log.splitlines() if 'ANR in ' + args.package in line]
+    check(not fatal and not game_anrs, 'no script errors, game ANRs or Android fatal crashes in logcat')
     report['status'] = 'passed'
 except Exception as error:
     report['status'] = 'failed'

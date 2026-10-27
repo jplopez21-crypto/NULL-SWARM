@@ -151,7 +151,7 @@ func _physics_process(delta: float) -> void:
 		boot_smoke = false
 		state = State.PAUSED
 		audio.shutdown()
-		await get_tree().create_timer(0.05).timeout
+		await get_tree().create_timer(0.20).timeout
 		get_tree().quit()
 
 func _process(delta: float) -> void:
