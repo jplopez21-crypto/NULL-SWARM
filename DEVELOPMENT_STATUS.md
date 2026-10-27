@@ -60,3 +60,10 @@
 - Removed nearest-target candidate arrays and shared exclusion-aware cell scanning with chains. Added 205 targeting parity/boundary checks.
 - Six all-links stress scenarios retain exact gameplay fingerprints; local timings are mixed, so heavy-combat performance remains an open priority. Evidence under docs/qa/targeting.
 - Fixed immediate startup/shutdown audio playback leak reproduced by strict CI; 40 repeated isolated probes passed after cancellable first-tick music startup.
+
+## Combat feedback pass
+
+- Implemented shared impact star mesh, smooth visual hit recoil, elongated wreckage, eased expanding rings and rising upgrade feedback.
+- Applied upgrades receive named confirmation; mutation announcements override ordinary confirmations.
+- Existing 40/85/150 effect limits and 160-mesh pool are unchanged. Reduced flashes suppress impact stars, debris and hit recoil; ordinary rings remain visible.
+- Added staged feedback screenshot and automated cosmetic-only/pool/accessibility/notice coverage. Current branch verification is linked in PR #1.

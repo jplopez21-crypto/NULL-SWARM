@@ -354,6 +354,47 @@ func run() -> void:
 	check(game.progress.rerolls == 0 and game.progress.pending == 1, "rerolls limited without consuming level choice")
 	game.start_run()
 	game.set_physics_process(false)
+	# Visual feedback must stay cosmetic, reset with pooling and respect accessibility.
+	var feedback_enemy: SwarmEnemy = game.combat.spawn(0, Vector3(4, 0, 0))
+	var before_position: Vector3 = feedback_enemy.position
+	feedback_enemy.hit(1, Vector3.ZERO)
+	feedback_enemy.tick(0.01)
+	check(feedback_enemy.body.scale.x > feedback_enemy.body.scale.y and feedback_enemy.position == before_position, "hit recoil changes only visual transform")
+	feedback_enemy.tick(0.1)
+	check(feedback_enemy.body.scale.is_equal_approx(Vector3.ONE * feedback_enemy.visual_scale) and is_zero_approx(feedback_enemy.body.position.y), "hit recoil fully settles")
+	feedback_enemy.hit(1, Vector3.ZERO)
+	feedback_enemy.effects_enabled = false
+	feedback_enemy.tick(0.01)
+	check(feedback_enemy.body.scale.is_equal_approx(Vector3.ONE * feedback_enemy.visual_scale), "reduced flashes suppress hit recoil")
+	feedback_enemy.activate(before_position, 1)
+	check(feedback_enemy.body.position == Vector3.ZERO and feedback_enemy.body.scale.is_equal_approx(Vector3.ONE * feedback_enemy.visual_scale), "pool reuse resets body pose")
+	var feedback: CombatEffects = game.combat.effects
+	feedback.flashes = false
+	feedback.emit_fx("spark", Vector3.ZERO, Vector3.ZERO, Color.WHITE)
+	check(feedback.live.is_empty(), "reduced flashes suppress sharp impact silhouettes")
+	feedback.flashes = true
+	feedback.emit_fx("spark", Vector3.ZERO, Vector3.ZERO, Color.WHITE)
+	check(feedback.live[0]["mesh"].mesh == feedback.impact_mesh, "impacts reuse shared star mesh")
+	feedback.tick(1)
+	feedback.emit_fx("uplink", Vector3.ZERO, Vector3.ZERO, Color.WHITE, 3)
+	feedback.tick(0.2)
+	check(feedback.live[0]["mesh"].position.y > 0.12, "upgrade ring rises while simulation advances")
+	feedback.tick(1)
+	check(feedback.pool.size() == 160 and feedback.live.is_empty(), "new feedback returns every mesh to pool")
+	game.progress.pending = 1
+	game.show_upgrade()
+	game.offered.assign(["speed"])
+	game.select_upgrade("speed")
+	check(game.ui.toast_title.text == "UPGRADE LINKED" and "SERVO OVERDRIVE" in game.ui.toast_detail.text, "upgrade confirmation names the selected passive")
+	game.progress.ranks = {"damage": 2, "arc": 3}
+	game.combat.update_build(game.progress.ranks)
+	game.progress.pending = 1
+	game.show_upgrade()
+	game.offered.assign(["damage"])
+	game.select_upgrade("damage")
+	check(game.ui.toast_title.text == "WEAPON MUTATION", "mutation announcement takes priority over ordinary upgrade confirmation")
+	game.start_run()
+	game.set_physics_process(false)
 	game.combat.effects.quality = 0
 	for i in range(100):
 		game.combat.effects.emit_fx("ring", Vector3.ZERO, Vector3.ZERO, Color.WHITE, 1.0)

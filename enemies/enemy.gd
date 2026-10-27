@@ -71,6 +71,7 @@ func activate(at: Vector3, health_scale: float) -> void:
 	exposed_time = 0.0
 	scale = Vector3.ONE
 	body.position = Vector3.ZERO
+	body.scale = Vector3.ONE * visual_scale
 	body.visible = true
 	telegraph.visible = false
 	active = true
@@ -109,7 +110,9 @@ func tick(delta: float) -> Vector3:
 	exposed_time = maxf(0.0, exposed_time - delta)
 	cooldown -= delta
 	flash = maxf(0.0, flash - delta)
-	body.scale = Vector3.ONE * visual_scale * (1.15 if flash > 0.0 and effects_enabled else 1.0)
+	var recoil: float = clampf(flash / 0.08, 0.0, 1.0) if effects_enabled else 0.0
+	body.scale = Vector3(1.0 + recoil * 0.22, 1.0 - recoil * 0.18, 1.0 + recoil * 0.22) * visual_scale
+	body.position.y = recoil * 0.10 * visual_scale
 	var shot := Vector3.ZERO
 	if definition.behavior == 1:
 		var reach: float = 15.0 * 0.55 * movement_multiplier

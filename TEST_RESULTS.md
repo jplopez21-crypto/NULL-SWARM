@@ -81,3 +81,12 @@ After installing the final pipeline APK, the owner reported “Works.” This co
 - Nearest-target selection scans grid cells directly without a candidate array or duplicate distance calculation. Chain attacks reuse the same selector with explicit exclusions. Added 200 seeded comparisons with the previous algorithm and five boundary/tie/exclusion cases.
 - Six all-links stress scenarios preserved exact before/after gameplay fingerprints and fixed loads. Reports: docs/qa/targeting/before.json and after.json. Local CPU p95 results are mixed: 600/high 46.024 → 36.405 ms; 600/low 39.019 → 43.176 ms. This is a single shared-host comparison, not a reliable overall speedup or Android FPS measurement. Baseline overlapped short probe repetitions, so timing conclusions are limited.
 - Full updated branch build/runtime/QA results are linked in PR #1; all nine updated local suites passed (370 system checks, 9 audio checks, 41 corruption checks, 12 input checks, 8 GUI checks, 5 probe checks, 49 resources, 504 UI checks and scene smoke), with zero strict error/leak failures.
+
+### Combat feedback pass
+
+- Added 10 checks covering visual-only hit recoil, settling and pooled pose reset, reduced-flash suppression, shared impact geometry, rising upgrade rings, pool reclamation, named passive confirmation and mutation announcement priority.
+- The first extended test run exposed a typed-array assignment error in the new test fixture, which was corrected using Array.assign; the failed run was not counted as a pass.
+- Native presentation CI adds a deliberately staged feedback.png frame; it is visual QA, not a human gameplay capture. The Android probe continues to exercise real touchscreen upgrade selection.
+- No combat damage, spawn rate, targeting, health, collision size, dash timing, effect budget or gameplay RNG changes are intended. Android phone performance and human satisfaction require device playtesting.
+
+Local post-fix verification: all nine isolated suites passed, including 380 system checks, 9 audio checks, 41 corruption checks, 12 input checks, 8 GUI checks, 5 probe checks, 49 resource checks, 504 UI checks and scene smoke; strict error/leak scan clean. Snapshot: docs/qa/combat-feedback/headless-results.json. Final CI evidence is linked in PR #1.

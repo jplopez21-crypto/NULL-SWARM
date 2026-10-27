@@ -162,3 +162,11 @@
 - Select nearest enemies directly from spatial cells; share exclusion-aware targeting with chain attacks, preserving ordering and combat outcomes.
 - Add seeded targeting parity and boundary regressions and preserve before/after stress evidence.
 - Cancel pending music startup when a scene shuts down immediately, fixing the intermittent probe-test WAV playback leak; add startup/cancellation audio regressions.
+
+### Combat feedback pass
+
+- Shared four-point impact silhouettes replace box-shaped hit sparks; shorter impacts and eased rings improve visual separation.
+- Enemy visual squash/recovery now settles smoothly and pooled enemies reset their visual pose. Collision, health, movement and attack timing are unchanged.
+- Elongated tumbling wreckage remains inside existing quality/pool limits. Upgrade rings rise briefly after selection.
+- Upgrade confirmations name the selected weapon/passive and rank; mutation announcements retain priority. Added staged feedback.png to CI presentation captures.
+- Added feedback/accessibility/pooling/announcement regressions. Procedural visuals remain development assets.

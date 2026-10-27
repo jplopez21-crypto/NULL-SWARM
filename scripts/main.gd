@@ -319,8 +319,12 @@ func select_upgrade(id: String) -> void:
 			player.health.shield = minf(player.health.max_shield, player.health.shield + 12.0)
 		"magnet": player.magnet += 1.2
 		"repair": player.health.current = minf(player.health.maximum, player.health.current + 35.0)
+	# Emit the ordinary confirmation first so mutation notices keep priority.
+	var selected_title: String = upgrade_description(id).get_slice("\n", 0)
+	var confirmation: String = "RANK %d // ACTIVE" % int(progress.ranks.get(id, 1)) if id != "repair" else "REPAIR APPLIED"
+	ui.toast("UPGRADE LINKED", selected_title + " // " + confirmation, Arsenal.color(id))
 	combat.update_build(progress.ranks)
-	combat.effects.emit_fx("ring", player.position, player.position, Arsenal.color(id), 3.0)
+	combat.effects.emit_fx("uplink", player.position, player.position, Arsenal.color(id), 3.0)
 	audio.play("ui", "UI")
 	if progress.pending > 0:
 		show_upgrade()
@@ -364,6 +368,24 @@ func _capture_session() -> void:
 	pickups.drop(player.position + Vector3(12, 0, -5), 100)
 	await get_tree().create_timer(0.5).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_locator.png")
+	# Freeze a staged feedback sample so short impacts remain inspectable in CI.
+	progress.pending = 1
+	state = State.UPGRADING
+	offered = ["speed"]
+	select_upgrade("speed")
+	state = State.PAUSED
+	combat.effects.tick(0.12)
+	for i in range(3):
+		var sample := combat.spawn(i, player.position + Vector3(-3 + i * 3, 0, -3))
+		sample.hit(1, Vector3.ZERO)
+		sample.tick(0.015)
+		combat.effects.emit_fx("spark", sample.position, sample.position, sample.definition.color.lightened(0.3), 0.65)
+	combat.effects.destruction(player.position + Vector3(3, 0, 2), Color("ff9274"), false)
+	combat.effects.tick(0.025)
+	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/feedback.png")
+	state = State.PLAYING
 	# Automated staged capture for visual QA, not a claim of human gameplay.
 	progress.ranks = {"orbit": 3, "thermal": 3, "arc": 3, "damage": 3}
 	combat.update_build(progress.ranks)
