@@ -38,3 +38,5 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 
 - Fixed an inferred GDScript type in the new opt-in probe loader; strict local headless suites subsequently passed.
 - Local editor import also reports inability to bind its TCP service in the sandbox. This is distinct from project parse errors; hosted CI import remains a required gate.
+
+- Found and fixed a CI cleanup hang when a superseded emulator job was cancelled before boot. Every ADB diagnostic/cleanup command now has a bounded timeout. Emulator runs use main pushes and PR updates to avoid redundant development push jobs.

@@ -1,6 +1,7 @@
 name: Android emulator runtime
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
   schedule:
@@ -92,9 +93,9 @@ jobs:
         if: ${{ always() }}
         run: |
           mkdir -p builds/android-runtime
-          "$ANDROID_HOME/platform-tools/adb" logcat -d > builds/android-runtime/final-logcat.txt 2>&1 || true
-          "$ANDROID_HOME/platform-tools/adb" shell dumpsys activity activities > builds/android-runtime/activities.txt 2>&1 || true
-          "$ANDROID_HOME/platform-tools/adb" emu kill || true
+          timeout 15s "$ANDROID_HOME/platform-tools/adb" logcat -d > builds/android-runtime/final-logcat.txt 2>&1 || true
+          timeout 15s "$ANDROID_HOME/platform-tools/adb" shell dumpsys activity activities > builds/android-runtime/activities.txt 2>&1 || true
+          timeout 10s "$ANDROID_HOME/platform-tools/adb" emu kill || true
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: ${{ always() }}
         with:
