@@ -104,10 +104,14 @@ jobs:
           adb shell input keyevent 82
           sleep 15
           adb install -r builds/android-runtime/emulator-debug.apk
+      - name: Install pinned image-check dependency
+        run: |
+          python3 -m venv /tmp/null-swarm-runtime-python
+          /tmp/null-swarm-runtime-python/bin/python -m pip install --disable-pip-version-check Pillow==11.3.0
       - name: Touch, gameplay, pause and lifecycle smoke
         run: |
           set -o pipefail
-          timeout 240s python3 tools/android_runtime_smoke.py 2>&1 | tee builds/android-runtime/smoke.log
+          timeout 300s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |

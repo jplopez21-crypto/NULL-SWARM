@@ -61,3 +61,5 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 
 - Latest Android run passed all nine functional touch/lifecycle checks, including persistent settings, with no shader-link failure or audio crash. Its final engine-log gate correctly failed on four `can_process` errors from panels detached inside synchronous button callbacks. Added a GUI-input regression reproducing four failures, changed panel retirement to hidden/deferred free, and reran it. Final hosted verification pending.
 - Native and full-QA push triggers now target main plus PR updates, avoiding redundant branch push runs; manual dispatch remains available.
+
+- All three hosted gates passed at 420dbfe67bf5a5a75a5f14d3f5f7892238719e0a, including ten Android checks with no game log errors. Manual screenshot review found startup captures could still show the boot splash before presentation. Added rendered-state/panel synchronization and a pinned Pillow blue/teal-frame smoke check; this is a readiness heuristic, not a full visual-quality assertion. Final rerun pending.

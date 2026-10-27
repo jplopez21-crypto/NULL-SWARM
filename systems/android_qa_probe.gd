@@ -8,9 +8,23 @@ var drags: int = 0
 var dashes: int = 0
 var last_dash: float = 0.0
 var last_player: int = 0
+var rendered_state: String = ""
+var rendered_panel: int = 0
+var rendered_frames: int = 0
 
 func _ready() -> void:
+	RenderingServer.frame_post_draw.connect(_frame_drawn)
 	print("ANDROID_QA_READY ", OS.get_user_data_dir())
+
+func _panel_id() -> int:
+	return game.ui.screen.get_instance_id() if is_instance_valid(game.ui.screen) else 0
+
+func _frame_drawn() -> void:
+	if not is_instance_valid(game):
+		return
+	rendered_state = ["menu", "playing", "upgrading", "paused", "results"][game.state]
+	rendered_panel = _panel_id()
+	rendered_frames = Engine.get_frames_drawn()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch and event.pressed:
@@ -34,6 +48,7 @@ func _process(delta: float) -> void:
 
 func snapshot() -> void:
 	var data: Dictionary = {"schema": 1, "process": OS.get_process_id(), "sample_ticks": Time.get_ticks_msec(), "state": ["menu", "playing", "upgrading", "paused", "results"][game.state],
+		"rendered_state": rendered_state, "panel": _panel_id(), "rendered_panel": rendered_panel, "rendered_frames": rendered_frames,
 		"canvas": [game.ui.root.size.x, game.ui.root.size.y], "touches": touches, "drags": drags, "dashes": dashes,
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
 	for node in game.ui.root.find_children("*", "Button", true, false):

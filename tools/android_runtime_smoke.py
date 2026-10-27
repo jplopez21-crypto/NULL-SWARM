@@ -9,6 +9,8 @@ import subprocess
 import time
 import re
 import xml.etree.ElementTree as ET
+from io import BytesIO
+from PIL import Image
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -19,6 +21,7 @@ out.mkdir(parents=True, exist_ok=True)
 checks = []
 actions = []
 telemetry_path = None
+visual_samples = []
 
 
 def adb(*cmd, binary=False):
@@ -41,7 +44,8 @@ def wait(predicate, timeout=30):
     while time.monotonic() < deadline:
         try:
             last = read()
-            if predicate(last):
+            ready = last.get("rendered_frames", 0) >= 3 and last.get("rendered_state") == last["state"] and last.get("rendered_panel") == last.get("panel")
+            if predicate(last) and ready:
                 return last
         except (ValueError, subprocess.SubprocessError):
             pass
@@ -56,10 +60,28 @@ def check(ok, name):
         raise AssertionError(name)
 
 
-def capture(name):
-    image = adb('exec-out', 'screencap', '-p', binary=True)
-    if image[:8] != b'\x89PNG\r\n\x1a\n':
-        raise AssertionError('invalid Android screencap')
+def game_frame_fraction(image):
+    # NULL//SWARM uses a blue/teal world and panels; the neutral Godot boot image
+    # has only a small blue logo. This smoke heuristic detects splash/blank frames.
+    sample = Image.open(BytesIO(image)).convert('RGB').resize((64, 36))
+    pixels = list(sample.getdata())
+    return sum(g >= r + 3 and b >= r + 3 and b >= g for r, g, b in pixels) / len(pixels)
+
+
+def capture(name, wait_for_game=True):
+    deadline = time.monotonic() + (30 if wait_for_game else 0)
+    while True:
+        image = adb('exec-out', 'screencap', '-p', binary=True)
+        if image[:8] != b'\x89PNG\r\n\x1a\n':
+            raise AssertionError('invalid Android screencap')
+        fraction = game_frame_fraction(image)
+        if not wait_for_game or fraction >= .25:
+            break
+        if time.monotonic() >= deadline:
+            (out / f'{name}-not-ready.png').write_bytes(image)
+            raise AssertionError(f'No rendered game frame for {name}; blue/teal fraction={fraction:.3f}')
+        time.sleep(.25)
+    visual_samples.append({'capture': name, 'game_palette_fraction': round(fraction, 4)})
     (out / f'{name}.png').write_bytes(image)
     return struct.unpack('>II', image[16:24])
 
@@ -132,7 +154,7 @@ def launch():
     raise AssertionError('Game did not become foreground activity after Android system-dialog handling')
 
 
-report = {'checks': checks, 'actions': actions, 'package': args.package,
+report = {'checks': checks, 'actions': actions, 'visual_samples': visual_samples, 'package': args.package,
           'variant': 'x86_64 Android 35 / Compatibility / read-only opt-in probe',
           'limitations': ['Does not validate ARM64 Mobile renderer, physical touch latency, cutouts or phone performance.',
                           'Victory/death are headless integration checks, not forced emulator outcomes.']}
@@ -143,6 +165,7 @@ try:
     report['engine'] = s['engine']
     report['renderer'] = s['renderer']
     capture('menu')
+    check(True, 'menu capture contains rendered game instead of boot splash')
     check(s['renderer'] == 'gl_compatibility', 'Android Compatibility renderer initialized')
     tap('DEPLOY', s)
     s = wait(lambda x: x['state'] == 'playing')
@@ -212,6 +235,7 @@ try:
     check(s['salvage'] >= salvage, 'force-stop/relaunch retains banked progression and opens menu')
     check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
     capture('relaunched')
+    check(True, 'relaunch menu is visibly rendered')
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]
@@ -222,7 +246,7 @@ except Exception as error:
     report['status'] = 'failed'
     report['error'] = str(error)
     try:
-        capture('failure')
+        capture('failure', wait_for_game=False)
         (out / 'logcat.txt').write_text(adb('logcat', '-d'))
     except Exception:
         pass
