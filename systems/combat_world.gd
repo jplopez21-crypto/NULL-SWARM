@@ -30,6 +30,7 @@ var weapon := WeaponController.new()
 var kills: int = 0
 var damage_by_weapon: Dictionary = {}
 var tick_index: int = 0
+var next_think_phase: Dictionary = {}
 var target: Node3D
 var active_enemies: int = 0
 var active_projectiles: int = 0
@@ -55,6 +56,8 @@ func _ready() -> void:
 func _create_enemy(kind: int) -> SwarmEnemy:
 	var enemy := SwarmEnemy.new()
 	enemy.index = enemies.size()
+	enemy.think_phase = int(next_think_phase.get(kind, kind)) % 6
+	next_think_phase[kind] = (enemy.think_phase + 1) % 6
 	add_child(enemy)
 	enemy.configure(DEFINITIONS[kind])
 	enemies.append(enemy)
@@ -116,7 +119,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			continue
 		active_enemies += 1
 		enemy.effects_enabled = effects_enabled
-		if enemy.index % 6 == tick_index % 6:
+		if enemy.think_phase == tick_index % 6:
 			enemy.think(player.position)
 		var shot_direction := enemy.tick(delta)
 		if shot_direction != Vector3.ZERO:

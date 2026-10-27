@@ -221,6 +221,12 @@ func run() -> void:
 	game.set_physics_process(false)
 	game.start_run()
 	game.set_physics_process(false)
+	for definition in CombatWorld.DEFINITIONS:
+		var phases: Dictionary = {}
+		for pooled_enemy in game.combat.enemies:
+			if pooled_enemy.definition == definition:
+				phases[pooled_enemy.think_phase] = true
+		check(phases.size() == 6, "%s AI updates span every batch phase" % definition.title)
 	var enemy: SwarmEnemy = game.combat.spawn(1, Vector3(10, 0, 0))
 	enemy.windup = 0.3
 	enemy.charging = 0.2

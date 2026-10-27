@@ -16,6 +16,7 @@ var effects_enabled: bool = true
 var body: Node3D
 var telegraph: MeshInstance3D
 var index: int = 0
+var think_phase: int = 0
 
 func configure(resource: EnemyDefinition) -> void:
 	definition = resource

@@ -105,6 +105,7 @@ func _spawn(world: Node3D, player_at: Vector3, major: bool) -> SwarmEnemy:
 	definition.color = Color("ff7652") if major else Color("ffb35c")
 	var enemy := SwarmEnemy.new()
 	enemy.index = world.enemies.size()
+	enemy.think_phase = enemy.index % 6
 	world.add_child(enemy)
 	enemy.configure(definition)
 	world.enemies.append(enemy)
