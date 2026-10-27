@@ -17,13 +17,13 @@ No new adaptation warning starts during a live boss encounter, around the Warden
 
 A bounded roughly 45-second window samples actual HP damage by weapon and player displacement. At least 20 seconds and 400 damage are required. Stationary share >=70% takes precedence; otherwise electrical >=50%, close-range >=45% or direct-fire >=65% selects a response. Below those thresholds there is no forced counter. Samples update about twice a second, not independently per enemy.
 
-Composition selection uses the existing single spawn RNG draw, with a capped bias and a renormalized normal distribution. Spawn counts/debt/intervals are untouched; stronger or faster compositions can still change combat pressure. Boss summoning remains its separate existing system. Enemy pools grow instead of dropping scheduled spawns. Insulator resistance is a data resource property and actual damage attribution records the reduced HP damage.
+Composition selection uses the existing single spawn RNG draw, with a capped bias and a renormalized normal distribution. Spawn counts/debt/intervals are untouched; stronger or faster compositions can still change combat pressure. Boss summoning remains its separate existing system. Enemy pools grow instead of dropping scheduled spawns. Independent per-archetype phase cursors spread AI decisions across six batches, preserving each unit’s update frequency without synchronizing a whole enemy type. Insulator resistance is a data resource property and actual damage attribution records the reduced HP damage.
 
 ## Validation and limits
 
 Local system checks cover signature classification, insufficient evidence, mixed builds, no early adaptation, warning delay, activation/expiry, boss windows, bounded samples, spawn-count/RNG-draw invariants, pause/reset and actual resistance behavior.
 
-Preliminary eight-case bot results retained several wins and one early Halo defeat. Focused electrical runs exercised real Insulator spawns/resisted hits: Conductor won with 338 resisted hits; Vanguard lost later. These are normal-rules bot observations, not human balance guarantees. The widened CI matrix adds an electricity-focused build and records adaptation histories, enemy composition and resisted hits.
+Verified CI passed 156 checks and ten normal-rules bot cases: seven victories and three defeats (one early Halo Vanguard loss, two late Arcstorm Vanguard losses). Electric Vanguard won both seeds and Conductor won; the matrix recorded 1,140 resisted hits, 17 Insulator warnings and 36 Bulwark warnings. This shows viable tested electrical builds under resistance, not universal human balance. Long upgrade gaps in Arcstorm and Kinetic cases remain explicit collector/path investigation leads. Full canonical reports live in `docs/qa/0.4/`.
 
 The replay check extends to 180 seconds to cover the first response. The stress fixture now uses all six regular archetypes (fixture version 2); its timing baseline is not directly comparable to the old five-type mix. Legacy pickup A/B numeric comparisons correctly skip when combat-source hashes no longer match Foundry 0.3, while current-game A/B/conservation tests still run.
 

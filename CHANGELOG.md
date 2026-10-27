@@ -93,3 +93,10 @@
 - Added adaptation histories/composition/resistance telemetry, electricity-focused bot coverage and a 180-second seeded replay.
 - Expanded the synthetic fixture to all six regular enemy types; versioned the changed workload.
 - Added staged warning/active visual captures and a separate Adaptive test package.
+- Distributed each archetype across all AI update phases and added six distribution checks.
+
+### 0.4 verified delivery
+
+- CI passed 156 checks, scene smoke, ten normal bot cases/180-second deterministic replay, six pickup comparisons and six stress scenarios. Seven bot wins/three losses retained in reports.
+- Verified signed APK export, downloaded ZIP/APK hashes, archive integrity and Adaptive package contents; inspected staged warning/active renders.
+- Archived canonical reports under docs/qa/0.4. Physical-device performance and human balance remain unverified.
