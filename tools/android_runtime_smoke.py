@@ -109,8 +109,15 @@ def move(dx, dz, state, duration=800):
     x, y = 120, state['canvas'][1] - 110
     begin = screen_point(x, y, state)
     end = screen_point(x + dx / length * 70, y + dz / length * 70, state)
-    adb('shell', 'input', 'swipe', *map(str, (*begin, *end, duration)))
-    actions.append({'swipe': [*begin, *end, duration]})
+    # A timed swipe can batch MOVE and UP into one slow emulator frame.
+    # Keep the real pointer held across rendered frames instead.
+    adb('shell', 'input', 'motionevent', 'DOWN', *map(str, begin))
+    try:
+        adb('shell', 'input', 'motionevent', 'MOVE', *map(str, end))
+        time.sleep(duration / 1000)
+    finally:
+        adb('shell', 'input', 'motionevent', 'UP', *map(str, end))
+    actions.append({'held_drag': [*begin, *end, duration]})
 
 
 def dismiss_system_dialogs():

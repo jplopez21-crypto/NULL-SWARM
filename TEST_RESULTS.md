@@ -65,3 +65,7 @@ godot --headless --script tests/run_benchmark.gd -- --corruption-stress
 ```
 
 Godot/templates 4.6.3, Java 21, SDK API 35/build-tools 35.0.1; emulator 37.2.12.0 and Android 35 Google APIs image revision 9 are enforced, with Pillow 11.3.0 in an isolated venv. Resolved versions/logs are uploaded. Main pushes, PR updates and manual dispatch run the gates; daily QA (03:23 UTC) and Saturday emulator QA (03:53 UTC) apply on the default branch after merge. QA/runtime artifacts are retained 14 days. A failed check fails CI, including zero-exit-code script errors and leak diagnostics.
+
+### Repeat-run touch timing regression
+
+The documentation-tip repeat (Android runtime run 40538534378) failed its movement assertion: drag events arrived, but a timed ADB swipe moved only 0.24 units on a slow emulator. Native build and full gameplay QA passed. The driver now sends real DOWN/MOVE/UP events with a held interval, preserving the greater-than-one-unit movement assertion. Verification of this change is pending CI.
