@@ -322,6 +322,17 @@ func _capture_session() -> void:
 		combat.spawn(i % 5, Vector3(cos(angle), 0, sin(angle)) * 10)
 	await get_tree().create_timer(2.0).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/combat.png")
+	# Staged presentation QA of the warning and new enemy silhouette.
+	combat.adaptation.pending = "insulators"
+	combat.adaptation.starts_at = combat.adaptation.elapsed + 8.0
+	combat.adaptation.changed.emit("warning", "insulators")
+	await get_tree().create_timer(0.3).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/adaptation_warning.png")
+	combat.adaptation.tick(8.1, player.position, combat.damage_by_weapon, false)
+	for i in range(3):
+		combat.spawn(5, Vector3(-5 + i * 5, 0, -4))
+	await get_tree().create_timer(0.3).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/adaptation_active.png")
 	progress.pending = 1
 	show_upgrade()
 	await get_tree().create_timer(0.5).timeout

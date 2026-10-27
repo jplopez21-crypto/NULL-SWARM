@@ -54,6 +54,64 @@ func run() -> void:
 	check(director.spawned > 500, "schedule supplies escalating pressure")
 	var early := SpawnDirector.new()
 	check(early.interval() > director.interval(), "spawn rate escalates")
+	# Adaptation responds to measured style, never invisible spawn-rate multipliers.
+	var metrics := {"sample_seconds": 45.0, "total_damage": 1000.0, "stationary_share": 0.0, "direct_share": 0.8, "electric_share": 0.1, "close_share": 0.1}
+	check(SwarmAdaptation.classify(metrics) == "bulwarks", "direct-fire response")
+	metrics["direct_share"] = 0.1
+	metrics["electric_share"] = 0.7
+	check(SwarmAdaptation.classify(metrics) == "insulators", "electrical response")
+	metrics["electric_share"] = 0.1
+	metrics["close_share"] = 0.7
+	check(SwarmAdaptation.classify(metrics) == "skimmers", "close-range response")
+	metrics["direct_share"] = 0.4
+	metrics["electric_share"] = 0.4
+	metrics["close_share"] = 0.2
+	check(SwarmAdaptation.classify(metrics).is_empty(), "mixed combat without a dominant signature causes no forced counter")
+	metrics["sample_seconds"] = 1.0
+	check(SwarmAdaptation.classify(metrics).is_empty(), "too short an observation window causes no adaptation")
+	metrics["sample_seconds"] = 45.0
+	metrics["stationary_share"] = 0.8
+	check(SwarmAdaptation.classify(metrics) == "siege", "stationary response")
+	metrics["total_damage"] = 10.0
+	check(SwarmAdaptation.classify(metrics).is_empty(), "too little evidence causes no adaptation")
+	var adaptive := SwarmAdaptation.new()
+	for second in range(120):
+		adaptive.tick(1.0, Vector3(second, 0, 0), {"arc": (second + 1) * 50.0})
+		if second == 118:
+			check(adaptive.pending.is_empty(), "no adaptation before first two minutes")
+	check(adaptive.pending == "insulators" and adaptive.preferred_kind() == -1, "warning precedes effective adaptation")
+	for second in range(7):
+		adaptive.tick(1.0, Vector3(120 + second, 0, 0), {"arc": 6000.0})
+	check(adaptive.preferred_kind() == -1 and adaptive.status().contains("IN 1s"), "full eight-second warning")
+	adaptive.tick(1.0, Vector3(128, 0, 0), {"arc": 6000.0})
+	check(adaptive.preferred_kind() == 5 and adaptive.bias() == 0.2, "announced adaptation activates with bounded bias")
+	for second in range(45):
+		adaptive.tick(1.0, Vector3(129 + second, 0, 0), {"arc": 6000.0}, false)
+	check(adaptive.active.is_empty() and adaptive.bias() == 0.0, "adaptation expires without permanent escalation")
+	adaptive.enabled = false
+	check(adaptive.preferred_kind() == -1, "QA disable has no active bias")
+	var encounter_gate := EncounterDirector.new()
+	check(not encounter_gate.allows_adaptation(175.0) and not encounter_gate.allows_adaptation(190.0) and encounter_gate.allows_adaptation(200.0) and not encounter_gate.allows_adaptation(520.0), "boss introduction windows suppress new adaptations")
+	var boss_gate := SwarmAdaptation.new()
+	for second in range(120):
+		boss_gate.tick(1.0, Vector3.ZERO, {"pulse": (second + 1) * 50.0}, false)
+	check(boss_gate.pending.is_empty(), "boss gate suppresses new adaptation warnings")
+	check(boss_gate.samples.size() <= 46, "observation window stays bounded")
+	var plain_director := SpawnDirector.new()
+	var biased_director := SpawnDirector.new()
+	var rng_plain := RandomNumberGenerator.new()
+	var rng_biased := RandomNumberGenerator.new()
+	rng_plain.seed = 414
+	rng_biased.seed = 414
+	var plain_total: int = 0
+	var biased_total: int = 0
+	for frame in range(36000):
+		plain_total += plain_director.tick(1.0 / 60.0)
+		biased_total += biased_director.tick(1.0 / 60.0)
+		plain_director.archetype(rng_plain)
+		biased_director.archetype(rng_biased, 5, 0.2)
+	check(plain_total == biased_total, "adaptation never increases base spawn count")
+	check(rng_plain.state == rng_biased.state, "composition selection uses one RNG draw per spawn decision")
 	var store := SaveStore.new()
 	store.path = "user://test_progress.json"
 	for suffix in ["", ".bak", ".tmp"]:
@@ -189,6 +247,14 @@ func run() -> void:
 	game.combat._damage(exposed, 8.0)
 	check(before_hp - exposed.hp == 10.0, "exposed core takes exactly 25 percent bonus damage")
 	exposed.deactivate()
+	var insulator: SwarmEnemy = game.combat.spawn(5, Vector3(5, 0, 0))
+	var hp_before: float = insulator.hp
+	game.combat._damage(insulator, 10.0, Vector3.ZERO, false, "arc")
+	check(is_equal_approx(hp_before - insulator.hp, 8.0), "Insulator reduces arc damage by the stated twenty percent")
+	hp_before = insulator.hp
+	game.combat._damage(insulator, 10.0, Vector3.ZERO, false, "pulse")
+	check(is_equal_approx(hp_before - insulator.hp, 10.0), "Insulator does not resist other weapon families")
+	insulator.deactivate()
 	for id in Arsenal.DATA:
 		game.combat.loadout = {id: 1}
 		game.combat.timers.clear()
@@ -256,7 +322,7 @@ func run() -> void:
 	game.set_physics_process(false)
 	game.pause_run()
 	game._physics_process(1.0)
-	check(game.combat.director.elapsed == 0, "pause freezes gameplay")
+	check(game.combat.director.elapsed == 0 and game.combat.adaptation.elapsed == 0, "pause freezes gameplay and adaptation")
 	game.resume_run()
 	game.combat.rng.seed = 7312026
 	# Integration harness: invulnerability isolates run completion from bot skill.
@@ -280,7 +346,7 @@ func run() -> void:
 	check(game.result_recorded, "results persisted once")
 	game.start_run()
 	game.set_physics_process(false)
-	check(game.combat.kills == 0 and game.progress.level == 1, "restart resets run")
+	check(game.combat.kills == 0 and game.progress.level == 1 and game.combat.adaptation.history.is_empty(), "restart resets run and learned signature")
 	game.player.health.shield = 0
 	game.player.health.take_damage(999)
 	check(game.state == game.State.RESULTS, "lethal damage reaches results")

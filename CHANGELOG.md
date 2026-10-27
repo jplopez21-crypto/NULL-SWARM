@@ -84,3 +84,12 @@
 - Reproduced pinned legacy outcomes; confirmed both local improvement and regression with the unchanged cautious bot. The alternate collector won both fixed seeds.
 - Verified signed APK export, downloaded hashes/archive integrity and new manifest package; inspected the menu capture.
 - Reports are preserved under docs/qa/0.3.1; phone playtesting remains pending.
+
+## 0.4.0 — Adaptive Swarm
+
+- Added run-local combat signature observation and announced, time-limited enemy-composition responses.
+- Added eight-second warnings, persistent counterplay hints, boss quiet windows and fresh signatures on restart.
+- Added amber-core Insulators with explicit 20% electrical resistance; other weapon damage is unchanged.
+- Added adaptation histories/composition/resistance telemetry, electricity-focused bot coverage and a 180-second seeded replay.
+- Expanded the synthetic fixture to all six regular enemy types; versioned the changed workload.
+- Added staged warning/active visual captures and a separate Adaptive test package.

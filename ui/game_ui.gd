@@ -39,6 +39,7 @@ var last_safe_size := Vector2.ZERO
 var hud_visible: bool = false
 var settings_return: Callable
 var notices: Label
+var adaptation_label: Label
 var boss_bar: ProgressBar
 var boss_label: Label
 var surge_label: Label
@@ -159,6 +160,7 @@ func _build_hud() -> void:
 	button_at(top, "II  PAUSE", func(): pause_run.emit())
 	xp_bar = _bar(hud, Color("5e9fff"), 5)
 	weapons_label = label_at(hud, "PULSE RIFLE  /  AUTOMATIC", 15, MUTED)
+	adaptation_label = label_at(hud, "SWARM // OBSERVING", 14, Color("ffcf85"))
 	hint_label = label_at(hud, "MOVE: WASD / LEFT STICK     DASH: SPACE / A", 15, MUTED)
 	perf_label = label_at(hud, "", 14, MUTED)
 	perf_label.visible = false
@@ -221,13 +223,13 @@ func show_menu(data: Dictionary) -> void:
 	label_at(box, "NULL//SWARM", 64)
 	label_at(box, "THE NETWORK IS LOST. YOU ARE STILL ONLINE.", 16, MUTED)
 	label_at(box, "REACTOR ZERO  /  SURVIVAL", 23)
-	label_at(box, "Ten minutes. Four weapon slots. One machine god.\nWeapons auto-fire. Large gold packets hold more XP.", 19, MUTED)
+	label_at(box, "Ten minutes. Four weapon slots. The swarm learns.\nWeapons auto-fire. Large gold packets hold more XP.", 19, MUTED)
 	label_at(box, "WARDEN 03:00     //     ARCHITECT 09:00", 16, Color("ffb35c"))
 	var play := button_at(box, "DEPLOY %s     →" % Research.KITS[data["selected_kit"]]["title"], func(): deploy.emit())
 	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
-	label_at(box, "BUILD 0.3.1  •  SALVAGE PERSISTS AFTER DEFEAT", 13, MUTED)
+	label_at(box, "BUILD 0.4  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
@@ -360,6 +362,7 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
 	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
 	dash_button.text = "DASH / %.1fs" % player.dash_cooldown if player.dash_cooldown > 0.0 else "DASH / READY"
+	adaptation_label.text = combat.adaptation.status()
 	var time := combat.director.elapsed
 	hint_label.visible = time < 22.0
 	notices.text = "STRIKER SIGNALS DETECTED • ORANGE LANES WARN OF CHARGES" if time > 22.0 and time < 29.0 else ("SENTRY SIGNALS DETECTED • AVOID VIOLET FIRING LANES" if time > 62.0 and time < 70.0 else "")

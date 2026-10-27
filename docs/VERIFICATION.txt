@@ -1,16 +1,6 @@
-Foundry XP 0.3.1 / Godot 4.6.3 / 2026-10-27
-Build commit: 604013b1cee618a9b970270feebaf0cca24b6529
-Android workflow 40441583372 — success
-QA workflow 40441583251 — success
-TEST_RESULT checks=130 failures=0
-SCENE_SMOKE_OK enemies=5 projectiles=2
-BOT_REPORT cases=8 failures=0 (7 victories, 1 defeat)
-XP_REPORT cases=6 failures=0; pinned old baseline compatible and reproduced
-All six CI A/B traces match local results excluding timing fields.
-STRESS_REPORT scenarios=6 failures=0
-APK signature verification passed in CI; ZIP/APK digests and integrity verified locally.
-APK manifest package com.nullswarm.game.foundry.xp verified; compiled pickup asset, DEX and ARM64 engine present.
-Test fixtures and QA images excluded from APK resources.
-APK SHA256: 80c24b193c178c1c6ae22d5109bfec51dfe7310d87d1173aaaf6a121dac100a9
-Menu visual capture inspected; 0.3.1 physical-device playtesting remains unverified.
-Headless CPU timing and bot outcomes are not phone FPS or human-fun claims.
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TEST_RESULT checks=150 failures=0
+
+Focused normal Electric probes: Vanguard defeat with 131 resisted hits; Conductor victory with 338.
+Expanded CI and APK verification pending.

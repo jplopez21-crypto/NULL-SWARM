@@ -4,7 +4,8 @@ extends RefCounted
 const PROFILES: Dictionary = {
  "halo": ["orbit", "thermal", "rail"],
  "arcstorm": ["arc", "drone", "rail"],
- "kinetic": ["rail", "drone", "orbit"]
+ "kinetic": ["rail", "drone", "orbit"],
+ "electric": ["arc", "orbit", "thermal"]
 }
 var profile: String = "halo"
 var reaction: float = 0.0
@@ -99,6 +100,8 @@ func _score(id: String, game: Node3D) -> float:
 	var priorities: Array = PROFILES[profile]
 	if id == "health" and game.player.health.current < game.player.health.maximum * 0.5:
 		return 250.0
+	if profile == "electric" and id == "arc":
+		return 160.0 - rank * 3.0
 	if profile == "halo" and id in ["orbit", "thermal"] and rank < 3:
 		return 150.0 - rank * 3.0
 	if profile == "arcstorm" and id in ["damage", "arc"] and rank < 3:

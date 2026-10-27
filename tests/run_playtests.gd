@@ -102,6 +102,7 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"weapons_and_ranks": game.progress.ranks.duplicate(), "mutations": mutation_times, "damage_by_weapon": game.combat.damage_by_weapon.duplicate(),
 		"warden_spawned": game.combat.encounters.mini_spawned, "warden_defeated": game._warden_down(), "architect_spawned": game.combat.encounters.boss_spawned,
 		"architect_defeated": game._architect_down(), "max_enemies": max_enemies, "max_projectiles": max_shots,
+		"adaptations": game.combat.adaptation.history.duplicate(true), "spawned_by_type": game.combat.spawned_by_type.duplicate(), "resisted_hits": game.combat.resisted_hits,
 		"banked_salvage": int(game.save.data["ledger"].get("awarded", 0)), "upgrade_choices": bot.choices, "minute_snapshots": snapshots,
 		"simulation_step_p95_ms": QAReport.percentile(samples, 0.95), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
 	if result["outcome"] == "victory":
@@ -120,6 +121,15 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--adaptation-probe" in OS.get_cmdline_user_args():
+		var probe_cases: Array[Dictionary] = []
+		for kit in ["vanguard", "conductor"]:
+			var probe: Dictionary = await simulate(101, "electric", kit)
+			probe_cases.append(probe)
+			print("ADAPTATION_PROBE ", kit, " outcome=", probe["outcome"], " resisted_hits=", probe["resisted_hits"])
+		QAReport.write("res://builds/qa/adaptation-probe.json", {"cases": probe_cases, "failures": failures})
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--xp-comparison" in OS.get_cmdline_user_args():
 		await compare_pickups()
 		return
@@ -132,9 +142,9 @@ func run() -> void:
 			cases.append(result)
 			print("BOT_CASE ", profile, " seed=", seed_value, " outcome=", result["outcome"], " time=", result["survived_seconds"], " kills=", result["kills"])
 	for kit in ["conductor", "sentinel"]:
-		cases.append(await simulate(101, "arcstorm" if kit == "conductor" else "halo", kit))
-	var repeat_a: Dictionary = await simulate(909, "halo", "vanguard", 90.0)
-	var repeat_b: Dictionary = await simulate(909, "halo", "vanguard", 90.0)
+		cases.append(await simulate(101, "electric" if kit == "conductor" else "halo", kit))
+	var repeat_a: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
+	var repeat_b: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
 	_check(fingerprint(repeat_a) == fingerprint(repeat_b), "seeded bot replay diverged")
 	var wins: int = 0
 	var defeats: int = 0
@@ -146,9 +156,16 @@ func run() -> void:
 		timeouts += 1 if result["outcome"] == "time_limit" else 0
 		if float(result["longest_upgrade_gap_seconds"]) > 120.0:
 			flags.append("%s/%s seed %d: >120s without upgrade; inspect XP collection/bot path before changing balance." % [result["profile"], result["kit"], result["seed"]])
-	report["summary"] = {"victories": wins, "defeats": defeats, "timeouts": timeouts, "investigate": flags}
+	var response_counts: Dictionary = {}
+	var resisted: int = 0
+	for result in cases:
+		resisted += int(result["resisted_hits"])
+		for event in result["adaptations"]:
+			if event["event"] == "warning":
+				response_counts[event["style"]] = int(response_counts.get(event["style"], 0)) + 1
+	report["summary"] = {"adaptation_warnings": response_counts, "resisted_hits": resisted, "victories": wins, "defeats": defeats, "timeouts": timeouts, "investigate": flags}
 	report["cases"] = cases
-	report["deterministic_replay"] = {"seed": 909, "seconds": 90, "matches": fingerprint(repeat_a) == fingerprint(repeat_b), "fingerprint": fingerprint(repeat_a)}
+	report["deterministic_replay"] = {"seed": 909, "seconds": 180, "matches": fingerprint(repeat_a) == fingerprint(repeat_b), "fingerprint": fingerprint(repeat_a)}
 	report["failures"] = failures
 	QAReport.write("res://builds/qa/bot-report.json", report)
 	var markdown := "# Bot playtests\n\nNormal combat rules; no forced survival or boss kills. Geometric bot, not a human balance verdict.\n\n| Build | Kit | Seed | Outcome | Seconds | Level | Kills | First weapon |\n|---|---|---:|---|---:|---:|---:|---:|\n"
@@ -156,6 +173,7 @@ func run() -> void:
 		markdown += "| %s | %s | %d | %s | %.1f | %d | %d | %.1fs |\n" % [result["profile"], result["kit"], result["seed"], result["outcome"], result["survived_seconds"], result["level"], result["kills"], result["first_new_weapon_seconds"]]
 	for flag in flags:
 		markdown += "\n- " + flag + "\n"
+	markdown += "\nSwarm warning counts: %s. Resisted electrical hits: %d.\n" % [JSON.stringify(response_counts), resisted]
 	markdown += "\nDeterministic replay: %s. Failures: %d.\n\nFull choices, damage, mutations, health snapshots and limitations are in bot-report.json.\n" % [report["deterministic_replay"]["matches"], failures.size()]
 	QAReport.text_file("res://builds/qa/BOT_REPORT.md", markdown)
 	print("BOT_REPORT cases=", cases.size(), " failures=", failures.size())
@@ -189,9 +207,10 @@ func compare_pickups() -> void:
 	report["failures"] = failures
 	report["limitations"] = ["Cautious rows hold the bot strategy fixed. Explicit value_aware rows change only navigation; no combat buffs.", "Two seeds diagnose this mechanism; they do not establish overall human balance."]
 	QAReport.write("res://builds/qa/xp-comparison.json", report)
-	var markdown := "# XP merge A/B\n\nUnchanged bot strategy and normal combat rules. Legacy fixtures must match the committed baseline.\n\n| Seed | Merge mode | Bot | Outcome | Seconds | Level | Collected XP | Left XP | Max merge distance | Peak orbs |\n|---:|---|---|---|---:|---:|---:|---:|---:|---:|\n"
+	var markdown := "# XP merge A/B\n\nUnchanged bot strategy and normal combat rules. Numeric legacy checks apply only when combat inputs match the pinned source.\n\n| Seed | Merge mode | Bot | Outcome | Seconds | Level | Collected XP | Left XP | Max merge distance | Peak orbs |\n|---:|---|---|---|---:|---:|---:|---:|---:|---:|\n"
 	for row in cases:
 		markdown += "| %d | %s | %s | %s | %.1f | %d | %d | %d | %.2fm | %d |\n" % [row["seed"], row["pickup_mode"], row["bot_policy"], row["outcome"], row["survived_seconds"], row["level"], row["xp_collected"], row["uncollected_xp"], row["max_merge_distance"], row["peak_pickups"]]
+	markdown += "\nPinned baseline: %s.\n" % report["pinned_baseline_note"]
 	QAReport.text_file("res://builds/qa/XP_COMPARISON.md", markdown)
 	print("XP_REPORT cases=", cases.size(), " failures=", failures.size())
 	await create_timer(0.1).timeout

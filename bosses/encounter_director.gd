@@ -1,6 +1,9 @@
 class_name EncounterDirector
 extends RefCounted
 
+const MINI_BOSS_TIME: float = 180.0
+const FINAL_BOSS_TIME: float = 540.0
+
 var mini_spawned: bool = false
 var boss_spawned: bool = false
 var boss_defeated: bool = false
@@ -18,17 +21,17 @@ var attacking_radial: bool = true
 
 func tick(delta: float, world: Node3D, player: SwarmPlayer) -> void:
 	var time: float = world.director.elapsed
-	if time >= 175.0 and not warning_sent:
+	if time >= MINI_BOSS_TIME - 5.0 and not warning_sent:
 		warning_sent = true
 		world.notice.emit("HEAVY SIGNAL INBOUND", "WARDEN ARRIVES AT 03:00", Color("ffb35c"))
-	if time >= 180.0 and not mini_spawned:
+	if time >= MINI_BOSS_TIME and not mini_spawned:
 		mini_spawned = true
 		mini = _spawn(world, player.position, false)
 		world.notice.emit("THE WARDEN", "BREAK THE ARMOR. CLAIM ITS MEMORY.", Color("ffb35c"))
-	if time >= 530.0 and not final_warning_sent:
+	if time >= FINAL_BOSS_TIME - 10.0 and not final_warning_sent:
 		world.notice.emit("THE ARCHITECT IS COMING", "FINAL CONTACT AT 09:00", Color("ff7652"))
 		final_warning_sent = true
-	if time >= 540.0 and not boss_spawned:
+	if time >= FINAL_BOSS_TIME and not boss_spawned:
 		boss_spawned = true
 		boss = _spawn(world, player.position, true)
 		world.notice.emit("THE ARCHITECT", "DESTROY THE CORE TO EXTRACT", Color("ff7652"))
@@ -120,3 +123,8 @@ func _clear_warnings() -> void:
 			warning.queue_free()
 	warnings.clear()
 	locations.clear()
+
+func allows_adaptation(time: float) -> bool:
+	var live_boss: bool = (mini != null and mini.active) or (boss != null and boss.active)
+	var mini_intro: bool = time >= MINI_BOSS_TIME - 5.0 and time < MINI_BOSS_TIME + 20.0
+	return not live_boss and not mini_intro and time < FINAL_BOSS_TIME - 20.0

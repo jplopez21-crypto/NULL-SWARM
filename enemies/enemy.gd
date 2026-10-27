@@ -48,6 +48,11 @@ func configure(resource: EnemyDefinition) -> void:
 		4:
 			SwarmVisuals.box(body, Vector3(1.6, 0.13, 0.38), Vector3(0, 1.1, 0), definition.color, true)
 			SwarmVisuals.sphere(body, 0.42, Vector3(0, 1.1, 0), Color("456e8d"))
+		5:
+			SwarmVisuals.box(body, Vector3(0.85, 1.0, 0.85), Vector3(0, 0.7, 0), Color("48382c"))
+			SwarmVisuals.ring(body, 0.85, Vector3(0, 0.7, 0), definition.color, 0.12)
+			for side in [-1.0, 1.0]:
+				SwarmVisuals.box(body, Vector3(0.18, 1.2, 0.22), Vector3(side * 0.55, 0.8, 0), definition.color, true)
 	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
 	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
 	deactivate()

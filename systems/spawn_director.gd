@@ -23,8 +23,13 @@ func tick(delta: float) -> int:
 	spawned += count
 	return count
 
-func archetype(rng: RandomNumberGenerator) -> int:
+func archetype(rng: RandomNumberGenerator, preferred: int = -1, bias: float = 0.0) -> int:
 	var roll := rng.randf()
+	var bounded_bias: float = clampf(bias, 0.0, SwarmAdaptation.BIAS) if preferred in [2, 3, 4, 5] else 0.0
+	if bounded_bias > 0.0:
+		if roll < bounded_bias:
+			return preferred
+		roll = (roll - bounded_bias) / (1.0 - bounded_bias)
 	if elapsed > 240.0 and roll > 0.90:
 		return 4
 	if elapsed > 120.0 and roll > 0.78:

@@ -10,6 +10,9 @@ signal cache_recovered
 var effects: CombatEffects
 var rig: WeaponRig
 var encounters := EncounterDirector.new()
+var adaptation := SwarmAdaptation.new()
+var spawned_by_type: Dictionary = {}
+var resisted_hits: int = 0
 var loadout: Dictionary = {}
 var mutations: Array[String] = []
 var timers: Dictionary = {}
@@ -30,11 +33,12 @@ var tick_index: int = 0
 var target: Node3D
 var active_enemies: int = 0
 var active_projectiles: int = 0
-const DEFINITIONS: Array[EnemyDefinition] = [preload("res://enemies/crawler.tres"), preload("res://enemies/striker.tres"), preload("res://enemies/sentry.tres"), preload("res://enemies/bulwark.tres"), preload("res://enemies/skimmer.tres")]
+const DEFINITIONS: Array[EnemyDefinition] = [preload("res://enemies/crawler.tres"), preload("res://enemies/striker.tres"), preload("res://enemies/sentry.tres"), preload("res://enemies/bulwark.tres"), preload("res://enemies/skimmer.tres"), preload("res://enemies/insulator.tres")]
 const ENEMY_RESERVE: int = 240
 
 func _ready() -> void:
 	rng.randomize()
+	adaptation.changed.connect(_adaptation_changed)
 	effects = CombatEffects.new()
 	add_child(effects)
 	rig = WeaponRig.new()
@@ -42,7 +46,7 @@ func _ready() -> void:
 	# Large enough to accommodate the complete fixed initial pool reserve.
 	# Pools grow if exhausted; no spawns are discarded to change difficulty.
 	for i in range(ENEMY_RESERVE):
-		_create_enemy(i % 5)
+		_create_enemy(i % DEFINITIONS.size())
 	for i in range(160):
 		_create_projectile(false)
 	for i in range(96):
@@ -67,6 +71,8 @@ func _create_projectile(hostile: bool) -> SwarmProjectile:
 	return shot
 
 func spawn(kind: int, point: Vector3) -> SwarmEnemy:
+	var id: String = str(DEFINITIONS[kind].id)
+	spawned_by_type[id] = int(spawned_by_type.get(id, 0)) + 1
 	for enemy in enemies:
 		if not enemy.active and enemy.definition == DEFINITIONS[kind]:
 			enemy.activate(point, 1.0 + director.elapsed / 280.0)
@@ -94,6 +100,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 	overclock = maxf(0.0, overclock - delta)
 	effects.tick(delta)
 	encounters.tick(delta, self, player)
+	adaptation.tick(delta, player.position, damage_by_weapon, encounters.allows_adaptation(director.elapsed))
 	var spawn_count := director.tick(delta)
 	for i in range(spawn_count):
 		var angle := rng.randf() * TAU
@@ -102,7 +109,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		point.z = clampf(point.z, -48.0, 48.0)
 		if point.distance_to(player.position) < 18.0:
 			point = player.position - Vector3(cos(angle), 0, sin(angle)) * 25.0
-		spawn(director.archetype(rng), point)
+		spawn(director.archetype(rng, adaptation.preferred_kind(), adaptation.bias()), point)
 	active_enemies = 0
 	for enemy in enemies:
 		if not enemy.active:
@@ -176,6 +183,9 @@ func update_build(ranks: Dictionary) -> void:
 func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO, critical: bool = false, weapon_id: String = "pulse") -> void:
 	if not enemy.active:
 		return
+	if weapon_id in ["arc", "arcstorm"] and enemy.definition.electric_resistance > 0.0:
+		amount *= 1.0 - clampf(enemy.definition.electric_resistance, 0.0, 0.8)
+		resisted_hits += 1
 	amount = maxf(0.0, amount) * (1.25 if enemy.exposed_time > 0.0 else 1.0)
 	damage_by_weapon[weapon_id] = float(damage_by_weapon.get(weapon_id, 0.0)) + minf(maxf(0.0, enemy.hp), amount)
 	impact.emit(enemy.position, amount, critical)
@@ -270,3 +280,9 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 		if ready:
 			timers[id] = float(definition["cooldown"]) * pow(0.94, rank - 1)
 			weapon_fired.emit(id)
+
+func _adaptation_changed(event: String, style: String) -> void:
+	if event == "warning":
+		var response: Dictionary = SwarmAdaptation.RESPONSES[style]
+		notice.emit("SWARM ADAPTING // 8s WARNING", response["reason"] + " // " + response["counter"], Color("ffcf85"))
+		weapon_fired.emit("mutation")

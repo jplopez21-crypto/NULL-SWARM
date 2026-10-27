@@ -15,7 +15,7 @@ Use an isolated writable XDG_DATA_HOME for sandboxed runs. Reports are written u
 
 ## Normal-rules bots
 
-The matrix has three upgrade strategies (Halo, Arcstorm and Kinetic), seeds 101/202 on a fresh Vanguard save, plus one explicitly earned/no-research fixture for each unlocked kit. Each case runs until death/victory or a 720-second combat-time limit. A separate seed-909, 90-second pair verifies gameplay determinism.
+The current matrix has four upgrade strategies (Halo, Arcstorm, Kinetic and Electric), seeds 101/202 on a fresh Vanguard save, plus one explicitly earned/no-research fixture for each unlocked kit. Each case runs until death/victory or a 720-second combat-time limit. A separate seed-909, 180-second pair verifies gameplay determinism.
 
 Bots use normal input movement and dash requests, automatic weapons, offered upgrades and available rerolls. They never inject invulnerability, teleport, grant stats during a run or force boss kills. Normal damage/dash invulnerability and earned upgrades remain enabled. Starting-kit fixtures grant only the documented prerequisite milestone before deployment, not research/currency.
 
@@ -64,3 +64,9 @@ Local diagnosis: unchanged-bot outcomes were mixed (seed 101 improved, seed 202 
 - [Current CPU benchmark](qa/0.3.1/STRESS_REPORT.md) / [full data](qa/0.3.1/stress-report.json).
 
 Legacy replay compatibility was true; both numeric baselines matched. All six A/B/collector CI traces matched local traces excluding timing fields. Correcting XP placement did not universally improve cautious-bot wins. The variant collector uses a different labelled navigation policy and cannot be used to claim an unchanged-bot balance improvement.
+
+## 0.4 adaptive coverage
+
+Current reports include adaptation warning/activation/expiry histories, underlying metrics, spawned types and resisted hits. The Conductor fixture now prioritizes the Electric build, explicitly labelled by profile, while other established profiles remain available. Ten normal cases run (four strategies × two fresh Vanguard seeds, plus Conductor/Sentinel fixtures). The replay extends past the first 02:00 analysis.
+
+Synthetic fixture version 2 mixes all six regular enemy types; compare timing only within the same fixture/hardware/Godot context. The frozen 0.3 pickup numeric baseline is expected to be incompatible after these combat changes; the report states this rather than pretending it was replayed. Current-game pickup conservation and labelled collector comparisons remain enabled.

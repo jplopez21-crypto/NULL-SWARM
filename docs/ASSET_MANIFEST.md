@@ -20,3 +20,7 @@ Destruction debris is pooled original primitive geometry; research/starting-kit 
 ## 0.3.1 memory packets
 
 Pickup spheres now share one original procedural mesh. Value tiers use blue/mint/gold shared materials and bounded scale; no external art or sounds were added.
+
+## 0.4 adaptive formations
+
+The Insulator's braced body/ring is original procedural geometry using shared original materials. Adaptive HUD/announcements reuse project fonts and generated UI audio. No external artwork, music or models were introduced. All remain development assets.

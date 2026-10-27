@@ -31,7 +31,7 @@ func scenario(count: int, quality: int) -> Dictionary:
 	for i in range(count):
 		var angle: float = TAU * i / count
 		var radius: float = 5.0 + (i % 6) * 1.8
-		var enemy := world.spawn(i % 5, Vector3(cos(angle), 0, sin(angle)) * radius)
+		var enemy := world.spawn(i % CombatWorld.DEFINITIONS.size(), Vector3(cos(angle), 0, sin(angle)) * radius)
 		# Synthetic load targets stay alive so the benchmark cannot become cheaper by killing them.
 		enemy.hp = 1000000000.0
 		enemy.max_hp = enemy.hp
@@ -98,6 +98,8 @@ func run() -> void:
 		"Fixture sustains at least 160 friendly + 160 hostile projectiles plus game-generated shots, 250 pickups and full weapon effects.",
 		"Timings include collision/AI/weapons/pickups/refill work but exclude bot decisions and render UI.",
 		"No absolute FPS/performance pass threshold on shared CI hardware."]
+	report["fixture_version"] = 2
+	report["enemy_mix"] = "six regular archetypes including Insulator; differs from pre-0.4 fixed mix"
 	var rows: Array[Dictionary] = []
 	for count in [100, 300, 600]:
 		var low: Dictionary = await scenario(count, 0)

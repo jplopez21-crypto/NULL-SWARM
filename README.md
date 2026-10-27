@@ -1,6 +1,6 @@
 # NULL//SWARM
 
-An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Foundry memory-packet fix (0.3.1); development art and generated audio are not final commercial assets.
+An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Adaptive Swarm pass (0.4); development art and generated audio are not final commercial assets.
 
 Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. Deploy VANGUARD, survive ten minutes and destroy The Architect, collect blue memory shards, and select upgrades. Weapons target automatically.
 
@@ -25,13 +25,13 @@ Install matching Godot 4.6.3 export templates, Java 21 and Android SDK platform-
 
 ```sh
 mkdir -p builds/android
-godot --headless --export-debug Android builds/android/null-swarm-foundry-0.3.1-debug.apk
-adb install -r builds/android/null-swarm-foundry-0.3.1-debug.apk
+godot --headless --export-debug Android builds/android/null-swarm-adaptive-0.4-debug.apk
+adb install -r builds/android/null-swarm-adaptive-0.4-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3.1-apk`. The [verified 0.3.1 APK ZIP](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40441583372/artifacts/12707070160) contains the APK under `android/` and staged QA captures under `screenshots/`. All 130 system checks, expanded bot/A-B/stress suites and APK signature verification passed. Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-adaptive-0.4-apk`. The 0.4 Android build and expanded CI verification are pending. Physical-device testing and balance remain required for this new version.
 
-This build installs alongside the original as **NULL SWARM Foundry XP** (`com.nullswarm.game.foundry.xp`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
+This build installs alongside the original as **NULL SWARM Adaptive** (`com.nullswarm.game.adaptive`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 
@@ -49,3 +49,5 @@ godot --headless --script tests/run_benchmark.gd
 Bots do not receive injected invulnerability or forced boss kills. Stress fixtures deliberately do; their headless CPU timings are not Android FPS. These additions are test tooling and do not change the installed 0.3 game.
 
 The 0.3.1 patch fixes pickup merging across distant positions and marks valuable packets with larger mint/gold visuals. Updated CI verification passed; [pickup comparison results](docs/qa/0.3.1/XP_COMPARISON.md) retain both positive and negative bot outcomes. The separately labelled XP comparison is described in [QA methods](docs/AUTOMATED_QA.md).
+
+Adaptive formations begin analysis at 02:00, announce eight seconds before changing the enemy mix, and offer persistent counterplay hints. See [Adaptive Swarm rules and limits](docs/ADAPTIVE_SWARM.md).
