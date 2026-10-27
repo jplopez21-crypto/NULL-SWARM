@@ -1,6 +1,6 @@
 # NULL//SWARM
 
-An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Memory guidance pass (0.4.1); development art and generated audio are not final commercial assets.
+An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Corruption Protocol pass (0.5); development art and generated audio are not final commercial assets.
 
 Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. Deploy VANGUARD, survive ten minutes and destroy The Architect, collect blue memory shards, and select upgrades. Weapons target automatically.
 
@@ -25,13 +25,13 @@ Install matching Godot 4.6.3 export templates, Java 21 and Android SDK platform-
 
 ```sh
 mkdir -p builds/android
-godot --headless --export-debug Android builds/android/null-swarm-memory-0.4.1-debug.apk
-adb install -r builds/android/null-swarm-memory-0.4.1-debug.apk
+godot --headless --export-debug Android builds/android/null-swarm-corruption-0.5-debug.apk
+adb install -r builds/android/null-swarm-corruption-0.5-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-memory-0.4.1-apk`. [Download the verified 0.4.1 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606/artifacts/12730444055) (sign into GitHub, extract the ZIP, install the APK in `android/`). Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-corruption-0.5-apk`. The 0.5 build is pending verification. [Previous verified 0.4.1 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606/artifacts/12730444055) (sign into GitHub, extract the ZIP, install the APK in `android/`). Physical-device testing and balance remain required for this new version.
 
-The new 0.4.1 build installs separately as **NULL SWARM Memory** (`com.nullswarm.game.memory`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
+The 0.5 build installs separately as **NULL SWARM Corruption** (`com.nullswarm.game.corruption`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 
@@ -53,3 +53,5 @@ The 0.3.1 patch fixes pickup merging across distant positions and marks valuable
 Adaptive formations begin analysis at 02:00, announce eight seconds before changing the enemy mix, and offer persistent counterplay hints. See [Adaptive Swarm rules and limits](docs/ADAPTIVE_SWARM.md).
 
 The 0.4.1 memory cue points from the operative toward stationary uncollected XP and displays distance. It does not identify a safe path or automatically collect packets. Human readability and pacing improvement remain to be tested.
+
+Corruption links become an optional alternate level-up choice from level 5. Review current/projected effects and lasting costs, or return to the exact same ordinary upgrade cards. See [Corruption Protocol rules](docs/CORRUPTION.md).

@@ -26,3 +26,5 @@ Pickup spheres now share one original procedural mesh. Value tiers use blue/mint
 The Insulator's braced body/ring is original procedural geometry using shared original materials. Adaptive HUD/announcements reuse project fonts and generated UI audio. No external artwork, music or models were introduced. All remain development assets.
 
 The 0.4.1 memory locator uses original procedural line/chevron drawing and the existing Godot fallback font; it introduces no third-party assets.
+
+Corruption 0.5 adds original purple UI elements and a fourth escort using the existing project-authored drone geometry/materials; acceptance reuses original synthesized level-up audio. No third-party assets added.

@@ -94,6 +94,22 @@ func run() -> void:
 		game.select_upgrade(game.offered[0])
 		game._process(0.3)
 		check(game.state == game.State.PLAYING and game.ui.memory_visible, "legal upgrade returns to guidance")
+		game.progress.level = 5
+		game.progress.pending = 1
+		game.show_upgrade()
+		await inspect(game, "unstable_offer", size)
+		var saved_offer: Array = game.offered.duplicate()
+		var saved_rng: int = game.combat.rng.state
+		game.show_corruption()
+		await inspect(game, "corruption", size)
+		check(game.corruption_panel, "optional corruption panel opens at level five")
+		game.return_upgrades()
+		check(game.offered == saved_offer and game.combat.rng.state == saved_rng, "declining corruption preserves upgrade cards")
+		game.show_corruption()
+		game.select_corruption("redline")
+		game._process(0.3)
+		check(game.state == game.State.PLAYING and game.player.health.maximum == 80 and game.ui.corruption_label.text.contains("1/3"), "accepted link updates gameplay and HUD")
+		await inspect(game, "corrupted", size)
 		game._notification(MainLoop.NOTIFICATION_APPLICATION_FOCUS_OUT)
 		game._process(0.1)
 		check(game.state == game.State.PAUSED and not game.ui.memory_visible, "focus loss pauses and hides guidance")

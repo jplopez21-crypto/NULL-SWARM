@@ -11,6 +11,7 @@ var effects: CombatEffects
 var rig: WeaponRig
 var encounters := EncounterDirector.new()
 var adaptation := SwarmAdaptation.new()
+var corruption := CorruptionProtocol.new()
 var spawned_by_type: Dictionary = {}
 var resisted_hits: int = 0
 var loadout: Dictionary = {}
@@ -114,11 +115,13 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			point = player.position - Vector3(cos(angle), 0, sin(angle)) * 25.0
 		spawn(director.archetype(rng, adaptation.preferred_kind(), adaptation.bias()), point)
 	active_enemies = 0
+	var regular_pace: float = corruption.enemy_pace()
 	for enemy in enemies:
 		if not enemy.active:
 			continue
 		active_enemies += 1
 		enemy.effects_enabled = effects_enabled
+		enemy.movement_multiplier = 1.0 if (enemy.definition.id == &"warden" or enemy.definition.id == &"architect") else regular_pace
 		if enemy.think_phase == tick_index % 6:
 			enemy.think(player.position)
 		var shot_direction := enemy.tick(delta)
@@ -131,9 +134,11 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 				return false
 	grid.rebuild(enemies)
 	target = grid.nearest(player.position, weapon.definition.range_m)
-	var fired := weapon.ready_to_fire(delta * (1.6 if overclock > 0.0 else 1.0), target != null)
+	var fired := weapon.ready_to_fire(delta * (1.6 if overclock > 0.0 else 1.0) * corruption.cycle_rate(), target != null)
 	if fired:
 		fire(player.position, target.position - player.position)
+		if corruption.extra_rounds() > 0:
+			fire(player.position, (target.position - player.position).rotated(Vector3.UP, 0.08))
 		effects.emit_fx("spark", player.position, player.position, Color("c1ffe7"), 0.45)
 	if target != null:
 		player.aim(target.position)
@@ -239,12 +244,12 @@ func chain(at: Vector3, damage: float, jumps: int, reach: float, ignore: Array =
 		previous = point
 
 func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
-	rig.tick(delta, player.position, loadout, mutations.has("halo"))
+	rig.tick(delta, player.position, loadout, mutations.has("halo"), corruption.extra_drones())
 	for id in Arsenal.DATA:
 		var rank: int = int(loadout.get(id, 0))
 		if rank <= 0:
 			continue
-		timers[id] = maxf(0.0, float(timers.get(id, 0.0)) - delta * (1.6 if overclock > 0.0 else 1.0))
+		timers[id] = maxf(0.0, float(timers.get(id, 0.0)) - delta * (1.6 if overclock > 0.0 else 1.0) * corruption.cycle_rate())
 		if float(timers[id]) > 0.0:
 			continue
 		var definition: Dictionary = Arsenal.DATA[id]

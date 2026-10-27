@@ -56,13 +56,13 @@ func tick(game: Node3D, delta: float) -> void:
 		var angle: float = TAU * i / 16.0
 		var candidate := Vector2(cos(angle), sin(angle))
 		var direction := Vector3(candidate.x, 0, candidate.y)
-		var predicted: Vector3 = point + direction * game.player.speed * 0.55
+		var predicted: Vector3 = point + direction * game.player.effective_speed() * 0.55
 		var score: float = direction.dot(goal.normalized()) * 3.0
 		score += candidate.dot(movement) * 0.25
 		if absf(predicted.x) > 44 or absf(predicted.z) > 44:
 			score -= 30.0
 		for enemy in nearby:
-			var enemy_next: Vector3 = enemy.position + enemy.velocity * 0.35
+			var enemy_next: Vector3 = enemy.position + enemy.velocity * enemy.movement_multiplier * 0.35
 			var clearance: float = predicted.distance_to(enemy_next) - enemy.definition.radius - 0.55
 			if clearance < 0:
 				score -= 45.0 + absf(clearance) * 8.0

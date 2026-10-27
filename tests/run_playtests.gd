@@ -37,7 +37,7 @@ func _game(seed_value: int, kit: String, pickup_mode: String = "local") -> Node3
 	game.audio.shutdown()
 	return game
 
-func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious") -> Dictionary:
+func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean") -> Dictionary:
 	var starting_failures: int = failures.size()
 	var game := _game(seed_value, kit, pickup_mode)
 	var bot: PlaytestBot = ValueAwareBot.new() if bot_policy == "value_aware" else PlaytestBot.new()
@@ -52,6 +52,18 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 	var next_snapshot: float = 60.0
 	var wall_start := Time.get_ticks_usec()
 	while steps < int(duration / DT) + 1000 and game.state != game.State.RESULTS and game.combat.director.elapsed < duration:
+		if game.state == game.State.UPGRADING and game.combat.corruption.available(game.progress.level) and link_policy != "clean":
+			var id: String = link_policy
+			if link_policy == "all":
+				id = ""
+				for candidate in CorruptionProtocol.IDS:
+					if game.combat.corruption.eligible(candidate, game.progress.level, game.progress.ranks):
+						id = candidate
+						break
+			if game.combat.corruption.eligible(id, game.progress.level, game.progress.ranks):
+				game.show_corruption()
+				game.select_corruption(id)
+				bot.choices.append({"at": snappedf(game.combat.director.elapsed, 0.01), "id": "corruption:" + id})
 		bot.tick(game, DT)
 		var start := Time.get_ticks_usec()
 		game._physics_process(DT)
@@ -103,6 +115,7 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"warden_spawned": game.combat.encounters.mini_spawned, "warden_defeated": game._warden_down(), "architect_spawned": game.combat.encounters.boss_spawned,
 		"architect_defeated": game._architect_down(), "max_enemies": max_enemies, "max_projectiles": max_shots,
 		"adaptations": game.combat.adaptation.history.duplicate(true), "spawned_by_type": game.combat.spawned_by_type.duplicate(), "resisted_hits": game.combat.resisted_hits,
+		"corruption": game.combat.corruption.accepted.duplicate(), "link_policy": link_policy,
 		"banked_salvage": int(game.save.data["ledger"].get("awarded", 0)), "upgrade_choices": bot.choices, "minute_snapshots": snapshots,
 		"simulation_step_p95_ms": QAReport.percentile(samples, 0.95), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
 	if result["outcome"] == "victory":
@@ -121,6 +134,20 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--corruption-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules corruption choices")
+		var cases: Array[Dictionary] = []
+		for fixture in [[101, "electric", "redline"], [202, "kinetic", "fracture"], [101, "kinetic", "hive"], [202, "kinetic", "all"]]:
+			var result: Dictionary = await simulate(fixture[0], fixture[1], "vanguard", MAX_SECONDS, "local", "cautious", fixture[2])
+			cases.append(result)
+			_check(not result["corruption"].is_empty(), "corruption probe never reached its offered link")
+			print("CORRUPTION_CASE ", fixture, " outcome=", result["outcome"], " links=", result["corruption"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Bot accepts advertised links only at legal upgrade opportunities, consuming one pending choice.", "Fixed seeds and privileged geometric movement do not establish human balance or fun."]
+		QAReport.write("res://builds/qa/corruption-probe.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--extended-seeds" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("additional fixed-seed normal-rules sessions")
 		var cases: Array[Dictionary] = []

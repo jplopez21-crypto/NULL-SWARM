@@ -15,6 +15,7 @@ var camera: Camera3D
 var arena: Node3D
 var run_root: Node3D
 var offered: Array[String] = []
+var corruption_panel: bool = false
 var shake: float = 0.0
 var result_recorded: bool = false
 var boot_smoke: bool = false
@@ -49,6 +50,9 @@ func _ready() -> void:
 	ui.dash.connect(func(): input_router.dash_requested = true)
 	ui.upgrade_selected.connect(select_upgrade)
 	ui.reroll_requested.connect(reroll_upgrades)
+	ui.corruption_requested.connect(show_corruption)
+	ui.corruption_return.connect(return_upgrades)
+	ui.corruption_selected.connect(select_corruption)
 	ui.lab_requested.connect(open_lab)
 	ui.research_requested.connect(purchase_research)
 	ui.kit_selected.connect(select_kit)
@@ -65,6 +69,7 @@ func _build_arena() -> void:
 	add_child(arena)
 
 func start_run() -> void:
+	corruption_panel = false
 	if run_root != null:
 		remove_child(run_root)
 		run_root.queue_free()
@@ -234,7 +239,44 @@ func show_upgrade() -> void:
 	input_router.reset()
 	offered = progress.choices(combat.rng)
 	audio.play("level", "UI")
-	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls)
+	corruption_panel = false
+	_render_upgrades()
+
+func _render_upgrades() -> void:
+	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level))
+
+func show_corruption() -> void:
+	if state != State.UPGRADING or progress.pending <= 0 or not combat.corruption.available(progress.level):
+		return
+	corruption_panel = true
+	ui.show_corruption(combat.corruption, player, combat, progress.ranks, progress.level)
+
+func return_upgrades() -> void:
+	if state != State.UPGRADING or not corruption_panel:
+		return
+	corruption_panel = false
+	_render_upgrades()
+
+func select_corruption(id: String) -> void:
+	if state != State.UPGRADING or not corruption_panel or progress.pending <= 0:
+		return
+	if id == "redline" and player.health.maximum <= CorruptionProtocol.HEALTH_COST:
+		return
+	if not combat.corruption.select(id, progress.level, progress.ranks):
+		return
+	progress.pending -= 1
+	if id == "redline":
+		player.health.maximum -= CorruptionProtocol.HEALTH_COST
+		player.health.current = minf(player.health.current, player.health.maximum)
+	player.walk_multiplier = combat.corruption.walk_rate()
+	corruption_panel = false
+	audio.play("level", "UI")
+	ui.toast("CORRUPTION LINKED", CorruptionProtocol.TITLES[id] + " // ACTIVE FOR THIS RUN", Color("efa6ff"))
+	if progress.pending > 0:
+		show_upgrade()
+	else:
+		ui.hide_panel()
+		state = State.PLAYING
 
 func upgrade_description(id: String) -> String:
 	if Arsenal.DATA.has(id):
@@ -249,16 +291,16 @@ func upgrade_description(id: String) -> String:
 		return "%s\n%s\n\n%s%s" % [definition["title"], line, definition["description"], synergy]
 	match id:
 		"damage": return "AMPLIFIED PULSE\nDamage %d → %d\nSynergy: Pulse 3 + Arc 3" % [int(combat.weapon.damage), int(combat.weapon.damage + 6)]
-		"rate": return "RAPID CYCLER\nCooldown %.2fs → %.2fs\nFaster automatic fire." % [combat.weapon.interval, maxf(0.12, combat.weapon.interval * 0.87)]
+		"rate": return "RAPID CYCLER\nCooldown %.2fs → %.2fs\nFaster automatic fire." % [combat.weapon.interval / combat.corruption.cycle_rate(), maxf(0.12, combat.weapon.interval * 0.87) / combat.corruption.cycle_rate()]
 		"pierce": return "PHASE ROUNDS\nPierce %d → %d\nPunch through another unit." % [combat.weapon.piercing, combat.weapon.piercing + 1]
-		"speed": return "SERVO OVERDRIVE\nSpeed %.1f → %.1f\nOutrun the machine tide." % [player.speed, player.speed + 0.65]
+		"speed": return "SERVO OVERDRIVE\nSpeed %.1f → %.1f\nOutrun the machine tide." % [player.effective_speed(), (player.speed + 0.65) * player.walk_multiplier]
 		"health": return "REINFORCED CHASSIS\nMax HP %d → %d\nAlso restores 25 health." % [int(player.health.maximum), int(player.health.maximum + 20)]
 		"shield": return "AEGIS CAPACITOR\nShield %d → %d\nRecharges after 5s unharmed." % [int(player.health.max_shield), int(player.health.max_shield + 12)]
 		"magnet": return "MEMORY TETHER\nAttraction %.1fm → %.1fm\nCollect tech from farther away." % [player.magnet, player.magnet + 1.2]
 	return "FIELD REPAIR\nRestore 35 HP\nAll systems fully upgraded."
 
 func select_upgrade(id: String) -> void:
-	if state != State.UPGRADING or not progress.select(id, offered):
+	if state != State.UPGRADING or corruption_panel or not progress.select(id, offered):
 		return
 	match id:
 		"damage": combat.weapon.damage += 6.0
@@ -295,7 +337,7 @@ func _exit_tree() -> void:
 			player.health.depleted.disconnect(connection["callable"])
 
 func reroll_upgrades() -> void:
-	if state != State.UPGRADING or progress.rerolls <= 0:
+	if state != State.UPGRADING or corruption_panel or progress.rerolls <= 0:
 		return
 	progress.rerolls -= 1
 	show_upgrade()
@@ -345,10 +387,17 @@ func _capture_session() -> void:
 	await get_tree().create_timer(0.3).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/adaptation_active.png")
 	state = State.PLAYING
+	progress.level = 5
 	progress.pending = 1
 	show_upgrade()
 	await get_tree().create_timer(0.5).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/upgrades.png")
+	show_corruption()
+	await get_tree().create_timer(0.4).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/corruption.png")
+	select_corruption("redline")
+	await get_tree().create_timer(0.3).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/corrupted.png")
 	ui.hide_panel()
 	progress.pending = 0
 	state = State.PLAYING

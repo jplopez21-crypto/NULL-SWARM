@@ -3,6 +3,7 @@ extends Node3D
 
 var health := HealthComponent.new()
 var speed: float = 7.0
+var walk_multiplier: float = 1.0
 var magnet: float = 2.6
 var dash_cooldown: float = 0.0
 var dash_time: float = 0.0
@@ -47,11 +48,14 @@ func tick(delta: float, movement: Vector2, dash: bool) -> bool:
 		dash_cooldown = 2.5
 		health.invulnerable = maxf(health.invulnerable, 0.24)
 		dashed = true
-	position += (direction * 27.0 if dash_time > 0.0 else moving * speed) * delta
+	position += (direction * 27.0 if dash_time > 0.0 else moving * effective_speed()) * delta
 	position.x = clampf(position.x, -boundary, boundary)
 	position.z = clampf(position.z, -boundary, boundary)
 	body.visible = not flash_feedback or health.invulnerable <= 0.0 or int(health.invulnerable * 20.0) % 2 == 0
 	return dashed
+
+func effective_speed() -> float:
+	return speed * walk_multiplier
 
 func aim(target: Vector3) -> void:
 	var offset := target - position

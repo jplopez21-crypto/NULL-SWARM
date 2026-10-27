@@ -27,12 +27,20 @@ jobs:
           godot --headless --editor --import --quit 2>&1 | tee builds/qa/import.log
           if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' builds/qa/import.log; then exit 1; fi
           godot --headless --script tests/run_tests.gd 2>&1 | tee builds/qa/unit.log
+          timeout 120s godot --headless --script tests/run_corruption_tests.gd 2>&1 | tee builds/qa/corruption.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/corruption.log; then exit 1; fi
       - name: Normal-rules bot playtests
         run: |
           set -o pipefail
           timeout 900s godot --headless --script tests/run_playtests.gd 2>&1 | tee builds/qa/bots.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/bots.log; then exit 1; fi
           test -s builds/qa/bot-report.json
+      - name: Normal-rules corruption sessions
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --corruption-probe 2>&1 | tee builds/qa/corruption-probe.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/corruption-probe.log; then exit 1; fi
+          test -s builds/qa/corruption-probe.json
       - name: Additional seeded sessions
         run: |
           set -o pipefail

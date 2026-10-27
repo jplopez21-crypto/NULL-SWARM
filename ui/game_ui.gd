@@ -8,6 +8,9 @@ signal return_menu
 signal pause_run
 signal dash
 signal upgrade_selected(id: String)
+signal corruption_requested
+signal corruption_return
+signal corruption_selected(id: String)
 signal reroll_requested
 signal lab_requested
 signal research_requested(id: String)
@@ -39,6 +42,8 @@ var last_safe_size := Vector2.ZERO
 var hud_visible: bool = false
 var settings_return: Callable
 var notices: Label
+var corruption_label: Label
+var corruption_bar: ProgressBar
 var adaptation_label: Label
 var boss_bar: ProgressBar
 var boss_label: Label
@@ -168,6 +173,8 @@ func _build_hud() -> void:
 	xp_bar = _bar(hud, Color("5e9fff"), 5)
 	weapons_label = label_at(hud, "PULSE RIFLE  /  AUTOMATIC", 15, MUTED)
 	adaptation_label = label_at(hud, "SWARM // OBSERVING", 14, Color("ffcf85"))
+	corruption_label = label_at(hud, "CORRUPTION 0/3 // CLEAN SIGNAL", 14, Color("efa6ff"))
+	corruption_bar = _bar(hud, Color("cf7aff"), 3)
 	hint_label = label_at(hud, "MOVE: WASD / LEFT STICK     DASH: SPACE / A", 15, MUTED)
 	perf_label = label_at(hud, "", 14, MUTED)
 	perf_label.visible = false
@@ -236,7 +243,7 @@ func show_menu(data: Dictionary) -> void:
 	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
-	label_at(box, "BUILD 0.4.1  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
+	label_at(box, "BUILD 0.5  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
@@ -284,7 +291,7 @@ func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: i
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
 
-func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0) -> void:
+func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false) -> void:
 	var box := _panel()
 	label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d" % level, 18, CYAN)
 	label_at(box, "CHOOSE YOUR ADVANTAGE", 32)
@@ -312,7 +319,28 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerol
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var reroll := button_at(footer, "REROLL  /  %d" % rerolls, func(): reroll_requested.emit())
 	reroll.disabled = rerolls <= 0
+	if unstable_available:
+		var unstable := button_at(box, "UNSTABLE LINK // OPTIONAL POWER + COST FOR THIS RUN", func(): corruption_requested.emit())
+		unstable.add_theme_color_override("font_color", Color("efa6ff"))
 	first.grab_focus()
+
+func show_corruption(protocol: CorruptionProtocol, player: SwarmPlayer, combat: CombatWorld, ranks: Dictionary, level: int) -> void:
+	var box := _panel()
+	label_at(box, "UNSTABLE TECHNOLOGY // OPTIONAL", 18, Color("efa6ff"))
+	label_at(box, "POWER HAS A PRICE", 30)
+	label_at(box, "Uses this level-up. Each link once. Costs last this run. Next link after 5 more levels.", 16, MUTED)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	box.add_child(row)
+	for id in CorruptionProtocol.IDS:
+		var button := button_at(row, protocol.description(id, player, combat, ranks), func(): corruption_selected.emit(id))
+		button.custom_minimum_size = Vector2(300, 285)
+		button.add_theme_font_size_override("font_size", 16)
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.disabled = not protocol.eligible(id, level, ranks)
+		button.add_theme_color_override("font_color", Color("efa6ff"))
+	var back := button_at(box, "KEEP MY UPGRADE CHOICES // BACK", func(): corruption_return.emit())
+	back.grab_focus()
 
 func show_settings(settings: Dictionary, back: Callable) -> void:
 	settings_return = back
@@ -373,6 +401,8 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
 	dash_button.text = "DASH / %.1fs" % player.dash_cooldown if player.dash_cooldown > 0.0 else "DASH / READY"
 	adaptation_label.text = combat.adaptation.status()
+	corruption_label.text = combat.corruption.status()
+	corruption_bar.value = 100.0 * combat.corruption.accepted.size() / CorruptionProtocol.MAX_LINKS
 	var time := combat.director.elapsed
 	hint_label.visible = time < 22.0
 	notices.text = "STRIKER SIGNALS DETECTED • ORANGE LANES WARN OF CHARGES" if time > 22.0 and time < 29.0 else ("SENTRY SIGNALS DETECTED • AVOID VIOLET FIRING LANES" if time > 62.0 and time < 70.0 else "")

@@ -49,7 +49,7 @@ func tick(game: Node3D, delta: float) -> void:
 			var angle: float = TAU * i / 16
 			var candidate := Vector2(cos(angle), sin(angle))
 			var direction := Vector3(candidate.x, 0, candidate.y)
-			var distance: float = 27.0 * 0.18 + game.player.speed * 0.37 if mode else game.player.speed * 0.55
+			var distance: float = 27.0 * 0.18 + game.player.effective_speed() * 0.37 if mode else game.player.effective_speed() * 0.55
 			var future: Vector3 = point + direction * distance
 			var score: float = (point.distance_to(goal) - future.distance_to(goal)) * 2.0 + candidate.dot(movement) * 0.4
 			if mode:
@@ -57,7 +57,7 @@ func tick(game: Node3D, delta: float) -> void:
 			if absf(future.x) > 45 or absf(future.z) > 45:
 				score -= 60.0
 			for enemy in nearby:
-				var enemy_future: Vector3 = enemy.position + enemy.velocity * 0.35
+				var enemy_future: Vector3 = enemy.position + enemy.velocity * enemy.movement_multiplier * 0.35
 				var clearance: float = future.distance_to(enemy_future) - enemy.definition.radius - 0.55
 				if clearance < 0.0:
 					score -= 75.0

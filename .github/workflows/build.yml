@@ -47,6 +47,7 @@ jobs:
       - name: Automated tests and scene smoke
         run: |
           godot --headless --script tests/run_tests.gd
+          timeout 120s godot --headless --script tests/run_corruption_tests.gd
           godot --headless -- --smoke
       - name: Render presentation captures
         run: |
@@ -58,13 +59,13 @@ jobs:
       - name: Export debug APK
         run: |
           mkdir -p builds/android
-          godot --headless --export-debug Android builds/android/null-swarm-memory-0.4.1-debug.apk
-          test -s builds/android/null-swarm-memory-0.4.1-debug.apk
-          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-memory-0.4.1-debug.apk
-          sha256sum builds/android/null-swarm-memory-0.4.1-debug.apk > builds/android/SHA256SUMS
+          godot --headless --export-debug Android builds/android/null-swarm-corruption-0.5-debug.apk
+          test -s builds/android/null-swarm-corruption-0.5-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-corruption-0.5-debug.apk
+          sha256sum builds/android/null-swarm-corruption-0.5-debug.apk > builds/android/SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: null-swarm-memory-0.4.1-apk
+          name: null-swarm-corruption-0.5-apk
           path: |
             builds/android/
             builds/screenshots/

@@ -17,6 +17,7 @@ var body: Node3D
 var telegraph: MeshInstance3D
 var index: int = 0
 var think_phase: int = 0
+var movement_multiplier: float = 1.0
 
 func configure(resource: EnemyDefinition) -> void:
 	definition = resource
@@ -110,6 +111,10 @@ func tick(delta: float) -> Vector3:
 	flash = maxf(0.0, flash - delta)
 	body.scale = Vector3.ONE * visual_scale * (1.15 if flash > 0.0 and effects_enabled else 1.0)
 	var shot := Vector3.ZERO
+	if definition.behavior == 1:
+		var reach: float = 15.0 * 0.55 * movement_multiplier
+		telegraph.scale.z = reach / 7.0
+		telegraph.position.z = -reach * 0.5
 	if windup > 0.0:
 		windup -= delta
 		telegraph.visible = true
@@ -127,7 +132,7 @@ func tick(delta: float) -> Vector3:
 		charging -= delta
 		if charging <= 0.0:
 			velocity = Vector3.ZERO
-	position += velocity * delta
+	position += velocity * delta * movement_multiplier
 	return shot
 
 func hit(amount: float, knockback: Vector3) -> bool:

@@ -125,3 +125,10 @@
 - Added six separately labelled seeded sessions across builds/earned kits to recurring CI.
 - Local UI suite: 352 checks / 32 layouts / zero failures. Expanded CI passed: 352 UI checks, 32 viewport captures and six extra seeded sessions (five wins/one loss), alongside the existing checks/matrix/comparisons/stress suite. Installed gameplay unchanged.
 - Configured daily QA at 03:23 UTC and 14-day artifact retention; archived follow-up reports and preserved bot defeats.
+
+## 0.5.0 — Corruption Protocol
+
+- Added optional run-local Redline, Fracture and Hive links with explicit power/cost previews; selection consumes one level-up and never rerolls ordinary choices.
+- Added five-level cadence, one-time links, three-link cap, prerequisites, guarded transactions, HUD meter, reset and non-persistent modifiers.
+- Wired cooldown rate, real extra rifle round, regular-enemy pace, extra visible/attacking drone and separate walking multiplier. Striker warning lanes now match travel distance.
+- Added dedicated modifier/transaction tests, legal-link normal bot sessions and corruption panels to recurring rendered UI QA. No billing, progression-save schema or commercial-art claims.

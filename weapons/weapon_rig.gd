@@ -12,7 +12,7 @@ func _ready() -> void:
 		var mesh := SwarmVisuals.sphere(self, 0.32, Vector3.ZERO, Arsenal.color("orbit"))
 		mesh.visible = false
 		orbitals.append(mesh)
-	for i in range(3):
+	for i in range(4):
 		var drone := Node3D.new()
 		add_child(drone)
 		SwarmVisuals.box(drone, Vector3(0.5, 0.2, 0.7), Vector3.ZERO, Color("37624c"))
@@ -21,7 +21,7 @@ func _ready() -> void:
 		drone.visible = false
 		drones.append(drone)
 
-func tick(delta: float, at: Vector3, ranks: Dictionary, halo: bool) -> void:
+func tick(delta: float, at: Vector3, ranks: Dictionary, halo: bool, extra_drones: int = 0) -> void:
 	position = at
 	orbit_time += delta
 	var count: int = mini(5, int(ranks.get("orbit", 0)) + 1) if ranks.has("orbit") else 0
@@ -34,7 +34,7 @@ func tick(delta: float, at: Vector3, ranks: Dictionary, halo: bool) -> void:
 			orbitals[i].position = Vector3(cos(angle) * 3.2, 0.8, sin(angle) * 3.2)
 			orbital_points.append(at + Vector3(cos(angle) * 3.2, 0, sin(angle) * 3.2))
 	for i in range(drones.size()):
-		var drone_count: int = 1 + int(ranks.get("drone", 0)) / 2 if ranks.has("drone") else 0
+		var drone_count: int = mini(4, 1 + int(ranks.get("drone", 0)) / 2 + extra_drones) if ranks.has("drone") else 0
 		drones[i].visible = i < drone_count
 		if i < drone_count:
 			var angle := orbit_time * 0.65 + i * TAU / drone_count

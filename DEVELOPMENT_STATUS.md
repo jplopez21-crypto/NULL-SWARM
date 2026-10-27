@@ -1,4 +1,4 @@
-# Development status — Memory locator 0.4.1 / 2026-10-27
+# Development status — Corruption Protocol 0.5 / 2026-10-27
 
 ## Completed features
 
@@ -45,3 +45,11 @@ Eight local collector comparisons passed all invariants and reproduced four caut
 - Existing bot/pickup case fields exactly match 0.4.1 excluding timings. Representative viewport captures inspected; they omit letterbox bars. Reports: docs/qa/0.4.1/followup/RESULTS.md.
 - Daily unattended QA scheduled at 03:23 UTC, 14-day artifact retention. GitHub may delay starts; this is CI automation, not a background chat process.
 - These additions change QA tooling only. The verified 0.4.1 APK remains the current gameplay build.
+
+## Corruption 0.5 implementation / verification in progress
+
+- Optional corruption panel from level 5, preserves ordinary cards and RNG on return; accepting consumes one pending upgrade. Five-level spacing, three unique links maximum, all costs end on restart.
+- Redline: +30% weapon cycle rate / -20 max HP; Fracture: +1 Pulse/Arcstorm round / +15% regular-enemy walking/charge pace; Hive: +1 actual drone / -12% walking speed, requires Drone Hive. Boss/warning clocks and normal dash are unchanged.
+- Added projected previews, disabled prerequisites, purple HUD meter/names, dedicated selection guards and actual modifier wiring. Striker lanes reflect charge travel distance.
+- Local 165 established system checks, dedicated corruption checks and expanded 504-check/44-layout UI suite passed during development. Four preliminary legal-link bot probes won; final CI with effective-speed-aware sensors is pending.
+- App NULL SWARM Corruption / com.nullswarm.game.corruption, version 0.5.0/code 7, separate from prior installs. Android build, rendered panels, canonical clean-run comparison and expanded scheduled QA pending.
