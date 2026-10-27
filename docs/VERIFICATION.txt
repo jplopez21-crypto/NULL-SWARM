@@ -1,25 +1,16 @@
-Godot 4.6.3 / Foundry 0.3 / 2026-10-27
-Build commit: 82a45e9a6649807af819b8a3fe4bdc1fa2656d32
-Workflow run: 40435364064 — success
-TEST_RESULT checks=121 failures=0
+Foundry XP 0.3.1 / Godot 4.6.3 / 2026-10-27
+Build commit: 604013b1cee618a9b970270feebaf0cca24b6529
+Android workflow 40441583372 — success
+QA workflow 40441583251 — success
+TEST_RESULT checks=130 failures=0
 SCENE_SMOKE_OK enemies=5 projectiles=2
-Menu/Foundry/results captures inspected; layout fits the 1280x720 QA viewport.
-Android debug export and apksigner verify: success.
-Artifact ZIP hash matches GitHub digest; APK hash matches SHA256SUMS.
-APK ZIP integrity, manifest, DEX, ARM64 engine verified locally.
-QA screenshots excluded from APK resources.
-APK SHA256: e1fa5e937ebd073fc4b16dc7ddf80803a80bdd2c301b09788e58cbf508e2eefc
-CI capture warnings: ObjectDB shutdown leak; virtual-display V-Sync unsupported.
-0.3 physical Android playtest/performance: NOT TESTED.
-Lifecycle harness uses invulnerability/explicit boss damage; not a balance test.
-
-Repeatable gameplay QA at d6206ffff31f6e521bd507c4e483c571535de7c6:
-Workflow 40437672314 — success
-TEST_RESULT checks=121 failures=0
-BOT_REPORT cases=8 failures=0; victories=7 defeats=1 timeouts=0
-90-second seed-909 replay: matched
-All eight CI gameplay traces matched local traces excluding timing fields.
+BOT_REPORT cases=8 failures=0 (7 victories, 1 defeat)
+XP_REPORT cases=6 failures=0; pinned old baseline compatible and reproduced
+All six CI A/B traces match local results excluding timing fields.
 STRESS_REPORT scenarios=6 failures=0
-Selected low/high gameplay counters/fingerprints and retained enemy loads: matched
-600 synthetic enemies / 400 peak shots: p95 CPU step low 22.611ms, high 22.444ms.
-These are headless host CPU timings, not phone frame rates or human balance results.
+APK signature verification passed in CI; ZIP/APK digests and integrity verified locally.
+APK manifest package com.nullswarm.game.foundry.xp verified; compiled pickup asset, DEX and ARM64 engine present.
+Test fixtures and QA images excluded from APK resources.
+APK SHA256: 80c24b193c178c1c6ae22d5109bfec51dfe7310d87d1173aaaf6a121dac100a9
+Menu visual capture inspected; 0.3.1 physical-device playtesting remains unverified.
+Headless CPU timing and bot outcomes are not phone FPS or human-fun claims.

@@ -1,80 +1,47 @@
-# Development status — Foundry 0.3 / 2026-10-27
+# Development status — Foundry XP 0.3.1 / 2026-10-27
 
-## Confirmed baseline
+## Completed features
 
-The owner reports that Milestone 1 and Reactor Zero 0.2 APKs work on their Android device. This is not a measured frame-rate or balance result.
+- Six weapons, four equipment slots, mutations, Overclock, five regular enemy types, Warden and Architect encounters.
+- Foundry salvage/research/kit unlock loop with versioned saves and idempotent checkpoints.
+- Fixed distant FIFO XP merging: only nearby stationary packets merge, within 3m. Older XP stays put, attracted packets are excluded, and sparse drops remain separate above a soft 300-packet budget.
+- Shared packet mesh, bounded size and blue/mint/gold value tiers; updated collection guidance.
+- Test-only pinned legacy fixture and separate value-aware collector retain honest A/B comparisons. Neither is included in the APK.
 
-## Completed in 0.3
+## Latest build — successful
 
-- Salvage earned from survival, kills, bosses and victory; defeat retains earned salvage.
-- Checkpoint ledger every 30 seconds and on pause/background/core recovery/results; repeated checkpoints/settlement cannot duplicate rewards.
-- Foundry research: bounded HP, attraction and reroll upgrades, with immediate purchase persistence and failure rollback.
-- Conductor and Sentinel starting-kit unlocks with explicit tradeoffs; Vanguard remains available.
-- Version 1 → 2 save migration, existing backup recovery, results/unlock feedback.
-- Pooled destruction debris, brief exposed boss cores and exact per-weapon damage totals on results.
-- Narrow Solar Halo area-pulse adjustment and corrected Overclock threshold HUD copy.
+- Source build commit: `604013b1cee618a9b970270feebaf0cca24b6529`.
+- Android workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40441583372
+- APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40441583372/artifacts/12707070160
+- APK: `builds/android/null-swarm-foundry-0.3.1-debug.apk`, ARM64, 27,711,129 bytes.
+- SHA256: `80c24b193c178c1c6ae22d5109bfec51dfe7310d87d1173aaaf6a121dac100a9`.
+- Export/signature check passed. Download ZIP/APK hashes, archive integrity, manifest package, DEX and ARM64 engine independently verified locally.
+- Menu capture inspected at 1280x720; game art/audio remain development assets.
 
-## Verification
+## Test results
 
-- Local automated suite: 121 checks passed, zero failures.
-- Includes migration, corruption recovery, checkpoint/settlement idempotency, currency/purchase/rank caps, failed-write refund, kit unlocks/tradeoffs, damage attribution and exposed-core bonus, plus the ten-minute lifecycle.
-- Final GitHub Actions run passed all 121 checks, scene smoke, rendered captures, Android debug export and APK signature verification.
-- Inspected menu, Foundry and results captures: controls/requirements/costs and damage/salvage totals are visible.
-- Downloaded artifact/APK digests and archive integrity independently verified locally.
-- Lifecycle harness uses invulnerability and explicit boss damage; human survivability and balance are unverified.
+- QA workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40441583251 — success.
+- 130 system checks passed, including 80m legacy relocation reproduction, 3m merge bound, conservation, sparse soft-budget behavior, attraction/vacuum and pooled visual reset.
+- Eight unchanged-cautious-policy normal bot cases: seven victories, one defeat. Seeded replay matched. These use normal combat rules, not injected invulnerability or forced boss kills.
+- Six XP A/B/collector cases passed invariants and pinned-baseline checks; all six CI gameplay traces matched local results after timing fields were excluded.
+- Cautious seed 101: legacy defeat/level24/3,045 collected XP → local victory/level54/14,864 XP.
+- Cautious seed 202: legacy victory/level54/14,769 XP → local defeat/level31/4,935 XP. The separate value-aware collector won both local-merge seeds. This is a navigation finding, not a universal difficulty improvement.
+- Old replay merge distances reached 48.26m; new comparisons stayed below 3m. Cautious fixed-case pickup peaks were 314–315; full matrix maximum was 318.
+- Six synthetic stress scenarios retained their loads and matched selected gameplay fingerprints across low/high effects. 600 enemies/400 peak shots: p95 CPU simulation 23.719ms low / 24.200ms high on the reported CI host. This excludes rendering and is not Android FPS.
+- Versioned canonical reports: docs/qa/0.3.1. QA report ZIP digest/integrity verified locally.
 
-## Delivery / known limitations
+## Known bugs / limits / work in progress
 
-- New package: com.nullswarm.game.foundry, display name NULL SWARM Foundry, installs alongside older test APKs.
-- Ephemeral debug signing still prevents reliable in-place test updates. Stable protected signing must be configured before production upgrades; no keys/passwords are committed.
-- Android-private saves in older differently signed packages cannot be automatically transferred by this new package.
-- Currency already checkpointed persists after interruption, but the active combat run does not resume after process death.
-- Procedural artwork/generated audio remain development assets. Android performance and reduced-effects readability require physical validation.
-- Previous CI smoke runs reported an intermittent ObjectDB shutdown warning; investigate before commercial acceptance.
-- Adaptive swarm/corruption, full permanent-progression content, final art and commercial release work remain deferred.
+- Owner reported earlier APKs working; 0.3.1 phone installation, packet readability and rendering performance have not been tested here.
+- Cautious bot still stalls on collection in some runs; do not change combat balance solely to make it win.
+- New app is NULL SWARM Foundry XP, package com.nullswarm.game.foundry.xp. It installs alongside prior test apps; Android-private saves remain separate.
+- Stable protected signing remains unconfigured; ephemeral debug keys do not support reliable in-place updates. No private keys are committed.
+- Active combat does not resume after process death; previously checkpointed currency/settings persist.
+- Earlier CI runs intermittently reported shutdown leaks; current build/QA logs had no such warning. Virtual-display V-Sync warning remains unrelated to measured phone performance.
+- Final commercial art, adaptive swarm/corruption expansion, full content roster, physical profiling and release preparation remain unfinished.
 
-## Next priorities
+## Next development priorities
 
-1. Playtest earning/spending salvage, starting kit tradeoffs, Halo adjustment and core-exposure feedback on Android.
-2. Use damage reports and physical frame-time measurements to guide further balance/performance work.
-
-## Verified APK
-
-- Workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064
-- Download: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064/artifacts/12703736664
-- Build commit: `82a45e9a6649807af819b8a3fe4bdc1fa2656d32`.
-- APK: `builds/android/null-swarm-foundry-0.3-debug.apk`, ARM64, 27,711,129 bytes.
-- SHA256: `e1fa5e937ebd073fc4b16dc7ddf80803a80bdd2c301b09788e58cbf508e2eefc`.
-- CI rendered capture still reported an ObjectDB shutdown warning and unsupported V-Sync setting on the virtual display. The pipeline passed; these are not physical-device performance measurements.
-- 0.3 installation, progression pacing and combat balance await owner playtesting.
-
-## Repeatable gameplay QA — verified in CI
-
-- Added normal-rules bot playtests: three strategies × two seeds on fresh Vanguard, plus Conductor/Sentinel earned-kit fixtures, all without research.
-- Local eight-case matrix: seven victories, one Kinetic/Vanguard defeat at 511.05s. A 90-second seeded replay matched exactly; no invariant failures.
-- Fresh Vanguard acquired its first additional weapon in approximately 11–16s.
-- Kinetic seed 101 collected 3,045 XP and left 7,505 XP uncollected; investigate bot collection path/progression before changing weapon balance.
-- Local synthetic benchmark completed six low/high scenarios at 100/300/600 enemies, retaining the requested loads and identical gameplay fingerprints across effect qualities.
-- Sequential CI benchmark completed: 600 enemies/400 peak shots measured p95 CPU simulation steps of 22.611ms low and 22.444ms high on the reported CI host. No Android FPS claim is made.
-- Dedicated QA workflow now runs on pushes/PRs/manual dispatch and uploads reports. No unattended calendar schedule was configured.
-- No gameplay changes or new APK are needed for these test tools; phone input/rendering/thermals and human enjoyment still require device playtesting.
-
-### QA delivery
-
-- Workflow https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437672314 succeeded: 121 system checks, eight normal-rules bot scenarios plus repeatability pair, six synthetic stress scenarios.
-- All eight CI gameplay outcomes/traces matched local results, excluding timing fields.
-- Report artifact: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437672314/artifacts/12705035805 — ZIP digest/integrity verified locally.
-- Canonical report snapshots and methods are in docs/qa and docs/AUTOMATED_QA.md.
-- Android regression build also passed: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40437670838. The earlier 0.3 artifact remains the installed-game reference; gameplay was not changed by this QA pass.
-
-## 0.3.1 pickup investigation — local checks passed, CI pending
-
-- Confirmed FIFO merging could move old XP 80m in a regression fixture and up to 48.26m in the original Kinetic seed-101 replay.
-- Local merging preserves existing packet locations, moves newly merged XP at most 3m, skips attracted/in-flight packets, and conserves all XP. A soft 300-packet budget permits sparse drops rather than teleporting them.
-- Shared packet geometry and bounded blue/mint/gold value visuals implemented.
-- 130 system checks passed; six local A/B/collector scenarios passed invariants and reproduced the old numeric baseline.
-- Cautious bot: seed 101 changed from defeat/level24 to victory/level54; seed 202 changed from victory/level54 to defeat/level31.
-- Separately labelled value-aware test collector won both local-merge seeds. No combat buffs or bot-policy substitution are hidden in the A/B.
-- Local packet peaks were 314–315 for the cautious-bot fixed cases, versus the old 300. Physical rendering cost remains unmeasured.
-- Full updated bot matrix, synthetic benchmark, visual captures and signed debug APK are pending CI.
-- New test package is com.nullswarm.game.foundry.xp (NULL SWARM Foundry XP) to avoid signature conflicts and preserve existing installs; Android-private saves remain separate until stable protected signing is configured.
+1. Validate gold-packet readability and soft-budget rendering cost on S23 Ultra.
+2. Broaden collection-policy/seed comparisons before tuning weapons or progression.
+3. Establish protected persistent signing before production updates and continue performance work using physical measurements.

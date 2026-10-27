@@ -1,0 +1,1865 @@
+{
+  "cases": [
+    {
+      "architect_defeated": false,
+      "architect_spawned": false,
+      "banked_salvage": 78,
+      "bot_policy": "cautious",
+      "damage_by_weapon": {
+        "drone": 57160.2507142862,
+        "pulse": 22766.5461904753,
+        "rail": 30426.1032142853
+      },
+      "damage_events": 15,
+      "dashes": 16,
+      "first_level_seconds": 12.45,
+      "first_new_weapon_seconds": 12.45,
+      "fixture": "new player",
+      "health": 0.0,
+      "kills": 1192,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 443.6,
+      "level": 24,
+      "longest_upgrade_gap_seconds": 137.55,
+      "max_enemies": 39,
+      "max_merge_distance": 48.2620658874512,
+      "max_projectiles": 9,
+      "minimum_health": 0.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 79,
+          "level": 4,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 171,
+          "level": 4,
+          "time": 120
+        },
+        {
+          "hp": 100.0,
+          "kills": 271,
+          "level": 11,
+          "time": 180
+        },
+        {
+          "hp": 100.0,
+          "kills": 388,
+          "level": 22,
+          "time": 240
+        },
+        {
+          "hp": 100.0,
+          "kills": 516,
+          "level": 22,
+          "time": 300
+        },
+        {
+          "hp": 100.0,
+          "kills": 664,
+          "level": 23,
+          "time": 360
+        },
+        {
+          "hp": 100.0,
+          "kills": 842,
+          "level": 23,
+          "time": 420
+        },
+        {
+          "hp": 59.65,
+          "kills": 1056,
+          "level": 24,
+          "time": 480
+        }
+      ],
+      "mutations": {
+
+      },
+      "outcome": "defeat",
+      "peak_pickups": 300,
+      "pickup_merges": 540,
+      "pickup_mode": "legacy",
+      "profile": "kinetic",
+      "research": {
+
+      },
+      "seed": 101,
+      "simulation_step_p95_ms": 0.435,
+      "survived_seconds": 511.05,
+      "uncollected_pickups": 300,
+      "uncollected_xp": 7505,
+      "upgrade_choices": [
+        {
+          "at": 12.45,
+          "id": "rail"
+        },
+        {
+          "at": 16.07,
+          "id": "drone"
+        },
+        {
+          "at": 24.72,
+          "id": "rail"
+        },
+        {
+          "at": 142.65,
+          "id": "drone"
+        },
+        {
+          "at": 144.7,
+          "id": "rail"
+        },
+        {
+          "at": 145.7,
+          "id": "drone"
+        },
+        {
+          "at": 146.37,
+          "id": "orbit"
+        },
+        {
+          "at": 147.22,
+          "id": "drone"
+        },
+        {
+          "at": 153.32,
+          "id": "rail"
+        },
+        {
+          "at": 156.98,
+          "id": "rail"
+        },
+        {
+          "at": 186.77,
+          "id": "orbit"
+        },
+        {
+          "at": 186.97,
+          "id": "orbit"
+        },
+        {
+          "at": 187.23,
+          "id": "drone"
+        },
+        {
+          "at": 187.5,
+          "id": "orbit"
+        },
+        {
+          "at": 187.63,
+          "id": "orbit"
+        },
+        {
+          "at": 187.78,
+          "id": "pierce"
+        },
+        {
+          "at": 188.02,
+          "id": "damage"
+        },
+        {
+          "at": 188.18,
+          "id": "rate"
+        },
+        {
+          "at": 188.37,
+          "id": "rate"
+        },
+        {
+          "at": 188.52,
+          "id": "damage"
+        },
+        {
+          "at": 188.73,
+          "id": "damage"
+        },
+        {
+          "at": 199.8,
+          "id": "reroll"
+        },
+        {
+          "at": 199.8,
+          "id": "damage"
+        },
+        {
+          "at": 337.35,
+          "id": "damage"
+        },
+        {
+          "at": 443.6,
+          "id": "damage"
+        }
+      ],
+      "wall_seconds": 11.651918,
+      "warden_defeated": true,
+      "warden_spawned": true,
+      "weapons_and_ranks": {
+        "damage": 6,
+        "drone": 5,
+        "orbit": 5,
+        "pierce": 1,
+        "rail": 5,
+        "rate": 2
+      },
+      "xp_collected": 3045
+    },
+    {
+      "architect_defeated": true,
+      "architect_spawned": true,
+      "banked_salvage": 138,
+      "bot_policy": "cautious",
+      "damage_by_weapon": {
+        "drone": 77714.1917261862,
+        "orbit": 644.87619047617,
+        "pulse": 61196.8423214199,
+        "rail": 42014.3838690453
+      },
+      "damage_events": 16,
+      "dashes": 32,
+      "first_level_seconds": 12.45,
+      "first_new_weapon_seconds": 12.45,
+      "fixture": "new player",
+      "health": 200.0,
+      "kills": 1647,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 598.67,
+      "level": 54,
+      "longest_upgrade_gap_seconds": 214.15,
+      "max_enemies": 56,
+      "max_merge_distance": 2.97915768566423,
+      "max_projectiles": 29,
+      "minimum_health": 53.15,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 79,
+          "level": 4,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 171,
+          "level": 4,
+          "time": 120
+        },
+        {
+          "hp": 100.0,
+          "kills": 271,
+          "level": 11,
+          "time": 180
+        },
+        {
+          "hp": 100.0,
+          "kills": 388,
+          "level": 22,
+          "time": 240
+        },
+        {
+          "hp": 100.0,
+          "kills": 516,
+          "level": 22,
+          "time": 300
+        },
+        {
+          "hp": 100.0,
+          "kills": 664,
+          "level": 22,
+          "time": 360
+        },
+        {
+          "hp": 100.0,
+          "kills": 843,
+          "level": 26,
+          "time": 420
+        },
+        {
+          "hp": 94.0,
+          "kills": 1055,
+          "level": 30,
+          "time": 480
+        },
+        {
+          "hp": 53.15,
+          "kills": 1333,
+          "level": 40,
+          "time": 540
+        },
+        {
+          "hp": 200.0,
+          "kills": 1647,
+          "level": 54,
+          "time": 600
+        }
+      ],
+      "mutations": {
+
+      },
+      "outcome": "victory",
+      "peak_pickups": 315,
+      "pickup_merges": 420,
+      "pickup_mode": "local",
+      "profile": "kinetic",
+      "research": {
+
+      },
+      "seed": 101,
+      "simulation_step_p95_ms": 0.493,
+      "survived_seconds": 600.02,
+      "uncollected_pickups": 24,
+      "uncollected_xp": 225,
+      "upgrade_choices": [
+        {
+          "at": 12.45,
+          "id": "rail"
+        },
+        {
+          "at": 16.07,
+          "id": "drone"
+        },
+        {
+          "at": 24.72,
+          "id": "rail"
+        },
+        {
+          "at": 142.65,
+          "id": "drone"
+        },
+        {
+          "at": 144.7,
+          "id": "rail"
+        },
+        {
+          "at": 145.7,
+          "id": "drone"
+        },
+        {
+          "at": 146.37,
+          "id": "orbit"
+        },
+        {
+          "at": 147.22,
+          "id": "drone"
+        },
+        {
+          "at": 153.32,
+          "id": "rail"
+        },
+        {
+          "at": 156.98,
+          "id": "rail"
+        },
+        {
+          "at": 186.77,
+          "id": "orbit"
+        },
+        {
+          "at": 186.97,
+          "id": "orbit"
+        },
+        {
+          "at": 187.23,
+          "id": "drone"
+        },
+        {
+          "at": 187.5,
+          "id": "orbit"
+        },
+        {
+          "at": 187.63,
+          "id": "orbit"
+        },
+        {
+          "at": 187.78,
+          "id": "pierce"
+        },
+        {
+          "at": 188.02,
+          "id": "damage"
+        },
+        {
+          "at": 188.18,
+          "id": "rate"
+        },
+        {
+          "at": 188.37,
+          "id": "rate"
+        },
+        {
+          "at": 188.52,
+          "id": "damage"
+        },
+        {
+          "at": 188.73,
+          "id": "damage"
+        },
+        {
+          "at": 199.8,
+          "id": "reroll"
+        },
+        {
+          "at": 199.8,
+          "id": "damage"
+        },
+        {
+          "at": 413.95,
+          "id": "damage"
+        },
+        {
+          "at": 415.13,
+          "id": "rate"
+        },
+        {
+          "at": 418.07,
+          "id": "rate"
+        },
+        {
+          "at": 419.77,
+          "id": "damage"
+        },
+        {
+          "at": 421.28,
+          "id": "rate"
+        },
+        {
+          "at": 422.9,
+          "id": "damage"
+        },
+        {
+          "at": 424.8,
+          "id": "rate"
+        },
+        {
+          "at": 446.28,
+          "id": "rate"
+        },
+        {
+          "at": 480.97,
+          "id": "magnet"
+        },
+        {
+          "at": 491.65,
+          "id": "magnet"
+        },
+        {
+          "at": 512.4,
+          "id": "pierce"
+        },
+        {
+          "at": 514.57,
+          "id": "pierce"
+        },
+        {
+          "at": 516.47,
+          "id": "magnet"
+        },
+        {
+          "at": 521.83,
+          "id": "magnet"
+        },
+        {
+          "at": 525.47,
+          "id": "magnet"
+        },
+        {
+          "at": 526.73,
+          "id": "reroll"
+        },
+        {
+          "at": 526.73,
+          "id": "speed"
+        },
+        {
+          "at": 531.13,
+          "id": "speed"
+        },
+        {
+          "at": 538.85,
+          "id": "speed"
+        },
+        {
+          "at": 549.93,
+          "id": "speed"
+        },
+        {
+          "at": 552.15,
+          "id": "speed"
+        },
+        {
+          "at": 552.78,
+          "id": "shield"
+        },
+        {
+          "at": 554.02,
+          "id": "shield"
+        },
+        {
+          "at": 554.1,
+          "id": "shield"
+        },
+        {
+          "at": 554.52,
+          "id": "shield"
+        },
+        {
+          "at": 554.6,
+          "id": "shield"
+        },
+        {
+          "at": 554.68,
+          "id": "health"
+        },
+        {
+          "at": 554.8,
+          "id": "health"
+        },
+        {
+          "at": 554.87,
+          "id": "health"
+        },
+        {
+          "at": 555.07,
+          "id": "health"
+        },
+        {
+          "at": 563.68,
+          "id": "health"
+        },
+        {
+          "at": 574.73,
+          "id": "repair"
+        },
+        {
+          "at": 587.2,
+          "id": "repair"
+        },
+        {
+          "at": 598.67,
+          "id": "repair"
+        }
+      ],
+      "wall_seconds": 14.705127,
+      "warden_defeated": true,
+      "warden_spawned": true,
+      "weapons_and_ranks": {
+        "damage": 7,
+        "drone": 5,
+        "health": 5,
+        "magnet": 5,
+        "orbit": 5,
+        "pierce": 3,
+        "rail": 5,
+        "rate": 7,
+        "repair": 3,
+        "shield": 5,
+        "speed": 5
+      },
+      "xp_collected": 14864
+    },
+    {
+      "architect_defeated": true,
+      "architect_spawned": true,
+      "banked_salvage": 138,
+      "bot_policy": "value_aware",
+      "damage_by_weapon": {
+        "drone": 72785.9847619007,
+        "orbit": 950.82,
+        "pulse": 59072.0563095167,
+        "rail": 45613.6872023785
+      },
+      "damage_events": 7,
+      "dashes": 18,
+      "first_level_seconds": 13.12,
+      "first_new_weapon_seconds": 23.8,
+      "fixture": "new player",
+      "health": 200.0,
+      "kills": 1650,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 596.98,
+      "level": 54,
+      "longest_upgrade_gap_seconds": 190.73,
+      "max_enemies": 58,
+      "max_merge_distance": 2.99681939957547,
+      "max_projectiles": 29,
+      "minimum_health": 100.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 79,
+          "level": 8,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 169,
+          "level": 13,
+          "time": 120
+        },
+        {
+          "hp": 100.0,
+          "kills": 274,
+          "level": 14,
+          "time": 180
+        },
+        {
+          "hp": 100.0,
+          "kills": 379,
+          "level": 24,
+          "time": 240
+        },
+        {
+          "hp": 100.0,
+          "kills": 518,
+          "level": 25,
+          "time": 300
+        },
+        {
+          "hp": 100.0,
+          "kills": 666,
+          "level": 25,
+          "time": 360
+        },
+        {
+          "hp": 100.0,
+          "kills": 846,
+          "level": 25,
+          "time": 420
+        },
+        {
+          "hp": 100.0,
+          "kills": 1063,
+          "level": 42,
+          "time": 480
+        },
+        {
+          "hp": 100.0,
+          "kills": 1333,
+          "level": 47,
+          "time": 540
+        },
+        {
+          "hp": 200.0,
+          "kills": 1650,
+          "level": 54,
+          "time": 600
+        }
+      ],
+      "mutations": {
+
+      },
+      "outcome": "victory",
+      "peak_pickups": 302,
+      "pickup_merges": 222,
+      "pickup_mode": "local",
+      "profile": "kinetic",
+      "research": {
+
+      },
+      "seed": 101,
+      "simulation_step_p95_ms": 0.42,
+      "survived_seconds": 600.02,
+      "uncollected_pickups": 11,
+      "uncollected_xp": 95,
+      "upgrade_choices": [
+        {
+          "at": 13.12,
+          "id": "magnet"
+        },
+        {
+          "at": 20.27,
+          "id": "damage"
+        },
+        {
+          "at": 23.8,
+          "id": "drone"
+        },
+        {
+          "at": 29.0,
+          "id": "rail"
+        },
+        {
+          "at": 37.65,
+          "id": "rail"
+        },
+        {
+          "at": 41.63,
+          "id": "damage"
+        },
+        {
+          "at": 53.45,
+          "id": "drone"
+        },
+        {
+          "at": 65.33,
+          "id": "rail"
+        },
+        {
+          "at": 78.2,
+          "id": "rail"
+        },
+        {
+          "at": 85.07,
+          "id": "orbit"
+        },
+        {
+          "at": 96.95,
+          "id": "drone"
+        },
+        {
+          "at": 110.6,
+          "id": "rail"
+        },
+        {
+          "at": 120.4,
+          "id": "drone"
+        },
+        {
+          "at": 186.87,
+          "id": "drone"
+        },
+        {
+          "at": 187.4,
+          "id": "orbit"
+        },
+        {
+          "at": 187.78,
+          "id": "orbit"
+        },
+        {
+          "at": 187.9,
+          "id": "orbit"
+        },
+        {
+          "at": 188.0,
+          "id": "orbit"
+        },
+        {
+          "at": 188.18,
+          "id": "rate"
+        },
+        {
+          "at": 188.28,
+          "id": "rate"
+        },
+        {
+          "at": 188.88,
+          "id": "rate"
+        },
+        {
+          "at": 193.77,
+          "id": "damage"
+        },
+        {
+          "at": 208.55,
+          "id": "damage"
+        },
+        {
+          "at": 235.92,
+          "id": "pierce"
+        },
+        {
+          "at": 247.67,
+          "id": "rate"
+        },
+        {
+          "at": 438.4,
+          "id": "magnet"
+        },
+        {
+          "at": 438.77,
+          "id": "damage"
+        },
+        {
+          "at": 439.12,
+          "id": "damage"
+        },
+        {
+          "at": 439.57,
+          "id": "damage"
+        },
+        {
+          "at": 439.77,
+          "id": "rate"
+        },
+        {
+          "at": 440.25,
+          "id": "rate"
+        },
+        {
+          "at": 441.07,
+          "id": "rate"
+        },
+        {
+          "at": 442.65,
+          "id": "magnet"
+        },
+        {
+          "at": 444.42,
+          "id": "magnet"
+        },
+        {
+          "at": 444.7,
+          "id": "pierce"
+        },
+        {
+          "at": 447.83,
+          "id": "pierce"
+        },
+        {
+          "at": 455.18,
+          "id": "reroll"
+        },
+        {
+          "at": 455.18,
+          "id": "magnet"
+        },
+        {
+          "at": 456.28,
+          "id": "reroll"
+        },
+        {
+          "at": 456.28,
+          "id": "speed"
+        },
+        {
+          "at": 456.95,
+          "id": "speed"
+        },
+        {
+          "at": 457.95,
+          "id": "speed"
+        },
+        {
+          "at": 465.33,
+          "id": "speed"
+        },
+        {
+          "at": 474.78,
+          "id": "speed"
+        },
+        {
+          "at": 488.28,
+          "id": "shield"
+        },
+        {
+          "at": 504.95,
+          "id": "shield"
+        },
+        {
+          "at": 512.02,
+          "id": "shield"
+        },
+        {
+          "at": 523.98,
+          "id": "shield"
+        },
+        {
+          "at": 534.48,
+          "id": "shield"
+        },
+        {
+          "at": 547.35,
+          "id": "health"
+        },
+        {
+          "at": 555.8,
+          "id": "health"
+        },
+        {
+          "at": 559.77,
+          "id": "health"
+        },
+        {
+          "at": 560.85,
+          "id": "health"
+        },
+        {
+          "at": 564.9,
+          "id": "health"
+        },
+        {
+          "at": 573.4,
+          "id": "repair"
+        },
+        {
+          "at": 586.6,
+          "id": "repair"
+        },
+        {
+          "at": 596.98,
+          "id": "repair"
+        }
+      ],
+      "wall_seconds": 14.031797,
+      "warden_defeated": true,
+      "warden_spawned": true,
+      "weapons_and_ranks": {
+        "damage": 7,
+        "drone": 5,
+        "health": 5,
+        "magnet": 5,
+        "orbit": 5,
+        "pierce": 3,
+        "rail": 5,
+        "rate": 7,
+        "repair": 3,
+        "shield": 5,
+        "speed": 5
+      },
+      "xp_collected": 14800
+    },
+    {
+      "architect_defeated": true,
+      "architect_spawned": true,
+      "banked_salvage": 138,
+      "bot_policy": "cautious",
+      "damage_by_weapon": {
+        "drone": 80972.8661309478,
+        "orbit": 691.563214285696,
+        "pulse": 52858.4453571355,
+        "rail": 44491.8967261875
+      },
+      "damage_events": 25,
+      "dashes": 33,
+      "first_level_seconds": 11.37,
+      "first_new_weapon_seconds": 11.37,
+      "fixture": "new player",
+      "health": 200.0,
+      "kills": 1645,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 599.43,
+      "level": 54,
+      "longest_upgrade_gap_seconds": 147.2,
+      "max_enemies": 62,
+      "max_merge_distance": 42.1604995727539,
+      "max_projectiles": 28,
+      "minimum_health": 46.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 76,
+          "level": 8,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 170,
+          "level": 8,
+          "time": 120
+        },
+        {
+          "hp": 71.0,
+          "kills": 266,
+          "level": 14,
+          "time": 180
+        },
+        {
+          "hp": 101.0,
+          "kills": 386,
+          "level": 21,
+          "time": 240
+        },
+        {
+          "hp": 101.0,
+          "kills": 518,
+          "level": 21,
+          "time": 300
+        },
+        {
+          "hp": 101.0,
+          "kills": 666,
+          "level": 25,
+          "time": 360
+        },
+        {
+          "hp": 98.5,
+          "kills": 844,
+          "level": 25,
+          "time": 420
+        },
+        {
+          "hp": 92.5,
+          "kills": 1058,
+          "level": 30,
+          "time": 480
+        },
+        {
+          "hp": 74.5,
+          "kills": 1341,
+          "level": 36,
+          "time": 540
+        },
+        {
+          "hp": 200.0,
+          "kills": 1645,
+          "level": 54,
+          "time": 600
+        }
+      ],
+      "mutations": {
+
+      },
+      "outcome": "victory",
+      "peak_pickups": 300,
+      "pickup_merges": 334,
+      "pickup_mode": "legacy",
+      "profile": "kinetic",
+      "research": {
+
+      },
+      "seed": 202,
+      "simulation_step_p95_ms": 0.471,
+      "survived_seconds": 600.02,
+      "uncollected_pickups": 24,
+      "uncollected_xp": 198,
+      "upgrade_choices": [
+        {
+          "at": 11.37,
+          "id": "rail"
+        },
+        {
+          "at": 21.72,
+          "id": "damage"
+        },
+        {
+          "at": 26.03,
+          "id": "orbit"
+        },
+        {
+          "at": 31.68,
+          "id": "drone"
+        },
+        {
+          "at": 36.97,
+          "id": "drone"
+        },
+        {
+          "at": 49.9,
+          "id": "orbit"
+        },
+        {
+          "at": 56.9,
+          "id": "orbit"
+        },
+        {
+          "at": 170.08,
+          "id": "rail"
+        },
+        {
+          "at": 172.73,
+          "id": "health"
+        },
+        {
+          "at": 173.77,
+          "id": "drone"
+        },
+        {
+          "at": 175.15,
+          "id": "orbit"
+        },
+        {
+          "at": 176.18,
+          "id": "orbit"
+        },
+        {
+          "at": 179.82,
+          "id": "rail"
+        },
+        {
+          "at": 186.18,
+          "id": "rail"
+        },
+        {
+          "at": 186.6,
+          "id": "drone"
+        },
+        {
+          "at": 186.62,
+          "id": "rail"
+        },
+        {
+          "at": 186.93,
+          "id": "drone"
+        },
+        {
+          "at": 187.23,
+          "id": "rate"
+        },
+        {
+          "at": 187.42,
+          "id": "damage"
+        },
+        {
+          "at": 187.8,
+          "id": "pierce"
+        },
+        {
+          "at": 188.83,
+          "id": "magnet"
+        },
+        {
+          "at": 336.03,
+          "id": "damage"
+        },
+        {
+          "at": 337.53,
+          "id": "pierce"
+        },
+        {
+          "at": 339.08,
+          "id": "rate"
+        },
+        {
+          "at": 340.85,
+          "id": "reroll"
+        },
+        {
+          "at": 340.85,
+          "id": "pierce"
+        },
+        {
+          "at": 440.97,
+          "id": "damage"
+        },
+        {
+          "at": 443.25,
+          "id": "rate"
+        },
+        {
+          "at": 445.73,
+          "id": "damage"
+        },
+        {
+          "at": 448.42,
+          "id": "rate"
+        },
+        {
+          "at": 471.78,
+          "id": "damage"
+        },
+        {
+          "at": 509.37,
+          "id": "rate"
+        },
+        {
+          "at": 513.48,
+          "id": "damage"
+        },
+        {
+          "at": 516.92,
+          "id": "reroll"
+        },
+        {
+          "at": 516.92,
+          "id": "rate"
+        },
+        {
+          "at": 522.52,
+          "id": "magnet"
+        },
+        {
+          "at": 536.25,
+          "id": "magnet"
+        },
+        {
+          "at": 538.98,
+          "id": "magnet"
+        },
+        {
+          "at": 544.4,
+          "id": "magnet"
+        },
+        {
+          "at": 550.4,
+          "id": "rate"
+        },
+        {
+          "at": 555.72,
+          "id": "speed"
+        },
+        {
+          "at": 556.03,
+          "id": "speed"
+        },
+        {
+          "at": 556.82,
+          "id": "speed"
+        },
+        {
+          "at": 557.13,
+          "id": "speed"
+        },
+        {
+          "at": 557.4,
+          "id": "speed"
+        },
+        {
+          "at": 557.73,
+          "id": "shield"
+        },
+        {
+          "at": 557.82,
+          "id": "shield"
+        },
+        {
+          "at": 557.82,
+          "id": "shield"
+        },
+        {
+          "at": 557.82,
+          "id": "shield"
+        },
+        {
+          "at": 557.82,
+          "id": "shield"
+        },
+        {
+          "at": 557.82,
+          "id": "health"
+        },
+        {
+          "at": 557.82,
+          "id": "health"
+        },
+        {
+          "at": 557.97,
+          "id": "health"
+        },
+        {
+          "at": 566.57,
+          "id": "health"
+        },
+        {
+          "at": 575.43,
+          "id": "repair"
+        },
+        {
+          "at": 587.7,
+          "id": "repair"
+        },
+        {
+          "at": 599.43,
+          "id": "repair"
+        }
+      ],
+      "wall_seconds": 14.323597,
+      "warden_defeated": true,
+      "warden_spawned": true,
+      "weapons_and_ranks": {
+        "damage": 7,
+        "drone": 5,
+        "health": 5,
+        "magnet": 5,
+        "orbit": 5,
+        "pierce": 3,
+        "rail": 5,
+        "rate": 7,
+        "repair": 3,
+        "shield": 5,
+        "speed": 5
+      },
+      "xp_collected": 14769
+    },
+    {
+      "architect_defeated": false,
+      "architect_spawned": false,
+      "banked_salvage": 76,
+      "bot_policy": "cautious",
+      "damage_by_weapon": {
+        "drone": 55984.2144642868,
+        "pulse": 20478.9930952376,
+        "rail": 29068.3341071424
+      },
+      "damage_events": 28,
+      "dashes": 23,
+      "first_level_seconds": 11.37,
+      "first_new_weapon_seconds": 11.37,
+      "fixture": "new player",
+      "health": 0.0,
+      "kills": 1141,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 476.53,
+      "level": 31,
+      "longest_upgrade_gap_seconds": 238.07,
+      "max_enemies": 34,
+      "max_merge_distance": 2.98765998316204,
+      "max_projectiles": 12,
+      "minimum_health": 0.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 76,
+          "level": 8,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 170,
+          "level": 8,
+          "time": 120
+        },
+        {
+          "hp": 71.0,
+          "kills": 266,
+          "level": 14,
+          "time": 180
+        },
+        {
+          "hp": 101.0,
+          "kills": 386,
+          "level": 21,
+          "time": 240
+        },
+        {
+          "hp": 101.0,
+          "kills": 518,
+          "level": 21,
+          "time": 300
+        },
+        {
+          "hp": 101.0,
+          "kills": 664,
+          "level": 21,
+          "time": 360
+        },
+        {
+          "hp": 101.0,
+          "kills": 840,
+          "level": 21,
+          "time": 420
+        },
+        {
+          "hp": 73.05,
+          "kills": 1059,
+          "level": 31,
+          "time": 480
+        }
+      ],
+      "mutations": {
+
+      },
+      "outcome": "defeat",
+      "peak_pickups": 314,
+      "pickup_merges": 407,
+      "pickup_mode": "local",
+      "profile": "kinetic",
+      "research": {
+
+      },
+      "seed": 202,
+      "simulation_step_p95_ms": 0.415,
+      "survived_seconds": 500.6,
+      "uncollected_pickups": 303,
+      "uncollected_xp": 5045,
+      "upgrade_choices": [
+        {
+          "at": 11.37,
+          "id": "rail"
+        },
+        {
+          "at": 21.72,
+          "id": "damage"
+        },
+        {
+          "at": 26.03,
+          "id": "orbit"
+        },
+        {
+          "at": 31.68,
+          "id": "drone"
+        },
+        {
+          "at": 36.97,
+          "id": "drone"
+        },
+        {
+          "at": 49.9,
+          "id": "orbit"
+        },
+        {
+          "at": 56.9,
+          "id": "orbit"
+        },
+        {
+          "at": 170.08,
+          "id": "rail"
+        },
+        {
+          "at": 172.73,
+          "id": "health"
+        },
+        {
+          "at": 173.77,
+          "id": "drone"
+        },
+        {
+          "at": 175.15,
+          "id": "orbit"
+        },
+        {
+          "at": 176.18,
+          "id": "orbit"
+        },
+        {
+          "at": 179.82,
+          "id": "rail"
+        },
+        {
+          "at": 186.18,
+          "id": "rail"
+        },
+        {
+          "at": 186.6,
+          "id": "drone"
+        },
+        {
+          "at": 186.62,
+          "id": "rail"
+        },
+        {
+          "at": 186.93,
+          "id": "drone"
+        },
+        {
+          "at": 187.23,
+          "id": "rate"
+        },
+        {
+          "at": 187.42,
+          "id": "damage"
+        },
+        {
+          "at": 187.8,
+          "id": "pierce"
+        },
+        {
+          "at": 188.83,
+          "id": "magnet"
+        },
+        {
+          "at": 426.9,
+          "id": "damage"
+        },
+        {
+          "at": 427.57,
+          "id": "damage"
+        },
+        {
+          "at": 428.88,
+          "id": "pierce"
+        },
+        {
+          "at": 467.75,
+          "id": "pierce"
+        },
+        {
+          "at": 469.6,
+          "id": "damage"
+        },
+        {
+          "at": 470.43,
+          "id": "damage"
+        },
+        {
+          "at": 472.05,
+          "id": "damage"
+        },
+        {
+          "at": 472.85,
+          "id": "health"
+        },
+        {
+          "at": 473.98,
+          "id": "health"
+        },
+        {
+          "at": 476.53,
+          "id": "rate"
+        }
+      ],
+      "wall_seconds": 10.929968,
+      "warden_defeated": true,
+      "warden_spawned": true,
+      "weapons_and_ranks": {
+        "damage": 7,
+        "drone": 5,
+        "health": 3,
+        "magnet": 1,
+        "orbit": 5,
+        "pierce": 3,
+        "rail": 5,
+        "rate": 2
+      },
+      "xp_collected": 4935
+    },
+    {
+      "architect_defeated": true,
+      "architect_spawned": true,
+      "banked_salvage": 138,
+      "bot_policy": "value_aware",
+      "damage_by_weapon": {
+        "drone": 75072.685238091,
+        "orbit": 295.487857142852,
+        "pulse": 56462.0008333247,
+        "rail": 50057.8613690455
+      },
+      "damage_events": 6,
+      "dashes": 22,
+      "first_level_seconds": 11.17,
+      "first_new_weapon_seconds": 11.17,
+      "fixture": "new player",
+      "health": 200.0,
+      "kills": 1657,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 590.3,
+      "level": 54,
+      "longest_upgrade_gap_seconds": 243.68,
+      "max_enemies": 40,
+      "max_merge_distance": 2.97902691564473,
+      "max_projectiles": 28,
+      "minimum_health": 100.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 81,
+          "level": 4,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 170,
+          "level": 4,
+          "time": 120
+        },
+        {
+          "hp": 100.0,
+          "kills": 272,
+          "level": 13,
+          "time": 180
+        },
+        {
+          "hp": 100.0,
+          "kills": 385,
+          "level": 22,
+          "time": 240
+        },
+        {
+          "hp": 100.0,
+          "kills": 516,
+          "level": 22,
+          "time": 300
+        },
+        {
+          "hp": 100.0,
+          "kills": 666,
+          "level": 22,
+          "time": 360
+        },
+        {
+          "hp": 100.0,
+          "kills": 844,
+          "level": 22,
+          "time": 420
+        },
+        {
+          "hp": 100.0,
+          "kills": 1065,
+          "level": 33,
+          "time": 480
+        },
+        {
+          "hp": 100.0,
+          "kills": 1353,
+          "level": 33,
+          "time": 540
+        },
+        {
+          "hp": 200.0,
+          "kills": 1657,
+          "level": 54,
+          "time": 600
+        }
+      ],
+      "mutations": {
+
+      },
+      "outcome": "victory",
+      "peak_pickups": 309,
+      "pickup_merges": 604,
+      "pickup_mode": "local",
+      "profile": "kinetic",
+      "research": {
+
+      },
+      "seed": 202,
+      "simulation_step_p95_ms": 0.432,
+      "survived_seconds": 600.02,
+      "uncollected_pickups": 9,
+      "uncollected_xp": 84,
+      "upgrade_choices": [
+        {
+          "at": 11.17,
+          "id": "rail"
+        },
+        {
+          "at": 18.65,
+          "id": "drone"
+        },
+        {
+          "at": 23.02,
+          "id": "rate"
+        },
+        {
+          "at": 142.5,
+          "id": "orbit"
+        },
+        {
+          "at": 144.73,
+          "id": "drone"
+        },
+        {
+          "at": 145.62,
+          "id": "drone"
+        },
+        {
+          "at": 146.2,
+          "id": "rail"
+        },
+        {
+          "at": 146.98,
+          "id": "rail"
+        },
+        {
+          "at": 148.58,
+          "id": "rail"
+        },
+        {
+          "at": 149.47,
+          "id": "drone"
+        },
+        {
+          "at": 151.18,
+          "id": "rail"
+        },
+        {
+          "at": 152.8,
+          "id": "orbit"
+        },
+        {
+          "at": 182.83,
+          "id": "drone"
+        },
+        {
+          "at": 183.18,
+          "id": "orbit"
+        },
+        {
+          "at": 183.45,
+          "id": "orbit"
+        },
+        {
+          "at": 183.75,
+          "id": "orbit"
+        },
+        {
+          "at": 183.8,
+          "id": "pierce"
+        },
+        {
+          "at": 183.92,
+          "id": "pierce"
+        },
+        {
+          "at": 184.17,
+          "id": "rate"
+        },
+        {
+          "at": 184.35,
+          "id": "rate"
+        },
+        {
+          "at": 184.52,
+          "id": "rate"
+        },
+        {
+          "at": 189.65,
+          "id": "pierce"
+        },
+        {
+          "at": 433.33,
+          "id": "damage"
+        },
+        {
+          "at": 433.77,
+          "id": "damage"
+        },
+        {
+          "at": 434.18,
+          "id": "rate"
+        },
+        {
+          "at": 434.52,
+          "id": "damage"
+        },
+        {
+          "at": 434.82,
+          "id": "damage"
+        },
+        {
+          "at": 435.57,
+          "id": "damage"
+        },
+        {
+          "at": 436.23,
+          "id": "rate"
+        },
+        {
+          "at": 436.83,
+          "id": "reroll"
+        },
+        {
+          "at": 436.83,
+          "id": "damage"
+        },
+        {
+          "at": 437.7,
+          "id": "rate"
+        },
+        {
+          "at": 438.97,
+          "id": "reroll"
+        },
+        {
+          "at": 438.97,
+          "id": "magnet"
+        },
+        {
+          "at": 439.78,
+          "id": "damage"
+        },
+        {
+          "at": 550.65,
+          "id": "magnet"
+        },
+        {
+          "at": 552.08,
+          "id": "magnet"
+        },
+        {
+          "at": 552.52,
+          "id": "speed"
+        },
+        {
+          "at": 552.73,
+          "id": "magnet"
+        },
+        {
+          "at": 553.02,
+          "id": "magnet"
+        },
+        {
+          "at": 553.45,
+          "id": "speed"
+        },
+        {
+          "at": 554.15,
+          "id": "speed"
+        },
+        {
+          "at": 554.8,
+          "id": "speed"
+        },
+        {
+          "at": 555.33,
+          "id": "speed"
+        },
+        {
+          "at": 555.63,
+          "id": "shield"
+        },
+        {
+          "at": 556.27,
+          "id": "shield"
+        },
+        {
+          "at": 557.1,
+          "id": "shield"
+        },
+        {
+          "at": 557.58,
+          "id": "shield"
+        },
+        {
+          "at": 558.27,
+          "id": "shield"
+        },
+        {
+          "at": 559.1,
+          "id": "health"
+        },
+        {
+          "at": 559.3,
+          "id": "health"
+        },
+        {
+          "at": 559.37,
+          "id": "health"
+        },
+        {
+          "at": 559.6,
+          "id": "health"
+        },
+        {
+          "at": 560.4,
+          "id": "health"
+        },
+        {
+          "at": 569.27,
+          "id": "repair"
+        },
+        {
+          "at": 580.38,
+          "id": "repair"
+        },
+        {
+          "at": 590.3,
+          "id": "repair"
+        }
+      ],
+      "wall_seconds": 14.599279,
+      "warden_defeated": true,
+      "warden_spawned": true,
+      "weapons_and_ranks": {
+        "damage": 7,
+        "drone": 5,
+        "health": 5,
+        "magnet": 5,
+        "orbit": 5,
+        "pierce": 3,
+        "rail": 5,
+        "rate": 7,
+        "repair": 3,
+        "shield": 5,
+        "speed": 5
+      },
+      "xp_collected": 15230
+    }
+  ],
+  "cpu": "AMD EPYC 7763 64-Core Processor",
+  "failures": [],
+  "fixed_step": 0.0166666666666667,
+  "godot": "4.6.3-stable (official)",
+  "kind": "XP merge A/B / unchanged bot strategy",
+  "limitations": [
+    "Cautious rows hold the bot strategy fixed. Explicit value_aware rows change only navigation; no combat buffs.",
+    "Two seeds diagnose this mechanism; they do not establish overall human balance."
+  ],
+  "logical_cpus": 4,
+  "os": "Linux",
+  "pinned_baseline_compatible": true,
+  "pinned_baseline_note": "Numeric legacy replay checked",
+  "rendering": "headless / no GPU frame measurements",
+  "schema": 1
+}

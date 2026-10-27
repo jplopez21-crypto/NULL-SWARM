@@ -29,7 +29,7 @@ godot --headless --export-debug Android builds/android/null-swarm-foundry-0.3.1-
 adb install -r builds/android/null-swarm-foundry-0.3.1-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3.1-apk`. The [verified 0.3 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40435364064/artifacts/12703736664) contains its APK under `android/` and staged QA captures under `screenshots/`. All 121 checks and APK signature verification passed. Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-foundry-0.3.1-apk`. The [verified 0.3.1 APK ZIP](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40441583372/artifacts/12707070160) contains the APK under `android/` and staged QA captures under `screenshots/`. All 130 system checks, expanded bot/A-B/stress suites and APK signature verification passed. Physical-device testing and balance remain required for this new version.
 
 This build installs alongside the original as **NULL SWARM Foundry XP** (`com.nullswarm.game.foundry.xp`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
@@ -48,4 +48,4 @@ godot --headless --script tests/run_benchmark.gd
 
 Bots do not receive injected invulnerability or forced boss kills. Stress fixtures deliberately do; their headless CPU timings are not Android FPS. These additions are test tooling and do not change the installed 0.3 game.
 
-The 0.3.1 patch fixes pickup merging across distant positions and marks valuable packets with larger mint/gold visuals. Its updated CI verification is pending. The separately labelled XP comparison is described in [QA methods](docs/AUTOMATED_QA.md).
+The 0.3.1 patch fixes pickup merging across distant positions and marks valuable packets with larger mint/gold visuals. Updated CI verification passed; [pickup comparison results](docs/qa/0.3.1/XP_COMPARISON.md) retain both positive and negative bot outcomes. The separately labelled XP comparison is described in [QA methods](docs/AUTOMATED_QA.md).

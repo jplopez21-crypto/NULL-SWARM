@@ -54,3 +54,13 @@ At 600 synthetic enemies/400 peak shots, p95 simulation-step time was 22.611ms l
 Legacy numeric results are checked against the frozen Foundry 0.3 fixture when combat/bot source hashes match. If those inputs intentionally change in future, the report explicitly skips that numeric comparison while still running the same-current-combat A/B and conservation checks. Local merges must stay within 3m and all modes must conserve XP. A defeat remains a valid bot observation.
 
 Local diagnosis: unchanged-bot outcomes were mixed (seed 101 improved, seed 202 worsened); the alternate collector won both with local merging. The merge-distance bug is real, but this is not evidence of a universal difficulty improvement or a required weapon buff.
+
+## Current 0.3.1 verification
+
+[QA workflow 40441583251](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40441583251) passed at `604013b1cee618a9b970270feebaf0cca24b6529`: 130 system checks, eight normal bot cases plus replay verification, six pickup A/B/collector cases and six synthetic stress scenarios.
+
+- [Pickup A/B table](qa/0.3.1/XP_COMPARISON.md) / [full data](qa/0.3.1/xp-comparison.json).
+- [Current bot matrix](qa/0.3.1/BOT_REPORT.md) / [full data](qa/0.3.1/bot-report.json).
+- [Current CPU benchmark](qa/0.3.1/STRESS_REPORT.md) / [full data](qa/0.3.1/stress-report.json).
+
+Legacy replay compatibility was true; both numeric baselines matched. All six A/B/collector CI traces matched local traces excluding timing fields. Correcting XP placement did not universally improve cautious-bot wins. The variant collector uses a different labelled navigation policy and cannot be used to claim an unchanged-bot balance improvement.

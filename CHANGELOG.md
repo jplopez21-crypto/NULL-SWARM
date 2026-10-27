@@ -77,3 +77,10 @@
 - Added regression tests, a pinned legacy replay fixture and a separate value-aware test collector.
 - Added six-case XP A/B/collector comparison to repeatable CI; original cautious bot remains unchanged.
 - No combat-stat buffs or spawn/difficulty reductions. Uses a separate Foundry XP package to preserve older test installs/saves.
+
+### 0.3.1 verified delivery
+
+- CI passed 130 checks, eight normal bot cases, six labelled pickup/collector comparisons and six synthetic stress scenarios.
+- Reproduced pinned legacy outcomes; confirmed both local improvement and regression with the unchanged cautious bot. The alternate collector won both fixed seeds.
+- Verified signed APK export, downloaded hashes/archive integrity and new manifest package; inspected the menu capture.
+- Reports are preserved under docs/qa/0.3.1; phone playtesting remains pending.
