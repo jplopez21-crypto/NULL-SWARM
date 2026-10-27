@@ -1,0 +1,112 @@
+class_name SwarmEnemy
+extends Node3D
+
+var active: bool = false
+var definition: EnemyDefinition
+var hp: float
+var velocity: Vector3
+var cooldown: float = 0.0
+var windup: float = 0.0
+var charging: float = 0.0
+var flash: float = 0.0
+var effects_enabled: bool = true
+var body: Node3D
+var telegraph: MeshInstance3D
+var index: int = 0
+
+func configure(resource: EnemyDefinition) -> void:
+	definition = resource
+	body = Node3D.new()
+	add_child(body)
+	match definition.behavior:
+		0:
+			SwarmVisuals.box(body, Vector3(0.85, 0.55, 0.9), Vector3(0, 0.5, 0), definition.color)
+			for side in [-1.0, 1.0]:
+				SwarmVisuals.box(body, Vector3(0.22, 0.25, 1.2), Vector3(side * 0.55, 0.25, 0), Color("693537"))
+		1:
+			var mesh := CylinderMesh.new()
+			mesh.top_radius = 0.0
+			mesh.bottom_radius = 0.65
+			mesh.height = 1.4
+			mesh.radial_segments = 5
+			var instance := MeshInstance3D.new()
+			instance.mesh = mesh
+			instance.position.y = 0.7
+			instance.material_override = SwarmVisuals.material(definition.color)
+			body.add_child(instance)
+		2:
+			SwarmVisuals.box(body, Vector3(1.2, 0.5, 1.2), Vector3(0, 0.3, 0), Color("49345e"))
+			SwarmVisuals.box(body, Vector3(0.65, 1.2, 0.65), Vector3(0, 1.0, 0), definition.color)
+	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
+	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
+	deactivate()
+
+func activate(at: Vector3, health_scale: float) -> void:
+	position = at
+	hp = definition.health * health_scale
+	velocity = Vector3.ZERO
+	cooldown = 1.2
+	windup = 0.0
+	charging = 0.0
+	flash = 0.0
+	scale = Vector3.ONE
+	body.position = Vector3.ZERO
+	body.visible = true
+	telegraph.visible = false
+	active = true
+	visible = true
+
+func deactivate() -> void:
+	active = false
+	visible = false
+
+# Called in staggered batches at 10 Hz; movement stays at fixed tick frequency.
+func think(player: Vector3) -> void:
+	if windup > 0.0 or charging > 0.0:
+		return
+	var offset := player - position
+	offset.y = 0.0
+	var distance := offset.length()
+	var direction := offset.normalized()
+	rotation.y = atan2(-direction.x, -direction.z)
+	if definition.behavior == 2 and distance < 15.0:
+		velocity = Vector3.ZERO
+		if cooldown <= 0.0:
+			windup = 0.8
+	elif definition.behavior == 1 and distance < 13.0 and cooldown <= 0.0:
+		velocity = Vector3.ZERO
+		windup = 0.7
+	else:
+		velocity = direction * definition.speed
+
+# Returns a sentry shot direction only at the end of its visible warning.
+func tick(delta: float) -> Vector3:
+	cooldown -= delta
+	flash = maxf(0.0, flash - delta)
+	body.scale = Vector3.ONE * (1.15 if flash > 0.0 and effects_enabled else 1.0)
+	var shot := Vector3.ZERO
+	if windup > 0.0:
+		windup -= delta
+		telegraph.visible = true
+		if windup <= 0.0:
+			var forward := -transform.basis.z
+			if definition.behavior == 1:
+				velocity = forward * 15.0
+				charging = 0.55
+			else:
+				shot = forward
+			cooldown = 3.0
+	else:
+		telegraph.visible = false
+	if charging > 0.0:
+		charging -= delta
+		if charging <= 0.0:
+			velocity = Vector3.ZERO
+	position += velocity * delta
+	return shot
+
+func hit(amount: float, knockback: Vector3) -> bool:
+	hp -= maxf(0.0, amount)
+	position += knockback
+	flash = 0.08
+	return hp <= 0.0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://resources/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"striker"
+title = "Striker"
+behavior = 1
+health = 22.0
+speed = 4.0
+damage = 14.0
+xp = 8
+radius = 0.5
+color = Color(1, 0.64, 0.18, 1)

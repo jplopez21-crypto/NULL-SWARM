@@ -1,0 +1,62 @@
+name: Validate and build Android
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      GODOT_VERSION: 4.6.3
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-java@7a445ee88d4e23b52c33f375d48b3e712bae55f4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install Godot and matching templates
+        run: |
+          curl --fail --location --retry 3 -o /tmp/godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          sudo install /tmp/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          curl --fail --location --retry 3 -o /tmp/templates.tpz "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q /tmp/templates.tpz -d /tmp/export
+          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mv /tmp/export/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/"
+      - name: Install Android SDK packages
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platform-tools' 'platforms;android-35' 'build-tools;35.0.1'
+          keytool -genkeypair -keystore /tmp/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -keysize 2048 -validity 10000
+      - name: Import and configure Android exporter
+        run: |
+          godot --headless --editor --import --quit 2>&1 | tee /tmp/import.log
+          if rg 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
+          mkdir -p "$HOME/.config/godot"
+          cat > "$HOME/.config/godot/editor_settings-4.6.tres" <<SETTINGS
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          export/android/java_sdk_path = "$JAVA_HOME"
+          export/android/debug_keystore = "/tmp/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          SETTINGS
+      - name: Automated tests and scene smoke
+        run: |
+          godot --headless --script tests/run_tests.gd
+          godot --headless -- --smoke
+      - name: Export debug APK
+        run: |
+          mkdir -p builds/android
+          godot --headless --export-debug Android builds/android/null-swarm-m1-debug.apk
+          test -s builds/android/null-swarm-m1-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-m1-debug.apk
+          sha256sum builds/android/null-swarm-m1-debug.apk > builds/android/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: null-swarm-m1-debug-apk
+          path: builds/android/
+          if-no-files-found: error

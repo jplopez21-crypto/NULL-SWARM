@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://resources/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"crawler"
+title = "Crawler"
+health = 30.0
+speed = 3.0
+color = Color(1, 0.3, 0.25, 1)
