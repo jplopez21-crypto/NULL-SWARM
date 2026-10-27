@@ -73,3 +73,8 @@
 - Prepared secret-only manual Preview build, separate install identity, certificate pinning before/after export, increasing versions and cleanup.
 - Seven local signing regressions passed using disposable test credentials. Existing installs/private saves remain separate.
 - Blocker: connected GitHub tools cannot write environment secrets; CLI permission attempt did not complete. No real persistent key was provisioned. Setup: docs/android/STABLE_PREVIEW_SIGNING.md. Stable APK and actual update/save-retention test remain pending.
+
+## APK update acceptance coverage
+
+- Added actual in-place emulator update and changed-settings/salvage retention checks (two additional runtime checks). Python compilation and workflow YAML/shell syntax validated locally; Android execution is through CI.
+- Uses one disposable test signer for two successive APK versions in the same run. Persistent cross-run Preview signing still requires owner environment secrets.

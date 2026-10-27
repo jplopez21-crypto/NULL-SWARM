@@ -101,3 +101,9 @@ Post-render correction: updated system suite passed 382 checks with a clean stri
 - Added those regressions to native build CI. No gameplay source changed in this signing follow-up.
 - Not run: real persistent-key export, physical-device in-place upgrade/save retention, and Play Protect completion. No real owner key/secrets are available through the connected tools. The prior network-permission CLI attempt was interrupted; it did not provision credentials.
 - Exact owner setup and limitations: docs/android/STABLE_PREVIEW_SIGNING.md. No claim that signing solves a Play Protect scan delay.
+
+### APK update acceptance coverage
+
+- Added optional --upgrade-apk to the Android driver. After real play, touch settings and force-stop checks, installs a newer APK over the existing package and asserts an increased installed version, a new process, and unchanged saved settings/salvage. Captures updated-install.png.
+- Emulator CI now exports two versions with one temporary signer and passes the second to the driver. Only the first APK is uploaded; the second stays in /tmp. This tests Android update/save retention, not persistent owner-key provisioning or Play Protect.
+- Local verification: Python bytecode compilation, YAML parse and bash syntax check passed. Runtime results are linked in PR #1 once executed; no local emulator/KVM is available.

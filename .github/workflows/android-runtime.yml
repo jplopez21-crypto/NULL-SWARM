@@ -61,6 +61,19 @@ jobs:
           mkdir -p builds/android-runtime
           godot --headless --export-debug Android builds/android-runtime/emulator-debug.apk
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android-runtime/emulator-debug.apk
+          python3 - <<'PYVERSION'
+          from configparser import ConfigParser
+          from pathlib import Path
+          config = ConfigParser(interpolation=None)
+          config.optionxform = str
+          config.read('export_presets.cfg')
+          section = config['preset.0.options']
+          section['version/code'] = str(int(section['version/code']) + 1)
+          with Path('export_presets.cfg').open('w') as target:
+              config.write(target)
+          PYVERSION
+          godot --headless --export-debug Android /tmp/emulator-upgrade.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify /tmp/emulator-upgrade.apk
       - name: Install emulator Linux dependencies
         run: |
           sudo apt-get update
@@ -111,7 +124,7 @@ jobs:
       - name: Touch, gameplay, pause and lifecycle smoke
         run: |
           set -o pipefail
-          timeout 300s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py 2>&1 | tee builds/android-runtime/smoke.log
+          timeout 300s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |

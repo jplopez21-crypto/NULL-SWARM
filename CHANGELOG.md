@@ -176,3 +176,8 @@
 - Add manual environment-secret preview build with pinned keystore/APK certificate checks, increasing versions and temporary credential cleanup.
 - New Preview package coexists with prior installs; seven real-keytool/configuration regressions pass.
 - Distribution is blocked until owner environment secrets are provisioned and workflow is registered on the default branch. No stable-signed APK or upgrade test is claimed.
+
+### APK upgrade acceptance test
+
+- Build a second higher-version emulator APK with the same test signer; install it using adb install -r and check saved settings/salvage after relaunch.
+- Keep the second APK outside uploaded artifacts; no real signing credentials or phone installation changes.

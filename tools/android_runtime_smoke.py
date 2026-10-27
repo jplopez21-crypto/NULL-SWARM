@@ -15,6 +15,7 @@ from PIL import Image
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
 parser.add_argument('--output', default='builds/android-runtime')
+parser.add_argument('--upgrade-apk', help='Install a same-signer higher-version APK after lifecycle checks')
 args = parser.parse_args()
 out = Path(args.output)
 out.mkdir(parents=True, exist_ok=True)
@@ -243,6 +244,24 @@ try:
     check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
     capture('relaunched')
     check(True, 'relaunch menu is visibly rendered')
+    if args.upgrade_apk:
+        before_update = s
+        package_info = adb('shell', 'dumpsys', 'package', args.package)
+        old_version = int(re.search(r'versionCode=(\d+)', package_info).group(1))
+        adb('shell', 'am', 'force-stop', args.package)
+        installed = adb('install', '-r', args.upgrade_apk)
+        if 'Success' not in installed:
+            raise AssertionError('Android rejected the in-place APK update')
+        package_info = adb('shell', 'dumpsys', 'package', args.package)
+        new_version = int(re.search(r'versionCode=(\d+)', package_info).group(1))
+        check(new_version > old_version, 'Android accepts higher-version same-signer APK update')
+        launch()
+        s = wait(lambda x: x['state'] == 'menu' and x['process'] != before_update['process'])
+        check(s['settings'] == before_update['settings'] and s['salvage'] == before_update['salvage'],
+              'in-place APK update retains changed settings and banked progression')
+        capture('updated-install')
+        report['apk_update'] = {'from_version': old_version, 'to_version': new_version,
+                               'settings_retained': True, 'salvage': s['salvage']}
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]
