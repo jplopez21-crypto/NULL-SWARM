@@ -55,3 +55,7 @@ Adaptive formations begin analysis at 02:00, announce eight seconds before chang
 The 0.4.1 memory cue points from the operative toward stationary uncollected XP and displays distance. It does not identify a safe path or automatically collect packets. Human readability and pacing improvement remain to be tested.
 
 Corruption links become an optional alternate level-up choice from level 5. Review current/projected effects and lasting costs, or return to the exact same ordinary upgrade cards. See [Corruption Protocol rules](docs/CORRUPTION.md).
+
+## Development Android validation
+
+[TEST_RESULTS.md](TEST_RESULTS.md) records current pass/fail/unavailable checks. Run `python3 tools/run_headless_checks.py` for isolated movement, system, corruption, UI and startup checks with strict completion/error detection. The Android runtime workflow builds a separate x86_64 Compatibility APK with read-only opt-in telemetry, installs it on Android 35, drives actual touchscreen input through ADB, and captures Android screenshots/logcat. It does not change combat stats. ARM64 Mobile export is a separate gate; phone performance and that renderer/ABI still require device testing. Weekly emulator scheduling takes effect on the default branch after merge.

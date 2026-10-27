@@ -35,3 +35,9 @@
 1. Profile/optimize targeting and chain-query CPU work under all-links stress without changing gameplay quantities or outcomes.
 2. Inspect collection-rate/distance gaps and validate guidance/corruption readability in real play.
 3. Broaden build/seed coverage and character differentiation after performance and balance evidence.
+
+## Android pipeline development branch
+
+- Work isolated on development/android-validation; main preserved pending merge.
+- Added strict isolated headless runner, 12 movement/input checks, central TEST_RESULTS.md and an Android 35 emulator workflow with actual ADB touch, screenshots, gameplay and lifecycle checks.
+- Emulator-only x86_64 Compatibility export opts into read-only debug telemetry; native ARM64 Mobile export remains separate. Runtime verification pending development CI.

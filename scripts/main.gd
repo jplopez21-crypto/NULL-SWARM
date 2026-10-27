@@ -58,6 +58,10 @@ func _ready() -> void:
 	ui.kit_selected.connect(select_kit)
 	ui.setting_changed.connect(change_setting)
 	ui.show_menu(save.data)
+	if OS.is_debug_build() and OS.has_feature("android") and ProjectSettings.get_setting("qa/android_runtime_probe", false):
+		var probe: Node = load("res://systems/android_qa_probe.gd").new()
+		probe.game = self
+		add_child(probe)
 	if "--capture" in OS.get_cmdline_user_args():
 		_capture_session()
 	boot_smoke = "--smoke" in OS.get_cmdline_user_args()

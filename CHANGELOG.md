@@ -139,3 +139,9 @@
 - Four legal corruption probes won; clean pre-existing case fields exactly match 0.4.1 excluding timing/new telemetry. Preserved all clean-bot defeats.
 - Verified signed APK, downloaded integrity/package/module contents and rendered panels/HUD. Archived reports in docs/qa/0.5.
 - Added separate local all-links stress fixture 3 and future daily CI step; six local scenarios passed parity/load checks. Recorded ~36.6–38.4ms p95 CPU at 600 enemies as an optimization concern, not Android FPS.
+
+### Android validation pipeline
+
+- Added explicit input/movement regressions, strict isolated headless orchestration and TEST_RESULTS.md.
+- Added Android 35 x86_64 Compatibility emulator export, opt-in read-only telemetry and real ADB touchscreen/gameplay/lifecycle checks with diagnostic artifacts.
+- Added concurrency cancellation for superseded branch/PR runs. Changes prepared on a development branch for review; Android runtime results pending.

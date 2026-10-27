@@ -3,6 +3,9 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -32,6 +35,7 @@ jobs:
           keytool -genkeypair -keystore /tmp/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -keysize 2048 -validity 10000
       - name: Import and configure Android exporter
         run: |
+          set -o pipefail
           godot --headless --editor --import --quit 2>&1 | tee /tmp/import.log
           if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
           mkdir -p "$HOME/.config/godot"
@@ -46,9 +50,7 @@ jobs:
           SETTINGS
       - name: Automated tests and scene smoke
         run: |
-          godot --headless --script tests/run_tests.gd
-          timeout 120s godot --headless --script tests/run_corruption_tests.gd
-          godot --headless -- --smoke
+          python3 tools/run_headless_checks.py
       - name: Render presentation captures
         run: |
           if ! command -v xvfb-run; then
@@ -70,3 +72,10 @@ jobs:
             builds/android/
             builds/screenshots/
           if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-headless-results
+          path: builds/qa/
+          retention-days: 14
+          if-no-files-found: warn
