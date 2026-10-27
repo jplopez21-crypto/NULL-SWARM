@@ -49,3 +49,8 @@
 - Fixed unsafe music loop endpoint and synchronous UI panel detachment discovered through Android testing. Added audio multi-loop and GUI-dispatch regressions.
 - Native development package installs separately; read-only telemetry is off in it. Full results, failures/fixes and hardware limits: TEST_RESULTS.md.
 - Main remains untouched pending merge. Physical ARM64/Mobile performance and stable signing remain open acceptance items.
+
+## Owner installation confirmation
+
+- Owner reports the development APK works. Installation/run is confirmed by owner feedback; quantitative device performance remains unmeasured.
+- Mobile opening HUD now explains dragging the left side and tapping Dash. Desktop keyboard/controller instructions remain available.

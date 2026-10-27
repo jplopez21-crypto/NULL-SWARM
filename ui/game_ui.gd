@@ -175,7 +175,8 @@ func _build_hud() -> void:
 	adaptation_label = label_at(hud, "SWARM // OBSERVING", 14, Color("ffcf85"))
 	corruption_label = label_at(hud, "CORRUPTION 0/3 // CLEAN SIGNAL", 14, Color("efa6ff"))
 	corruption_bar = _bar(hud, Color("cf7aff"), 3)
-	hint_label = label_at(hud, "MOVE: WASD / LEFT STICK     DASH: SPACE / A", 15, MUTED)
+	var movement_hint := "DRAG LEFT SIDE TO MOVE     TAP DASH TO EVADE" if OS.has_feature("mobile") else "MOVE: WASD / LEFT STICK     DASH: SPACE / A"
+	hint_label = label_at(hud, movement_hint, 15, MUTED)
 	perf_label = label_at(hud, "", 14, MUTED)
 	perf_label.visible = false
 	notices = label_at(hud, "", 16, Color("ffbd78"))

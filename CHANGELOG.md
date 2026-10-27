@@ -151,3 +151,8 @@
 - Added real emulator touch, gameplay, rendered-frame readiness, background/relaunch and settings persistence checks; pinned SWANGLE tooling and diagnostic artifacts.
 - Fixed the procedural WAV loop boundary and unsafe UI panel detachment during clicks; added six audio and eight GUI-input regressions.
 - All development CI gates passed, including 12 Android runtime checks; TEST_RESULTS.md records resolved failures and untested hardware scope. Prepared on development/android-validation in PR #1.
+
+### Mobile onboarding follow-up
+
+- Show touch movement/dash instructions on mobile during the opening 22 seconds.
+- Record owner confirmation that the development APK installs and runs.
