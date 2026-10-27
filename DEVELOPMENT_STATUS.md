@@ -40,4 +40,12 @@
 
 - Work isolated on development/android-validation; main preserved pending merge.
 - Added strict isolated headless runner, 12 movement/input checks, central TEST_RESULTS.md and an Android 35 emulator workflow with actual ADB touch, screenshots, gameplay and lifecycle checks.
-- Emulator-only x86_64 Compatibility export opts into read-only debug telemetry; native ARM64 Mobile export remains separate. Runtime verification pending development CI.
+- Emulator-only x86_64 Compatibility export opts into read-only debug telemetry; native ARM64 Mobile export remains separate. All three development CI gates passed at 9fcd304bc232c6014ab9533bb45960bb70a992d0.
+
+## Android validation verified
+
+- PR #1 / development/android-validation: strict nine-suite headless checks, 49 resources, 504 UI checks, 20 normal-policy sessions, replay, pickup comparisons, 12 stress scenarios and signed ARM64 debug export passed.
+- Real Android emulator passed 12 touch/render/lifecycle/persistence checks. Inspected actual rendered menus/combat/upgrades/settings; logs contain no game errors or crashes.
+- Fixed unsafe music loop endpoint and synchronous UI panel detachment discovered through Android testing. Added audio multi-loop and GUI-dispatch regressions.
+- Native development package installs separately; read-only telemetry is off in it. Full results, failures/fixes and hardware limits: TEST_RESULTS.md.
+- Main remains untouched pending merge. Physical ARM64/Mobile performance and stable signing remain open acceptance items.

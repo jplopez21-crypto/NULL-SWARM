@@ -145,3 +145,9 @@
 - Added explicit input/movement regressions, strict isolated headless orchestration and TEST_RESULTS.md.
 - Added Android 35 x86_64 Compatibility emulator export, opt-in read-only telemetry and real ADB touchscreen/gameplay/lifecycle checks with diagnostic artifacts.
 - Added concurrency cancellation for superseded branch/PR runs. Changes prepared on a development branch for review; Android runtime results pending.
+
+### Android runtime verification completed
+
+- Added real emulator touch, gameplay, rendered-frame readiness, background/relaunch and settings persistence checks; pinned SWANGLE tooling and diagnostic artifacts.
+- Fixed the procedural WAV loop boundary and unsafe UI panel detachment during clicks; added six audio and eight GUI-input regressions.
+- All development CI gates passed, including 12 Android runtime checks; TEST_RESULTS.md records resolved failures and untested hardware scope. Prepared on development/android-validation in PR #1.

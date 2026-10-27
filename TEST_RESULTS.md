@@ -1,25 +1,60 @@
 # NULL//SWARM test results
 
-## Development pipeline — in progress
+Verified 2026-10-27 on development branch `development/android-validation`; [PR #1](https://github.com/jplopez21-crypto/NULL-SWARM/pull/1). Game/test code verified at `9fcd304bc232c6014ab9533bb45960bb70a992d0`. Main remains unchanged pending merge.
 
-Branch: `development/android-validation`. Production `main` is unchanged until review/merge.
+## Passed checks
 
-| Check | Status | Evidence / limitation |
+| Coverage | Result | Evidence |
 |---|---|---|
-| Movement, diagonal normalization, touch ownership/release, bounds, dash/cooldown | Passed locally | 12 checks in `tests/run_input_tests.gd` |
-| Combat, spawning, XP, upgrades, saves, death/victory lifecycle | Passed locally | 165 checks in `tests/run_tests.gd` |
-| Corruption modifiers/transactions/reset | Passed locally | 41 checks in `tests/run_corruption_tests.gd` |
-| UI geometry, lifecycle, focus, input reset | Passed locally | 504 checks / 44 staged states in `tests/run_ui_tests.gd` |
-| Main-scene startup/combat smoke | Passed locally | `SCENE_SMOKE_OK` |
-| Strict headless orchestration | Passed locally | Input, systems, corruption, UI and smoke suites passed; resource validation also passed separately and is integrated into the same runner |
-| Resource/script validation | Passed locally | All loadable scripts/scenes/resources, including the dormant Android probe |
-| Debug probe isolation | Passed locally | Snapshot preserves health, position, simulation time and progression; default export disables the probe |
-| Android ARM64 Mobile export/signature | Pending development CI | Existing main build passed; new branch must be verified separately |
-| Android emulator install/launch/touch/gameplay/lifecycle | Pending CI | New x86_64 Compatibility export, real ADB input, read-only opt-in telemetry |
-| Local Android emulator | Could not run | Android SDK/adb/emulator absent; `/dev/kvm` unavailable. Runtime job installs dependencies on an Ubuntu GitHub runner |
-| Physical ARM64 device / Mobile renderer performance | Could not run | No connected phone; emulator Compatibility results do not validate this backend/ABI |
+| Normal movement, diagonal speed, touch ownership/release, bounds, dash/cooldown/reset | Passed: 12 checks | `tests/run_input_tests.gd` |
+| Combat/damage, enemy spawning/scaling, XP/overflow/merging, upgrades, saves/unlocks, death and victory lifecycle | Passed: 165 checks | `tests/run_tests.gd` |
+| Corruption eligibility, costs/modifiers, selection, reset | Passed: 41 checks | `tests/run_corruption_tests.gd` |
+| Audio format/loop bounds and 24 seconds of actual offline mixing | Passed: 6 checks | `tests/run_audio_tests.gd` |
+| Actual GUI mouse dispatch and safe panel retirement | Passed: 8 checks | `tests/run_gui_input_tests.gd` |
+| Read-only Android probe and disabled-by-default export | Passed: 5 checks | `tests/run_probe_tests.gd` |
+| Script, scene and resource loading | Passed: 49 resources | `tests/validate_resources.gd` |
+| UI geometry/lifecycle and corruption screens | Passed: 504 checks / 44 staged states | Local headless and CI software OpenGL |
+| Main scene startup and automatic combat | Passed | `SCENE_SMOKE_OK`, no script errors or leak warnings |
+| Nine isolated strict headless suites | Passed | Exit code + positive completion + error/leak scan; `headless-results.json` |
+| Normal-rule gameplay sessions | Passed invariants: 20 cases | 16 victories / 4 defeats retained; no injected immunity or forced boss kills |
+| Seeded replay | Passed | Two matching 180-second sessions |
+| Pickup comparisons | Passed: 6 cases | Conservation/local-merge/collector checks; historical numeric baseline skipped when sources differ |
+| Synthetic combat stress | Passed: 6 clean + 6 corrupted cases | Fixed-load and low/high gameplay parity; not a phone FPS threshold |
+| ARM64 Mobile debug APK import/export/signature | Passed | [Native build](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40535254881) |
+| Android 35 x86_64 Compatibility install/launch/touch/lifecycle | Passed: 12 checks | [Android runtime](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40535254515) |
+| Full recurring QA pipeline | Passed | [QA run](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40535254750) |
 
-## Reproduction
+The emulator used real ADB touch to deploy, move, dash, pause/resume, collect enemy XP, select an offered upgrade and toggle a setting. Background/resume retained pause; a new process after force-stop retained the changed setting and banked progression. Rendered state/panel synchronization plus a coarse blue/teal-frame check rejected boot-splash captures. Menu, combat, upgrade, settings and relaunched-menu screenshots were inspected. The final log scan found no Godot engine/script errors, game ANRs or native/Java fatal crashes.
+
+## Build artifacts
+
+[Download ARM64 Development APK ZIP](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40535254881/artifacts/12747577938). Extract `android/null-swarm-development-debug.apk`. Package: `com.nullswarm.game.development`, display name **NULL SWARM Development**; it installs separately from earlier game builds.
+
+APK SHA256: `a35e5ca7186a937b6ed79a6b97c79453325a73d2b8c5a0f8a3241d9bbe887d45`. Downloaded ZIP/APK hashes and CRCs independently verified, with ARM64/DEX/package checks. Tests/tools are excluded and the native APK has no enabled QA probe setting. CI ran `apksigner verify`.
+
+[Android screenshots/logcat/emulator report](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40535254515/artifacts/12747443519). Durable summaries and raw check results: [docs/qa/android-pipeline](docs/qa/android-pipeline/).
+
+## Failures found and resolved
+
+- Missing runner `libpulse.so.0` blocked emulator startup; added explicit Linux runtime libraries.
+- Unbounded ADB cleanup could hang a cancelled pre-boot job; diagnostic commands now have deadlines and duplicate development push runs were removed.
+- Fixed a GDScript loader type inference error and a JSON int/float comparison in the new probe test.
+- Strict checks caught intermittent shutdown audio references. After draining audio/UI teardown, eight fresh-process smoke repetitions had zero leak warnings (before: one of eight leaked).
+- Deprecated SwiftShader-indirect produced real GLES shader-link errors. Source inspection ruled out the attempted project-capacity workaround; it was reverted. Pinned SWANGLE rendering passed without reducing game light/entity budgets.
+- Procedural music used a one-past-end loop sample. Corrected the inclusive endpoint and added multi-loop native mixing checks; subsequent Android runs had no AudioTrack crash.
+- Immediate panel detachment during button dispatch produced `can_process` errors. A real GUI-input regression reproduced four failures; hidden/deferred panel retirement now passes all eight checks and Android log scanning.
+- Telemetry could precede a visible menu, producing boot-splash screenshots. Added rendered-frame/panel synchronization and pinned Pillow image readiness checks; inspected captures now show the game menus.
+
+## Could not run / limits
+
+- No local Android SDK/emulator/KVM; Android runtime testing ran successfully on the KVM-enabled GitHub runner instead.
+- Local editor TCP-service binding is restricted by the sandbox. Hosted import and local strict resource/headless checks passed.
+- No connected ARM64 phone: primary Mobile/Vulkan renderer runtime, real touch latency, cutouts, thermals and 30/60 FPS targets remain unverified. Emulator results certify the stated x86_64 Compatibility variant only. Android 10/API 29 runtime is not in this initial emulator matrix.
+- Death/victory lifecycle tests include controlled fixtures; separate normal-rule bot runs provide completion evidence, not human balance or fun guarantees. Emulator smoke does not force death/victory.
+- The palette check is a startup smoke heuristic, not pixel-perfect visual QA. Host audio is muted; guest audio mixing runs, but audible quality was not assessed.
+- Debug signing keys are ephemeral; stable protected signing is still required for repeat in-place development updates or release distribution. No signing keys or owner credentials are committed.
+
+## Reproduction and automation
 
 ```sh
 godot --headless --editor --import --quit
@@ -29,37 +64,4 @@ godot --headless --script tests/run_playtests.gd -- --corruption-probe
 godot --headless --script tests/run_benchmark.gd -- --corruption-stress
 ```
 
-`builds/qa/headless-results.json` and suite logs record exact local/CI outcomes. The Android runtime workflow uploads APK, screenshots, telemetry report, logcat, emulator version and system-image revision. A failure fails the job; missing KVM is an explicit infrastructure blocker.
-
-## Honest scope
-
-Death/victory lifecycle integration includes deliberately controlled fixtures to exercise state transitions; those do not establish human survivability. Separate normal-rule bots complete real runs without injected immunity or forced boss kills. Emulator smoke uses touch for deployment, walking, dash, pause/resume and ordinary upgrade selection; it does not award XP or force outcomes. Background/relaunch checks concern checkpointed permanent progression, not mid-run restoration. Headless/software-rendered timing is not phone FPS.
-
-## Issues found during setup
-
-- Fixed an inferred GDScript type in the new opt-in probe loader; strict local headless suites subsequently passed.
-- Local editor import also reports inability to bind its TCP service in the sandbox. This is distinct from project parse errors; hosted CI import remains a required gate.
-
-- Found and fixed a CI cleanup hang when a superseded emulator job was cancelled before boot. Every ADB diagnostic/cleanup command now has a bounded timeout. Emulator runs use main pushes and PR updates to avoid redundant development push jobs.
-
-- First Android runtime job failed before boot because the Ubuntu runner lacked libpulse.so.0. Added explicit Linux emulator dependencies; rerun pending.
-- Added a real touchscreen settings toggle and process-death persistence assertion; ARM64 development APK now has an isolated application ID.
-
-- Probe unit test initially failed on strict dictionary equality after JSON converted integer numeric values to floats. Corrected the comparison to validate numeric values semantically while preserving boolean types; reran the full probe checks.
-
-- Strict CI detected an intermittent smoke shutdown leak despite a success marker. Verbose local repetition identified AudioStreamWAV/AudioStreamPlaybackWAV references; shutdown drain increased before engine exit, retaining strict leak failure checks.
-- Emulator boot and Android Compatibility initialization passed. First gameplay touch was blocked by Android fullscreen onboarding and a Pixel Launcher ANR; added explicit OS-only dialog handling, activity-focus checks and emulator settling. Game ANRs remain failures. Rerun pending.
-
-- Post-fix shutdown repetition: eight fresh-process smoke runs passed with zero leak warnings (before fix: one of eight leaked audio playback references). Full hosted rerun pending.
-
-- Android logcat revealed real GLES shader-link failures: the emulator exceeded its fragment uniform limit. Configured Compatibility rendering for eight renderable lights/two lights per object; the current arena has one directional light, so no existing lighting or gameplay quantities are removed. Mobile/Vulkan settings remain unchanged. Runtime now fails on Godot engine errors as well as script/native crashes. Hosted rerun pending.
-
-- Further emulator testing reached gameplay but exposed a native AudioTrack crash and remaining shader failures. Corrected the eight-second WAV loop end from frame count to the last valid sample; added a 24-second offline mixing regression test. Reduced the unused global shader variable capacity to fit minimum GLES limits; no custom shader globals are currently used. Hosted verification pending.
-
-- Source inspection showed the GLES global uniform array is hardcoded in this Godot renderer, so project light/buffer limits do not solve the legacy emulator driver bug. Reverted those capacity changes; switched the emulator from deprecated SwiftShader-indirect to SWANGLE and enforced observed emulator/image version pins. Game rendering budgets remain unchanged.
-- Audio regression passed six checks, including 24 seconds of real offline WAV mixing across multiple loop boundaries. Hosted AudioTrack validation remains pending.
-
-- Latest Android run passed all nine functional touch/lifecycle checks, including persistent settings, with no shader-link failure or audio crash. Its final engine-log gate correctly failed on four `can_process` errors from panels detached inside synchronous button callbacks. Added a GUI-input regression reproducing four failures, changed panel retirement to hidden/deferred free, and reran it. Final hosted verification pending.
-- Native and full-QA push triggers now target main plus PR updates, avoiding redundant branch push runs; manual dispatch remains available.
-
-- All three hosted gates passed at 420dbfe67bf5a5a75a5f14d3f5f7892238719e0a, including ten Android checks with no game log errors. Manual screenshot review found startup captures could still show the boot splash before presentation. Added rendered-state/panel synchronization and a pinned Pillow blue/teal-frame smoke check; this is a readiness heuristic, not a full visual-quality assertion. Final rerun pending.
+Godot/templates 4.6.3, Java 21, SDK API 35/build-tools 35.0.1; emulator 37.2.12.0 and Android 35 Google APIs image revision 9 are enforced, with Pillow 11.3.0 in an isolated venv. Resolved versions/logs are uploaded. Main pushes, PR updates and manual dispatch run the gates; daily QA (03:23 UTC) and Saturday emulator QA (03:53 UTC) apply on the default branch after merge. QA/runtime artifacts are retained 14 days. A failed check fails CI, including zero-exit-code script errors and leak diagnostics.

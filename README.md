@@ -59,3 +59,5 @@ Corruption links become an optional alternate level-up choice from level 5. Revi
 ## Development Android validation
 
 [TEST_RESULTS.md](TEST_RESULTS.md) records current pass/fail/unavailable checks. Run `python3 tools/run_headless_checks.py` for isolated movement, system, corruption, UI and startup checks with strict completion/error detection. The Android runtime workflow builds a separate x86_64 Compatibility APK with read-only opt-in telemetry, installs it on Android 35, drives actual touchscreen input through ADB, and captures Android screenshots/logcat. It does not change combat stats. ARM64 Mobile export is a separate gate; phone performance and that renderer/ABI still require device testing. Weekly emulator scheduling takes effect on the default branch after merge.
+
+The development pipeline now passes real Android 35 emulator checks alongside native ARM64 export and strict headless/normal-gameplay suites. [Verified results and APK](TEST_RESULTS.md) distinguish emulator Compatibility coverage from untested physical ARM64/Mobile performance. CI development APKs install as NULL SWARM Development, separately from earlier builds. Debug keys remain ephemeral.
