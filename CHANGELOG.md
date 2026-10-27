@@ -33,3 +33,10 @@
 - Added distinct generated weapon sounds and an original sequenced combat loop.
 - Added pooled effect budgets and rendered CI captures. This remains development artwork/audio.
 - Uses a separate Reactor package so it can coexist with the owner's working original APK.
+
+### 0.2 verification
+
+- Passed 100 automated checks, rendered visual capture, Android debug export and APK signature verification in workflow 40432471369.
+- Fixed upgrade-card feedback layering and cancelled pending boss attacks across encounter transitions.
+- Independently verified downloaded artifact/APK checksums and excluded QA captures from the APK.
+- Physical-device playtesting and profiling remain required; intermittent CI smoke shutdown warning remains.

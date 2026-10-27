@@ -29,7 +29,7 @@ godot --headless --export-debug Android builds/android/null-swarm-reactor-0.2-de
 adb install -r builds/android/null-swarm-reactor-0.2-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-reactor-0.2-apk`. Physical-device testing and balance remain required for this new version.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-reactor-0.2-apk`. The [verified 0.2 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40432471369/artifacts/12701948224) includes the APK under `android/` and staged QA images under `screenshots/`. All 100 checks and APK signature verification passed. Physical-device testing and balance remain required for this new version.
 
 This build installs alongside the original as **NULL SWARM Reactor** (`com.nullswarm.game.slice`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
