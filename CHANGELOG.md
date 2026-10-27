@@ -106,3 +106,9 @@
 - Added optional eight-case Arcstorm/Kinetic navigation comparison with normal combat rules.
 - Reproduced all four cautious baseline fields and documented mixed gap results; preserved full traces.
 - Re-ran 156 system checks. Installed gameplay and APK unchanged.
+
+## 0.4.1 — Memory locator
+
+- Added a steady player-relative direction cue and distance to nearby uncollected memory, with target hysteresis and four queries per second.
+- Cue ignores in-flight packets and packets within attraction range; pause/panels suppress it. It does not alter pickup positions, XP, attraction, combat, RNG or bot navigation.
+- Added locator regression checks and a staged visual capture; separate Memory test package preserves prior installs. Android verification pending.

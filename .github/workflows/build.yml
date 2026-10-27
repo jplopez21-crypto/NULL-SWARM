@@ -58,13 +58,13 @@ jobs:
       - name: Export debug APK
         run: |
           mkdir -p builds/android
-          godot --headless --export-debug Android builds/android/null-swarm-adaptive-0.4-debug.apk
-          test -s builds/android/null-swarm-adaptive-0.4-debug.apk
-          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-adaptive-0.4-debug.apk
-          sha256sum builds/android/null-swarm-adaptive-0.4-debug.apk > builds/android/SHA256SUMS
+          godot --headless --export-debug Android builds/android/null-swarm-memory-0.4.1-debug.apk
+          test -s builds/android/null-swarm-memory-0.4.1-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-memory-0.4.1-debug.apk
+          sha256sum builds/android/null-swarm-memory-0.4.1-debug.apk > builds/android/SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: null-swarm-adaptive-0.4-apk
+          name: null-swarm-memory-0.4.1-apk
           path: |
             builds/android/
             builds/screenshots/

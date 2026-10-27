@@ -158,6 +158,7 @@ func _process(delta: float) -> void:
 		var aspect := get_viewport().get_visible_rect().size.aspect()
 		camera.size = maxf(29.0, aspect * 16.0)
 		ui.update_hud(player, progress, combat)
+		ui.update_memory(delta, pickups, player, state == State.PLAYING)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.physical_keycode == KEY_F3:
@@ -313,6 +314,10 @@ func _capture_session() -> void:
 	await get_tree().create_timer(0.4).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/foundry.png")
 	start_run()
+	# Isolated, staged locator capture with no artificial combat claims.
+	pickups.drop(player.position + Vector3(12, 0, -5), 100)
+	await get_tree().create_timer(0.5).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_locator.png")
 	# Automated staged capture for visual QA, not a claim of human gameplay.
 	progress.ranks = {"orbit": 3, "thermal": 3, "arc": 3, "damage": 3}
 	combat.update_build(progress.ranks)

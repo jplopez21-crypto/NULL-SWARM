@@ -1,4 +1,4 @@
-# Development status — Adaptive Swarm 0.4 / 2026-10-27
+# Development status — Memory locator 0.4.1 / 2026-10-27
 
 ## Completed implementation
 
@@ -43,3 +43,10 @@
 - All eight local runs completed with zero invariant failures. Four cautious cases exactly reproduced canonical outcome/level/XP/gap fields. All 156 system checks passed again.
 - Alternate Arcstorm collector won both seeds but still stalled for 249–320 seconds; Kinetic gap changes were mixed. Collection affects outcomes, but a universal pacing improvement is not established.
 - Gameplay and the verified 0.4 APK are unchanged; this checkpoint adds reproducible diagnostic tooling.
+
+## Memory locator implementation
+
+- Added a steady cyan player-relative arrow and distance label for uncollected memory. Queries nearest eligible packet at 4 Hz with 20% distance hysteresis; attracted/within-range packets are excluded.
+- Locator is UI guidance only and does not affect simulation, XP, combat or normal-bot navigation. Its human pacing benefit is unproven.
+- Reused label backing style; no per-frame style allocation. Added query regression checks and staged locator screenshot.
+- Version 0.4.1 / code 6, app NULL SWARM Memory / com.nullswarm.game.memory; separate saves/install for ephemeral test signing. Verification pending.

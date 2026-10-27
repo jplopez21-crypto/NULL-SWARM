@@ -46,9 +46,16 @@ var surge_label: Label
 var toast_title: Label
 var toast_detail: Label
 var toast_time: float = 0.0
+var memory_backing := StyleBoxFlat.new()
+var memory_packet: MeshInstance3D
+var memory_origin := Vector3.ZERO
+var memory_visible: bool = false
+var memory_refresh: float = 0.0
 var backdrop: Control
 
 func _ready() -> void:
+	memory_backing.bg_color = Color(0.02, 0.07, 0.10, 0.85)
+	memory_backing.set_corner_radius_all(3)
 	root = Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(root)
@@ -229,11 +236,14 @@ func show_menu(data: Dictionary) -> void:
 	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
-	label_at(box, "BUILD 0.4  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
+	label_at(box, "BUILD 0.4.1  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
 	hud_visible = value
+	memory_packet = null
+	memory_visible = false
+	memory_refresh = 0.0
 	column.visible = value
 	joystick_canvas.queue_redraw()
 
@@ -389,6 +399,46 @@ func _process(delta: float) -> void:
 			damage_texts.remove_at(i)
 	joystick_canvas.queue_redraw()
 
+func update_memory(delta: float, pickups: PickupSystem, player: SwarmPlayer, playing: bool) -> void:
+	memory_visible = playing
+	memory_origin = player.position
+	if not playing:
+		return
+	memory_refresh -= delta
+	if memory_refresh <= 0.0:
+		memory_refresh = 0.25
+		var previous: MeshInstance3D = memory_packet if is_instance_valid(memory_packet) else null
+		memory_packet = pickups.memory_target(player.position, player.magnet + 0.6, previous)
+	if is_instance_valid(memory_packet):
+		var offset := memory_packet.position - player.position
+		offset.y = 0.0
+		memory_visible = memory_packet.visible and offset.length() > player.magnet + 0.6
+	else:
+		memory_visible = false
+
+func _draw_memory() -> void:
+	if not memory_visible or not is_instance_valid(memory_packet):
+		return
+	if world_camera.is_position_behind(memory_origin) or world_camera.is_position_behind(memory_packet.position):
+		return
+	var center := world_camera.unproject_position(memory_origin)
+	var target := world_camera.unproject_position(memory_packet.position)
+	var direction := (target - center).normalized()
+	if direction.length_squared() < 0.5:
+		return
+	var tip := center + direction * 70.0
+	var side := direction.orthogonal() * 6.0
+	joystick_canvas.draw_line(center + direction * 49.0, tip, CYAN, 2.0, true)
+	joystick_canvas.draw_polyline(PackedVector2Array([tip - direction * 9.0 + side, tip, tip - direction * 9.0 - side]), CYAN, 2.0, true)
+	var offset := memory_packet.position - memory_origin
+	offset.y = 0.0
+	var text := "MEMORY %dm" % ceili(offset.length())
+	var text_size := ThemeDB.fallback_font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15)
+	# Fixed below-player label stays away from top HUD and bottom touch controls.
+	var label_point := center + Vector2(-text_size.x * 0.5, 99)
+	joystick_canvas.draw_style_box(memory_backing, Rect2(label_point - Vector2(5, 16), text_size + Vector2(10, 6)))
+	joystick_canvas.draw_string(ThemeDB.fallback_font, label_point, text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, CYAN)
+
 func _draw_feedback() -> void:
 	if not hud_visible or screen != null:
 		return
@@ -399,6 +449,7 @@ func _draw_feedback() -> void:
 		joystick_canvas.draw_circle(center + input_router.stick * 60, 23, Color(0.4, 0.9, 0.8, 0.4))
 	if world_camera == null:
 		return
+	_draw_memory()
 	for item in damage_texts:
 		var at: Vector3 = item["at"] + Vector3(0, 1.5 + (0.6 - item["life"]) * 2.0, 0)
 		if not world_camera.is_position_behind(at):

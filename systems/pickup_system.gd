@@ -90,3 +90,27 @@ func outstanding_xp() -> int:
 func vacuum() -> void:
 	for item in items:
 		item["attract"] = true
+
+# Read-only locator. Never attracts, moves or grants a packet.
+func memory_target(at: Vector3, attraction_radius: float, preferred: MeshInstance3D = null) -> MeshInstance3D:
+	var nearest: MeshInstance3D
+	var nearest_distance: float = INF
+	var preferred_distance: float = INF
+	for item in items:
+		if item["attract"]:
+			continue
+		var mesh: MeshInstance3D = item["mesh"]
+		var offset := mesh.position - at
+		offset.y = 0.0
+		var distance := offset.length_squared()
+		if distance <= attraction_radius * attraction_radius:
+			continue
+		if distance < nearest_distance:
+			nearest = mesh
+			nearest_distance = distance
+		if is_instance_valid(preferred) and mesh == preferred:
+			preferred_distance = distance
+	# Stay with the current packet unless another is meaningfully closer.
+	if preferred_distance < INF and preferred_distance <= nearest_distance * 1.44:
+		return preferred
+	return nearest
