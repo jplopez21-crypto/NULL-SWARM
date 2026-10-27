@@ -121,6 +121,19 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--extended-seeds" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("additional fixed-seed normal-rules sessions")
+		var cases: Array[Dictionary] = []
+		for fixture in [[303, "halo", "vanguard"], [303, "arcstorm", "vanguard"], [404, "kinetic", "vanguard"], [404, "electric", "vanguard"], [505, "electric", "conductor"], [505, "halo", "sentinel"]]:
+			var result: Dictionary = await simulate(fixture[0], fixture[1], fixture[2])
+			cases.append(result)
+			print("EXTENDED_CASE ", fixture, " outcome=", result["outcome"], " time=", result["survived_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Additional fixed seeds, not random exploration or human balance evidence.", "Same cautious navigation and normal combat; earned kits have no research grants."]
+		QAReport.write("res://builds/qa/extended-seeds.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--collector-probe" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("upgrade-gap collector investigation")
 		var cases: Array[Dictionary] = []

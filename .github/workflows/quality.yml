@@ -31,6 +31,22 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd 2>&1 | tee builds/qa/bots.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/bots.log; then exit 1; fi
           test -s builds/qa/bot-report.json
+      - name: Additional seeded sessions
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --extended-seeds 2>&1 | tee builds/qa/extended.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/extended.log; then exit 1; fi
+          test -s builds/qa/extended-seeds.json
+      - name: UI lifecycle and window-size captures
+        run: |
+          set -o pipefail
+          if ! command -v xvfb-run; then
+            sudo apt-get update
+            sudo apt-get install -y xvfb libgl1-mesa-dri
+          fi
+          LIBGL_ALWAYS_SOFTWARE=1 timeout 180s xvfb-run -a -s "-screen 0 1920x1200x24" godot --rendering-method gl_compatibility --audio-driver Dummy --script tests/run_ui_tests.gd -- --capture-ui 2>&1 | tee builds/qa/ui.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/ui.log; then exit 1; fi
+          test -s builds/qa/ui-report.json
       - name: Pickup merge A/B and collector comparison
         run: |
           set -o pipefail

@@ -118,3 +118,9 @@
 - Local/CI passed 165 checks, scene smoke, ten normal bot runs/180-second replay, six pickup comparisons and six synthetic stress scenarios.
 - All non-timing gameplay fields in the ten bot and six pickup cases exactly matched canonical 0.4 reports.
 - Signed APK export and downloaded ZIP/APK integrity verified; staged locator render inspected. Reports archived in docs/qa/0.4.1. Human pacing/readability and phone performance remain unverified.
+
+### Continuing QA coverage
+
+- Added reproducible UI lifecycle/window geometry checks and software-rendered captures for eight screens at four window sizes.
+- Added six separately labelled seeded sessions across builds/earned kits to recurring CI.
+- Local UI suite: 352 checks / 32 layouts / zero failures. Expanded CI verification pending; installed gameplay unchanged.

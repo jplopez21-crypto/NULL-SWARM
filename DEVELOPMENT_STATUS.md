@@ -36,3 +36,10 @@ Eight local collector comparisons passed all invariants and reproduced four caut
 1. Investigate collection-rate/distance telemetry during stalled intervals if phone playtests confirm confusion.
 2. Validate memory cue readability and collection pacing on a phone; inspect pickup distances/rates during stalled intervals.
 3. Implement informed corruption choices with explicit power/risk previews, capped modifiers and save-safe integration.
+
+## Continuing test expansion
+
+- Added a dedicated UI lifecycle/window suite: 352 local checks across 32 staged screen states passed. Physical window sizes are verified separately from the unchanged KEEP-scaled 1280×720 canvas.
+- Added pause/focus/upgrade/results guidance checks, touch/dash reset and restart cleanup.
+- Added six normal-rules sessions on new fixed seeds; rendered 32-screen CI captures and expanded seeded verification pending.
+- These additions change QA tooling only. The verified 0.4.1 APK remains the current gameplay build.

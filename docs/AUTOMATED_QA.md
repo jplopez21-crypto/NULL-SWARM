@@ -80,3 +80,11 @@ This probe is explicit/manual rather than an extra mandatory build step. It does
 ## 0.4.1 memory guidance verification
 
 165 checks passed, including locator empty/nearest/hysteresis/retarget/in-flight/attraction-range/read-only/vacuum cases. Ten normal bot case records and six pickup case records exactly matched canonical 0.4 after excluding wall/step timing fields. Six stress scenarios and 180-second replay passed. [Current reports](qa/0.4.1/BOT_REPORT.md) preserve the same seven wins/three defeats. The locator is driven by rendered UI updates, not bot decisions; these comparisons establish simulation isolation for the tested cases, not a human pacing benefit or phone UI cost.
+
+## Continuing UI and seeded-run regression coverage
+
+`godot --headless --script tests/run_ui_tests.gd` exercises menu, settings, combat, adaptation warning, pause, upgrades, results and Foundry at four requested window sizes: 1280×720, 1600×720, 1280×960 and 960×600. It verifies actual requested window sizes independently from the logical canvas, visible-button/panel containment, touch/dash reset, frozen simulation clock, focus-loss pause, guidance suppression/reacquisition and stale-target cleanup on restart. The project’s KEEP scaling preserves the 1280×720 logical canvas with letterboxing at other ratios; this is not coverage of four independent responsive canvas sizes.
+
+CI runs the same suite with `--capture-ui` under Xvfb/software OpenGL and uploads 32 staged PNGs plus `ui-report.json` in the QA artifact. These captures are desktop renders, not Android safe-area, real touch, device FPS or process-death validation. Synthetic lifecycle actions and seeded/staged state setup are test fixtures.
+
+`godot --headless --script tests/run_playtests.gd -- --extended-seeds` adds six cautious-bot sessions on seeds 303/404/505 covering all four builds and both earned-kit fixtures. It retains normal combat, legal offered upgrades and all existing invariants; defeats remain valid observations. Results are separate from the canonical ten-case matrix (`extended-seeds.json`), preserving prior comparisons. Both suites now run on each QA workflow invocation.
