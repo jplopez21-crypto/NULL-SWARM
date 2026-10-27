@@ -1,48 +1,41 @@
-# Development status — 2026-10-27
+# Development status — Reactor Zero 0.2 / 2026-10-27
 
-## Completed implementation
+## Confirmed baseline
 
-- Godot 4.6.3 project with elevated 3D camera and industrial arena.
-- VANGUARD movement, dash, Pulse Rifle, shields and damage invulnerability.
-- Pooled crawlers, charging strikers and ranged sentries with telegraphed attacks.
-- Five-minute survival schedule, XP pickups, capped upgrades, victory/defeat and restart.
-- Touch/keyboard/controller input; HUD, menus, settings and safe-area margins.
-- Generated audio, adjustable feedback and performance overlay.
-- Versioned local settings/statistics with backup recovery.
-- Source published to GitHub; Android debug CI now builds successfully.
+The owner reports that the original Milestone 1 APK works on their Android device. Its source and successful build remain available in repository history.
 
-## Latest build — successful
+## Completed in this iteration
 
-- Build commit: `c962acfb5c02ed261b363d45625d7738b85b43e3`.
-- Workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40429916577
-- Artifact: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40429916577/artifacts/12700993972
-- APK: `builds/android/null-swarm-m1-debug.apk`, ARM64, 27,664,697 bytes.
-- SHA256: `da1d426d1e7f2e85e276dcf822df04b134faaecc9acf43c27e4e6bb08f9c2c4e`.
-- Android export and apksigner verification passed in GitHub Actions.
-- Downloaded artifact ZIP and contained APK integrity/checksum independently verified locally.
-- Debug signing only. No release-ready AAB or production signing credentials included.
+- Six weapon behaviors with four equipment slots, ranked upgrades and two rerolls.
+- Arcstorm Rifle and Solar Halo mutations with explicit prerequisite descriptions.
+- Kill-chain Overclock, boss-core repair/vacuum/bonus upgrade rewards.
+- Five regular enemy archetypes, Warden mini-boss at 03:00 and three-phase Architect at 09:00.
+- Ten-minute survival with extraction requiring Architect defeat.
+- Reactor floor tiles batched with MultiMesh, peripheral machinery and stronger operative silhouettes/animation.
+- Pooled weapon/death effects, distinct generated weapon sounds and an original sequenced combat loop.
+- Revised menus, colored upgrade cards, boss health/phase, equipment HUD and encounter announcements.
 
-## Test results
+## Verification
 
-- CI resource import: passed.
-- Automated suite: 79 checks, zero failures, including five-minute lifecycle simulation, defeat/restart, pool reset, pause, cooldowns, upgrades and corrupted-save recovery.
-- Scene smoke: passed with active enemies and projectiles.
-- Completion harness uses invulnerability to isolate lifecycle correctness; human survivability/balance is not established.
-- Android installation, touch feel, rendered visuals and S23 Ultra performance have not been tested.
+- Local automated suite: 100 checks passed, zero failures.
+- Scene smoke: passed with active enemies/projectiles.
+- Coverage includes each weapon's damage, slot restrictions, mutations, reroll bounds, Overclock, effect-pool limits/reclamation, boss warnings, extraction gating and full ten-minute lifecycle.
+- Lifecycle simulation uses invulnerability and explicit final-boss damage; it does not establish human survivability or balance.
+- Android CI export and staged desktop visual capture: in progress.
+- No physical-device profiling or playtest of 0.2 yet.
 
-## Known limitations / in progress
+## Delivery / limitations
 
-- Milestone 1 acceptance remains open until installed APK gameplay and physical-device performance checks pass.
-- CI's test suite still emitted an intermittent ObjectDB shutdown leak warning despite audio cleanup. The scene smoke passed without that warning; further investigation is required.
-- Graphics presets currently vary damage-number effects only; no measured Android performance budget yet.
-- Application interruption pauses and persists settings/statistics; active-run recovery after process termination is not implemented.
-- Artwork/audio remain development assets, not final commercial presentation.
-- Android 10 minimum configuration and current Play policy requirements must be verified during release preparation. This non-Gradle debug export uses the engine template SDK configuration.
-- No completed production release-signing workflow, billing, permanent progression or Milestone 2 content.
+- Installs alongside original as NULL SWARM Reactor, package com.nullswarm.game.slice.
+- Debug signing is ephemeral per CI run; persistent signing is required before future in-place updates.
+- Procedural art and synthesized audio remain development assets.
+- Original-system expansion (adaptive swarm/corruption), permanent progression, release signing and full commercial content remain deferred.
+- Mid-run process-death recovery remains unimplemented; focus loss pauses and persists saved settings/statistics.
+- Android performance targets and reduced-effects readability require physical-device validation.
 
 ## Next priorities
 
-1. Install the APK on S23 Ultra and complete a human five-minute session.
-2. Validate joystick/dash multitouch, controller focus, safe areas and background/resume.
-3. Profile frame time, enemy/projectile counts and rendering under heavy combat; verify Compatibility fallback.
-4. Investigate intermittent CI shutdown warning and tune difficulty/readability before Milestone 2.
+1. Inspect rendered CI captures and fix visual issues.
+2. Produce and verify the Android APK.
+3. Human-playtest first-minute weapon acquisition, Warden difficulty and Architect readability on S23 Ultra.
+4. Profile combat before expanding content further.

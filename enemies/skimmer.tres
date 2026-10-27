@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://resources/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"skimmer"
+title = "Skimmer"
+behavior = 4
+health = 34.0
+speed = 4.3
+damage = 11.0
+xp = 10
+radius = 0.6
+color = Color(0.46, 0.80, 1, 1)

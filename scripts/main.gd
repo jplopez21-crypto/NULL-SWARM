@@ -1,6 +1,6 @@
 extends Node3D
 
-const RUN_SECONDS: float = 300.0
+const RUN_SECONDS: float = 600.0
 enum State { MENU, PLAYING, UPGRADING, PAUSED, RESULTS }
 var state: State = State.MENU
 var input_router := InputRouter.new()
@@ -44,44 +44,18 @@ func _ready() -> void:
 	ui.pause_run.connect(pause_run)
 	ui.dash.connect(func(): input_router.dash_requested = true)
 	ui.upgrade_selected.connect(select_upgrade)
+	ui.reroll_requested.connect(reroll_upgrades)
 	ui.setting_changed.connect(change_setting)
 	ui.show_menu(save.data)
+	if "--capture" in OS.get_cmdline_user_args():
+		_capture_session()
 	boot_smoke = "--smoke" in OS.get_cmdline_user_args()
 	if boot_smoke:
 		start_run()
 
 func _build_arena() -> void:
-	arena = Node3D.new()
+	arena = ReactorArena.new()
 	add_child(arena)
-	SwarmVisuals.box(arena, Vector3(100, 0.4, 100), Vector3(0, -0.3, 0), Color("101f2c"))
-	for axis in range(-50, 51, 5):
-		SwarmVisuals.box(arena, Vector3(0.035, 0.02, 100), Vector3(axis, -0.07, 0), Color("203b47"), true)
-		SwarmVisuals.box(arena, Vector3(100, 0.02, 0.035), Vector3(0, -0.07, axis), Color("203b47"), true)
-	for side in [-1, 1]:
-		SwarmVisuals.box(arena, Vector3(100, 0.2, 0.15), Vector3(0, 0, side * 48), Color("7dfadd"), true)
-		SwarmVisuals.box(arena, Vector3(0.15, 0.2, 100), Vector3(side * 48, 0, 0), Color("7dfadd"), true)
-	# Scenery stays outside the traversable combat floor.
-	for i in range(24):
-		var angle := float(i) / 24.0 * TAU
-		var pos := Vector3(cos(angle) * 64, 1.5, sin(angle) * 64)
-		SwarmVisuals.box(arena, Vector3(6, 3 + i % 4, 6), pos, Color("263944"))
-		SwarmVisuals.box(arena, Vector3(6.1, 0.12, 6.1), pos + Vector3(0, 1, 0), Color("4ac9bf"), true)
-	var environment := WorldEnvironment.new()
-	var env := Environment.new()
-	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("07121c")
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("aec4d9")
-	env.ambient_light_energy = 0.7
-	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	environment.environment = env
-	add_child(environment)
-	var light := DirectionalLight3D.new()
-	light.rotation_degrees = Vector3(-65, -25, 0)
-	light.light_color = Color("b6d4e7")
-	light.light_energy = 1.3
-	light.shadow_enabled = false
-	add_child(light)
 
 func start_run() -> void:
 	if run_root != null:
@@ -103,6 +77,13 @@ func start_run() -> void:
 		pickups.drop(at, amount)
 		if Engine.get_physics_frames() % 3 == 0:
 			audio.play("kill"))
+	combat.notice.connect(func(title: String, detail: String, color: Color): ui.toast(title, detail, color))
+	combat.weapon_fired.connect(_weapon_sound)
+	combat.cache_recovered.connect(func():
+		pickups.vacuum()
+		player.health.current = minf(player.health.maximum, player.health.current + 30.0)
+		player.health.shield = player.health.max_shield
+		progress.pending += 1)
 	combat.player_hit.connect(func():
 		shake = 0.3
 		audio.play("damage"))
@@ -112,6 +93,7 @@ func start_run() -> void:
 	ui.hide_panel()
 	ui.set_hud(true)
 	state = State.PLAYING
+	ui.toast("LINK ESTABLISHED", "COLLECT MEMORY // BUILD YOUR ARSENAL", Color("78f8d4"))
 	camera.position = Vector3(0, 32, 23)
 
 func _physics_process(delta: float) -> void:
@@ -119,16 +101,20 @@ func _physics_process(delta: float) -> void:
 		return
 	if player.tick(delta, input_router.movement(), input_router.dash_requested):
 		audio.play("dash")
+		combat.effects.emit_fx("ring", player.position, player.position, Color("78f8d4"), 1.7)
 	input_router.dash_requested = false
-	for enemy in combat.enemies:
-		enemy.effects_enabled = save.data["settings"]["flashes"]
+	player.flash_feedback = save.data["settings"]["flashes"]
+	combat.effects_enabled = save.data["settings"]["flashes"]
+	combat.effects.flashes = save.data["settings"]["flashes"]
+	combat.effects.quality = int(save.data["settings"]["quality"])
 	if combat.tick(delta, player):
 		audio.play("fire")
+		player.recoil = 1.0
 	# Depletion callbacks can change state during combat.tick.
 	if state != State.PLAYING:
 		return
 	progress.add_xp(pickups.tick(delta, player))
-	if combat.director.elapsed >= RUN_SECONDS:
+	if combat.director.elapsed >= RUN_SECONDS and combat.encounters.boss_defeated:
 		finish_run(true)
 	elif progress.pending > 0:
 		show_upgrade()
@@ -222,11 +208,21 @@ func show_upgrade() -> void:
 	input_router.reset()
 	offered = progress.choices(combat.rng)
 	audio.play("level", "UI")
-	ui.show_upgrades(offered, upgrade_description, progress.level)
+	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls)
 
 func upgrade_description(id: String) -> String:
+	if Arsenal.DATA.has(id):
+		var definition: Dictionary = Arsenal.DATA[id]
+		var rank: int = int(progress.ranks.get(id, 0))
+		var line := "NEW WEAPON // %s" % definition["role"] if rank == 0 else "RANK %d → %d // DMG %d → %d" % [rank, rank + 1, int(definition["damage"] * (1.0 + (rank - 1) * 0.28)), int(definition["damage"] * (1.0 + rank * 0.28))]
+		var synergy := ""
+		if id in ["orbit", "thermal"]:
+			synergy = "\nMUTATION: Orbitals 3 + Thermal 3"
+		elif id == "arc":
+			synergy = "\nMUTATION: Arc 3 + Amplified Pulse 3"
+		return "%s\n%s\n\n%s%s" % [definition["title"], line, definition["description"], synergy]
 	match id:
-		"damage": return "AMPLIFIED PULSE\nDamage %d → %d\nHarder hits. Every shot." % [int(combat.weapon.damage), int(combat.weapon.damage + 6)]
+		"damage": return "AMPLIFIED PULSE\nDamage %d → %d\nSynergy: Pulse 3 + Arc 3" % [int(combat.weapon.damage), int(combat.weapon.damage + 6)]
 		"rate": return "RAPID CYCLER\nCooldown %.2fs → %.2fs\nFaster automatic fire." % [combat.weapon.interval, maxf(0.12, combat.weapon.interval * 0.87)]
 		"pierce": return "PHASE ROUNDS\nPierce %d → %d\nPunch through another unit." % [combat.weapon.piercing, combat.weapon.piercing + 1]
 		"speed": return "SERVO OVERDRIVE\nSpeed %.1f → %.1f\nOutrun the machine tide." % [player.speed, player.speed + 0.65]
@@ -251,6 +247,8 @@ func select_upgrade(id: String) -> void:
 			player.health.shield = minf(player.health.max_shield, player.health.shield + 12.0)
 		"magnet": player.magnet += 1.2
 		"repair": player.health.current = minf(player.health.maximum, player.health.current + 35.0)
+	combat.update_build(progress.ranks)
+	combat.effects.emit_fx("ring", player.position, player.position, Arsenal.color(id), 3.0)
 	audio.play("ui", "UI")
 	if progress.pending > 0:
 		show_upgrade()
@@ -269,3 +267,36 @@ func _exit_tree() -> void:
 	if is_instance_valid(player):
 		for connection in player.health.depleted.get_connections():
 			player.health.depleted.disconnect(connection["callable"])
+
+func reroll_upgrades() -> void:
+	if state != State.UPGRADING or progress.rerolls <= 0:
+		return
+	progress.rerolls -= 1
+	show_upgrade()
+
+func _weapon_sound(id: String) -> void:
+	if id in ["mutation", "overclock"]:
+		audio.play("level", "UI")
+	else:
+		audio.play(id)
+
+func _capture_session() -> void:
+	await get_tree().create_timer(1.0).timeout
+	DirAccess.make_dir_recursive_absolute("res://builds/screenshots")
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/menu.png")
+	start_run()
+	# Automated staged capture for visual QA, not a claim of human gameplay.
+	progress.ranks = {"orbit": 3, "thermal": 3, "arc": 3, "damage": 3}
+	combat.update_build(progress.ranks)
+	combat.rng.seed = 7312026
+	for i in range(22):
+		var angle := i * TAU / 22
+		combat.spawn(i % 5, Vector3(cos(angle), 0, sin(angle)) * 10)
+	await get_tree().create_timer(2.0).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/combat.png")
+	progress.pending = 1
+	show_upgrade()
+	await get_tree().create_timer(0.5).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/upgrades.png")
+	audio.shutdown()
+	get_tree().quit()

@@ -4,6 +4,19 @@ extends Node3D
 signal enemy_destroyed(at: Vector3, xp: int)
 signal player_hit
 signal impact(at: Vector3, amount: float, critical: bool)
+signal notice(title: String, detail: String, color: Color)
+signal weapon_fired(id: String)
+signal cache_recovered
+var effects: CombatEffects
+var rig: WeaponRig
+var encounters := EncounterDirector.new()
+var loadout: Dictionary = {}
+var mutations: Array[String] = []
+var timers: Dictionary = {}
+var streak: int = 0
+var streak_time: float = 0.0
+var overclock: float = 0.0
+var effects_enabled: bool = true
 var enemies: Array[SwarmEnemy] = []
 var projectiles: Array[SwarmProjectile] = []
 var hostile_projectiles: Array[SwarmProjectile] = []
@@ -16,15 +29,19 @@ var tick_index: int = 0
 var target: Node3D
 var active_enemies: int = 0
 var active_projectiles: int = 0
-const DEFINITIONS: Array[EnemyDefinition] = [preload("res://enemies/crawler.tres"), preload("res://enemies/striker.tres"), preload("res://enemies/sentry.tres")]
-const ENEMY_RESERVE: int = 384
+const DEFINITIONS: Array[EnemyDefinition] = [preload("res://enemies/crawler.tres"), preload("res://enemies/striker.tres"), preload("res://enemies/sentry.tres"), preload("res://enemies/bulwark.tres"), preload("res://enemies/skimmer.tres")]
+const ENEMY_RESERVE: int = 240
 
 func _ready() -> void:
-	rng.seed = 7312026
+	rng.randomize()
+	effects = CombatEffects.new()
+	add_child(effects)
+	rig = WeaponRig.new()
+	add_child(rig)
 	# Large enough to accommodate the complete fixed five-minute spawn schedule.
 	# Pools grow if exhausted; no spawns are discarded to change difficulty.
 	for i in range(ENEMY_RESERVE):
-		_create_enemy(i % 3)
+		_create_enemy(i % 5)
 	for i in range(160):
 		_create_projectile(false)
 	for i in range(96):
@@ -70,6 +87,12 @@ func fire(at: Vector3, direction: Vector3, hostile: bool = false, amount: float 
 
 func tick(delta: float, player: SwarmPlayer) -> bool:
 	tick_index += 1
+	streak_time -= delta
+	if streak_time <= 0.0:
+		streak = 0
+	overclock = maxf(0.0, overclock - delta)
+	effects.tick(delta)
+	encounters.tick(delta, self, player)
 	var spawn_count := director.tick(delta)
 	for i in range(spawn_count):
 		var angle := rng.randf() * TAU
@@ -84,6 +107,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		if not enemy.active:
 			continue
 		active_enemies += 1
+		enemy.effects_enabled = effects_enabled
 		if enemy.index % 6 == tick_index % 6:
 			enemy.think(player.position)
 		var shot_direction := enemy.tick(delta)
@@ -94,11 +118,13 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 				player_hit.emit()
 	grid.rebuild(enemies)
 	target = grid.nearest(player.position, weapon.definition.range_m)
-	var fired := weapon.ready_to_fire(delta, target != null)
+	var fired := weapon.ready_to_fire(delta * (1.6 if overclock > 0.0 else 1.0), target != null)
 	if fired:
 		fire(player.position, target.position - player.position)
+		effects.emit_fx("spark", player.position, player.position, Color("c1ffe7"), 0.45)
 	if target != null:
 		player.aim(target.position)
+	_tick_arsenal(delta, player)
 	active_projectiles = 0
 	for shot in projectiles:
 		if not shot.active:
@@ -117,11 +143,9 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			shot.struck.append(enemy.index)
 			var critical := rng.randf() < 0.08
 			var amount := shot.damage * (1.8 if critical else 1.0)
-			impact.emit(enemy.position, amount, critical)
-			if enemy.hit(amount, shot.velocity.normalized() * 0.2):
-				enemy_destroyed.emit(enemy.position, enemy.definition.xp)
-				enemy.deactivate()
-				kills += 1
+			_damage(enemy, amount, shot.velocity.normalized() * 0.2, critical)
+			if mutations.has("arcstorm"):
+				chain(enemy.position, weapon.damage * 0.5, 2, 6.0, [enemy.index])
 			if shot.piercing <= 0:
 				shot.deactivate()
 				break
@@ -137,3 +161,107 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 				player_hit.emit()
 			shot.deactivate()
 	return fired
+
+func update_build(ranks: Dictionary) -> void:
+	loadout = ranks
+	for id in Arsenal.mutation(ranks):
+		if not mutations.has(id):
+			mutations.append(id)
+			notice.emit("WEAPON MUTATION", "ARCSTORM RIFLE // ROUNDS NOW CHAIN" if id == "arcstorm" else "SOLAR HALO // ORBITALS RADIATE HEAT", Color("ffe39b"))
+			weapon_fired.emit("mutation")
+
+func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO, critical: bool = false) -> void:
+	if not enemy.active:
+		return
+	impact.emit(enemy.position, amount, critical)
+	effects.emit_fx("spark", enemy.position, enemy.position, enemy.definition.color.lightened(0.3), 0.45 if critical else 0.22)
+	if not enemy.hit(amount, knockback if enemy.definition.radius < 1.3 else Vector3.ZERO):
+		return
+	var at := enemy.position
+	enemy.deactivate()
+	kills += 1
+	streak += 1
+	streak_time = 3.0
+	if streak % 20 == 0:
+		overclock = 6.0
+		notice.emit("OVERCLOCK // %d CHAIN" % streak, "FIRE RATE +60%% FOR 6 SECONDS", Color("b9f66b"))
+		weapon_fired.emit("overclock")
+	enemy_destroyed.emit(at, enemy.definition.xp)
+	effects.emit_fx("ring", at, at, enemy.definition.color, enemy.definition.radius * 1.8)
+	if enemy.definition.id in [&"warden", &"architect"]:
+		cache_recovered.emit()
+		notice.emit("CORE RECOVERED", "MEMORY VACUUM // REPAIR // BONUS UPGRADE", Color("ffe39b"))
+		weapon_fired.emit("mutation")
+
+func area(at: Vector3, radius: float, damage: float, push: float = 0.0) -> void:
+	for enemy in grid.query(at, radius + 3.0):
+		if enemy.position.distance_to(at) <= radius + enemy.definition.radius:
+			_damage(enemy, damage, (enemy.position - at).normalized() * push)
+
+func chain(at: Vector3, damage: float, jumps: int, reach: float, ignore: Array = []) -> void:
+	var used: Array = ignore.duplicate()
+	var previous := at
+	for i in range(jumps):
+		var closest: SwarmEnemy
+		var local_reach: float = reach if i == 0 else minf(reach, 7.0)
+		var distance: float = local_reach * local_reach
+		for enemy in grid.query(previous, local_reach):
+			if used.has(enemy.index):
+				continue
+			var squared: float = enemy.position.distance_squared_to(previous)
+			if squared < distance:
+				closest = enemy
+				distance = squared
+		if closest == null:
+			break
+		var point := closest.position
+		used.append(closest.index)
+		effects.emit_fx("beam", previous, point, Arsenal.color("arc"), 0.10)
+		_damage(closest, damage)
+		previous = point
+
+func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
+	rig.tick(delta, player.position, loadout, mutations.has("halo"))
+	for id in Arsenal.DATA:
+		var rank: int = int(loadout.get(id, 0))
+		if rank <= 0:
+			continue
+		timers[id] = maxf(0.0, float(timers.get(id, 0.0)) - delta * (1.6 if overclock > 0.0 else 1.0))
+		if float(timers[id]) > 0.0:
+			continue
+		var definition: Dictionary = Arsenal.DATA[id]
+		var damage: float = definition["damage"] * (1.0 + (rank - 1) * 0.28)
+		var ready: bool = target != null
+		match id:
+			"orbit":
+				for point in rig.orbital_points:
+					area(point, 0.8, damage)
+				if mutations.has("halo"):
+					area(player.position, 4.2, damage * 0.45)
+					effects.emit_fx("ring", player.position, player.position, Color("ffe39b"), 4.2)
+			"arc":
+				if ready:
+					chain(player.position, damage, 3 + rank / 2, 17.0)
+			"rail":
+				if ready:
+					var start := player.position
+					var end: Vector3 = start + (target.position - start).normalized() * 26.0
+					effects.emit_fx("beam", start, end, Arsenal.color("rail"), 0.22)
+					for enemy in grid.query(start, 29.0):
+						var closest := Geometry3D.get_closest_point_to_segment(enemy.position, start, end)
+						if enemy.position.distance_to(closest) < enemy.definition.radius + 0.45:
+							_damage(enemy, damage)
+			"thermal":
+				ready = not grid.query(player.position, 6.0).is_empty()
+				if ready:
+					area(player.position, 5.0 + rank * 0.2, damage, 1.3)
+					effects.emit_fx("ring", player.position, player.position, Arsenal.color("thermal"), 5.0 + rank * 0.2)
+			"drone":
+				for point in rig.drone_points:
+					var victim := grid.nearest(point, 19.0)
+					if victim != null:
+						effects.emit_fx("beam", point, victim.position, Arsenal.color("drone"), 0.07)
+						_damage(victim, damage)
+		if ready:
+			timers[id] = float(definition["cooldown"]) * pow(0.94, rank - 1)
+			weapon_fired.emit(id)

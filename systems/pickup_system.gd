@@ -38,3 +38,7 @@ func tick(delta: float, player: SwarmPlayer) -> int:
 			items.remove_at(i)
 	total_collected += earned
 	return earned
+
+func vacuum() -> void:
+	for item in items:
+		item["attract"] = true

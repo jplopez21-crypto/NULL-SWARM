@@ -8,6 +8,7 @@ signal return_menu
 signal pause_run
 signal dash
 signal upgrade_selected(id: String)
+signal reroll_requested
 signal setting_changed(key: String, value: Variant)
 const CYAN := Color("78f8d4")
 const MUTED := Color("8cabb9")
@@ -34,6 +35,13 @@ var last_safe_size := Vector2.ZERO
 var hud_visible: bool = false
 var settings_return: Callable
 var notices: Label
+var boss_bar: ProgressBar
+var boss_label: Label
+var surge_label: Label
+var toast_title: Label
+var toast_detail: Label
+var toast_time: float = 0.0
+var backdrop: Control
 
 func _ready() -> void:
 	root = Control.new()
@@ -56,6 +64,12 @@ func _ready() -> void:
 	theme.set_color("font_color", "Label", Color("e0f0f2"))
 	theme.set_color("font_color", "Button", Color("e0f0f2"))
 	root.theme = theme
+	backdrop = Control.new()
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(backdrop)
+	root.move_child(backdrop, 0)
+	backdrop.draw.connect(_draw_brand)
 	safe = MarginContainer.new()
 	safe.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	safe.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -90,6 +104,8 @@ func button_at(parent: Node, text: String, callback: Callable) -> Button:
 	button.custom_minimum_size.y = 56
 	parent.add_child(button)
 	button.pressed.connect(callback)
+	button.mouse_entered.connect(func(): button.modulate = Color("baffee"))
+	button.mouse_exited.connect(func(): button.modulate = Color.WHITE)
 	return button
 
 func _safe_area() -> void:
@@ -143,6 +159,17 @@ func _build_hud() -> void:
 	perf_label = label_at(hud, "", 14, MUTED)
 	perf_label.visible = false
 	notices = label_at(hud, "", 16, Color("ffbd78"))
+	boss_label = label_at(hud, "", 18, Color("ff9274"))
+	boss_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	boss_bar = _bar(hud, Color("ff7652"), 7)
+	boss_label.visible = false
+	boss_bar.visible = false
+	surge_label = label_at(hud, "", 18, Color("b9f66b"))
+	surge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	toast_title = label_at(hud, "", 30, CYAN)
+	toast_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	toast_detail = label_at(hud, "", 16, MUTED)
+	toast_detail.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var spacer := Control.new()
 	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -164,9 +191,10 @@ func _panel() -> VBoxContainer:
 		screen.queue_free()
 	screen = PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.025, 0.06, 0.085, 0.97)
+	style.bg_color = Color(0.025, 0.06, 0.085, 0.94)
 	style.border_color = Color("355966")
 	style.set_border_width_all(1)
+	style.border_width_top = 3
 	style.set_corner_radius_all(8)
 	style.content_margin_left = 28
 	style.content_margin_right = 28
@@ -177,21 +205,24 @@ func _panel() -> VBoxContainer:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
 	screen.add_child(box)
+	screen.modulate.a = 0.0
+	create_tween().tween_property(screen, "modulate:a", 1.0, 0.16)
 	return box
 
 func show_menu(data: Dictionary) -> void:
 	set_hud(false)
 	var box := _panel()
 	box.custom_minimum_size.x = 570
-	label_at(box, "N // S     •     SECTOR 001", 16, CYAN)
-	label_at(box, "NULL//SWARM", 58)
+	label_at(box, "N // S     •     COMBAT SYSTEMS ONLINE", 16, CYAN)
+	label_at(box, "NULL//SWARM", 64)
 	label_at(box, "THE NETWORK IS LOST. YOU ARE STILL ONLINE.", 16, MUTED)
-	label_at(box, "INDUSTRIAL EXCLUSION ZONE", 23)
-	label_at(box, "Survive 05:00. Recover tech. Keep moving.\nWeapons fire automatically. Collect blue memory shards.", 19, MUTED)
+	label_at(box, "REACTOR ZERO  /  SURVIVAL", 23)
+	label_at(box, "Ten minutes. Four weapon slots. One machine god.\nWeapons fire automatically. Collect blue memory shards.", 19, MUTED)
+	label_at(box, "WARDEN 03:00     //     ARCHITECT 09:00", 16, Color("ffb35c"))
 	var play := button_at(box, "DEPLOY VANGUARD     →", func(): deploy.emit())
 	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
-	label_at(box, "MILESTONE 01  •  DEVELOPMENT ART  •  OFFLINE", 13, MUTED)
+	label_at(box, "BUILD 0.2  •  OFFLINE DEPLOYMENT", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
@@ -227,7 +258,7 @@ func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: i
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
 
-func show_upgrades(ids: Array[String], descriptions: Callable, level: int) -> void:
+func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0) -> void:
 	var box := _panel()
 	label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d" % level, 18, CYAN)
 	label_at(box, "CHOOSE YOUR ADVANTAGE", 32)
@@ -239,10 +270,18 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int) -> vo
 		var id: String = ids[i]
 		var text: String = descriptions.call(id)
 		var button := button_at(row, "0%d\n\n%s" % [i + 1, text], func(): upgrade_selected.emit(id))
-		button.custom_minimum_size = Vector2(280, 210)
+		button.custom_minimum_size = Vector2(292, 255)
+		button.add_theme_font_size_override("font_size", 17)
+		button.add_theme_color_override("font_color", Arsenal.color(id))
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		if first == null:
 			first = button
-	label_at(box, "SIMULATION PAUSED  •  UPGRADES APPLY IMMEDIATELY", 14, MUTED)
+	var footer := HBoxContainer.new()
+	box.add_child(footer)
+	var caption := label_at(footer, "4 WEAPON SLOTS // CHOOSE A DIRECTION", 14, MUTED)
+	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var reroll := button_at(footer, "REROLL  /  %d" % rerolls, func(): reroll_requested.emit())
+	reroll.disabled = rerolls <= 0
 	first.grab_focus()
 
 func show_settings(settings: Dictionary, back: Callable) -> void:
@@ -286,8 +325,20 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	health_bar.value = 100.0 * player.health.current / player.health.maximum
 	shield_bar.value = 100.0 * player.health.shield / maxf(1.0, player.health.max_shield)
 	xp_bar.value = 100.0 * progress.xp / progress.threshold()
-	status_label.text = "%s / 05:00     LV %02d     %d KILLS" % [clock(combat.director.elapsed), progress.level, combat.kills]
-	weapons_label.text = "PULSE RIFLE   /   %d DMG   /   %.2fs   /   PIERCE %d" % [int(combat.weapon.damage), combat.weapon.interval, combat.weapon.piercing]
+	status_label.text = "%s / 10:00     LV %02d     %d KILLS" % [clock(combat.director.elapsed), progress.level, combat.kills]
+	var names: Array[String] = ["ARCSTORM" if combat.mutations.has("arcstorm") else "PULSE RIFLE"]
+	for id in Arsenal.DATA:
+		if progress.ranks.has(id):
+			names.append(("SOLAR HALO" if id == "orbit" and combat.mutations.has("halo") else Arsenal.title(id)) + " %d" % progress.ranks[id])
+	weapons_label.text = "   /   ".join(names) + "    [%d/4]" % progress.equipped()
+	var boss: SwarmEnemy = combat.encounters.boss if combat.encounters.boss != null and combat.encounters.boss.active else combat.encounters.mini
+	var boss_active := boss != null and boss.active
+	boss_bar.visible = boss_active
+	boss_label.visible = boss_active
+	if boss_active:
+		boss_label.text = boss.definition.title + "  //  PHASE %d" % combat.encounters.phase
+		boss_bar.value = 100.0 * boss.hp / boss.max_hp
+	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  20 TO OVERCLOCK" % combat.streak if combat.streak > 1 else "")
 	dash_button.text = "DASH / %.1fs" % player.dash_cooldown if player.dash_cooldown > 0.0 else "DASH / READY"
 	var time := combat.director.elapsed
 	hint_label.visible = time < 22.0
@@ -305,6 +356,10 @@ func add_damage(at: Vector3, amount: float, critical: bool, enabled: bool) -> vo
 	damage_texts.append({"at": at, "text": str(int(amount)), "life": 0.6, "critical": critical})
 
 func _process(delta: float) -> void:
+	toast_time = maxf(0.0, toast_time - delta)
+	toast_title.visible = toast_time > 0.0
+	toast_detail.visible = toast_time > 0.0
+	backdrop.queue_redraw()
 	for i in range(damage_texts.size() - 1, -1, -1):
 		damage_texts[i]["life"] -= delta
 		if damage_texts[i]["life"] <= 0.0:
@@ -326,3 +381,23 @@ func _draw_feedback() -> void:
 		if not world_camera.is_position_behind(at):
 			var point := world_camera.unproject_position(at)
 			joystick_canvas.draw_string(ThemeDB.fallback_font, point, item["text"], HORIZONTAL_ALIGNMENT_LEFT, -1, 24 if item["critical"] else 17, Color("ffe990") if item["critical"] else Color("d6ffed"))
+
+func toast(title: String, detail: String, color: Color = CYAN) -> void:
+	toast_title.text = title
+	toast_title.add_theme_color_override("font_color", color)
+	toast_detail.text = detail
+	toast_time = 3.0
+
+func _draw_brand() -> void:
+	if hud_visible:
+		return
+	var size := root.size
+	backdrop.draw_rect(Rect2(Vector2.ZERO, size), Color(0.01, 0.025, 0.045, 0.6))
+	var origin := Vector2(size.x * 0.82, size.y * 0.5)
+	var angle := Time.get_ticks_msec() * 0.0001
+	for i in range(3):
+		var radius: float = 150.0 + i * 55
+		backdrop.draw_arc(origin, radius, angle + i, angle + i + PI * 1.65, 80, Color(0.23, 0.63, 0.62, 0.18), 2.0)
+	for i in range(12):
+		var y: float = i * 70.0
+		backdrop.draw_line(Vector2(0, y), Vector2(size.x, y), Color(0.2, 0.4, 0.5, 0.06), 1)

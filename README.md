@@ -1,8 +1,8 @@
 # NULL//SWARM
 
-An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Milestone 1 foundation; development art and generated audio are not final commercial assets.
+An offline sci-fi survival roguelite for Android, implemented in Godot 4.6.3 / typed GDScript. Reactor Zero combat slice (0.2); development art and generated audio are not final commercial assets.
 
-Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. Deploy VANGUARD, survive five minutes, collect blue memory shards, and select upgrades. Weapons target automatically.
+Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. Deploy VANGUARD, survive ten minutes and destroy The Architect, collect blue memory shards, and select upgrades. Weapons target automatically.
 
 - Move: WASD/arrows, controller left stick, or touch the left side and drag.
 - Dash: Space, controller A, or the onscreen button.
@@ -25,11 +25,13 @@ Install matching Godot 4.6.3 export templates, Java 21 and Android SDK platform-
 
 ```sh
 mkdir -p builds/android
-godot --headless --export-debug Android builds/android/null-swarm-m1-debug.apk
-adb install -r builds/android/null-swarm-m1-debug.apk
+godot --headless --export-debug Android builds/android/null-swarm-reactor-0.2-debug.apk
+adb install -r builds/android/null-swarm-reactor-0.2-debug.apk
 ```
 
-The GitHub Actions workflow installs these dependencies, imports resources, tests, exports, verifies APK signing, and uploads `null-swarm-m1-debug-apk`. A successful Android export, test run and APK signature verification are available in [workflow run 40429916577](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40429916577). Download the `null-swarm-m1-debug-apk` artifact and extract its APK. Installation and physical-device playtesting remain unverified. Android 10 is the intended minimum; verify effective manifest SDK values before distribution. Current Play policy compliance remains a release-stage check.
+The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-reactor-0.2-apk`. Physical-device testing and balance remain required for this new version.
+
+This build installs alongside the original as **NULL SWARM Reactor** (`com.nullswarm.game.slice`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://resources/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"bulwark"
+title = "Bulwark"
+behavior = 3
+health = 135.0
+speed = 1.7
+damage = 18.0
+xp = 18
+radius = 0.95
+color = Color(0.86, 0.77, 0.47, 1)

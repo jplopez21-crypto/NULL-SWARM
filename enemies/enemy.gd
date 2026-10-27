@@ -4,6 +4,8 @@ extends Node3D
 var active: bool = false
 var definition: EnemyDefinition
 var hp: float
+var max_hp: float
+var visual_scale: float = 1.0
 var velocity: Vector3
 var cooldown: float = 0.0
 var windup: float = 0.0
@@ -37,6 +39,14 @@ func configure(resource: EnemyDefinition) -> void:
 		2:
 			SwarmVisuals.box(body, Vector3(1.2, 0.5, 1.2), Vector3(0, 0.3, 0), Color("49345e"))
 			SwarmVisuals.box(body, Vector3(0.65, 1.2, 0.65), Vector3(0, 1.0, 0), definition.color)
+		3:
+			SwarmVisuals.box(body, Vector3(1.5, 1.2, 1.1), Vector3(0, 0.7, 0), Color("3f4a51"))
+			SwarmVisuals.box(body, Vector3(1.65, 0.28, 0.22), Vector3(0, 1.1, -0.7), definition.color, true)
+			for side in [-1.0, 1.0]:
+				SwarmVisuals.box(body, Vector3(0.3, 0.8, 1.4), Vector3(side * 0.7, 0.4, 0), definition.color)
+		4:
+			SwarmVisuals.box(body, Vector3(1.6, 0.13, 0.38), Vector3(0, 1.1, 0), definition.color, true)
+			SwarmVisuals.sphere(body, 0.42, Vector3(0, 1.1, 0), Color("456e8d"))
 	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
 	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
 	deactivate()
@@ -44,6 +54,7 @@ func configure(resource: EnemyDefinition) -> void:
 func activate(at: Vector3, health_scale: float) -> void:
 	position = at
 	hp = definition.health * health_scale
+	max_hp = hp
 	velocity = Vector3.ZERO
 	cooldown = 1.2
 	windup = 0.0
@@ -77,13 +88,15 @@ func think(player: Vector3) -> void:
 		velocity = Vector3.ZERO
 		windup = 0.7
 	else:
+		if definition.behavior == 4:
+			direction = (direction + Vector3(-direction.z, 0, direction.x) * sin(cooldown * 2.5 + index) * 0.8).normalized()
 		velocity = direction * definition.speed
 
 # Returns a sentry shot direction only at the end of its visible warning.
 func tick(delta: float) -> Vector3:
 	cooldown -= delta
 	flash = maxf(0.0, flash - delta)
-	body.scale = Vector3.ONE * (1.15 if flash > 0.0 and effects_enabled else 1.0)
+	body.scale = Vector3.ONE * visual_scale * (1.15 if flash > 0.0 and effects_enabled else 1.0)
 	var shot := Vector3.ZERO
 	if windup > 0.0:
 		windup -= delta

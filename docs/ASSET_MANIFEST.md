@@ -8,3 +8,7 @@
 | UI font | Godot built-in fallback font | Engine-supplied font; retain Godot distribution notices |
 
 No third-party downloaded artwork, music or proprietary game content is included. Final commercial art/audio and a complete distribution license audit remain later milestones. No blanket open-source license is granted by this manifest.
+
+## Reactor Zero additions
+
+All reactor tiles, warning geometry, towers, weapons, drones, boss embellishments, rings, beams and UI branding are original procedural meshes/drawing code authored in this project. New weapon cues and sequenced music are original synthesized PCM. No third-party art or music was downloaded. These assets remain development artwork/audio pending commercial art direction review.

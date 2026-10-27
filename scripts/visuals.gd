@@ -36,3 +36,16 @@ static func sphere(parent: Node3D, radius: float, pos: Vector3, color: Color) ->
 	mesh.position = pos
 	parent.add_child(mesh)
 	return mesh
+
+static func ring(parent: Node3D, radius: float, pos: Vector3, color: Color, thickness: float = 0.10) -> MeshInstance3D:
+	var mesh := MeshInstance3D.new()
+	var shape := TorusMesh.new()
+	shape.inner_radius = maxf(0.01, radius - thickness)
+	shape.outer_radius = radius
+	shape.rings = 32
+	shape.ring_segments = 6
+	mesh.mesh = shape
+	mesh.material_override = material(color, true)
+	mesh.position = pos
+	parent.add_child(mesh)
+	return mesh

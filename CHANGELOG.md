@@ -22,3 +22,14 @@
 - GitHub Actions passed import, all 79 tests, scene smoke, debug APK export and signature verification.
 - Downloaded APK and independently verified artifact and APK checksums/archive integrity.
 - Physical-device installation and gameplay testing remain outstanding; CI still reports an intermittent test-shutdown leak warning.
+
+## 0.2.0 — Reactor Zero combat pass
+
+- Expanded to six weapons, four equipment slots, ranked weapon upgrades and two rerolls.
+- Added Arcstorm Rifle and Solar Halo mutations, and a kill-chain Overclock reward.
+- Added Bulwark/Skimmer enemies, the Warden mini-boss and three-phase Architect encounter.
+- Extended the run to ten minutes with extraction gated by final-boss defeat.
+- Added a tiled reactor arena, industrial perimeter machinery, weapon-colored effects, animated operative, revised menus/cards/HUD, boss bars and encounter announcements.
+- Added distinct generated weapon sounds and an original sequenced combat loop.
+- Added pooled effect budgets and rendered CI captures. This remains development artwork/audio.
+- Uses a separate Reactor package so it can coexist with the owner's working original APK.
