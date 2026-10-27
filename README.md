@@ -36,3 +36,14 @@ This build installs alongside the original as **NULL SWARM Foundry** (`com.nulls
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 
 See [development status](DEVELOPMENT_STATUS.md), [architecture](docs/ARCHITECTURE.md), and [asset manifest](docs/ASSET_MANIFEST.md).
+
+## Repeatable gameplay QA
+
+The separate **Repeatable gameplay QA** Actions workflow runs normal-rules bot cases and a synthetic combat CPU benchmark on pushes/PRs or manual dispatch. Reports and diagnostic logs are uploaded as `null-swarm-gameplay-qa`, with tables in the workflow summary. See [QA methods and limits](docs/AUTOMATED_QA.md).
+
+```sh
+godot --headless --script tests/run_playtests.gd
+godot --headless --script tests/run_benchmark.gd
+```
+
+Bots do not receive injected invulnerability or forced boss kills. Stress fixtures deliberately do; their headless CPU timings are not Android FPS. These additions are test tooling and do not change the installed 0.3 game.

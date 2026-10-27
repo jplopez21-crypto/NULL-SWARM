@@ -55,3 +55,11 @@
 - Passed 121 checks, scene smoke, rendered capture, Android export and APK signature verification in workflow 40435364064.
 - Inspected the Foundry/results screens and verified downloaded ZIP/APK integrity and hashes.
 - Owner playtesting of 0.3 and physical-device profiling remain pending.
+
+## Automated gameplay QA — 2026-10-27
+
+- Added normal-rules bots with three upgrade strategies, fixed seeds, fresh/earned-kit fixtures and deterministic replay verification.
+- Added survival, damage, mutation, XP collection, progression-gap and entity-count reports.
+- Added low/high synthetic stress scenarios at 100/300/600 enemies with gameplay-state parity checks and CPU percentiles.
+- Added a dedicated Actions workflow publishing JSON, Markdown and diagnostic logs on pushes/PRs/manual runs.
+- Gameplay code and APK version remain unchanged.

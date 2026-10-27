@@ -1,0 +1,52 @@
+name: Repeatable gameplay QA
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gameplay-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      GODOT_VERSION: 4.6.3
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Install pinned Godot
+        run: |
+          curl --fail --location --retry 3 -o /tmp/godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          sudo install /tmp/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+      - name: Import and run system checks
+        run: |
+          set -o pipefail
+          mkdir -p builds/qa
+          godot --headless --editor --import --quit 2>&1 | tee builds/qa/import.log
+          if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' builds/qa/import.log; then exit 1; fi
+          godot --headless --script tests/run_tests.gd 2>&1 | tee builds/qa/unit.log
+      - name: Normal-rules bot playtests
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd 2>&1 | tee builds/qa/bots.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/bots.log; then exit 1; fi
+          test -s builds/qa/bot-report.json
+      - name: Synthetic combat CPU benchmark
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          timeout 600s godot --headless --script tests/run_benchmark.gd 2>&1 | tee builds/qa/stress.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/stress.log; then exit 1; fi
+          test -s builds/qa/stress-report.json
+      - name: Publish QA summaries
+        if: ${{ !cancelled() }}
+        run: |
+          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md; do
+            if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
+          done
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ !cancelled() }}
+        with:
+          name: null-swarm-gameplay-qa
+          path: builds/qa/
+          if-no-files-found: error
