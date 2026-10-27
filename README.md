@@ -29,7 +29,7 @@ godot --headless --export-debug Android builds/android/null-swarm-m1-debug.apk
 adb install -r builds/android/null-swarm-m1-debug.apk
 ```
 
-The GitHub Actions workflow installs these dependencies, imports resources, tests, exports, verifies APK signing, and uploads `null-swarm-m1-debug-apk`. Its execution has not yet been verified. Android 10 is the intended minimum; verify effective manifest SDK values before distribution. Current Play policy compliance remains a release-stage check.
+The GitHub Actions workflow installs these dependencies, imports resources, tests, exports, verifies APK signing, and uploads `null-swarm-m1-debug-apk`. A successful Android export, test run and APK signature verification are available in [workflow run 40429916577](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40429916577). Download the `null-swarm-m1-debug-apk` artifact and extract its APK. Installation and physical-device playtesting remain unverified. Android 10 is the intended minimum; verify effective manifest SDK values before distribution. Current Play policy compliance remains a release-stage check.
 
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 

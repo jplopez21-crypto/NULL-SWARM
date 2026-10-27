@@ -14,3 +14,11 @@
 - Fixed audio playback cleanup during shutdown.
 - Re-ran 79 automated checks and the scene smoke successfully, with no leak warnings in the final runs.
 - Confirmed Android dependency download and GitHub write access remain blocked; no APK produced.
+
+## 0.1.0 Android build — 2026-10-27
+
+- Published the complete source and build pipeline to GitHub.
+- Fixed the Java action revision, enabled Android ETC2/ASTC imports and corrected CI log validation.
+- GitHub Actions passed import, all 79 tests, scene smoke, debug APK export and signature verification.
+- Downloaded APK and independently verified artifact and APK checksums/archive integrity.
+- Physical-device installation and gameplay testing remain outstanding; CI still reports an intermittent test-shutdown leak warning.
