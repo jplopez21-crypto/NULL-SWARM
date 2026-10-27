@@ -53,3 +53,8 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 - Post-fix shutdown repetition: eight fresh-process smoke runs passed with zero leak warnings (before fix: one of eight leaked audio playback references). Full hosted rerun pending.
 
 - Android logcat revealed real GLES shader-link failures: the emulator exceeded its fragment uniform limit. Configured Compatibility rendering for eight renderable lights/two lights per object; the current arena has one directional light, so no existing lighting or gameplay quantities are removed. Mobile/Vulkan settings remain unchanged. Runtime now fails on Godot engine errors as well as script/native crashes. Hosted rerun pending.
+
+- Further emulator testing reached gameplay but exposed a native AudioTrack crash and remaining shader failures. Corrected the eight-second WAV loop end from frame count to the last valid sample; added a 24-second offline mixing regression test. Reduced the unused global shader variable capacity to fit minimum GLES limits; no custom shader globals are currently used. Hosted verification pending.
+
+- Source inspection showed the GLES global uniform array is hardcoded in this Godot renderer, so project light/buffer limits do not solve the legacy emulator driver bug. Reverted those capacity changes; switched the emulator from deprecated SwiftShader-indirect to SWANGLE and enforced observed emulator/image version pins. Game rendering budgets remain unchanged.
+- Audio regression passed six checks, including 24 seconds of real offline WAV mixing across multiple loop boundaries. Hosted AudioTrack validation remains pending.

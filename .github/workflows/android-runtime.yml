@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 30
     env:
       GODOT_VERSION: 4.6.3
+      EXPECTED_EMULATOR_VERSION: 37.2.12.0
+      EXPECTED_IMAGE_REVISION: 9
       ANDROID_AVD_HOME: /tmp/null-swarm-avd
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -62,7 +64,7 @@ jobs:
       - name: Install emulator Linux dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libpulse0 libnss3 libx11-6 libxcb1 libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libxkbcommon0 libgl1 libglu1-mesa libasound2t64
+          sudo apt-get install -y --no-install-recommends libpulse0 libnss3 libx11-6 libxcb1 libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libxkbcommon0 libgl1 libegl1 libvulkan1 libglu1-mesa libasound2t64
       - name: Install Android emulator and system image
         run: |
           test -e /dev/kvm || { echo 'EMULATOR_BLOCKED: /dev/kvm is unavailable'; exit 1; }
@@ -80,7 +82,15 @@ jobs:
         run: |
           emulator -version > builds/android-runtime/emulator-version.txt 2>&1
           cp "$ANDROID_HOME/system-images/android-35/google_apis/x86_64/package.xml" builds/android-runtime/system-image-package.xml
-          emulator -avd null_swarm_qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -accel on -cores 2 -memory 2048 -feature -Vulkan > builds/android-runtime/emulator.log 2>&1 &
+          python3 - <<'PYPINS'
+          import os, pathlib, xml.etree.ElementTree as ET
+          version = pathlib.Path('builds/android-runtime/emulator-version.txt').read_text()
+          assert 'Android emulator version ' + os.environ['EXPECTED_EMULATOR_VERSION'] in version, 'Emulator version drift: update the reviewed pin deliberately'
+          root = ET.parse('builds/android-runtime/system-image-package.xml').getroot()
+          revisions = [n for n in root.iter() if n.tag.endswith('}revision') or n.tag == 'revision']
+          assert revisions and list(revisions[0])[0].text == os.environ['EXPECTED_IMAGE_REVISION'], 'Android image revision drift'
+          PYPINS
+          emulator -avd null_swarm_qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swangle -accel on -cores 2 -memory 2048 > builds/android-runtime/emulator.log 2>&1 &
           echo $! > /tmp/null-swarm-emulator.pid
           timeout 120s adb wait-for-device
           timeout 300s bash -c 'until [ "$(adb shell getprop sys.boot_completed | tr -d "\r")" = 1 ]; do sleep 2; done'

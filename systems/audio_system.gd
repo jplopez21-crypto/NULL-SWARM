@@ -24,8 +24,6 @@ func _ready() -> void:
 	music.bus = "Music"
 	music.volume_db = -20.0
 	var drone := score_loop()
-	drone.loop_mode = AudioStreamWAV.LOOP_FORWARD
-	drone.loop_end = drone.data.size() / 2
 	music.stream = drone
 	add_child(music)
 	music.play()
@@ -43,6 +41,7 @@ func tone(hz: float, duration: float, ambient: bool = false) -> AudioStreamWAV:
 	var result := AudioStreamWAV.new()
 	result.format = AudioStreamWAV.FORMAT_16_BITS
 	result.mix_rate = rate
+	result.stereo = false
 	result.data = bytes
 	return result
 
@@ -98,5 +97,10 @@ func score_loop() -> AudioStreamWAV:
 	var stream := AudioStreamWAV.new()
 	stream.format = AudioStreamWAV.FORMAT_16_BITS
 	stream.mix_rate = rate
+	stream.stereo = false
 	stream.data = bytes
+	stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	stream.loop_begin = 0
+	# Godot WAV mixing uses an inclusive end sample, not a frame count.
+	stream.loop_end = bytes.size() / 2 - 1
 	return stream
