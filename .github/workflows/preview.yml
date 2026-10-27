@@ -1,0 +1,83 @@
+name: Build stable preview APK
+on:
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  android:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development/android-validation'
+    environment: development-signing
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      GODOT_VERSION: 4.6.3
+      XDG_CONFIG_HOME: ${{ runner.temp }}/null-swarm-preview-config
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install Godot and matching templates
+        run: |
+          curl --fail --location --retry 3 -o /tmp/godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          sudo install /tmp/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          curl --fail --location --retry 3 -o /tmp/templates.tpz "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q /tmp/templates.tpz -d /tmp/export
+          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mv /tmp/export/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/"
+      - name: Install Android SDK packages
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platform-tools' 'platforms;android-35' 'build-tools;35.0.1'
+      - name: Import and configure Android exporter
+        run: |
+          set -o pipefail
+          godot --headless --editor --import --quit 2>&1 | tee /tmp/import.log
+          if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
+      - name: Restore and validate persistent preview identity
+        env:
+          ANDROID_DEV_KEYSTORE_BASE64: ${{ secrets.ANDROID_DEV_KEYSTORE_BASE64 }}
+          ANDROID_DEV_STORE_PASSWORD: ${{ secrets.ANDROID_DEV_STORE_PASSWORD }}
+          ANDROID_DEV_KEY_ALIAS: ${{ secrets.ANDROID_DEV_KEY_ALIAS }}
+          ANDROID_DEV_CERT_SHA256: ${{ secrets.ANDROID_DEV_CERT_SHA256 }}
+        run: python3 tools/prepare_preview_signing.py
+      - name: Automated tests and scene smoke
+        run: |
+          python3 tools/run_headless_checks.py
+      - name: Render presentation captures
+        run: |
+          if ! command -v xvfb-run; then
+            sudo apt-get update
+            sudo apt-get install -y xvfb libgl1-mesa-dri
+          fi
+          LIBGL_ALWAYS_SOFTWARE=1 xvfb-run -a godot --rendering-method gl_compatibility --audio-driver Dummy -- --capture
+      - name: Export pinned preview APK
+        env:
+          ANDROID_DEV_CERT_SHA256: ${{ secrets.ANDROID_DEV_CERT_SHA256 }}
+        run: |
+          mkdir -p builds/android
+          godot --headless --export-debug Android builds/android/null-swarm-preview-debug.apk
+          test -s builds/android/null-swarm-preview-debug.apk
+          python3 tools/prepare_preview_signing.py --verify-apk builds/android/null-swarm-preview-debug.apk
+          sha256sum builds/android/null-swarm-preview-debug.apk > builds/android/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: null-swarm-stable-preview-apk
+          path: |
+            builds/android/
+            builds/screenshots/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-headless-results
+          path: builds/qa/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Remove signing material
+        if: ${{ always() }}
+        run: rm -rf "$XDG_CONFIG_HOME"

@@ -67,3 +67,9 @@
 - Applied upgrades receive named confirmation; mutation announcements override ordinary confirmations.
 - Existing 40/85/150 effect limits and 160-mesh pool are unchanged. Reduced flashes suppress impact stars, debris and hit recoil; ordinary rings remain visible.
 - Added staged feedback screenshot and automated cosmetic-only/pool/accessibility/notice coverage. Current branch verification is linked in PR #1.
+
+## Stable preview signing
+
+- Prepared secret-only manual Preview build, separate install identity, certificate pinning before/after export, increasing versions and cleanup.
+- Seven local signing regressions passed using disposable test credentials. Existing installs/private saves remain separate.
+- Blocker: connected GitHub tools cannot write environment secrets; CLI permission attempt did not complete. No real persistent key was provisioned. Setup: docs/android/STABLE_PREVIEW_SIGNING.md. Stable APK and actual update/save-retention test remain pending.

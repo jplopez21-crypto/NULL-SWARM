@@ -94,3 +94,10 @@ Local post-fix verification: all nine isolated suites passed, including 380 syst
 First CI render review found hit impacts obscured by enemy bodies and confirmation text crossing silhouettes. Raised impacts above each enemy’s visual scale, enabled two-sided rendering only on cached impact materials, and outlined toast text. Revised staged sample separates silhouettes for inspection. The first native APK passed signature/export and downloaded integrity checks; final-tip results remain authoritative in PR #1.
 
 Post-render correction: updated system suite passed 382 checks with a clean strict log scan; the two additional checks cover two-sided impact rendering and cached material/height reuse. Results: docs/qa/combat-feedback/visibility-regressions.json.
+
+### Persistent preview signing configuration
+
+- Executed `python3 -m unittest discover -s tests -p test_preview_signing.py -v`: 7/7 passed. Real keytool generated a disposable test PKCS12 key, verified its certificate, rejected wrong password/pin, and reused its identity across increasing version codes. APK signer-output rejection is a mocked unit check, not a real signed-APK validation.
+- Added those regressions to native build CI. No gameplay source changed in this signing follow-up.
+- Not run: real persistent-key export, physical-device in-place upgrade/save retention, and Play Protect completion. No real owner key/secrets are available through the connected tools. The prior network-permission CLI attempt was interrupted; it did not provision credentials.
+- Exact owner setup and limitations: docs/android/STABLE_PREVIEW_SIGNING.md. No claim that signing solves a Play Protect scan delay.

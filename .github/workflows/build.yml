@@ -49,6 +49,8 @@ jobs:
           export/android/debug_keystore_user = "androiddebugkey"
           export/android/debug_keystore_pass = "android"
           SETTINGS
+      - name: Signing configuration regressions
+        run: python3 -m unittest discover -s tests -p 'test_preview_signing.py' -v
       - name: Automated tests and scene smoke
         run: |
           python3 tools/run_headless_checks.py

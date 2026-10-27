@@ -170,3 +170,9 @@
 - Elongated tumbling wreckage remains inside existing quality/pool limits. Upgrade rings rise briefly after selection.
 - Upgrade confirmations name the selected weapon/passive and rank; mutation announcements retain priority. Added staged feedback.png to CI presentation captures.
 - Added feedback/accessibility/pooling/announcement regressions. Procedural visuals remain development assets.
+
+### Stable preview signing configuration
+
+- Add manual environment-secret preview build with pinned keystore/APK certificate checks, increasing versions and temporary credential cleanup.
+- New Preview package coexists with prior installs; seven real-keytool/configuration regressions pass.
+- Distribution is blocked until owner environment secrets are provisioned and workflow is registered on the default branch. No stable-signed APK or upgrade test is claimed.
