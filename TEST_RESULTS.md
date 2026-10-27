@@ -68,4 +68,4 @@ Godot/templates 4.6.3, Java 21, SDK API 35/build-tools 35.0.1; emulator 37.2.12.
 
 ### Repeat-run touch timing regression
 
-The documentation-tip repeat (Android runtime run 40538534378) failed its movement assertion: drag events arrived, but a timed ADB swipe moved only 0.24 units on a slow emulator. Native build and full gameplay QA passed. The driver now sends real DOWN/MOVE/UP events with a held interval, preserving the greater-than-one-unit movement assertion. Verification of this change is pending CI.
+The documentation-tip repeat (Android runtime run 40538534378) failed its movement assertion: drag events arrived, but a timed ADB swipe moved only 0.24 units on a slow emulator. Native build and full gameplay QA passed. The driver now sends real DOWN/MOVE/UP events with a held interval, preserving the greater-than-one-unit movement assertion. Verified in Android runtime run [40540308197](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40540308197): all 12 checks passed, including unchanged movement distance and clean logcat assertions. The ARM64 build passed in run 40540308146.
