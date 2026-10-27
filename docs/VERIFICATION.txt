@@ -1,16 +1,17 @@
-NULL//SWARM Adaptive 0.4 — verified 2026-10-27
-Code commit: 2b3d42de6832d2f35e9c7bd95da960db00a363cb
+NULL//SWARM Memory 0.4.1 — verified 2026-10-27
+Code commit: 2ed509490f70fe9bf6568ff024be6e8e81ef7e0a
 Godot 4.6.3
-Local and CI: TEST_RESULT checks=156 failures=0
+Local and CI: TEST_RESULT checks=165 failures=0
 CI scene smoke: SCENE_SMOKE_OK
 Normal bots: 10 cases, 7 victories / 3 defeats, zero invariant failures.
 Deterministic 180-second replay: passed.
 Pickup comparisons: 6 cases, zero failures; historic numeric baseline skipped (changed combat source).
-Stress: 6 fixed-load scenarios, low/high gameplay parity passed. Headless CPU is not device FPS.
-Android workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40446641740
-QA workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40446641895
-APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40446641740/artifacts/12707849670
-Extract android/null-swarm-adaptive-0.4-debug.apk.
-CI apksigner verification passed. Downloaded ZIP/APK hashes and CRCs checked; DEX, ARM64 runtime, compiled adaptation and package ID present; test fixtures excluded.
-APK SHA256: a7556c3fdbf11ef4749ba2ca383c7c75ec260a9b35f23ea95605ceffece60eec
-Staged warning/active renders inspected; physical Android testing, thermals and human balance not performed here.
+All non-timing gameplay fields in ten bot and six pickup cases exactly match canonical 0.4.
+Stress: 6 fixed-load scenarios, low/high gameplay parity passed. CPU timings exclude rendering/locator UI and are not device FPS.
+Android workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606
+QA workflow: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218604
+APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40496218606/artifacts/12730444055
+Extract android/null-swarm-memory-0.4.1-debug.apk.
+CI apksigner verification passed. Downloaded ZIP/APK hashes and CRCs checked; DEX, ARM64 runtime, compiled pickup resources and Memory package ID present; test fixtures excluded.
+APK SHA256: 014cacb6009c14581dfa53a132237873870143624543b6b732881f6b6042deb8
+Staged locator render inspected; physical Android testing, thermals, aspect-ratio coverage and human pacing not performed here.

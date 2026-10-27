@@ -76,3 +76,7 @@ Synthetic fixture version 2 mixes all six regular enemy types; compare timing on
 Run `godot --headless --script tests/run_playtests.gd -- --collector-probe` to compare Arcstorm and Kinetic on seeds 101/202, each with cautious and value-aware navigation. Combat, pickup merging, upgrade priorities and new-player stats are identical; only collector navigation differs. The eight runs write `builds/qa/collector-probe.json`, including upgrade timestamps, minute snapshots, earned/left XP and the longest upgrade gap. Invariant failures return a nonzero exit code; defeats remain observations. Use isolated XDG directories as with other scene integration tests.
 
 This probe is explicit/manual rather than an extra mandatory build step. It does not replace the canonical cautious-bot matrix or retroactively change its reported outcomes.
+
+## 0.4.1 memory guidance verification
+
+165 checks passed, including locator empty/nearest/hysteresis/retarget/in-flight/attraction-range/read-only/vacuum cases. Ten normal bot case records and six pickup case records exactly matched canonical 0.4 after excluding wall/step timing fields. Six stress scenarios and 180-second replay passed. [Current reports](qa/0.4.1/BOT_REPORT.md) preserve the same seven wins/three defeats. The locator is driven by rendered UI updates, not bot decisions; these comparisons establish simulation isolation for the tested cases, not a human pacing benefit or phone UI cost.

@@ -15,3 +15,7 @@ The completion test uses explicit invulnerability to isolate lifecycle and sched
 ## Foundry progression
 
 Research describes capped upgrades and starting-kit sidegrades independently of combat. SaveStore v2 migrates v1 data and owns the tokenized salvage ledger. Checkpoints award only the positive difference from the already-banked total; settlement closes a token once. Purchases persist immediately with in-memory rollback on write failure. Main composes research at deployment and checkpoints periodically and at lifecycle/encounter boundaries. Combat damage attribution records actual HP removed, excluding overkill; it is displayed in results and performs no online telemetry.
+
+## Memory guidance
+
+`PickupSystem.memory_target` is a read-only horizontal-distance query over stationary packets outside attraction range. `GameUI.update_memory` calls it at most four times per rendered second, with target-distance hysteresis. The UI projects the world direction into a player-relative chevron and distance label. It owns no collection or progression behavior, consumes no gameplay RNG and pauses/hides behind modal screens. The normal-rules bots retain their own unchanged navigation; bot outcome parity can validate simulation isolation, not whether humans find this cue helpful. Synthetic combat timing excludes this rendering/UI path.

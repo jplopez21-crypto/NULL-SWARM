@@ -111,4 +111,10 @@
 
 - Added a steady player-relative direction cue and distance to nearby uncollected memory, with target hysteresis and four queries per second.
 - Cue ignores in-flight packets and packets within attraction range; pause/panels suppress it. It does not alter pickup positions, XP, attraction, combat, RNG or bot navigation.
-- Added locator regression checks and a staged visual capture; separate Memory test package preserves prior installs. Android verification pending.
+- Added locator regression checks and a staged visual capture; separate Memory test package preserves prior installs.
+
+### 0.4.1 verified delivery
+
+- Local/CI passed 165 checks, scene smoke, ten normal bot runs/180-second replay, six pickup comparisons and six synthetic stress scenarios.
+- All non-timing gameplay fields in the ten bot and six pickup cases exactly matched canonical 0.4 reports.
+- Signed APK export and downloaded ZIP/APK integrity verified; staged locator render inspected. Reports archived in docs/qa/0.4.1. Human pacing/readability and phone performance remain unverified.

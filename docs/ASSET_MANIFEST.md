@@ -24,3 +24,5 @@ Pickup spheres now share one original procedural mesh. Value tiers use blue/mint
 ## 0.4 adaptive formations
 
 The Insulator's braced body/ring is original procedural geometry using shared original materials. Adaptive HUD/announcements reuse project fonts and generated UI audio. No external artwork, music or models were introduced. All remain development assets.
+
+The 0.4.1 memory locator uses original procedural line/chevron drawing and the existing Godot fallback font; it introduces no third-party assets.
