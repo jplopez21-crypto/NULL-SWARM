@@ -157,10 +157,19 @@ try:
     check(True, 'Android background/resume preserves paused state')
     capture('background-resumed')
     salvage = s['salvage']
+    tap('SETTINGS', s)
+    s = wait(lambda x: any('Camera shake' in b['text'] for b in x['buttons']))
+    old_shake = s['settings']['shake']
+    tap('Camera shake', s)
+    s = wait(lambda x: x['settings']['shake'] != old_shake)
+    new_shake = s['settings']['shake']
+    capture('settings-changed')
+    tap('BACK', s)
     adb('shell', 'am', 'force-stop', args.package)
     launch()
     s = wait(lambda x: x['state'] == 'menu')
     check(s['salvage'] >= salvage, 'force-stop/relaunch retains banked progression and opens menu')
+    check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
     capture('relaunched')
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)

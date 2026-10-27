@@ -59,6 +59,10 @@ jobs:
           mkdir -p builds/android-runtime
           godot --headless --export-debug Android builds/android-runtime/emulator-debug.apk
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android-runtime/emulator-debug.apk
+      - name: Install emulator Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libpulse0 libnss3 libx11-6 libxcb1 libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libxkbcommon0 libgl1 libglu1-mesa libasound2t64
       - name: Install Android emulator and system image
         run: |
           test -e /dev/kvm || { echo 'EMULATOR_BLOCKED: /dev/kvm is unavailable'; exit 1; }

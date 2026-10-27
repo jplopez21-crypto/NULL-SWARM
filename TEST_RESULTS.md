@@ -12,7 +12,8 @@ Branch: `development/android-validation`. Production `main` is unchanged until r
 | UI geometry, lifecycle, focus, input reset | Passed locally | 504 checks / 44 staged states in `tests/run_ui_tests.gd` |
 | Main-scene startup/combat smoke | Passed locally | `SCENE_SMOKE_OK` |
 | Strict headless orchestration | Passed locally | Input, systems, corruption, UI and smoke suites passed; resource validation also passed separately and is integrated into the same runner |
-| Resource/script validation | Passed locally | 46 loadable scripts/scenes/resources, including the dormant Android probe |
+| Resource/script validation | Passed locally | All loadable scripts/scenes/resources, including the dormant Android probe |
+| Debug probe isolation | Passed locally | Snapshot preserves health, position, simulation time and progression; default export disables the probe |
 | Android ARM64 Mobile export/signature | Pending development CI | Existing main build passed; new branch must be verified separately |
 | Android emulator install/launch/touch/gameplay/lifecycle | Pending CI | New x86_64 Compatibility export, real ADB input, read-only opt-in telemetry |
 | Local Android emulator | Could not run | Android SDK/adb/emulator absent; `/dev/kvm` unavailable. Runtime job installs dependencies on an Ubuntu GitHub runner |
@@ -40,3 +41,8 @@ Death/victory lifecycle integration includes deliberately controlled fixtures to
 - Local editor import also reports inability to bind its TCP service in the sandbox. This is distinct from project parse errors; hosted CI import remains a required gate.
 
 - Found and fixed a CI cleanup hang when a superseded emulator job was cancelled before boot. Every ADB diagnostic/cleanup command now has a bounded timeout. Emulator runs use main pushes and PR updates to avoid redundant development push jobs.
+
+- First Android runtime job failed before boot because the Ubuntu runner lacked libpulse.so.0. Added explicit Linux emulator dependencies; rerun pending.
+- Added a real touchscreen settings toggle and process-death persistence assertion; ARM64 development APK now has an isolated application ID.
+
+- Probe unit test initially failed on strict dictionary equality after JSON converted integer numeric values to floats. Corrected the comparison to validate numeric values semantically while preserving boolean types; reran the full probe checks.

@@ -48,6 +48,7 @@ func snapshot() -> void:
 			if not item["attract"]:
 				data["targets"].append([item["mesh"].position.x, item["mesh"].position.z])
 	data["salvage"] = game.save.data["salvage"]
+	data["settings"] = game.save.data["settings"].duplicate(true)
 	var file := FileAccess.open("user://qa-runtime.tmp", FileAccess.WRITE)
 	if file == null:
 		push_error("ANDROID_QA telemetry write failed")
