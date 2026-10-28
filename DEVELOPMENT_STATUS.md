@@ -2,6 +2,7 @@
 
 ## Current checkpoint
 
+- Emulator measurement follow-up: the first stats build passed all three hosted gates/22 Android checks, but its capture-heavy software-emulator readings were 2–3 FPS. Removed redundant input-coordinate screenshots and added an observational quiet sample. Follow-up CI is pending. Physical-phone performance remains unverified; no entity/difficulty budgets changed.
 - In progress: touch-accessible saved Performance stats preference, synchronized F3/checkbox state, 4Hz live HUD monitors and legacy/default-off compatibility. Local nine-suite validation passed: 438 systems, 30 GUI, six probe and 1,188 UI checks/104 layouts. Android driver now targets 22 checks, including real toggle input and saved overlay after update/redeployment; hosted verification is pending. Usage/measurement scope: docs/PERFORMANCE_STATS.md.
 - Completed queued-upgrade clarity: the heading shows actual pending choices, including the active one, with three/two/one progression. Rerolls preserve the queue; ordinary choices/accepted links consume one. Actual GUI regressions and 100-layout UI coverage passed.
 - Verified game/test code 0f592f7ea0d0fad3d5a0f112820407119ebd0879: native 40767153218, Android 40767153246 (18 checks), and full QA 40767153234 all passed. Nine strict suites include 24 GUI and 1,140 UI checks; gameplay/pacing/XP/replay plus 18 synthetic stress cases passed. All 30 logged case summaries match the prior baseline. Exact limits/results: docs/qa/upgrade-queue/verified-ci.json.

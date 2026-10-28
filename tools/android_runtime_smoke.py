@@ -8,6 +8,7 @@ import struct
 import subprocess
 import time
 import re
+import statistics
 import xml.etree.ElementTree as ET
 from io import BytesIO
 from PIL import Image
@@ -23,6 +24,7 @@ checks = []
 actions = []
 telemetry_path = None
 visual_samples = []
+screen_dimensions = None
 
 
 def adb(*cmd, binary=False):
@@ -70,6 +72,7 @@ def game_frame_fraction(image):
 
 
 def capture(name, wait_for_game=True):
+    global screen_dimensions
     deadline = time.monotonic() + (30 if wait_for_game else 0)
     while True:
         image = adb('exec-out', 'screencap', '-p', binary=True)
@@ -84,11 +87,14 @@ def capture(name, wait_for_game=True):
         time.sleep(.25)
     visual_samples.append({'capture': name, 'game_palette_fraction': round(fraction, 4)})
     (out / f'{name}.png').write_bytes(image)
-    return struct.unpack('>II', image[16:24])
+    screen_dimensions = struct.unpack('>II', image[16:24])
+    return screen_dimensions
 
 
 def screen_point(x, y, state):
-    width, height = capture('latest')
+    # Landscape and wm size are fixed for this run. Explicit captures refresh
+    # the dimensions; input targeting should not force a GPU readback each time.
+    width, height = screen_dimensions or capture('latest')
     cw, ch = state['canvas']
     scale = min(width / cw, height / ch)
     return round((width - cw * scale) / 2 + x * scale), round((height - ch * scale) / 2 + y * scale)
@@ -160,6 +166,31 @@ def launch():
         if any(args.package in line and ('mResumedActivity' in line or 'topResumedActivity' in line) for line in foreground.splitlines()):
             return
     raise AssertionError('Game did not become foreground activity after Android system-dialog handling')
+
+
+def quiet_profile():
+    # Diagnostic observation only: no FPS pass gate, inputs, screenshots or grants.
+    # The existing read-only probe/audio/rendering stay active on the CI emulator.
+    time.sleep(2)
+    initial = read()
+    started = time.monotonic()
+    samples = []
+    while time.monotonic() - started < 5:
+        current = read()
+        text = current.get('performance_stats_text', '')
+        fps = re.match(r'^(\d+) FPS /', text)
+        samples.append({'wall_seconds': round(time.monotonic() - started, 3),
+                        'simulation_seconds': current.get('time', 0), 'state': current['state'],
+                        'fps': int(fps.group(1)) if fps else None, 'hud': text})
+        time.sleep(.5)
+    elapsed = samples[-1]['wall_seconds'] if samples else 0
+    active = [s['fps'] for s in samples if s['state'] == 'playing' and s['fps'] is not None]
+    return {'method': '2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second',
+            'variant': 'CI x86_64 Android 35 / Compatibility / SWANGLE software rendering',
+            'samples': samples, 'median_fps': statistics.median(active) if active else None,
+            'simulation_seconds_per_wall_second': (samples[-1]['simulation_seconds'] - initial.get('time', 0)) / elapsed if elapsed > 0 else None,
+            'limits': ['Unseeded fresh deployment; not the earlier capture-heavy combat workload.',
+                       'Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim.']}
 
 
 report = {'checks': checks, 'actions': actions, 'visual_samples': visual_samples, 'package': args.package,
@@ -301,6 +332,7 @@ try:
         s = wait(lambda x: x['state'] == 'playing' and x.get('performance_stats_visible', False) and 'ENEMIES' in x.get('performance_stats_text', ''))
         check(True, 'saved performance diagnostics appear on deployment after APK update')
         capture('performance-restored')
+        report['quiet_profile'] = quiet_profile()
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]

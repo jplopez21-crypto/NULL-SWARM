@@ -2,6 +2,7 @@
 
 ## Development — 2026-10-28 / Touch performance stats
 
+- Reduced emulator smoke overhead by caching fixed display dimensions instead of capturing a PNG for each input coordinate. Added a quiet fresh-deployment observation without input/screencaps; it has no phone-FPS acceptance gate.
 - Added a saved default-off Performance stats toggle to menu/pause settings; F3 uses the same preference and ignores held-key repeats.
 - Added checkbox/HUD synchronization, optional-setting compatibility for old saves, and portable-backup retention.
 - Samples FPS/average frame interval, entities, draw calls and engine memory at 4Hz while enabled. The HUD passes touch through and changes no combat or effect budgets.
