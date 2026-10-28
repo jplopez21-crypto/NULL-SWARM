@@ -90,3 +90,10 @@
 - Implemented moving-source radial warning lanes, fixed-target area circles and explicit HUD attack/recharge/exposed cues. Removed rapid vertical warning oscillation; danger radii stay fixed.
 - Local nine-suite validation passed: 405 system checks and 656 UI checks across 64 layouts, plus established GUI/input/audio/save/corruption/smoke coverage. Snapshot: docs/qa/boss-readability/headless-results.json.
 - Added staged barrage/impact/exposed captures. CI/build verification is linked in PR #1; physical-device readability and frame time still require testing. No attack-stat or pattern scheduling changes.
+
+## Dash and defensive feedback
+
+- Operative silhouette stays visible throughout invulnerability. Shield and hull feedback use one shared-material ring per operative; dash trails use existing bounded pooled beam geometry.
+- Dash readiness gauge stays non-blocking; shield HUD shows online, waiting and recharging states. Shield-only hits have a distinct generated SFX.
+- Local checks cover dash timing/protection, actual shield/hull metadata, feedback expiration/accessibility, trail reclamation and gauge/status values. Expanded UI capture matrix: 72 layouts.
+- Android test now verifies visible operative and actual readiness after touch dash. Device results and comparative QA are linked in PR #1 after execution; physical phone frame rate/comfort remain unmeasured.

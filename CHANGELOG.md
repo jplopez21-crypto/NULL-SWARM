@@ -194,3 +194,10 @@
 - Radial barrage markers follow the firing source and show a lane for each existing projectile direction. Area circles remain locked to their selected locations.
 - Added explicit barrage/impact/recharge/exposure HUD cues, steady warning-thickness progression and immediate marker hiding on cancellation.
 - Preserved attack deadlines, damage, counts, radii, phases and reward rules. Added eleven warning/shot/counterplay regressions and twelve boss UI layout captures.
+
+### Dash and defensive feedback
+
+- Keep the operative visible during dash/hit protection; replace blinking with brief shield-blue/hull-orange damage feedback rings.
+- Add pooled narrowing dash trails, an always-interactive cooldown gauge and explicit shield recharge status. Reduced flashes suppress trails and hit rings.
+- Add an original generated shield-absorption sound; hull damage retains its existing sound. Preserve damage, shield recharge, dash speed/cooldown/protection and collision rules.
+- Add defensive input/effect/HUD regressions and staged shield/hull/dash captures.

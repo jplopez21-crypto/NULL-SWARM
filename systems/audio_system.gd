@@ -18,7 +18,7 @@ func _ready() -> void:
 		var voice := AudioStreamPlayer.new()
 		add_child(voice)
 		voices.append(voice)
-	for spec in [["fire", 460.0, 0.07], ["hit", 170.0, 0.08], ["kill", 95.0, 0.14], ["level", 720.0, 0.35], ["damage", 65.0, 0.25], ["ui", 520.0, 0.08], ["dash", 300.0, 0.16], ["orbit", 260.0, 0.10], ["arc", 1120.0, 0.15], ["rail", 85.0, 0.3], ["thermal", 52.0, 0.32], ["drone", 680.0, 0.06]]:
+	for spec in [["fire", 460.0, 0.07], ["hit", 170.0, 0.08], ["kill", 95.0, 0.14], ["level", 720.0, 0.35], ["damage", 65.0, 0.25], ["shield", 880.0, 0.12], ["ui", 520.0, 0.08], ["dash", 300.0, 0.16], ["orbit", 260.0, 0.10], ["arc", 1120.0, 0.15], ["rail", 85.0, 0.3], ["thermal", 52.0, 0.32], ["drone", 680.0, 0.06]]:
 		sounds[spec[0]] = tone(spec[1], spec[2])
 	music = AudioStreamPlayer.new()
 	music.bus = "Music"

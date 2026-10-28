@@ -56,7 +56,8 @@ func snapshot() -> void:
 			var rect: Rect2 = node.get_global_rect()
 			data["buttons"].append({"text": node.text, "disabled": node.disabled, "rect": [rect.position.x, rect.position.y, rect.size.x, rect.size.y]})
 	if is_instance_valid(game.player) and is_instance_valid(game.combat):
-		data.merge({"position": [game.player.position.x, game.player.position.z], "hp": game.player.health.current,
+		data.merge({"dash_readiness": game.ui.dash_gauge.value, "operative_visible": game.player.body.visible,
+			"shield_status": game.ui.defense_label.text, "position": [game.player.position.x, game.player.position.z], "hp": game.player.health.current,
 			"time": game.combat.director.elapsed, "kills": game.combat.kills, "xp": game.pickups.total_collected,
 			"level": game.progress.level, "ranks": game.progress.ranks.duplicate(), "pending": game.progress.pending, "targets": []})
 		for item in game.pickups.items:

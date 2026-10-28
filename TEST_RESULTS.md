@@ -125,3 +125,12 @@ Local final verification: all nine isolated suites passed with no strict errors/
 - Native captures add boss_barrage.png, boss_impact.png and boss_exposed.png. These are deliberately staged presentation QA. Final CI comparisons/runtime evidence are linked in PR #1 after execution. No claim of physical-phone boss validation.
 
 Boss render review: first native export passed signature/integrity checks, but orange boss text needed stronger contrast against the model. Added dark outlines to both boss labels. Staged warning captures now clear transient damage text/toasts only; normal gameplay feedback remains intact. Updated UI geometry/resource verification is run before publishing the refinement.
+
+### Dash and defensive feedback
+
+- Found the player body blinked invisible during every invulnerability window, including dash. It now remains visible; optional short hit rings and bounded dash trails convey feedback instead. Reduced flashes suppress both.
+- Preserve 27m/s dash, 0.18s dash duration, 2.5s cooldown and 0.24s protection. Constants only replace existing literals. Accepted damage records actual absorbed/hull loss as transient feedback metadata without changing shield/HP arithmetic.
+- Added nine input checks, four pooled-effect checks and six HUD checks per viewport. Android probe reports body visibility/readiness and the driver asserts them after real dash input. Native captures add shield_feedback.png, hull_feedback.png and dash_feedback.png, explicitly staged for visual QA.
+- Full current local suite snapshot is stored under docs/qa/defensive-feedback; final CI/runtime/comparison evidence is linked in PR #1 after execution. Human comfort, audible shield cue quality and physical ARM64 FPS remain unverified.
+
+Final local defensive-feedback verification: all nine isolated suites passed (409 system, 21 input, 720 UI checks/72 layouts, 12 GUI, 9 audio, 5 probe, 49 resources, 41 corruption and scene smoke). Strict script/engine/leak scan clean. Python Android-driver compilation also passed.

@@ -17,6 +17,7 @@ var arena: Node3D
 var run_root: Node3D
 var offered: Array[String] = []
 var corruption_panel: bool = false
+var dash_trail_clock: float = 0.0
 var shake: float = 0.0
 var result_recorded: bool = false
 var boot_smoke: bool = false
@@ -80,6 +81,7 @@ func _build_arena() -> void:
 
 func start_run() -> void:
 	corruption_panel = false
+	dash_trail_clock = 0.0
 	if run_root != null:
 		remove_child(run_root)
 		run_root.queue_free()
@@ -115,7 +117,7 @@ func start_run() -> void:
 		_checkpoint_progress())
 	combat.player_hit.connect(func():
 		shake = 0.3
-		audio.play("damage"))
+		audio.play("shield" if player.health.last_hull_loss <= 0.0 else "damage"))
 	combat.impact.connect(func(at: Vector3, amount: float, critical: bool):
 		ui.add_damage(at, amount, critical, int(save.data["settings"]["quality"]) > 0)
 		if critical:
@@ -130,14 +132,20 @@ func start_run() -> void:
 func _physics_process(delta: float) -> void:
 	if state != State.PLAYING:
 		return
-	if player.tick(delta, input_router.movement(), input_router.dash_requested):
-		audio.play("dash")
-		combat.effects.emit_fx("ring", player.position, player.position, Color("78f8d4"), 1.7)
-	input_router.dash_requested = false
 	player.flash_feedback = save.data["settings"]["flashes"]
 	combat.effects_enabled = save.data["settings"]["flashes"]
 	combat.effects.flashes = save.data["settings"]["flashes"]
 	combat.effects.quality = int(save.data["settings"]["quality"])
+	var before_move := player.position
+	if player.tick(delta, input_router.movement(), input_router.dash_requested):
+		audio.play("dash")
+		combat.effects.emit_fx("ring", player.position, player.position, Color("78f8d4"), 1.7)
+		dash_trail_clock = 0.0
+	input_router.dash_requested = false
+	dash_trail_clock -= delta
+	if player.dash_time > 0.0 and dash_trail_clock <= 0.0 and before_move.distance_squared_to(player.position) > 0.0001:
+		combat.effects.emit_fx("dash", before_move, player.position, Color("78f8d4"), 0.18)
+		dash_trail_clock = 0.04
 	if combat.tick(delta, player):
 		audio.play("fire")
 		player.recoil = 1.0
@@ -380,6 +388,50 @@ func _capture_session() -> void:
 	pickups.drop(player.position + Vector3(12, 0, -5), 100)
 	await get_tree().create_timer(0.5).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_locator.png")
+	# Staged defensive feedback: freeze visual samples, then restore the fixture.
+	var saved_defense := Vector4(player.health.current, player.health.shield, player.health.invulnerable, player.health.recharge_delay)
+	var saved_position := player.position
+	state = State.PAUSED
+	player.flash_feedback = true
+	player.health.invulnerable = 0
+	player.health.take_damage(8)
+	player.tick(0.06, Vector2.ZERO, false)
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.2).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/shield_feedback.png")
+	player.health.invulnerable = 0
+	player.health.shield = 0
+	player.health.take_damage(12)
+	player.tick(0.06, Vector2.ZERO, false)
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.2).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/hull_feedback.png")
+	player.health.current = saved_defense.x
+	player.health.shield = saved_defense.y
+	player.health.invulnerable = 0
+	player.hit_feedback_time = 0
+	state = State.PLAYING
+	input_router.stick = Vector2.RIGHT
+	input_router.dash_requested = true
+	_physics_process(1.0 / 60.0)
+	for i in range(3):
+		_physics_process(0.04)
+	state = State.PAUSED
+	ui.toast_time = 0
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.2).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/dash_feedback.png")
+	input_router.reset()
+	player.position = saved_position
+	player.dash_cooldown = 0
+	player.dash_time = 0
+	player.health.current = saved_defense.x
+	player.health.shield = saved_defense.y
+	player.health.invulnerable = saved_defense.z
+	player.health.recharge_delay = saved_defense.w
+	player.tick(0, Vector2.ZERO, false)
+	combat.effects.tick(1)
+	state = State.PLAYING
 	# Freeze a staged feedback sample so short impacts remain inspectable in CI.
 	progress.pending = 1
 	state = State.UPGRADING

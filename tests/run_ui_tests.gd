@@ -67,6 +67,27 @@ func run() -> void:
 		game._process(0.3)
 		check(game.ui.memory_visible and is_instance_valid(game.ui.memory_packet), "memory cue acquires packet after deployment")
 		await inspect(game, "combat", size)
+		game.player.dash_cooldown = SwarmPlayer.DASH_COOLDOWN
+		game._process(0)
+		check(is_zero_approx(game.ui.dash_gauge.value), "new dash cooldown starts with empty readiness gauge")
+		game.player.dash_cooldown = SwarmPlayer.DASH_COOLDOWN * 0.5
+		game._process(0)
+		check(is_equal_approx(game.ui.dash_gauge.value, 50), "dash gauge reflects actual cooldown fraction")
+		await inspect(game, "dash-cooldown", size)
+		game.player.dash_cooldown = 0
+		game._process(0)
+		check(is_equal_approx(game.ui.dash_gauge.value, 100) and not game.ui.dash_button.disabled, "ready dash keeps touch button enabled")
+		game.player.health.shield = 0
+		game.player.health.recharge_delay = 5
+		game._process(0)
+		check(game.ui.defense_label.text.contains("SHIELD DOWN"), "shield-down HUD explains recovery delay")
+		await inspect(game, "shield-down", size)
+		game.player.health.recharge_delay = 0
+		game._process(0)
+		check(game.ui.defense_label.text == "SHIELD RECHARGING", "HUD distinguishes active recharge from waiting")
+		game.player.health.shield = game.player.health.max_shield
+		game._process(0)
+		check(game.ui.defense_label.text == "SHIELD ONLINE", "full shield returns to stable ready label")
 		game.combat.adaptation.pending = "insulators"
 		game.combat.adaptation.starts_at = game.combat.adaptation.elapsed + 8.0
 		game.ui.toast("SWARM ADAPTING // 8s WARNING", "AMBER CORES RESIST ARC 20% // OTHER WEAPONS WORK NORMALLY", GameUI.CYAN)

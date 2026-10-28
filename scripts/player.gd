@@ -1,6 +1,12 @@
 class_name SwarmPlayer
 extends Node3D
 
+const DASH_COOLDOWN: float = 2.5
+const DASH_DURATION: float = 0.18
+const DASH_PROTECTION: float = 0.24
+const DASH_SPEED: float = 27.0
+var hit_ring: MeshInstance3D
+var hit_feedback_time: float = 0.0
 var health := HealthComponent.new()
 var speed: float = 7.0
 var walk_multiplier: float = 1.0
@@ -17,6 +23,9 @@ var recoil: float = 0.0
 var legs: Array[MeshInstance3D] = []
 
 func _ready() -> void:
+	health.changed.connect(_damage_feedback)
+	hit_ring = SwarmVisuals.ring(self, 1.0, Vector3(0, 0.10, 0), Color("5cbbf6"), 0.06)
+	hit_ring.visible = false
 	body = Node3D.new()
 	add_child(body)
 	SwarmVisuals.box(body, Vector3(0.85, 1.05, 0.65), Vector3(0, 0.85, 0), Color("264859"))
@@ -44,14 +53,19 @@ func tick(delta: float, movement: Vector2, dash: bool) -> bool:
 		direction = moving.normalized()
 	var dashed := false
 	if dash and dash_cooldown <= 0.0:
-		dash_time = 0.18
-		dash_cooldown = 2.5
-		health.invulnerable = maxf(health.invulnerable, 0.24)
+		dash_time = DASH_DURATION
+		dash_cooldown = DASH_COOLDOWN
+		health.invulnerable = maxf(health.invulnerable, DASH_PROTECTION)
 		dashed = true
-	position += (direction * 27.0 if dash_time > 0.0 else moving * effective_speed()) * delta
+	position += (direction * DASH_SPEED if dash_time > 0.0 else moving * effective_speed()) * delta
 	position.x = clampf(position.x, -boundary, boundary)
 	position.z = clampf(position.z, -boundary, boundary)
-	body.visible = not flash_feedback or health.invulnerable <= 0.0 or int(health.invulnerable * 20.0) % 2 == 0
+	# Keep the operative silhouette visible during both dash and hit protection.
+	body.visible = true
+	hit_feedback_time = maxf(0.0, hit_feedback_time - delta)
+	hit_ring.visible = flash_feedback and hit_feedback_time > 0.0
+	var expansion: float = 1.0 + (1.0 - hit_feedback_time / 0.35) * 0.4
+	hit_ring.scale = Vector3(expansion, 0.5, expansion)
 	return dashed
 
 func effective_speed() -> float:
@@ -65,3 +79,10 @@ func aim(target: Vector3) -> void:
 func _exit_tree() -> void:
 	for connection in health.depleted.get_connections():
 		health.depleted.disconnect(connection["callable"])
+
+func _damage_feedback() -> void:
+	hit_feedback_time = 0.35
+	var color := Color("5cbbf6") if health.last_hull_loss <= 0.0 else Color("ff9274")
+	hit_ring.material_override = SwarmVisuals.material(color, true)
+	hit_ring.scale = Vector3(1, 0.5, 1)
+	hit_ring.visible = flash_feedback

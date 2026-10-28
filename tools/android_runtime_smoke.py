@@ -183,8 +183,9 @@ try:
     check(s['drags'] > 0 and s['touches'] > 0, 'real Android touch events moved player')
     dash_before = s['dashes']
     tap('DASH', s)
-    wait(lambda x: x['dashes'] > dash_before)
+    s = wait(lambda x: x['dashes'] > dash_before and x.get('dash_readiness', 100) < 100)
     check(True, 'touch dash activated')
+    check(s.get('operative_visible', False) and 0 <= s['dash_readiness'] < 100, 'dash keeps operative visible and updates readiness gauge')
     capture('combat')
     tap('PAUSE')
     s = wait(lambda x: x['state'] == 'paused')

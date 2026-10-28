@@ -415,6 +415,17 @@ func run() -> void:
 	check(feedback.live[0]["mesh"].position.y > 0.12, "upgrade ring rises while simulation advances")
 	feedback.tick(1)
 	check(feedback.pool.size() == 160 and feedback.live.is_empty(), "new feedback returns every mesh to pool")
+	feedback.flashes = false
+	feedback.emit_fx("dash", Vector3.ZERO, Vector3.RIGHT, Color.WHITE, 0.18)
+	check(feedback.live.is_empty(), "reduced flashes suppress dash trails")
+	feedback.flashes = true
+	feedback.emit_fx("dash", Vector3.ZERO, Vector3.RIGHT, Color.WHITE, 0.18)
+	var trail: MeshInstance3D = feedback.live[0]["mesh"]
+	check(trail.mesh == feedback.beam_mesh and is_equal_approx(trail.scale.z, 1), "dash trail reuses beam geometry across actual movement segment")
+	feedback.tick(0.08)
+	check(trail.scale.x > 0 and trail.scale.x < 0.18, "dash trail narrows smoothly during its short lifetime")
+	feedback.tick(1)
+	check(feedback.pool.size() == 160 and feedback.live.is_empty(), "dash trail returns to existing pool")
 	game.progress.pending = 1
 	game.show_upgrade()
 	game.offered.assign(["speed"])

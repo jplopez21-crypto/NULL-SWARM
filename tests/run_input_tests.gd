@@ -49,9 +49,26 @@ func run() -> void:
 	player.position = Vector3.ZERO
 	check(player.tick(0.01, Vector2.RIGHT, true), "ready dash accepts input")
 	check(is_equal_approx(player.position.x, 0.27) and player.health.invulnerable > 0, "dash moves at normal speed with temporary protection")
+	check(player.body.visible, "operative silhouette remains visible during dash protection")
+	check(not player.health.take_damage(50), "dash still blocks damage during its existing protection window")
 	check(not player.tick(0.01, Vector2.RIGHT, true), "cooldown rejects repeated dash")
 	player.tick(3, Vector2.ZERO, false)
 	check(player.dash_cooldown == 0 and player.dash_time == 0, "dash timers clamp to zero")
+	player.health.invulnerable = 0
+	player.health.shield = 30
+	player.health.current = 100
+	check(player.health.take_damage(5) and player.health.last_absorbed == 5 and player.health.last_hull_loss == 0, "shield-only hit records actual absorbed damage")
+	check(player.hit_ring.visible and player.hit_ring.material_override == SwarmVisuals.material(Color("5cbbf6"), true), "shield absorption shows blue feedback")
+	player.tick(0.1, Vector2.ZERO, false)
+	check(player.body.visible, "hit protection never hides the operative silhouette")
+	player.tick(0.3, Vector2.ZERO, false)
+	check(not player.hit_ring.visible, "damage ring expires instead of persisting")
+	player.flash_feedback = false
+	player.health.invulnerable = 0
+	check(player.health.take_damage(50) and player.health.last_absorbed == 25 and player.health.last_hull_loss == 25, "mixed hit records shield and hull loss without changing damage")
+	check(not player.hit_ring.visible, "reduced flashes suppress damage ring immediately")
+	player.tick(0.01, Vector2.ZERO, false)
+	check(player.body.visible, "reduced flashes keep operative visible after hull damage")
 	router.dash_requested = true
 	router.stick = Vector2.RIGHT
 	router.reset()

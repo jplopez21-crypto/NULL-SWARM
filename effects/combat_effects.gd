@@ -1,6 +1,8 @@
 class_name CombatEffects
 extends Node3D
 
+const DURATIONS: Dictionary = {"beam": 0.12, "dash": 0.16, "spark": 0.18, "shard": 0.65, "uplink": 0.65}
+
 var pool: Array[MeshInstance3D] = []
 var live: Array[Dictionary] = []
 var quality: int = 1
@@ -42,10 +44,10 @@ func _ready() -> void:
 
 func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float = 1.0) -> void:
 	var limit: int = [40, 85, 150][quality]
-	if live.size() >= limit or pool.is_empty() or (not flashes and kind == "spark"):
+	if live.size() >= limit or pool.is_empty() or (not flashes and kind in ["spark", "dash"]):
 		return
 	var mesh: MeshInstance3D = pool.pop_back()
-	mesh.mesh = impact_mesh if kind == "spark" else (beam_mesh if kind in ["beam", "shard"] else ring_mesh)
+	mesh.mesh = impact_mesh if kind == "spark" else (beam_mesh if kind in ["beam", "dash", "shard"] else ring_mesh)
 	if kind == "spark":
 		if not impact_materials.has(color):
 			var material: StandardMaterial3D = SwarmVisuals.material(color, true).duplicate()
@@ -56,10 +58,11 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 		mesh.material_override = SwarmVisuals.material(color, true)
 	mesh.rotation = Vector3.ZERO
 	mesh.position = at + Vector3(0, 0.12, 0)
-	if kind == "beam":
-		mesh.position = (at + to) * 0.5 + Vector3(0, 0.8, 0)
+	if kind in ["beam", "dash"]:
+		var height: float = 0.3 if kind == "dash" else 0.8
+		mesh.position = (at + to) * 0.5 + Vector3(0, height, 0)
 		if at.distance_to(to) > 0.01:
-			mesh.look_at(to + Vector3(0, 0.8, 0))
+			mesh.look_at(to + Vector3(0, height, 0))
 		mesh.scale = Vector3(size, size, maxf(0.1, at.distance_to(to)))
 	elif kind in ["spark", "shard"]:
 		mesh.position.y = at.y + 0.8
@@ -68,7 +71,7 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 	else:
 		mesh.scale = Vector3(size * 0.4, 0.4, size * 0.4)
 	mesh.visible = true
-	live.append({"mesh": mesh, "life": 0.0, "duration": 0.12 if kind == "beam" else (0.65 if kind == "shard" else (0.18 if kind == "spark" else (0.65 if kind == "uplink" else 0.38))), "size": size, "kind": kind, "velocity": Vector3(randf_range(-4.0, 4.0), randf_range(2.0, 5.0), randf_range(-4.0, 4.0))})
+	live.append({"mesh": mesh, "life": 0.0, "duration": float(DURATIONS.get(kind, 0.38)), "size": size, "kind": kind, "velocity": Vector3(randf_range(-4.0, 4.0), randf_range(2.0, 5.0), randf_range(-4.0, 4.0))})
 
 func tick(delta: float) -> void:
 	for i in range(live.size() - 1, -1, -1):
@@ -80,7 +83,7 @@ func tick(delta: float) -> void:
 			mesh.visible = false
 			pool.append(mesh)
 			live.remove_at(i)
-		elif fx["kind"] not in ["beam", "spark", "shard"]:
+		elif fx["kind"] not in ["beam", "dash", "spark", "shard"]:
 			var radius: float = fx["size"] * lerpf(0.4, 1.0, 1.0 - pow(1.0 - fraction, 2.0))
 			if fx["kind"] == "uplink":
 				mesh.position.y += delta * 2.2
@@ -91,6 +94,9 @@ func tick(delta: float) -> void:
 			mesh.rotate_x(delta * 7.0)
 			mesh.rotate_z(delta * 4.0)
 			mesh.scale *= maxf(0.0, 1.0 - delta * 1.7)
+		elif fx["kind"] == "dash":
+			mesh.scale.x = fx["size"] * (1.0 - fraction)
+			mesh.scale.y = mesh.scale.x
 		elif fx["kind"] == "spark":
 			mesh.scale = Vector3.ONE * fx["size"] * (1.0 - fraction)
 

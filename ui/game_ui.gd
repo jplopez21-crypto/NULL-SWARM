@@ -38,6 +38,8 @@ var operative_title: String = "VANGUARD"
 var weapons_label: Label
 var perf_label: Label
 var hint_label: Label
+var dash_gauge: ProgressBar
+var defense_label: Label
 var dash_button: Button
 var world_camera: Camera3D
 var input_router: InputRouter
@@ -172,6 +174,7 @@ func _build_hud() -> void:
 	health_label = label_at(vital, "VANGUARD  /  100 HP", 18, CYAN)
 	health_bar = _bar(vital, CYAN, 13)
 	shield_bar = _bar(vital, Color("5cbbf6"), 6)
+	defense_label = label_at(vital, "SHIELD ONLINE", 13, MUTED)
 	status_label = label_at(top, "", 23)
 	status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -217,6 +220,13 @@ func _build_hud() -> void:
 	bottom.add_child(left)
 	dash_button = button_at(bottom, "DASH  /  READY", func(): dash.emit())
 	dash_button.custom_minimum_size = Vector2(180, 95)
+	dash_gauge = _bar(dash_button, CYAN, 4)
+	dash_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dash_gauge.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	dash_gauge.offset_left = 16
+	dash_gauge.offset_right = -16
+	dash_gauge.offset_top = -12
+	dash_gauge.offset_bottom = -8
 
 func _panel() -> VBoxContainer:
 	if screen != null:
@@ -419,6 +429,13 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
 	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
+	dash_gauge.value = clampf(100.0 * (1.0 - player.dash_cooldown / SwarmPlayer.DASH_COOLDOWN), 0.0, 100.0)
+	if player.health.shield >= player.health.max_shield:
+		defense_label.text = "SHIELD ONLINE"
+	elif player.health.recharge_delay > 0.0:
+		defense_label.text = ("SHIELD DOWN / RECHARGE IN %.1fs" if player.health.shield <= 0.0 else "RECHARGE IN %.1fs") % player.health.recharge_delay
+	else:
+		defense_label.text = "SHIELD RECHARGING"
 	dash_button.text = "DASH / %.1fs" % player.dash_cooldown if player.dash_cooldown > 0.0 else "DASH / READY"
 	adaptation_label.text = combat.adaptation.status()
 	corruption_label.text = combat.corruption.status()
