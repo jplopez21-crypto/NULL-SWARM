@@ -587,7 +587,7 @@ func _capture_session() -> void:
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/singularity_upgrade.png")
 	# Staged onboarding/readout capture; not a normal-play progression trace.
 	start_run()
-	state = State.PAUSED
+	set_physics_process(false)
 	progress.add_xp(100)
 	progress.pending = 0
 	combat.director.elapsed = 11

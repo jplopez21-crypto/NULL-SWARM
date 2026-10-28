@@ -180,8 +180,9 @@ func _build_hud() -> void:
 	status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button_at(top, "II  PAUSE", func(): pause_run.emit())
-	xp_bar = _bar(hud, Color("5e9fff"), 20)
-	xp_label = label_at(xp_bar, "", 13)
+	xp_bar = _bar(hud, Color("5e9fff"), 22)
+	xp_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	xp_label = label_at(xp_bar, "", 15)
 	xp_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	xp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	xp_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

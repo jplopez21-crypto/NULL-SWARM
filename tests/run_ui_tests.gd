@@ -75,7 +75,7 @@ func run() -> void:
 		check(absf(game.ui.xp_bar.value - 100.0 / 3.0) <= game.ui.xp_bar.step * 0.5, "numeric memory readout agrees with progress fill")
 		check(game.ui.hint_label.visible and game.ui.hint_label.text.contains("COLLECT BLUE MEMORY"), "onboarding connects collection to upgrades")
 		check(game.ui.xp_bar.get_global_rect().encloses(game.ui.xp_label.get_global_rect()), "memory text fits the bar")
-		check(game.ui.xp_label.mouse_filter == Control.MOUSE_FILTER_IGNORE, "memory readout cannot intercept touch movement")
+		check(game.ui.xp_label.mouse_filter == Control.MOUSE_FILTER_IGNORE and game.ui.xp_bar.mouse_filter == Control.MOUSE_FILTER_IGNORE, "memory readout and backing cannot intercept touch movement")
 		await inspect(game, "memory-onboarding", size)
 		game.combat.director.elapsed = 22
 		game._process(0)
