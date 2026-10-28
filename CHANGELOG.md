@@ -7,6 +7,8 @@
 - Added checkbox/HUD synchronization, optional-setting compatibility for old saves, and portable-backup retention.
 - Samples FPS/average frame interval, entities, draw calls and engine memory at 4Hz while enabled. The HUD passes touch through and changes no combat or effect budgets.
 - Expanded local coverage to 104 UI layouts and added Android touch/persistence/update acceptance checks. Execution/build evidence is tracked in TEST_RESULTS.md.
+- Follow-up native export and all 22 Android checks passed. Quiet software-emulator observation measured median 5 FPS (3–5); this remains below targets and is not phone performance validation. APK identity/integrity and revision-specific evidence are recorded under docs/qa/performance-stats.
+- Full QA passed with unchanged gameplay/XP/pacing results and 18 stress fingerprints. All 104 rendered UI layouts passed; local/native/QA strict-suite summaries match. Final report records executed code 000dd701a5ffc4dd7d6b365e23d677a302d42ab3.
 
 ## Development — 2026-10-28 / Queued upgrade clarity
 
