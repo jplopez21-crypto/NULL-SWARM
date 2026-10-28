@@ -123,3 +123,5 @@ Local final verification: all nine isolated suites passed with no strict errors/
 - Eleven added checks cover ring/lane count, moving-source positions, cue states, exact firing directions/counts, fixed impact targets, exposure bonus wording and immediate hide on cancellation.
 - Local clean run: all nine isolated suites pass, including 405 system and 656 UI checks / 64 layouts. Other suites: 12 GUI, 9 audio, 5 probe, 49 resources, 12 input, 41 corruption and scene smoke. No strict engine/script errors or leak warnings.
 - Native captures add boss_barrage.png, boss_impact.png and boss_exposed.png. These are deliberately staged presentation QA. Final CI comparisons/runtime evidence are linked in PR #1 after execution. No claim of physical-phone boss validation.
+
+Boss render review: first native export passed signature/integrity checks, but orange boss text needed stronger contrast against the model. Added dark outlines to both boss labels. Staged warning captures now clear transient damage text/toasts only; normal gameplay feedback remains intact. Updated UI geometry/resource verification is run before publishing the refinement.

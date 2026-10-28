@@ -200,7 +200,7 @@ func _build_hud() -> void:
 	toast_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast_detail = label_at(hud, "", 16, MUTED)
 	toast_detail.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	for notice in [toast_title, toast_detail]:
+	for notice in [toast_title, toast_detail, boss_label, boss_cue_label]:
 		notice.add_theme_color_override("font_outline_color", Color("081722"))
 		notice.add_theme_constant_override("outline_size", 4)
 	var spacer := Control.new()

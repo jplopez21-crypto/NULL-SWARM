@@ -452,6 +452,8 @@ func _capture_session() -> void:
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/architect.png")
 	# Staged pattern snapshots freeze only presentation QA, never normal gameplay.
 	state = State.PAUSED
+	ui.toast_time = 0.0
+	ui.damage_texts.clear()
 	combat.encounters.boss.exposed_time = 0
 	combat.encounters._clear_warnings()
 	combat.encounters.phase = 2
