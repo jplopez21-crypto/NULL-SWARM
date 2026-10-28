@@ -2,6 +2,17 @@
 
 ## Current local verification — 2026-10-28
 
+### Hosted acceptance completed
+
+Verified game/test code: `15f5ad383dcff35fec8eb0ee2c4dea2a8b14ebe0`. This final report checkpoint only changes documentation; later CI triggered by documentation is separate from the executed evidence below.
+
+- [Native build 40683779940](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40683779940): actionlint, seven signing-helper regressions, nine strict headless suites, staged renders, ARM64 Mobile export and apksigner verification passed. Downloaded archive/APK hashes and CRCs independently checked; native QA probe setting is disabled. APK SHA256: `cfc2ce702b9032f2b08d6668fa5d5ef7c2affaff562d62e91e71b7b145eaf55f`.
+- [Android runtime 40683779926](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40683779926): all 18 checks passed. Normal gameplay banked 1 salvage after 35 kills / 30.48 simulated seconds. Exact positive balance and changed settings survived force-stop/relaunch, portable restore and same-signer APK update from version 7 to 8. Inspected the updated menu showing 1 salvage. This is x86_64 Android 35 Compatibility coverage, not ARM64 Mobile/phone validation or persistent cross-run signing.
+- [Full QA 40683779992](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40683779992): 22 normal sessions (18 victories, four valid defeats), four successful pacing probes, six XP comparisons, deterministic replay, 924 UI checks/88 layouts and 18 synthetic stress cases passed. All 28 established gameplay/XP cases match the prior baseline excluding only timing fields; all 18 synthetic gameplay fingerprints match. Pacing traces match local results exactly excluding timings. Known collection gaps remain visible; no human-fun claim.
+- [Debug APK ZIP](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40683779940/artifacts/12813872710), [Android evidence](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40683779926/artifacts/12813104672), [full QA reports](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40683779992/artifacts/12813394678). Extract `android/null-swarm-development-debug.apk`. ZIP/APK verification and concise acceptance metadata: docs/qa/upgrade-pacing/verified-ci.json.
+
+### Local checks and investigation history
+
 - Memory readout/collection guidance: all nine isolated headless suites passed. Counts: 430 systems, 924 UI/88 layouts, 50 resources, 21 input, 12 GUI, 9 audio, 5 Android probe, 41 corruption, plus scene smoke. Strict engine/script/leak scan clean.
 - Four normal-rules Singularity collector comparisons are traced at five-second intervals; both established navigation policies and combat rules remain unchanged. Pickup accounting and accumulated level costs are checked in every trace sample. Results/limits: [upgrade pacing](docs/UPGRADE_PACING.md). No claim that a bot victory proves human balance.
 - An exploratory third navigation policy was rejected after worse pacing. An initial exploratory dash assertion failed because the scoring preferred walking; that experiment and assertion were removed together. Initial UI fill assertions expected fractional percentages despite ProgressBar's whole-percent step; corrected the assertion to respect half-step rounding, preserving gameplay/UI fill behavior. Only the subsequent clean run counts as passing.

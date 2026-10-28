@@ -7,6 +7,7 @@
 - Expanded UI coverage to 88 layouts and added staged onboarding capture. Current local check evidence and pacing limits are documented in TEST_RESULTS.md and docs/UPGRADE_PACING.md.
 - Fixed Preview workflow runner-context validation and added hash-pinned actionlint checks for all workflows in native CI.
 - Strengthened Android lifecycle/restore/update acceptance to earn and retain exact nonzero salvage through normal gameplay, rather than accepting an empty wallet.
+- Verified game/test code 15f5ad383dcff35fec8eb0ee2c4dea2a8b14ebe0 passed native export, 18 Android checks and full QA. Preserved 28 existing non-timing gameplay/XP results and 18 synthetic gameplay fingerprints. Final documentation records the exact build artifacts and verification limits.
 
 ## 0.1.0 — 2026-10-26
 

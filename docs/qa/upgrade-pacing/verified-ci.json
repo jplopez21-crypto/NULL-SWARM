@@ -1,0 +1,63 @@
+{
+  "verified_game_and_test_code": "15f5ad383dcff35fec8eb0ee2c4dea2a8b14ebe0",
+  "documentation_checkpoint_only": true,
+  "native_build": {
+    "commit": "15f5ad383dcff35fec8eb0ee2c4dea2a8b14ebe0",
+    "run": 40683779940,
+    "artifact": 12813872710,
+    "zip_sha256": "c6e1d90c84d17cc94a70e8564a52b0271612d880f08a9e0103df7eb97fd91d87",
+    "apk_sha256": "cfc2ce702b9032f2b08d6668fa5d5ef7c2affaff562d62e91e71b7b145eaf55f",
+    "apk_bytes": 27757066,
+    "crc": "passed",
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "qa_probe_enabled": false,
+    "compiled_scripts_match_reviewed_2c7f3ac7": 28,
+    "asset_comparison_note": "77 of 80 assets identical; changed generated scene node ID, UID cache and sparse-pack index. No claim of byte-identical entire packages.",
+    "signature": "CI apksigner verification passed; independent hash/archive checks passed"
+  },
+  "gameplay_qa": {
+    "code": "15f5ad383dcff35fec8eb0ee2c4dea2a8b14ebe0",
+    "qa_run": 40683779992,
+    "qa_artifact": 12813394678,
+    "normal_sessions": 22,
+    "normal_victories": 18,
+    "normal_defeats": 4,
+    "pacing_sessions": 4,
+    "pacing_victories": 4,
+    "unchanged_normal_and_xp_cases_except_timings": 28,
+    "pacing_replays_match_local_except_timings": true,
+    "stress_cases": 18,
+    "stress_gameplay_fingerprints_match_prior": true,
+    "ui_checks": 924,
+    "ui_layouts": 88,
+    "deterministic_replay": true,
+    "failures": []
+  },
+  "android": {
+    "run": 40683779926,
+    "artifact": 12813104672,
+    "status": "passed",
+    "checks": 18,
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "checkpoint_time": 30.4833333333329,
+    "checkpoint_kills": 35,
+    "checkpoint_salvage": 1,
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "limitations": [
+      "Does not validate ARM64 Mobile renderer, physical touch latency, cutouts or phone performance.",
+      "Victory/death are headless integration checks, not forced emulator outcomes."
+    ]
+  },
+  "limits": [
+    "Native ARM64 Mobile APK built and signed; runtime coverage uses x86_64 Compatibility emulator.",
+    "Persistent owner Preview signing not provisioned; diagnostic CI keys rotate.",
+    "Headless CPU stress timings do not establish phone frame rate or human balance.",
+    "Full commercial content and final art/audio remain unfinished."
+  ]
+}
