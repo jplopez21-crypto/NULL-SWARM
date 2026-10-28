@@ -3,7 +3,7 @@
 ## Upgrade queue clarity — 2026-10-28
 
 - Implemented pending-choice count in the upgrade heading. Added actual GUI-dispatch cases for 100-XP overflow (three choices), reroll preservation, invalid/repeated selections, exact ordinary consumption and corruption acceptance/decline. UI fixtures cover three/two/one choices and corruption with a remaining choice across four window sizes (100 layouts).
-- These new checks have not run yet at implementation time. The selected executor reports no usable execution environment; local Godot, shell checks and screenshot inspection could not run. GitHub remains available, so hosted import, strict suites, software renders, Android runtime and APK export are the verification path. Results will be recorded after execution; prior baseline evidence below remains revision-specific.
+- These new checks have not run yet at implementation time. The selected executor reports no usable execution environment; local Godot, shell checks and screenshot inspection could not run. GitHub remains available, so hosted import, strict suites, software renders, Android runtime and APK export are the verification path. Results will be recorded after execution; prior baseline evidence below remains revision-specific. Native CI now emits its structured headless summary and a bounded staged queue PNG in log chunks, enabling remote inspection without an executor; no gameplay/user save data or signing material is emitted.
 
 ## Current local verification — 2026-10-28
 

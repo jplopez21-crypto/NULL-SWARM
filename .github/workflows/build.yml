@@ -70,6 +70,24 @@ jobs:
             sudo apt-get install -y xvfb libgl1-mesa-dri
           fi
           LIBGL_ALWAYS_SOFTWARE=1 xvfb-run -a godot --rendering-method gl_compatibility --audio-driver Dummy -- --capture
+      - name: Emit bounded CI verification preview
+        run: |
+          python3 - <<'PY'
+          import base64
+          import json
+          from pathlib import Path
+          report = json.loads(Path('builds/qa/headless-results.json').read_text())
+          assert report['status'] == 'passed'
+          print('CI_HEADLESS_REPORT ' + json.dumps(report, separators=(',', ':')))
+          capture = Path('builds/screenshots/upgrade_queue.png').read_bytes()
+          assert capture.startswith(b'\x89PNG\r\n\x1a\n')
+          if len(capture) <= 262144:
+              encoded = base64.b64encode(capture).decode('ascii')
+              for start in range(0, len(encoded), 12000):
+                  print('CI_QUEUE_PREVIEW_PNG ' + encoded[start:start + 12000])
+          else:
+              print('CI_QUEUE_PREVIEW_SKIPPED bytes=' + str(len(capture)))
+          PY
       - name: Export debug APK
         run: |
           mkdir -p builds/android
