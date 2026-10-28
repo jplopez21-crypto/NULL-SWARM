@@ -188,3 +188,9 @@
 - Added bounded checksummed versioned progression transfer, shared save validation, ledger removal and rollback on write failure.
 - Added backup persistence/invalid-input checks, real GUI dispatch tests and 52 UI layouts. Android smoke covers real clipboard round-trip, confirmed restore and subsequent APK update.
 - This cannot access older installed apps without export support; no signing-key or billing changes.
+
+### Boss warning readability
+
+- Radial barrage markers follow the firing source and show a lane for each existing projectile direction. Area circles remain locked to their selected locations.
+- Added explicit barrage/impact/recharge/exposure HUD cues, steady warning-thickness progression and immediate marker hiding on cancellation.
+- Preserved attack deadlines, damage, counts, radii, phases and reward rules. Added eleven warning/shot/counterplay regressions and twelve boss UI layout captures.

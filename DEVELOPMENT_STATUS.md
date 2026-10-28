@@ -84,3 +84,9 @@
 - Implemented offline progression/settings codes, checksum/size/schema validation, main-menu-only preview/confirmation and one-level pre-import recovery. No current-run equipment or ledger transfer.
 - Added 12 backup system checks, four GUI-dispatch checks and eight UI layouts (52 total / 584 checks). Android driver adds clipboard and restore checks before its update test.
 - Documentation: docs/android/PROGRESS_BACKUPS.md. Older installed APKs without this feature cannot export through it; owner key provisioning remains blocked.
+
+## Boss warning readability
+
+- Implemented moving-source radial warning lanes, fixed-target area circles and explicit HUD attack/recharge/exposed cues. Removed rapid vertical warning oscillation; danger radii stay fixed.
+- Local nine-suite validation passed: 405 system checks and 656 UI checks across 64 layouts, plus established GUI/input/audio/save/corruption/smoke coverage. Snapshot: docs/qa/boss-readability/headless-results.json.
+- Added staged barrage/impact/exposed captures. CI/build verification is linked in PR #1; physical-device readability and frame time still require testing. No attack-stat or pattern scheduling changes.

@@ -450,6 +450,30 @@ func _capture_session() -> void:
 	player.health.invulnerable = 2.0
 	await get_tree().create_timer(0.7).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/architect.png")
+	# Staged pattern snapshots freeze only presentation QA, never normal gameplay.
+	state = State.PAUSED
+	combat.encounters.boss.exposed_time = 0
+	combat.encounters._clear_warnings()
+	combat.encounters.phase = 2
+	combat.encounters.attack_index = 1
+	combat.encounters.attack_cooldown = 0
+	combat.encounters.tick(0.01, combat, player)
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.2).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/boss_barrage.png")
+	combat.encounters._clear_warnings()
+	combat.encounters.attack_index = 0
+	combat.encounters.attack_cooldown = 0
+	combat.encounters.tick(0.01, combat, player)
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.2).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/boss_impact.png")
+	combat.encounters._clear_warnings()
+	combat.encounters.boss.exposed_time = 1.2
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.2).timeout
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/boss_exposed.png")
+	state = State.PLAYING
 	combat._damage(combat.encounters.boss, 999999.0)
 	finish_run(false)
 	await get_tree().create_timer(0.4).timeout

@@ -440,12 +440,47 @@ func run() -> void:
 	game.combat.encounters.attack_cooldown = 0.0
 	game.combat.encounters.tick(0.01, game.combat, game.player)
 	check(game.combat.encounters.warning_time > 1.0, "boss warning precedes attack")
+	var encounter: EncounterDirector = game.combat.encounters
+	check(encounter.warnings.size() == 13, "phase-one barrage has one ring and twelve shot lanes")
+	check(encounter.cue(encounter.mini).contains("BARRAGE"), "HUD names barrage counterplay during warning")
+	encounter.mini.position += Vector3(2, 0, 1)
+	encounter.tick(0.01, game.combat, game.player)
+	check(encounter.warnings[0].position.is_equal_approx(encounter.mini.position + Vector3(0, 0.08, 0)), "moving source carries radial warning ring")
+	var lanes_match: bool = true
+	for i in range(12):
+		lanes_match = lanes_match and encounter.warnings[i + 1].position.is_equal_approx(encounter.mini.position + encounter.radial_direction(i, 12) * 5 + Vector3(0, 0.10, 0))
+	check(lanes_match, "every warning lane follows the advertised firing direction")
 	game.combat.encounters.tick(1.2, game.combat, game.player)
 	var hostile_count: int = 0
 	for projectile in game.combat.hostile_projectiles:
 		if projectile.active:
 			hostile_count += 1
 	check(hostile_count > 0, "boss fires after telegraph expires")
+	check(hostile_count == 12, "warning lanes do not change phase-one projectile count")
+	var directions_match: bool = true
+	for i in range(hostile_count):
+		directions_match = directions_match and game.combat.hostile_projectiles[i].velocity.normalized().is_equal_approx(encounter.radial_direction(i, 12))
+	check(directions_match, "actual barrage velocity matches warning lanes")
+	check(encounter.cue(encounter.mini).contains("RECHARGE"), "HUD distinguishes recharge from an active attack")
+	encounter.phase = 2
+	encounter.mini.hp = encounter.mini.max_hp * 0.5
+	encounter.attack_index = 0
+	encounter.attack_cooldown = 0
+	encounter.tick(0.01, game.combat, game.player)
+	check(not encounter.attacking_radial and encounter.warnings.size() == 3 and encounter.cue(encounter.mini).contains("IMPACT"), "phase-two area warning has three circles and explicit escape cue")
+	var impact_locations := encounter.locations.duplicate()
+	game.player.position += Vector3(4, 0, 0)
+	encounter.tick(0.1, game.combat, game.player)
+	check(encounter.locations == impact_locations, "locked impact locations do not chase player movement")
+	encounter._clear_warnings()
+	encounter.mini.exposed_time = 1.2
+	check(encounter.cue(encounter.mini).contains("+25% DAMAGE"), "exposed window advertises the existing damage bonus")
+	encounter.mini.exposed_time = 0
+	var retired_warning := SwarmVisuals.ring(game.combat, 1, Vector3.ZERO, Color.WHITE)
+	encounter.warnings.append(retired_warning)
+	encounter._clear_warnings()
+	check(not retired_warning.visible and retired_warning.is_queued_for_deletion(), "cancelled danger markers hide immediately before deferred disposal")
+
 	game.combat.encounters.attack_cooldown = 0.0
 	game.combat.encounters.tick(0.01, game.combat, game.player)
 	game.combat.encounters._clear_warnings()

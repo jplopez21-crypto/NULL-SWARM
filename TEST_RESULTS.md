@@ -116,3 +116,10 @@ Post-render correction: updated system suite passed 382 checks with a clean stri
 - Final CI results and screenshots are linked in PR #1 after execution. Physical cross-app transfer, old-app export and persistent Preview signing are not claimed.
 
 Local final verification: all nine isolated suites passed with no strict errors/leaks: 394 system, 12 GUI, 9 audio, 5 probe, 49 resources, 12 input, 41 corruption, 584 UI checks and scene smoke. Snapshot: docs/qa/progress-backup/headless-results.json.
+
+### Boss warning readability
+
+- Found radial warning rings were left at the wind-up origin while the moving boss fired from its current position. Updated radial marker positions and added spokes using the same direction calculation as emitted shots. Locked area locations remain unchanged.
+- Eleven added checks cover ring/lane count, moving-source positions, cue states, exact firing directions/counts, fixed impact targets, exposure bonus wording and immediate hide on cancellation.
+- Local clean run: all nine isolated suites pass, including 405 system and 656 UI checks / 64 layouts. Other suites: 12 GUI, 9 audio, 5 probe, 49 resources, 12 input, 41 corruption and scene smoke. No strict engine/script errors or leak warnings.
+- Native captures add boss_barrage.png, boss_impact.png and boss_exposed.png. These are deliberately staged presentation QA. Final CI comparisons/runtime evidence are linked in PR #1 after execution. No claim of physical-phone boss validation.

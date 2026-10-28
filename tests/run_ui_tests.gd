@@ -22,6 +22,8 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 	await settle()
 	var bounds: Rect2 = game.ui.root.get_global_rect().grow(1.0)
 	check(root.size == size, "%s %s: requested window size applied" % [size, stage])
+	if game.ui.boss_cue_label.is_visible_in_tree():
+		check(bounds.encloses(game.ui.boss_cue_label.get_global_rect()), "%s %s: boss cue fits viewport" % [size, stage])
 	var buttons: int = 0
 	for node in game.ui.root.find_children("*", "Button", true, false):
 		if node.is_visible_in_tree():
@@ -115,6 +117,25 @@ func run() -> void:
 		game._process(0.3)
 		check(game.state == game.State.PLAYING and game.player.health.maximum == 80 and game.ui.corruption_label.text.contains("1/3"), "accepted link updates gameplay and HUD")
 		await inspect(game, "corrupted", size)
+		var encounters: EncounterDirector = game.combat.encounters
+		encounters.mini = encounters._spawn(game.combat, game.player.position, false)
+		encounters.mini_spawned = true
+		encounters.attack_cooldown = 0
+		encounters.tick(0.01, game.combat, game.player)
+		game._process(0.1)
+		await inspect(game, "boss-barrage", size)
+		encounters._clear_warnings()
+		encounters.phase = 2
+		encounters.mini.hp = encounters.mini.max_hp * 0.5
+		encounters.attack_index = 0
+		encounters.attack_cooldown = 0
+		encounters.tick(0.01, game.combat, game.player)
+		game._process(0.1)
+		await inspect(game, "boss-impact", size)
+		encounters._clear_warnings()
+		encounters.mini.exposed_time = 1.2
+		game._process(0.1)
+		await inspect(game, "boss-exposed", size)
 		game._notification(MainLoop.NOTIFICATION_APPLICATION_FOCUS_OUT)
 		game._process(0.1)
 		check(game.state == game.State.PAUSED and not game.ui.memory_visible, "focus loss pauses and hides guidance")

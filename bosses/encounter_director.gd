@@ -1,6 +1,7 @@
 class_name EncounterDirector
 extends RefCounted
 
+const TELEGRAPH_SECONDS: float = 1.15
 const MINI_BOSS_TIME: float = 180.0
 const FINAL_BOSS_TIME: float = 540.0
 
@@ -56,14 +57,13 @@ func tick(delta: float, world: Node3D, player: SwarmPlayer) -> void:
 		world.notice.emit("CORE EXPOSED // PHASE %d" % phase, "+25% DAMAGE FOR 1.2s // ATTACK PATTERNS CHANGING", Color("ffe39b"))
 	if warning_time > 0.0:
 		warning_time -= delta
-		for warning in warnings:
-			warning.scale.y = 0.4 + sin(warning_time * 15.0) * 0.15
+		_update_warning_visuals(source)
 		if warning_time <= 0.0:
 			if attacking_radial:
 				var count: int = 10 + phase * 2
 				for i in range(count):
-					var angle: float = TAU * i / count + attack_index * 0.23
-					world.fire(source.position + Vector3(cos(angle), 0, sin(angle)) * 2.0, Vector3(cos(angle), 0, sin(angle)), true, 15.0)
+					var direction := radial_direction(i, count)
+					world.fire(source.position + direction * 2.0, direction, true, 15.0)
 			else:
 				for location in locations:
 					world.effects.emit_fx("ring", location, location, Color("ff7652"), 3.3)
@@ -80,9 +80,15 @@ func tick(delta: float, world: Node3D, player: SwarmPlayer) -> void:
 		if attack_cooldown <= 0.0:
 			attack_index += 1
 			attacking_radial = phase == 1 or attack_index % 2 == 0
-			warning_time = 1.15
+			warning_time = TELEGRAPH_SECONDS
 			if attacking_radial:
 				warnings.append(SwarmVisuals.ring(world, 3.2, source.position + Vector3(0, 0.08, 0), Color("ff9274"), 0.16))
+				var count: int = 10 + phase * 2
+				for i in range(count):
+					var direction := radial_direction(i, count)
+					var lane := SwarmVisuals.box(world, Vector3(0.09, 0.035, 6.0), source.position + direction * 5.0 + Vector3(0, 0.10, 0), Color("ff9274"), true)
+					lane.rotation.y = atan2(direction.x, direction.z)
+					warnings.append(lane)
 			else:
 				for i in range(3):
 					var location := player.position + Vector3((i - 1) * 6.0, 0, 0)
@@ -121,6 +127,7 @@ func _clear_warnings() -> void:
 	warning_time = 0.0
 	for warning in warnings:
 		if is_instance_valid(warning):
+			warning.visible = false
 			warning.queue_free()
 	warnings.clear()
 	locations.clear()
@@ -129,3 +136,25 @@ func allows_adaptation(time: float) -> bool:
 	var live_boss: bool = (mini != null and mini.active) or (boss != null and boss.active)
 	var mini_intro: bool = time >= MINI_BOSS_TIME - 5.0 and time < MINI_BOSS_TIME + 20.0
 	return not live_boss and not mini_intro and time < FINAL_BOSS_TIME - 20.0
+
+func radial_direction(index: int, count: int) -> Vector3:
+	var angle: float = TAU * index / count + attack_index * 0.23
+	return Vector3(cos(angle), 0, sin(angle))
+
+func _update_warning_visuals(source: SwarmEnemy) -> void:
+	var progress: float = clampf(1.0 - warning_time / TELEGRAPH_SECONDS, 0.0, 1.0)
+	for i in range(warnings.size()):
+		var warning := warnings[i]
+		if attacking_radial:
+			warning.position = source.position + Vector3(0, 0.08, 0) if i == 0 else source.position + radial_direction(i - 1, warnings.size() - 1) * 5.0 + Vector3(0, 0.10, 0)
+		# Steady thickness progression replaces the old rapid vertical oscillation.
+		warning.scale.y = 0.4 + progress * 0.25
+
+func cue(source: SwarmEnemy) -> String:
+	if source == null or not source.active:
+		return ""
+	if source.exposed_time > 0.0:
+		return "CORE EXPOSED %.1fs // +25%% DAMAGE" % source.exposed_time
+	if warning_time > 0.0:
+		return ("BARRAGE IN %.1fs // MOVE BETWEEN THE SPOKES" if attacking_radial else "IMPACT IN %.1fs // LEAVE THE MARKED CIRCLES") % maxf(0.1, warning_time)
+	return "WEAPON RECHARGE %.1fs // KEEP YOUR DISTANCE" % maxf(0.0, attack_cooldown)

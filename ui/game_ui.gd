@@ -51,6 +51,7 @@ var corruption_label: Label
 var corruption_bar: ProgressBar
 var adaptation_label: Label
 var boss_bar: ProgressBar
+var boss_cue_label: Label
 var boss_label: Label
 var surge_label: Label
 var toast_title: Label
@@ -190,6 +191,9 @@ func _build_hud() -> void:
 	boss_bar = _bar(hud, Color("ff7652"), 7)
 	boss_label.visible = false
 	boss_bar.visible = false
+	boss_cue_label = label_at(hud, "", 16, Color("ffcf85"))
+	boss_cue_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	boss_cue_label.visible = false
 	surge_label = label_at(hud, "", 18, Color("b9f66b"))
 	surge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast_title = label_at(hud, "", 30, CYAN)
@@ -407,7 +411,9 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	var boss_active := boss != null and boss.active
 	boss_bar.visible = boss_active
 	boss_label.visible = boss_active
+	boss_cue_label.visible = boss_active
 	if boss_active:
+		boss_cue_label.text = combat.encounters.cue(boss)
 		boss_label.text = boss.definition.title + "  //  PHASE %d" % combat.encounters.phase
 		if boss.exposed_time > 0.0:
 			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
