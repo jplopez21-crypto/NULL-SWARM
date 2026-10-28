@@ -412,10 +412,10 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	shield_bar.value = 100.0 * player.health.shield / maxf(1.0, player.health.max_shield)
 	xp_bar.value = 100.0 * progress.xp / progress.threshold()
 	status_label.text = "%s / 10:00     LV %02d     %d KILLS" % [clock(combat.director.elapsed), progress.level, combat.kills]
-	var names: Array[String] = ["ARCSTORM" if combat.mutations.has("arcstorm") else "PULSE RIFLE"]
+	var names: Array[String] = [Arsenal.equipped_title("pulse", combat.mutations)]
 	for id in Arsenal.DATA:
 		if progress.ranks.has(id):
-			names.append(("SOLAR HALO" if id == "orbit" and combat.mutations.has("halo") else Arsenal.title(id)) + " %d" % progress.ranks[id])
+			names.append(Arsenal.equipped_title(id, combat.mutations) + " %d" % progress.ranks[id])
 	weapons_label.text = "   /   ".join(names) + "    [%d/4]" % progress.equipped()
 	var boss: SwarmEnemy = combat.encounters.boss if combat.encounters.boss != null and combat.encounters.boss.active else combat.encounters.mini
 	var boss_active := boss != null and boss.active

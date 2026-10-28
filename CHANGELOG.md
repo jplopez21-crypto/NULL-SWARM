@@ -201,3 +201,9 @@
 - Add pooled narrowing dash trails, an always-interactive cooldown gauge and explicit shield recharge status. Reduced flashes suppress trails and hit rings.
 - Add an original generated shield-absorption sound; hull damage retains its existing sound. Preserve damage, shield recharge, dash speed/cooldown/protection and collision rules.
 - Add defensive input/effect/HUD regressions and staged shield/hull/dash captures.
+
+### Singularity Lance mutation
+
+- Rail Lance 3 + Memory Tether 3 now unlocks a third evolution: piercing rail impacts leave a single refreshing gravity field with periodic damage and small-enemy pull. Bosses and committed attack lanes remain anchored.
+- Centralized mutation requirements/names; added evolved cards/HUD/results/SFX, incremental spatial reindexing and projectile-style adaptation accounting.
+- Added new normal-rules bot profile, field-clock/pull/refresh/reset tests, UI captures and synthetic gravity workload fixture 4. Two local mutation runs won; six local stress cases passed invariants. Human balance and device performance remain unverified.

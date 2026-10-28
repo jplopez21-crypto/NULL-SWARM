@@ -370,6 +370,70 @@ func run() -> void:
 	game.combat.update_build({"damage": 3, "arc": 3})
 	game.combat.update_build({"damage": 3, "arc": 3})
 	check(game.combat.mutations.count("arcstorm") == 1, "mutation activates exactly once")
+	check(Arsenal.mutation({"rail": 3, "magnet": 3}).has("singularity"), "Singularity requires ranked Rail and Tether")
+	check(not Arsenal.mutation({"rail": 2, "magnet": 3}).has("singularity") and not Arsenal.mutation({"rail": 3, "magnet": 2}).has("singularity"), "both Singularity prerequisites are mandatory")
+	game.start_run()
+	game.set_physics_process(false)
+	game.combat.update_build({"rail": 3, "magnet": 3})
+	game.combat.update_build({"rail": 3, "magnet": 3})
+	check(game.combat.mutations.count("singularity") == 1, "Singularity activates only once")
+	var gravity_victim: SwarmEnemy = game.combat.spawn(0, Vector3(4.4, 0, 0))
+	gravity_victim.hp = 1000
+	game.combat.grid.rebuild(game.combat.enemies)
+	game.combat.target = gravity_victim
+	game.combat._tick_arsenal(0, game.player)
+	check(game.combat.gravity.activations == 1 and game.combat.gravity.position == gravity_victim.position, "mutated rail shot creates a field at its target impact")
+	gravity_victim.hp = 1000
+	var anchored: SwarmEnemy = game.combat.encounters._spawn(game.combat, Vector3.ZERO, false)
+	anchored.position = Vector3(1, 0, 0)
+	anchored.hp = 1000
+	var winding: SwarmEnemy = game.combat.spawn(1, Vector3(-3, 0, 0))
+	winding.windup = 0.8
+	winding.hp = 1000
+	var charging: SwarmEnemy = game.combat.spawn(1, Vector3(-1, 0, 0))
+	charging.charging = 0.5
+	charging.hp = 1000
+	game.combat.grid.rebuild(game.combat.enemies)
+	var field: GravityField = game.combat.gravity
+	check(field.activate(Vector3.ZERO, 9), "finite positive field activation accepted")
+	field.tick(0.15, game.combat)
+	check(gravity_victim.hp == 1000 and field.pulses_fired == 0, "field never deals damage before first pulse deadline")
+	field.tick(0.15, game.combat)
+	check(is_equal_approx(gravity_victim.position.x, 3.5), "field pulls at three metres per second")
+	check(gravity_victim.hp == 991 and field.pulses_fired == 1, "first pulse applies exact advertised damage")
+	check(anchored.position == Vector3(1, 0, 0) and winding.position == Vector3(-3, 0, 0) and charging.position == Vector3(-1, 0, 0), "bosses and committed wind-up/charge lanes remain anchored")
+	check(game.combat.grid.query(gravity_victim.position, 0.05).has(gravity_victim), "pulled enemy stays indexed after crossing a spatial cell")
+	var fresh_grid := SpatialGrid.new()
+	fresh_grid.rebuild(game.combat.enemies)
+	check(game.combat.grid.query(Vector3.ZERO, 10) == fresh_grid.query(Vector3.ZERO, 10), "incremental field reindex preserves fresh-grid traversal order")
+	field.tick(1.2, game.combat)
+	check(gravity_victim.hp == 955 and anchored.hp == 955 and field.pulses_fired == 5, "full field delivers five pulses including anchored targets")
+	check(not field.visible and field.remaining == 0 and gravity_victim.position.is_equal_approx(Vector3.ZERO), "field expires without pull overshoot")
+	field.tick(10, game.combat)
+	check(gravity_victim.hp == 955 and field.pulses_fired == 5, "expired field cannot keep damaging enemies")
+	check(not field.activate(Vector3(INF, 0, 0), 9) and not field.activate(Vector3.ZERO, NAN), "invalid field coordinates and damage are rejected")
+	field.activate(Vector3.ZERO, 9)
+	field.activate(Vector3(0.5, 0, 0), 9)
+	check(field.get_child_count() == 2 and field.position == Vector3(0.5, 0, 0), "refresh replaces one field without allocating more visual nodes")
+	var pulses_before_refresh: int = field.pulses_fired
+	field.tick(0.2, game.combat)
+	field.activate(Vector3(0.5, 0, 0), 9)
+	field.tick(0.1, game.combat)
+	check(field.pulses_fired == pulses_before_refresh + 1, "rapid field refresh preserves pulse cadence instead of starving damage")
+	game.combat.effects_enabled = false
+	field.tick(0.1, game.combat)
+	check(field.visible and field.core.scale == Vector3.ONE, "reduced effects retain field boundary without core pulsation")
+	var paused_remaining: float = field.remaining
+	field.tick(NAN, game.combat)
+	check(field.remaining == paused_remaining, "non-finite field delta cannot corrupt clocks or positions")
+	game.pause_run()
+	game._physics_process(0.5)
+	check(field.remaining == paused_remaining, "pausing combat freezes the gravity field clock")
+	game.resume_run()
+	game.start_run()
+	game.set_physics_process(false)
+	check(game.combat.gravity.remaining == 0 and game.combat.mutations.is_empty(), "new run resets field and mutation state")
+
 	game.combat.streak = 19
 	var combo_victim: SwarmEnemy = game.combat.spawn(0, Vector3(3, 0, 0))
 	game.combat._damage(combo_victim, 999)

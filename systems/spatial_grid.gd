@@ -42,3 +42,19 @@ func nearest(point: Vector3, radius: float, excluded: Array = []) -> Node3D:
 					best = distance
 					found = entity
 	return found
+
+func relocate(entity: Node3D, previous: Vector3) -> void:
+	var old_key := Vector2i(floori(previous.x / CELL), floori(previous.z / CELL))
+	var new_key := Vector2i(floori(entity.position.x / CELL), floori(entity.position.z / CELL))
+	if old_key == new_key:
+		return
+	if cells.has(old_key):
+		cells[old_key].erase(entity)
+		if cells[old_key].is_empty():
+			cells.erase(old_key)
+	var bucket: Array = cells.get(new_key, [])
+	var index: int = 0
+	while index < bucket.size() and bucket[index].index < entity.index:
+		index += 1
+	bucket.insert(index, entity)
+	cells[new_key] = bucket

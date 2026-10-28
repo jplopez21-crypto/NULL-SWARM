@@ -9,18 +9,31 @@ const DATA: Dictionary = {
  "thermal": {"title": "THERMAL BURST", "role": "AREA", "color": Color("ff7652"), "damage": 40.0, "cooldown": 2.8, "description": "A close-range blast\npushes the swarm back."},
  "drone": {"title": "DRONE HIVE", "role": "SUPPORT", "color": Color("b9f66b"), "damage": 17.0, "cooldown": 0.8, "description": "Autonomous escorts fire\nfrom your flanks."}
 }
+const MUTATIONS: Dictionary = {
+ "arcstorm": {"weapon": "pulse", "title": "ARCSTORM RIFLE", "requires": {"damage": 3, "arc": 3}, "effect": "ROUNDS NOW CHAIN"},
+ "halo": {"weapon": "orbit", "title": "SOLAR HALO", "requires": {"orbit": 3, "thermal": 3}, "effect": "ORBITALS RADIATE HEAT"},
+ "singularity": {"weapon": "rail", "title": "SINGULARITY LANCE", "requires": {"rail": 3, "magnet": 3}, "effect": "RAIL IMPACTS LEAVE GRAVITY FIELDS"}
+}
 const MAX_SLOTS: int = 4
 
 static func color(id: String) -> Color:
-	return DATA.get(id, {}).get("color", Color("78f8d4"))
+	return Color("8eb5ff") if id == "singularity" else DATA.get(id, {}).get("color", Color("78f8d4"))
 
 static func title(id: String) -> String:
-	return {"arcstorm": "ARCSTORM", "halo": "SOLAR HALO"}.get(id, DATA.get(id, {}).get("title", "PULSE RIFLE"))
+	return MUTATIONS[id]["title"] if MUTATIONS.has(id) else DATA.get(id, {}).get("title", "PULSE RIFLE")
 
 static func mutation(ranks: Dictionary) -> Array[String]:
 	var result: Array[String] = []
-	if int(ranks.get("damage", 0)) >= 3 and int(ranks.get("arc", 0)) >= 3:
-		result.append("arcstorm")
-	if int(ranks.get("orbit", 0)) >= 3 and int(ranks.get("thermal", 0)) >= 3:
-		result.append("halo")
+	for id in MUTATIONS:
+		var ready: bool = true
+		for prerequisite in MUTATIONS[id]["requires"]:
+			ready = ready and int(ranks.get(prerequisite, 0)) >= int(MUTATIONS[id]["requires"][prerequisite])
+		if ready:
+			result.append(id)
 	return result
+
+static func equipped_title(weapon: String, active: Array[String]) -> String:
+	for id in MUTATIONS:
+		if active.has(id) and MUTATIONS[id]["weapon"] == weapon:
+			return MUTATIONS[id]["title"]
+	return title(weapon)

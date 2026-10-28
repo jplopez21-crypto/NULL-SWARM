@@ -97,3 +97,10 @@
 - Dash readiness gauge stays non-blocking; shield HUD shows online, waiting and recharging states. Shield-only hits have a distinct generated SFX.
 - Local checks cover dash timing/protection, actual shield/hull metadata, feedback expiration/accessibility, trail reclamation and gauge/status values. Expanded UI capture matrix: 72 layouts.
 - Android test now verifies visible operative and actual readiness after touch dash. Device results and comparative QA are linked in PR #1 after execution; physical phone frame rate/comfort remain unmeasured.
+
+## Singularity Lance / build diversity
+
+- Implemented Rail 3 + Tether 3 mutation with one 4.5m/1.5s field, delayed 0.3s pulses, 3m/s small-enemy pull, anchored bosses/committed lanes and preserved refresh cadence.
+- Upgrades, HUD, damage accounting, warning-preserving movement, synthesized firing cue, Swarm style tracking and fresh-run reset integrated. Only changed spatial cells are reindexed.
+- Added Singularity profile to normal bot coverage (22 combined sessions total), new fixture 4 stress and three evolution UI states at four sizes (84 layouts total). Local two-seed mutation and six synthetic workload reports are in docs/qa/singularity.
+- Mechanics/limits: docs/SINGULARITY_LANCE.md. Physical-device active-field rendering/performance and human tradeoff balance still need testing; persistent signing remains blocked on owner environment secrets.

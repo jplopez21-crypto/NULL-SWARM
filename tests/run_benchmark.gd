@@ -5,6 +5,7 @@ const WARMUP: int = 120
 const SAMPLES: int = 600
 var failures: Array[String] = []
 var corrupted: bool = false
+var gravity_stress: bool = false
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -30,6 +31,8 @@ func scenario(count: int, quality: int) -> Dictionary:
 	if corrupted:
 		# Four-slot legal loadout; synthetic HP/immunity still deliberately sustain load.
 		var ranks: Dictionary = {"drone": 5, "rail": 5, "arc": 5, "damage": 7}
+		if gravity_stress:
+			ranks["magnet"] = 3
 		world.update_build(ranks)
 		world.corruption.select("redline", 5, ranks)
 		world.corruption.select("fracture", 10, ranks)
@@ -97,13 +100,15 @@ func scenario(count: int, quality: int) -> Dictionary:
 	var total: float = 0.0
 	for value in samples:
 		total += value
-	var result := {"requested_enemies": count, "quality": ["low", "medium", "high"][quality], "warmup_steps": WARMUP, "sample_steps": SAMPLES,
+	var result := {"gravity_activations": world.gravity.activations, "gravity_pulses": world.gravity.pulses_fired, "requested_enemies": count, "quality": ["low", "medium", "high"][quality], "warmup_steps": WARMUP, "sample_steps": SAMPLES,
 		"mean_simulation_step_ms": total / samples.size(), "p50_simulation_step_ms": QAReport.percentile(samples, 0.5),
 		"p95_simulation_step_ms": QAReport.percentile(samples, 0.95), "p99_simulation_step_ms": QAReport.percentile(samples, 0.99),
 		"max_simulation_step_ms": samples.max(), "enemy_peak": enemy_peak, "projectile_peak": shot_peak, "effect_peak": effect_peak,
 		"minimum_pickups_after_refill": pickup_floor, "corruption": world.corruption.accepted.duplicate(), "drone_count": world.rig.drone_points.size(),
 		"memory_static_mb": Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0,
 		"gameplay_fingerprint": JSON.stringify(state).sha256_text(), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
+	if gravity_stress and (world.gravity.activations == 0 or world.gravity.pulses_fired == 0):
+		failures.append("Gravity stress never exercised its field workload")
 	if corrupted and pickup_floor < 250:
 		failures.append("Corruption stress fixture drained below 250 pickups")
 	if corrupted and (world.rig.drone_points.size() != 4 or world.corruption.accepted.size() != 3):
@@ -115,15 +120,16 @@ func scenario(count: int, quality: int) -> Dictionary:
 	return result
 
 func run() -> void:
-	corrupted = "--corruption-stress" in OS.get_cmdline_user_args()
+	gravity_stress = "--gravity-stress" in OS.get_cmdline_user_args()
+	corrupted = gravity_stress or "--corruption-stress" in OS.get_cmdline_user_args()
 	var report := QAReport.metadata("synthetic combat CPU benchmark")
 	report["limitations"] = ["Headless CPU simulation; excludes rendering, GPU, frame pacing and phone thermal behavior.",
 		"Synthetic target invulnerability and huge enemy HP maintain load; these are NOT normal-rules playtests.",
 		"Fixture sustains at least 160 friendly + 160 hostile projectiles plus game-generated shots, 250 pickups and full weapon effects.",
 		"Timings include collision/AI/weapons/pickups/refill work but exclude bot decisions and render UI.",
 		"No absolute FPS/performance pass threshold on shared CI hardware."]
-	report["fixture_version"] = 3 if corrupted else 2
-	report["loadout"] = "Pulse/Arcstorm + Arc + Rail + Drone, all three corruption links" if corrupted else "Pulse/Arcstorm + Arc + Orbit + Thermal, clean"
+	report["fixture_version"] = 4 if gravity_stress else (3 if corrupted else 2)
+	report["loadout"] = "Singularity + Arc + Drone + Pulse/Arcstorm, Tether 3, all corruption links" if gravity_stress else "Pulse/Arcstorm + Arc + Rail + Drone, all three corruption links" if corrupted else "Pulse/Arcstorm + Arc + Orbit + Thermal, clean"
 	report["enemy_mix"] = "six regular archetypes including Insulator; differs from pre-0.4 fixed mix"
 	var rows: Array[Dictionary] = []
 	for count in [100, 300, 600]:
@@ -136,12 +142,12 @@ func run() -> void:
 		print("STRESS_CASE enemies=", count, " low_p95_ms=", low["p95_simulation_step_ms"], " high_p95_ms=", high["p95_simulation_step_ms"])
 	report["scenarios"] = rows
 	report["failures"] = failures
-	QAReport.write("res://builds/qa/" + ("corruption-stress-report.json" if corrupted else "stress-report.json"), report)
+	QAReport.write("res://builds/qa/" + ("gravity-stress-report.json" if gravity_stress else ("corruption-stress-report.json" if corrupted else "stress-report.json")), report)
 	var markdown := "# Synthetic combat CPU benchmark\n\nHeadless simulation timing, NOT Android FPS. Synthetic invulnerable targets maintain load.\n\n| Enemies | Quality | Peak shots | Mean ms | p95 ms | p99 ms | Peak effects |\n|---:|---|---:|---:|---:|---:|---:|\n"
 	for row in rows:
 		markdown += "| %d | %s | %d | %.3f | %.3f | %.3f | %d |\n" % [row["requested_enemies"], row["quality"], row["projectile_peak"], row["mean_simulation_step_ms"], row["p95_simulation_step_ms"], row["p99_simulation_step_ms"], row["effect_peak"]]
 	markdown += "\nLow/high gameplay-state parity and fixed-load checks: %s. CPU: %s.\n" % ["passed" if failures.is_empty() else "FAILED", report["cpu"]]
-	QAReport.text_file("res://builds/qa/" + ("CORRUPTION_STRESS_REPORT.md" if corrupted else "STRESS_REPORT.md"), markdown)
-	print("CORRUPTION_STRESS_REPORT scenarios=" if corrupted else "STRESS_REPORT scenarios=", rows.size(), " failures=", failures.size())
+	QAReport.text_file("res://builds/qa/" + ("GRAVITY_STRESS_REPORT.md" if gravity_stress else ("CORRUPTION_STRESS_REPORT.md" if corrupted else "STRESS_REPORT.md")), markdown)
+	print("GRAVITY_STRESS_REPORT scenarios=" if gravity_stress else "CORRUPTION_STRESS_REPORT scenarios=" if corrupted else "STRESS_REPORT scenarios=", rows.size(), " failures=", failures.size())
 	await create_timer(0.1).timeout
 	quit(0 if failures.is_empty() else 1)

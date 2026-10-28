@@ -111,7 +111,7 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"damage_events": bot.damage_events, "first_level_seconds": snappedf(first_level, 0.01), "first_new_weapon_seconds": snappedf(bot.first_new_weapon, 0.01),
 		"xp_collected": game.pickups.total_collected, "uncollected_xp": uncollected_xp, "uncollected_pickups": game.pickups.items.size(),
 		"longest_upgrade_gap_seconds": snappedf(longest_gap, 0.01), "last_upgrade_seconds": last_upgrade,
-		"weapons_and_ranks": game.progress.ranks.duplicate(), "mutations": mutation_times, "damage_by_weapon": game.combat.damage_by_weapon.duplicate(),
+		"gravity_fields": {"activations": game.combat.gravity.activations, "pulses": game.combat.gravity.pulses_fired, "pull_distance": game.combat.gravity.pull_distance}, "weapons_and_ranks": game.progress.ranks.duplicate(), "mutations": mutation_times, "damage_by_weapon": game.combat.damage_by_weapon.duplicate(),
 		"warden_spawned": game.combat.encounters.mini_spawned, "warden_defeated": game._warden_down(), "architect_spawned": game.combat.encounters.boss_spawned,
 		"architect_defeated": game._architect_down(), "max_enemies": max_enemies, "max_projectiles": max_shots,
 		"adaptations": game.combat.adaptation.history.duplicate(true), "spawned_by_type": game.combat.spawned_by_type.duplicate(), "resisted_hits": game.combat.resisted_hits,
@@ -146,6 +146,21 @@ func run() -> void:
 		report["failures"] = failures
 		report["limitations"] = ["Bot accepts advertised links only at legal upgrade opportunities, consuming one pending choice.", "Fixed seeds and privileged geometric movement do not establish human balance or fun."]
 		QAReport.write("res://builds/qa/corruption-probe.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--singularity-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules Singularity build sessions")
+		var cases: Array[Dictionary] = []
+		var exercised: bool = false
+		for seed_value in [101, 202]:
+			var result: Dictionary = await simulate(seed_value, "singularity", "vanguard")
+			cases.append(result)
+			exercised = exercised or (result["mutations"].has("singularity") and int(result["gravity_fields"]["pulses"]) > 0)
+			print("SINGULARITY_CASE seed=", seed_value, " outcome=", result["outcome"], " fields=", result["gravity_fields"])
+		_check(exercised, "Singularity sessions never reached a working evolved field")
+		report["cases"] = cases
+		report["failures"] = failures
+		QAReport.write("res://builds/qa/singularity-probe.json", report)
 		quit(0 if failures.is_empty() else 1)
 		return
 	if "--extended-seeds" in OS.get_cmdline_user_args():
@@ -198,6 +213,11 @@ func run() -> void:
 			print("BOT_CASE ", profile, " seed=", seed_value, " outcome=", result["outcome"], " time=", result["survived_seconds"], " kills=", result["kills"])
 	for kit in ["conductor", "sentinel"]:
 		cases.append(await simulate(101, "electric" if kit == "conductor" else "halo", kit))
+	var gravity_covered: bool = false
+	for result in cases:
+		if result["profile"] == "singularity" and result["mutations"].has("singularity"):
+			gravity_covered = gravity_covered or int(result["gravity_fields"]["pulses"]) > 0
+	_check(gravity_covered, "normal-rules sessions never activated and pulsed Singularity")
 	var repeat_a: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
 	var repeat_b: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
 	_check(fingerprint(repeat_a) == fingerprint(repeat_b), "seeded bot replay diverged")

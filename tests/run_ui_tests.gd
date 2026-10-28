@@ -165,6 +165,29 @@ func run() -> void:
 		await settle()
 		game._process(0.3)
 		check(not game.ui.memory_visible and not is_instance_valid(game.ui.memory_packet), "restart clears freed packet reference")
+		game.progress.ranks = {"rail": 2, "magnet": 3}
+		game.combat.update_build(game.progress.ranks)
+		game.progress.level = 8
+		game.progress.pending = 1
+		game.show_upgrade()
+		game.offered.assign(["rail", "magnet", "health"])
+		game._render_upgrades()
+		await inspect(game, "singularity-offer", size)
+		game.select_upgrade("rail")
+		var gravity_target: SwarmEnemy = game.combat.spawn(0, game.player.position + Vector3(4, 0, -3))
+		gravity_target.hp = 1000
+		game.combat.grid.rebuild(game.combat.enemies)
+		game.combat.target = gravity_target
+		game.combat._tick_arsenal(0, game.player)
+		game.combat.gravity.tick(0.1, game.combat)
+		game._process(0.1)
+		check(game.combat.gravity.visible and game.ui.weapons_label.text.contains("SINGULARITY LANCE"), "legal rail upgrade activates field and evolved HUD title")
+		await inspect(game, "singularity-field", size)
+		game.progress.pending = 1
+		game.show_upgrade()
+		game.offered.assign(["rail", "health", "shield"])
+		game._render_upgrades()
+		await inspect(game, "singularity-upgrade", size)
 		game.finish_run(false)
 		game._process(0.1)
 		check(not game.ui.memory_visible, "results hide guidance")

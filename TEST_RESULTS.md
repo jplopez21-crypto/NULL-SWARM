@@ -136,3 +136,13 @@ Boss render review: first native export passed signature/integrity checks, but o
 Final local defensive-feedback verification: all nine isolated suites passed (409 system, 21 input, 720 UI checks/72 layouts, 12 GUI, 9 audio, 5 probe, 49 resources, 41 corruption and scene smoke). Strict script/engine/leak scan clean. Python Android-driver compilation also passed.
 
 Defensive render review: first native APK passed signing/hash/archive checks. The staged dash image showed incomplete HUD text during rapid fixture changes; added explicit post-draw waits to defensive screenshots and cleared the introductory toast only in capture fixtures. Normal gameplay timing is unchanged. Revised captures must be inspected in the final artifact.
+
+### Singularity Lance mutation
+
+- New Rail 3 + Tether 3 evolution integrates delayed gravity pulses, bounded pull and one-field refresh into actual rail firing. Mutation requirements/names are registered centrally. Base upgrade IDs/RNG offers are unchanged.
+- First field test found a floating-point remainder at expiration; corrected expiry tolerance. Added a refresh-cadence regression so frequent rail shots cannot indefinitely postpone field pulses. Tests also cover actual shot activation, prerequisites/duplicates, anchored bosses/windups/charges, incremental grid membership/order, invalid values, expiration, pause, quality and run reset.
+- Executed normal-rules Singularity probe seeds 101/202: both won, reached the mutation and exercised over 1,300 pulses each. No injected immunity or forced boss kills in those sessions. Reports: docs/qa/singularity/singularity-probe.json.
+- Executed six synthetic gravity stress cases: load/parity invariants passed, actual field activations and pulses asserted. Fixture 4 explicitly sustains invulnerable high-HP enemies, projectiles/pickups and corruption links. CPU values are headless workload measurements, not Android FPS or an old-fixture speedup. Report: docs/qa/singularity/gravity-stress-report.json.
+- Standard CI adds this bot profile and gravity stress; native snapshots add singularity_offer.png, singularity_field.png and singularity_upgrade.png. Final branch CI/render evidence is linked in PR #1 after execution. Physical active-field Android rendering and human balance are not claimed.
+
+Final local Singularity verification: all nine isolated suites passed, with 430 system checks, 872 UI checks/84 layouts, 50 resource checks, 21 input, 12 GUI, 9 audio, 5 probe, 41 corruption and scene smoke. Strict errors/leak scan clean. QA workflow YAML and shell syntax validated.

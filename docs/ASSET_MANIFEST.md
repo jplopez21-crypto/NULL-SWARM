@@ -28,3 +28,7 @@ The Insulator's braced body/ring is original procedural geometry using shared or
 The 0.4.1 memory locator uses original procedural line/chevron drawing and the existing Godot fallback font; it introduces no third-party assets.
 
 Corruption 0.5 adds original purple UI elements and a fourth escort using the existing project-authored drone geometry/materials; acceptance reuses original synthesized level-up audio. No third-party assets added.
+
+## Singularity Lance
+
+Gravity-field boundary/core are original procedural torus meshes with shared project materials; the evolved rail cue is original synthesized PCM in SwarmAudio. No external assets were downloaded. These remain development visuals/audio, not final commercial assets.

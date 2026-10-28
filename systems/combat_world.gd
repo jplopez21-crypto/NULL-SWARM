@@ -7,6 +7,7 @@ signal impact(at: Vector3, amount: float, critical: bool)
 signal notice(title: String, detail: String, color: Color)
 signal weapon_fired(id: String)
 signal cache_recovered
+var gravity: GravityField
 var effects: CombatEffects
 var rig: WeaponRig
 var encounters := EncounterDirector.new()
@@ -43,6 +44,8 @@ func _ready() -> void:
 	adaptation.changed.connect(_adaptation_changed)
 	effects = CombatEffects.new()
 	add_child(effects)
+	gravity = GravityField.new()
+	add_child(gravity)
 	rig = WeaponRig.new()
 	add_child(rig)
 	# Large enough to accommodate the complete fixed initial pool reserve.
@@ -133,6 +136,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			if player.health.current <= 0.0:
 				return false
 	grid.rebuild(enemies)
+	gravity.tick(delta, self)
 	target = grid.nearest(player.position, weapon.definition.range_m)
 	var fired := weapon.ready_to_fire(delta * (1.6 if overclock > 0.0 else 1.0) * corruption.cycle_rate(), target != null)
 	if fired:
@@ -185,7 +189,7 @@ func update_build(ranks: Dictionary) -> void:
 	for id in Arsenal.mutation(ranks):
 		if not mutations.has(id):
 			mutations.append(id)
-			notice.emit("WEAPON MUTATION", "ARCSTORM RIFLE // ROUNDS NOW CHAIN" if id == "arcstorm" else "SOLAR HALO // ORBITALS RADIATE HEAT", Color("ffe39b"))
+			notice.emit("WEAPON MUTATION", Arsenal.MUTATIONS[id]["title"] + " // " + Arsenal.MUTATIONS[id]["effect"], Color("ffe39b"))
 			weapon_fired.emit("mutation")
 
 func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO, critical: bool = false, weapon_id: String = "pulse") -> void:
@@ -259,13 +263,17 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 					chain(player.position, damage, 3 + rank / 2, 17.0)
 			"rail":
 				if ready:
+					var impact_at: Vector3 = target.position
+					var evolved: bool = mutations.has("singularity")
 					var start := player.position
 					var end: Vector3 = start + (target.position - start).normalized() * 26.0
-					effects.emit_fx("beam", start, end, Arsenal.color("rail"), 0.22)
+					effects.emit_fx("beam", start, end, Arsenal.color("singularity" if evolved else "rail"), 0.22)
 					for enemy in grid.query(start, 29.0):
 						var closest := Geometry3D.get_closest_point_to_segment(enemy.position, start, end)
 						if enemy.position.distance_to(closest) < enemy.definition.radius + 0.45:
-							_damage(enemy, damage, Vector3.ZERO, false, "rail")
+							_damage(enemy, damage, Vector3.ZERO, false, "singularity" if evolved else "rail")
+					if evolved:
+						gravity.activate(impact_at, damage * GravityField.PULSE_DAMAGE_FRACTION)
 			"thermal":
 				ready = not grid.query(player.position, 6.0).is_empty()
 				if ready:
@@ -279,7 +287,7 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 						_damage(victim, damage, Vector3.ZERO, false, "drone")
 		if ready:
 			timers[id] = float(definition["cooldown"]) * pow(0.94, rank - 1)
-			weapon_fired.emit(id)
+			weapon_fired.emit("singularity" if id == "rail" and mutations.has("singularity") else id)
 
 func _adaptation_changed(event: String, style: String) -> void:
 	if event == "warning":

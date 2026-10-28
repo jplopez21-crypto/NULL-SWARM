@@ -79,10 +79,17 @@ jobs:
           timeout 600s godot --headless --script tests/run_benchmark.gd -- --corruption-stress 2>&1 | tee builds/qa/corruption-stress.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/corruption-stress.log; then exit 1; fi
           test -s builds/qa/corruption-stress-report.json
+      - name: Singularity-field CPU benchmark
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          timeout 600s godot --headless --script tests/run_benchmark.gd -- --gravity-stress 2>&1 | tee builds/qa/gravity-stress.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/gravity-stress.log; then exit 1; fi
+          test -s builds/qa/gravity-stress-report.json
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/CORRUPTION_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

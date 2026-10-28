@@ -304,9 +304,15 @@ func upgrade_description(id: String) -> String:
 		var synergy := ""
 		if id in ["orbit", "thermal"]:
 			synergy = "\nMUTATION: Orbitals 3 + Thermal 3"
+		elif id == "rail":
+			synergy = "\nEVOLVE: Singularity Lance\nRail 3 + Tether 3\nPull field; bosses stay anchored."
+			if combat.mutations.has("singularity"):
+				var current_field: float = definition["damage"] * (1.0 + (rank - 1) * 0.28) * GravityField.PULSE_DAMAGE_FRACTION
+				var next_field: float = definition["damage"] * (1.0 + rank * 0.28) * GravityField.PULSE_DAMAGE_FRACTION
+				synergy = "\nFIELD %.1f → %.1f / PULSE\n5 PULSES / 1.5s\nBosses/charge lanes anchored." % [current_field, next_field]
 		elif id == "arc":
 			synergy = "\nMUTATION: Arc 3 + Amplified Pulse 3"
-		return "%s\n%s\n\n%s%s" % [definition["title"], line, definition["description"], synergy]
+		return "%s\n%s\n\n%s%s" % [Arsenal.equipped_title(id, combat.mutations), line, definition["description"], synergy]
 	match id:
 		"damage": return "AMPLIFIED PULSE\nDamage %d → %d\nSynergy: Pulse 3 + Arc 3" % [int(combat.weapon.damage), int(combat.weapon.damage + 6)]
 		"rate": return "RAPID CYCLER\nCooldown %.2fs → %.2fs\nFaster automatic fire." % [combat.weapon.interval / combat.corruption.cycle_rate(), maxf(0.12, combat.weapon.interval * 0.87) / combat.corruption.cycle_rate()]
@@ -314,7 +320,7 @@ func upgrade_description(id: String) -> String:
 		"speed": return "SERVO OVERDRIVE\nSpeed %.1f → %.1f\nOutrun the machine tide." % [player.effective_speed(), (player.speed + 0.65) * player.walk_multiplier]
 		"health": return "REINFORCED CHASSIS\nMax HP %d → %d\nAlso restores 25 health." % [int(player.health.maximum), int(player.health.maximum + 20)]
 		"shield": return "AEGIS CAPACITOR\nShield %d → %d\nRecharges after 5s unharmed." % [int(player.health.max_shield), int(player.health.max_shield + 12)]
-		"magnet": return "MEMORY TETHER\nAttraction %.1fm → %.1fm\nCollect tech from farther away." % [player.magnet, player.magnet + 1.2]
+		"magnet": return "MEMORY TETHER\nAttraction %.1fm → %.1fm\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3" % [player.magnet, player.magnet + 1.2]
 	return "FIELD REPAIR\nRestore 35 HP\nAll systems fully upgraded."
 
 func select_upgrade(id: String) -> void:
@@ -540,6 +546,44 @@ func _capture_session() -> void:
 	finish_run(false)
 	await get_tree().create_timer(0.4).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/results.png")
+	# New evolution is shown through the real upgrade transaction in a staged fixture.
+	start_run()
+	progress.ranks = {"rail": 2, "magnet": 3, "arc": 2, "drone": 2}
+	combat.update_build(progress.ranks)
+	progress.level = 8
+	progress.pending = 1
+	show_upgrade()
+	offered.assign(["rail", "magnet", "health"])
+	_render_upgrades()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/singularity_offer.png")
+	select_upgrade("rail")
+	state = State.PAUSED
+	var field_target: SwarmEnemy
+	for i in range(6):
+		var angle: float = i * TAU / 6.0
+		var sample := combat.spawn(0, Vector3(5 + cos(angle) * 2, 0, -3 + sin(angle) * 2))
+		sample.hp = 500
+		if i == 0:
+			field_target = sample
+	combat.grid.rebuild(combat.enemies)
+	combat.target = field_target
+	combat._tick_arsenal(0, player)
+	combat.gravity.tick(0.15, combat)
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/singularity_field.png")
+	progress.pending = 1
+	show_upgrade()
+	offered.assign(["rail", "shield", "health"])
+	_render_upgrades()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/singularity_upgrade.png")
 	audio.shutdown()
 	get_tree().quit()
 
