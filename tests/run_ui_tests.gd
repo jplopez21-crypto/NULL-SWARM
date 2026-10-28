@@ -24,6 +24,8 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 	check(root.size == size, "%s %s: requested window size applied" % [size, stage])
 	if game.ui.boss_cue_label.is_visible_in_tree():
 		check(bounds.encloses(game.ui.boss_cue_label.get_global_rect()), "%s %s: boss cue fits viewport" % [size, stage])
+	if game.ui.perf_label.is_visible_in_tree():
+		check(bounds.encloses(game.ui.perf_label.get_global_rect()), "%s %s: performance stats fit viewport" % [size, stage])
 	if is_instance_valid(game.ui.upgrade_header) and game.ui.upgrade_header.is_visible_in_tree():
 		check(bounds.encloses(game.ui.upgrade_header.get_global_rect()), "%s %s: upgrade queue heading fits viewport" % [size, stage])
 	var buttons: int = 0
@@ -70,6 +72,15 @@ func run() -> void:
 		check(game.ui.memory_visible and is_instance_valid(game.ui.memory_packet), "memory cue acquires packet after deployment")
 		check(game.ui.hint_label.visible and game.ui.hint_label.text.contains("DASH"), "new run restores movement onboarding")
 		await inspect(game, "combat", size)
+		check(not game.ui.perf_label.visible, "new default hides diagnostic HUD")
+		game.change_setting("performance_stats", true)
+		game._process(0)
+		check(game.ui.perf_label.is_visible_in_tree() and game.ui.perf_label.text.contains("FPS") and game.ui.perf_label.text.contains("ENEMIES") and game.ui.perf_label.text.contains("ENGINE"), "enabled diagnostics show honest live monitor labels")
+		check(game.ui.perf_label.mouse_filter == Control.MOUSE_FILTER_IGNORE, "diagnostic label passes touch through")
+		await inspect(game, "performance-stats", size)
+		game.change_setting("performance_stats", false)
+		game._process(0)
+		check(not game.ui.perf_label.is_visible_in_tree(), "disabling diagnostics hides the HUD immediately")
 		game.progress.add_xp(100)
 		game.combat.director.elapsed = 11
 		game._process(0)

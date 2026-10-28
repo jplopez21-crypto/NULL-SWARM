@@ -79,14 +79,15 @@ jobs:
           report = json.loads(Path('builds/qa/headless-results.json').read_text())
           assert report['status'] == 'passed'
           print('CI_HEADLESS_REPORT ' + json.dumps(report, separators=(',', ':')))
-          capture = Path('builds/screenshots/upgrade_queue.png').read_bytes()
-          assert capture.startswith(b'\x89PNG\r\n\x1a\n')
-          if len(capture) <= 262144:
-              encoded = base64.b64encode(capture).decode('ascii')
-              for start in range(0, len(encoded), 12000):
-                  print('CI_QUEUE_PREVIEW_PNG ' + encoded[start:start + 12000])
-          else:
-              print('CI_QUEUE_PREVIEW_SKIPPED bytes=' + str(len(capture)))
+          for name, prefix in [('upgrade_queue', 'CI_QUEUE'), ('performance_stats', 'CI_PERF')]:
+              capture = Path('builds/screenshots/' + name + '.png').read_bytes()
+              assert capture.startswith(b'\x89PNG\r\n\x1a\n')
+              if len(capture) <= 262144:
+                  encoded = base64.b64encode(capture).decode('ascii')
+                  for start in range(0, len(encoded), 12000):
+                      print(prefix + '_PREVIEW_PNG ' + encoded[start:start + 12000])
+              else:
+                  print(prefix + '_PREVIEW_SKIPPED bytes=' + str(len(capture)))
           PY
       - name: Export debug APK
         run: |

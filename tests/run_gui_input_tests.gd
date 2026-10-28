@@ -64,6 +64,21 @@ func run() -> void:
 	check(retained_until_frame_end(old_panel), "settings transition preserves current dispatch target")
 	await settle()
 	check(game.ui.screen != null, "settings panel remains usable")
+	click(game, "Performance stats")
+	await settle()
+	check(game.save.data["settings"]["performance_stats"] and game.ui.perf_label.visible and game.save._read(game.save.path)["settings"]["performance_stats"], "GUI diagnostic toggle applies and saves its boolean preference")
+	var shortcut := InputEventKey.new()
+	shortcut.keycode = KEY_F3
+	shortcut.physical_keycode = KEY_F3
+	shortcut.pressed = true
+	root.push_input(shortcut, true)
+	check(not game.save.data["settings"]["performance_stats"] and not game.ui.perf_toggle.button_pressed, "F3 updates saved preference and visible settings control")
+	shortcut.echo = true
+	root.push_input(shortcut, true)
+	check(not game.save.data["settings"]["performance_stats"], "held F3 repeat cannot toggle diagnostics repeatedly")
+	shortcut.echo = false
+	root.push_input(shortcut, true)
+	check(game.save.data["settings"]["performance_stats"] and game.ui.perf_toggle.button_pressed, "F3 can re-enable the same touch preference")
 	old_panel = game.ui.screen
 	click(game, "BACK")
 	check(retained_until_frame_end(old_panel), "back transition safely retires settings panel")
@@ -72,6 +87,8 @@ func run() -> void:
 	click(game, "RESUME")
 	check(game.state == game.State.PLAYING and retained_until_frame_end(old_panel), "resume click safely returns to combat")
 	await settle()
+	game._process(0)
+	check(game.ui.perf_label.is_visible_in_tree() and game.ui.perf_label.text.contains("ENEMIES") and game.ui.perf_label.text.contains("FPS"), "saved diagnostics are visible with real HUD data on resume")
 	# A real XP overflow must display and consume every pending choice once.
 	game.progress.add_xp(100)
 	game.show_upgrade()
@@ -141,9 +158,11 @@ func run() -> void:
 	entry.text = game.save.backup_code()
 	click(game, "PREVIEW RESTORE")
 	await settle()
+	game.change_setting("performance_stats", false)
 	click(game, "RESTORE THIS BACKUP")
 	await settle()
 	check(game.pending_backup_code.is_empty() and FileAccess.file_exists(game.save.path + ".pre-import"), "confirmed GUI restore keeps recovery copy")
+	check(game.save.data["settings"]["performance_stats"] and game.ui.perf_label.visible and not game.ui.perf_label.is_visible_in_tree(), "backup restore reapplies saved diagnostics without leaking HUD into menus")
 	game.audio.shutdown()
 	await create_timer(0.2).timeout
 	game.queue_free()

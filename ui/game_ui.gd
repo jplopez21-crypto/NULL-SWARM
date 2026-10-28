@@ -39,6 +39,8 @@ var health_label: Label
 var operative_title: String = "VANGUARD"
 var weapons_label: Label
 var perf_label: Label
+var perf_toggle: CheckButton
+var perf_next_sample_ms: int = 0
 var hint_label: Label
 var dash_gauge: ProgressBar
 var defense_label: Label
@@ -197,6 +199,7 @@ func _build_hud() -> void:
 	var movement_hint := "DRAG LEFT SIDE TO MOVE     TAP DASH TO EVADE" if OS.has_feature("mobile") else "MOVE: WASD / LEFT STICK     DASH: SPACE / A"
 	hint_label = label_at(hud, movement_hint, 15, MUTED)
 	perf_label = label_at(hud, "", 14, MUTED)
+	perf_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	perf_label.visible = false
 	notices = label_at(hud, "", 16, Color("ffbd78"))
 	boss_label = label_at(hud, "", 18, Color("ff9274"))
@@ -399,11 +402,18 @@ func show_settings(settings: Dictionary, back: Callable) -> void:
 		slider.custom_minimum_size = Vector2(300, 36)
 		row.add_child(slider)
 		slider.value_changed.connect(func(value: float): setting_changed.emit(key, value))
-	for pair in [["shake", "Camera shake"], ["flashes", "Impact flashes"]]:
+	var toggles := GridContainer.new()
+	toggles.columns = 2
+	toggles.add_theme_constant_override("h_separation", 14)
+	box.add_child(toggles)
+	for pair in [["shake", "Camera shake"], ["flashes", "Impact flashes"], ["performance_stats", "Performance stats"]]:
 		var check := CheckButton.new()
 		check.text = pair[1]
+		check.custom_minimum_size.y = 56
 		check.button_pressed = settings[pair[0]]
-		box.add_child(check)
+		toggles.add_child(check)
+		if pair[0] == "performance_stats":
+			perf_toggle = check
 		check.toggled.connect(func(value: bool): setting_changed.emit(pair[0], value))
 	var row := HBoxContainer.new()
 	box.add_child(row)
@@ -459,9 +469,17 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	else:
 		hint_label.text = "COLLECT BLUE MEMORY TO UPGRADE // CYAN ARROW POINTS TO MORE"
 	notices.text = "STRIKER SIGNALS DETECTED • ORANGE LANES WARN OF CHARGES" if time > 22.0 and time < 29.0 else ("SENTRY SIGNALS DETECTED • AVOID VIOLET FIRING LANES" if time > 62.0 and time < 70.0 else "")
-	if perf_label.visible:
+	if perf_label.visible and Time.get_ticks_msec() >= perf_next_sample_ms:
+		perf_next_sample_ms = Time.get_ticks_msec() + 250
 		var fps := Engine.get_frames_per_second()
-		perf_label.text = "%d FPS / %.1fms  •  ENEMIES %d  •  SHOTS %d  •  DRAWS %d  •  STATIC %.1fMB" % [fps, 1000.0 / maxf(1.0, fps), combat.active_enemies, combat.active_projectiles, Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0]
+		var timing := "%d FPS / %.1fms AVG FRAME" % [fps, 1000.0 / fps] if fps > 0 else "FPS WARMING UP"
+		perf_label.text = "%s  •  ENEMIES %d  •  SHOTS %d  •  DRAWS %d  •  ENGINE %.1fMB" % [timing, combat.active_enemies, combat.active_projectiles, Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0]
+
+func set_performance_stats(enabled: bool) -> void:
+	perf_label.visible = enabled
+	perf_next_sample_ms = 0
+	if is_instance_valid(perf_toggle):
+		perf_toggle.set_pressed_no_signal(enabled)
 
 static func clock(seconds: float) -> String:
 	return "%02d:%02d" % [int(seconds) / 60, int(seconds) % 60]

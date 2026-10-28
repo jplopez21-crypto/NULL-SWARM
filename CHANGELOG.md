@@ -1,5 +1,12 @@
 # Changelog
 
+## Development — 2026-10-28 / Touch performance stats
+
+- Added a saved default-off Performance stats toggle to menu/pause settings; F3 uses the same preference and ignores held-key repeats.
+- Added checkbox/HUD synchronization, optional-setting compatibility for old saves, and portable-backup retention.
+- Samples FPS/average frame interval, entities, draw calls and engine memory at 4Hz while enabled. The HUD passes touch through and changes no combat or effect budgets.
+- Expanded local coverage to 104 UI layouts and added Android touch/persistence/update acceptance checks. Execution/build evidence is tracked in TEST_RESULTS.md.
+
 ## Development — 2026-10-28 / Queued upgrade clarity
 
 - Upgrade headings show how many choices are ready, including the current choice, with correct singular wording for the last one.

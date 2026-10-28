@@ -13,7 +13,21 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
+	var old_preferences := SaveStore.defaults()
+	check(not old_preferences["settings"]["performance_stats"], "performance stats default off")
+	old_preferences["settings"].erase("performance_stats")
+	check(not SaveStore.validated(old_preferences)["settings"]["performance_stats"], "existing saves gain disabled performance preference without migration")
+	old_preferences["version"] = 1
+	check(not SaveStore.validated(old_preferences)["settings"]["performance_stats"], "legacy v1 save gains disabled performance preference")
+	old_preferences["version"] = SaveStore.VERSION
+	old_preferences["settings"]["performance_stats"] = "true"
+	check(not SaveStore.validated(old_preferences)["settings"]["performance_stats"], "non-boolean diagnostic preference safely falls back")
+	old_preferences["settings"]["performance_stats"] = 1
+	check(not SaveStore.validated(old_preferences)["settings"]["performance_stats"], "numeric diagnostic preference cannot masquerade as a boolean")
+	old_preferences["settings"]["performance_stats"] = true
+	check(SaveStore.validated(old_preferences)["settings"]["performance_stats"], "enabled performance preference survives validation")
 	var source_save := SaveStore.new()
+	source_save.data["settings"]["performance_stats"] = true
 	source_save.data["salvage"] = 42
 	source_save.data["salvaged_kills"] = 180
 	source_save.data["research"] = {"chassis": 1}
@@ -21,6 +35,7 @@ func run() -> void:
 	source_save.data["settings"]["shake"] = false
 	var code := source_save.backup_code()
 	var imported := SaveStore.inspect_backup(code)
+	check(imported["settings"]["performance_stats"], "portable backup retains enabled diagnostics")
 	check(imported["salvage"] == 42 and imported["selected_kit"] == "conductor" and not imported["settings"]["shake"], "portable backup retains earned progress and settings")
 	check(SaveStore.inspect_backup(code + "x").is_empty(), "backup checksum rejects corruption")
 	check(SaveStore.inspect_backup("NS1.!!!!." + "0".repeat(64)).is_empty(), "invalid base64 fails without decoding")
@@ -34,6 +49,7 @@ func run() -> void:
 	receiver.path = "user://backup_restore_test.json"
 	receiver.data["salvage"] = 7
 	check(receiver.persist() == OK and receiver.restore_backup(code) == OK, "valid backup restores to disk")
+	check(receiver._read(receiver.path)["settings"]["performance_stats"], "performance preference survives actual restore and disk reload")
 	check(receiver._read(receiver.path)["salvage"] == 42 and receiver._read(receiver.path + ".pre-import")["salvage"] == 7, "restore preserves previous save and writes replacement")
 	check(receiver.restore_backup(code) == OK and receiver.data["salvage"] == 42, "repeated restores replace rather than add currency")
 	var before_restore := receiver.data.duplicate(true)

@@ -51,6 +51,8 @@ func snapshot() -> void:
 		"rendered_state": rendered_state, "panel": _panel_id(), "rendered_panel": rendered_panel, "rendered_frames": rendered_frames,
 		"canvas": [game.ui.root.size.x, game.ui.root.size.y], "touches": touches, "drags": drags, "dashes": dashes,
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
+	data["performance_stats_visible"] = game.ui.perf_label.is_visible_in_tree()
+	data["performance_stats_text"] = game.ui.perf_label.text
 	for node in game.ui.root.find_children("*", "Button", true, false):
 		if node.is_visible_in_tree():
 			var rect: Rect2 = node.get_global_rect()

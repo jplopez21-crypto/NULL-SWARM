@@ -10,7 +10,7 @@ static func defaults() -> Dictionary:
 	return {"version": VERSION, "runs": 0, "kills": 0, "best_time": 0.0, "wins": 0,
 		"salvage": 0, "salvaged_kills": 0, "wardens": 0, "architects": 0,
 		"research": {}, "selected_kit": "vanguard", "ledger": {},
-		"settings": {"master": 0.8, "music": 0.35, "sfx": 0.65, "ui": 0.65, "shake": true, "flashes": true, "quality": 1}}
+		"settings": {"master": 0.8, "music": 0.35, "sfx": 0.65, "ui": 0.65, "shake": true, "flashes": true, "performance_stats": false, "quality": 1}}
 
 static func _number(value: Variant) -> bool:
 	return (value is float or value is int) and is_finite(float(value)) and float(value) >= 0.0
@@ -67,7 +67,7 @@ static func validated(source: Variant) -> Dictionary:
 	var settings: Dictionary = defaults()["settings"]
 	for key in settings:
 		var value: Variant = parsed["settings"].get(key, settings[key])
-		if key in ["shake", "flashes"]:
+		if key in ["shake", "flashes", "performance_stats"]:
 			if value is bool:
 				settings[key] = value
 		elif _number(value):

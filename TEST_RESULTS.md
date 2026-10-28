@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Touch-accessible performance stats — 2026-10-28
+
+- Implemented a default-off boolean preference, touch settings toggle, shared persistent F3 behavior with repeat suppression, immediate checkbox/HUD synchronization, restoration through backups and 4Hz diagnostic sampling. Metrics distinguish average frame interval and Godot engine memory from CPU/GPU/RSS profiling.
+- Executed all nine isolated local suites: passed with no strict script/engine/leak errors. Counts: 438 systems, 30 GUI, six probe, 1,188 UI checks/104 layouts, 21 input, nine audio, 50 resources, 41 corruption and scene smoke. New checks exercise legacy/malformed preferences, actual GUI toggle/F3/restore flow, visible pass-through HUD and read-only telemetry.
+- Python Android-driver compilation and all workflow YAML/bash syntax checks passed. Android driver adds four checks for real settings touch, visible gameplay HUD, persistence across force-stop and visibility after an APK update/new deployment. These 22 checks require hosted Android execution; no new APK or Android result is claimed yet.
+- Native presentation capture adds performance_stats.png; bounded CI log previews cover it and the existing queue screenshot. Local/hosted metrics are observational and do not establish physical ARM64 phone frame rate. Final CI/artifact evidence will be recorded after execution.
+
 ## Upgrade queue clarity — 2026-10-28
 
 Verified game/test code: `0f592f7ea0d0fad3d5a0f112820407119ebd0879`. The final report checkpoint changes documentation only; subsequent documentation-triggered CI is separate from the executed evidence here.

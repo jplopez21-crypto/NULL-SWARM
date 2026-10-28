@@ -42,6 +42,7 @@ func _ready() -> void:
 	camera.look_at(Vector3.ZERO)
 	ui = GameUI.new()
 	add_child(ui)
+	ui.set_performance_stats(bool(save.data["settings"].get("performance_stats", false)))
 	ui.input_router = input_router
 	ui.world_camera = camera
 	ui.deploy.connect(start_run)
@@ -81,6 +82,7 @@ func _build_arena() -> void:
 
 func start_run() -> void:
 	corruption_panel = false
+	ui.set_performance_stats(bool(save.data["settings"].get("performance_stats", false)))
 	dash_trail_clock = 0.0
 	if run_root != null:
 		remove_child(run_root)
@@ -184,8 +186,8 @@ func _process(delta: float) -> void:
 		ui.update_memory(delta, pickups, player, state == State.PLAYING)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and event.physical_keycode == KEY_F3:
-		ui.perf_label.visible = not ui.perf_label.visible
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F3:
+		change_setting("performance_stats", not bool(save.data["settings"].get("performance_stats", false)))
 	if event.is_action_pressed("pause"):
 		if state == State.PLAYING:
 			pause_run()
@@ -354,6 +356,8 @@ func select_upgrade(id: String) -> void:
 
 func change_setting(key: String, value: Variant) -> void:
 	save.data["settings"][key] = value
+	if key == "performance_stats":
+		ui.set_performance_stats(bool(value))
 	audio.apply(save.data["settings"])
 	var error := save.persist()
 	if error != OK:
@@ -600,6 +604,12 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_onboarding.png")
+	change_setting("performance_stats", true)
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/performance_stats.png")
+	change_setting("performance_stats", false)
 	# Restore the three pending choices from this staged 100-XP fixture.
 	progress.pending = 3
 	show_upgrade()
@@ -698,6 +708,7 @@ func restore_backup() -> void:
 		return
 	audio.apply(save.data["settings"])
 	ui.show_backup("", "Progress restored. Previous save kept locally.")
+	ui.set_performance_stats(bool(save.data["settings"].get("performance_stats", false)))
 
 func preview_recovery() -> void:
 	if state != State.MENU:

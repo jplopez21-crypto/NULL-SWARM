@@ -175,6 +175,13 @@ try:
     capture('menu')
     check(True, 'menu capture contains rendered game instead of boot splash')
     check(s['renderer'] == 'gl_compatibility', 'Android Compatibility renderer initialized')
+    tap('SETTINGS', s)
+    s = wait(lambda x: any('Performance stats' in b['text'] for b in x['buttons']))
+    tap('Performance stats', s)
+    s = wait(lambda x: x['settings'].get('performance_stats', False))
+    check(True, 'real Android settings touch enables performance preference')
+    tap('BACK', s)
+    s = wait(lambda x: x['state'] == 'menu' and any('DEPLOY' in b['text'] for b in x['buttons']))
     tap('DEPLOY', s)
     s = wait(lambda x: x['state'] == 'playing')
     before = s['position']
@@ -187,6 +194,9 @@ try:
     check(True, 'touch dash activated')
     check(s.get('operative_visible', False) and 0 <= s['dash_readiness'] < 100, 'dash keeps operative visible and updates readiness gauge')
     capture('combat')
+    s = wait(lambda x: x.get('performance_stats_visible', False) and 'ENEMIES' in x.get('performance_stats_text', ''))
+    check(True, 'performance diagnostics are visibly active during real Android gameplay')
+    capture('performance-stats')
     tap('PAUSE')
     s = wait(lambda x: x['state'] == 'paused')
     elapsed = s['time']
@@ -244,6 +254,7 @@ try:
     s = wait(lambda x: x['state'] == 'menu' and x['process'] != old_process)
     check(s['salvage'] == salvage and salvage > 0, 'force-stop/relaunch retains exact nonzero banked progression and opens menu')
     check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
+    check(s['settings'].get('performance_stats', False), 'performance preference survives Android force-stop/relaunch')
     capture('relaunched')
     check(True, 'relaunch menu is visibly rendered')
     backup_before = s
@@ -286,6 +297,10 @@ try:
         capture('updated-install')
         report['apk_update'] = {'from_version': old_version, 'to_version': new_version,
                                'settings_retained': True, 'salvage': s['salvage']}
+        tap('DEPLOY', s)
+        s = wait(lambda x: x['state'] == 'playing' and x.get('performance_stats_visible', False) and 'ENEMIES' in x.get('performance_stats_text', ''))
+        check(True, 'saved performance diagnostics appear on deployment after APK update')
+        capture('performance-restored')
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]
