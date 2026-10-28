@@ -65,6 +65,12 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd -- --xp-comparison 2>&1 | tee builds/qa/xp-comparison.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/xp-comparison.log; then exit 1; fi
           test -s builds/qa/xp-comparison.json
+      - name: Upgrade pacing and collector comparison
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --pacing-probe 2>&1 | tee builds/qa/pacing-probe.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/pacing-probe.log; then exit 1; fi
+          test -s builds/qa/pacing-probe.json
       - name: Synthetic combat CPU benchmark
         if: ${{ !cancelled() }}
         run: |
@@ -89,7 +95,7 @@ jobs:
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

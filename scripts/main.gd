@@ -585,6 +585,21 @@ func _capture_session() -> void:
 	await get_tree().create_timer(0.3).timeout
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/singularity_upgrade.png")
+	# Staged onboarding/readout capture; not a normal-play progression trace.
+	start_run()
+	state = State.PAUSED
+	progress.add_xp(100)
+	progress.pending = 0
+	combat.director.elapsed = 11
+	pickups.drop(Vector3(12, 0, -5), 25)
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	ui.update_hud(player, progress, combat)
+	ui.update_memory(0.3, pickups, player, true)
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_onboarding.png")
 	audio.shutdown()
 	get_tree().quit()
 

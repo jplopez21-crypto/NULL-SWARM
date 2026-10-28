@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-10-28 / Memory collection clarity
+
+- Added numeric memory/next-level readout and a brief opening collection hint, with touch input passing through the readout.
+- Added optional five-second XP traces and four fixed-seed navigation comparisons to recurring QA. Preserved both established bot policies and all combat/progression rules.
+- Expanded UI coverage to 88 layouts and added staged onboarding capture. Current local check evidence and pacing limits are documented in TEST_RESULTS.md and docs/UPGRADE_PACING.md.
+
 ## 0.1.0 — 2026-10-26
 
 - Created the Godot 4.6.3 project and five-minute survival loop.

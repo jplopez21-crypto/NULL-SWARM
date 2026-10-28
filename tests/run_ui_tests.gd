@@ -66,7 +66,24 @@ func run() -> void:
 		game.pickups.drop(Vector3(12, 0, -5), 100)
 		game._process(0.3)
 		check(game.ui.memory_visible and is_instance_valid(game.ui.memory_packet), "memory cue acquires packet after deployment")
+		check(game.ui.hint_label.visible and game.ui.hint_label.text.contains("DASH"), "new run restores movement onboarding")
 		await inspect(game, "combat", size)
+		game.progress.add_xp(100)
+		game.combat.director.elapsed = 11
+		game._process(0)
+		check(game.ui.xp_label.text == "MEMORY 16 / 48  //  NEXT LEVEL 05", "HUD shows actual remaining XP after multi-level overflow")
+		check(absf(game.ui.xp_bar.value - 100.0 / 3.0) <= game.ui.xp_bar.step * 0.5, "numeric memory readout agrees with progress fill")
+		check(game.ui.hint_label.visible and game.ui.hint_label.text.contains("COLLECT BLUE MEMORY"), "onboarding connects collection to upgrades")
+		check(game.ui.xp_bar.get_global_rect().encloses(game.ui.xp_label.get_global_rect()), "memory text fits the bar")
+		check(game.ui.xp_label.mouse_filter == Control.MOUSE_FILTER_IGNORE, "memory readout cannot intercept touch movement")
+		await inspect(game, "memory-onboarding", size)
+		game.combat.director.elapsed = 22
+		game._process(0)
+		check(not game.ui.hint_label.visible, "opening guidance clears before charge warning")
+		game.progress.level = 1
+		game.progress.xp = 0
+		game.progress.pending = 0
+		game.combat.director.elapsed = 0
 		game.player.dash_cooldown = SwarmPlayer.DASH_COOLDOWN
 		game._process(0)
 		check(is_zero_approx(game.ui.dash_gauge.value), "new dash cooldown starts with empty readiness gauge")

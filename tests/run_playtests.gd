@@ -37,7 +37,31 @@ func _game(seed_value: int, kit: String, pickup_mode: String = "local") -> Node3
 	game.audio.shutdown()
 	return game
 
-func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean") -> Dictionary:
+func _pacing_sample(game: Node3D) -> Dictionary:
+	var cold_xp: int = 0
+	var attracted_xp: int = 0
+	var local_xp: int = 0
+	var nearest: float = INF
+	for item in game.pickups.items:
+		if item["attract"]:
+			attracted_xp += int(item["xp"])
+			continue
+		cold_xp += int(item["xp"])
+		var offset: Vector3 = item["mesh"].position - game.player.position
+		offset.y = 0.0
+		var distance: float = offset.length()
+		nearest = minf(nearest, distance)
+		if distance <= 16.0:
+			local_xp += int(item["xp"])
+	return {"time": snappedf(game.combat.director.elapsed, 0.01), "level": game.progress.level,
+		"xp": game.progress.xp, "threshold": game.progress.threshold(), "pending": game.progress.pending,
+		"dropped": game.pickups.total_dropped, "collected": game.pickups.total_collected,
+		"cold_xp": cold_xp, "attracted_xp": attracted_xp, "cold_xp_within_16m": local_xp,
+		"nearest_cold_m": snappedf(nearest, 0.01) if nearest < INF else -1.0,
+		"position": [snappedf(game.player.position.x, 0.01), snappedf(game.player.position.z, 0.01)],
+		"speed": game.player.effective_speed(), "magnet": game.player.magnet, "kills": game.combat.kills}
+
+func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean", trace_pacing: bool = false) -> Dictionary:
 	var starting_failures: int = failures.size()
 	var game := _game(seed_value, kit, pickup_mode)
 	var bot: PlaytestBot = ValueAwareBot.new() if bot_policy == "value_aware" else PlaytestBot.new()
@@ -50,6 +74,8 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 	var samples: Array[float] = []
 	var snapshots: Array[Dictionary] = []
 	var next_snapshot: float = 60.0
+	var pacing_trace: Array[Dictionary] = []
+	var next_trace: float = 0.0
 	var wall_start := Time.get_ticks_usec()
 	while steps < int(duration / DT) + 1000 and game.state != game.State.RESULTS and game.combat.director.elapsed < duration:
 		if game.state == game.State.UPGRADING and game.combat.corruption.available(game.progress.level) and link_policy != "clean":
@@ -79,6 +105,9 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		if game.combat.director.elapsed >= next_snapshot:
 			snapshots.append({"time": int(next_snapshot), "hp": snappedf(game.player.health.current, 0.01), "level": game.progress.level, "kills": game.combat.kills})
 			next_snapshot += 60.0
+		if trace_pacing and game.combat.director.elapsed >= next_trace:
+			pacing_trace.append(_pacing_sample(game))
+			next_trace += 5.0
 		_check(is_finite(game.player.position.x) and is_finite(game.player.health.current), "non-finite player state")
 		_check(absf(game.player.position.x) <= 47.01 and absf(game.player.position.z) <= 47.01, "movement escaped arena")
 		_check(game.progress.equipped() <= Arsenal.MAX_SLOTS, "bot obtained too many weapons")
@@ -120,6 +149,14 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"simulation_step_p95_ms": QAReport.percentile(samples, 0.95), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
 	if result["outcome"] == "victory":
 		_check(result["architect_defeated"] and float(result["survived_seconds"]) >= 600.0, "invalid victory")
+	if trace_pacing:
+		pacing_trace.append(_pacing_sample(game))
+		result["pacing_trace"] = pacing_trace
+		for sample in pacing_trace:
+			_check(sample["dropped"] == sample["collected"] + sample["cold_xp"] + sample["attracted_xp"], "pacing trace lost XP accounting")
+			var completed_levels: int = int(sample["level"]) - 1
+			var spent_xp: int = completed_levels * 18 + 5 * completed_levels * (completed_levels - 1)
+			_check(sample["collected"] == spent_xp + sample["xp"], "pacing trace disagrees with accumulated level costs")
 	game.audio.shutdown()
 	game.queue_free()
 	await process_frame
@@ -134,6 +171,26 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--pacing-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("Singularity upgrade-gap navigation comparison")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202]:
+			for policy in ["cautious", "value_aware"]:
+				var result: Dictionary = await simulate(seed_value, "singularity", "vanguard", MAX_SECONDS, "local", policy, "clean", true)
+				cases.append(result)
+				print("PACING_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " level=", result["level"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Same normal combat and upgrade policy; only collection navigation differs.", "Five-second samples explain availability, not exact human visibility, safety or balance.", "No injected XP, forced kills, altered spawn rules or granted upgrades."]
+		QAReport.write("res://builds/qa/pacing-probe.json", report)
+		var markdown := "# Upgrade pacing investigation\n\nNormal rules; same Singularity upgrade preferences. Navigation changes only. Fixed seeds and geometric sensors do not establish human balance.\n\n| Seed | Collector | Outcome | Level | XP recovered | Longest gap |\n|---:|---|---|---:|---:|---:|\n"
+		for result in cases:
+			markdown += "| %d | %s | %s | %d | %d | %.2fs |\n" % [result["seed"], result["bot_policy"], result["outcome"], result["level"], result["xp_collected"], result["longest_upgrade_gap_seconds"]]
+		markdown += "\nTrace samples include banked/uncollected XP, nearby packet distance, attraction state and player position. Cautious and value-aware policies are preserved.\n\nFailures: %d. No global XP/spawn/damage changes.\n" % failures.size()
+		QAReport.text_file("res://builds/qa/PACING_REPORT.md", markdown)
+		print("PACING_REPORT cases=", cases.size(), " failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--corruption-probe" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("normal-rules corruption choices")
 		var cases: Array[Dictionary] = []

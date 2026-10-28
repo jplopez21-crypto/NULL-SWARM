@@ -1,5 +1,18 @@
 # NULL//SWARM test results
 
+## Current local verification — 2026-10-28
+
+- Memory readout/collection guidance: all nine isolated headless suites passed. Counts: 430 systems, 924 UI/88 layouts, 50 resources, 21 input, 12 GUI, 9 audio, 5 Android probe, 41 corruption, plus scene smoke. Strict engine/script/leak scan clean.
+- Four normal-rules Singularity collector comparisons are traced at five-second intervals; both established navigation policies and combat rules remain unchanged. Pickup accounting and accumulated level costs are checked in every trace sample. Results/limits: [upgrade pacing](docs/UPGRADE_PACING.md). No claim that a bot victory proves human balance.
+- An exploratory third navigation policy was rejected after worse pacing. An initial exploratory dash assertion failed because the scoring preferred walking; that experiment and assertion were removed together. Initial UI fill assertions expected fractional percentages despite ProgressBar's whole-percent step; corrected the assertion to respect half-step rounding, preserving gameplay/UI fill behavior. Only the subsequent clean run counts as passing.
+- QA workflow YAML and shell syntax validated. Software-rendered layout/onboarding captures, signed ARM64 export and real Android touch/lifecycle/update checks are hosted CI gates. Their current revision results and artifacts are linked from [PR #1](https://github.com/jplopez21-crypto/NULL-SWARM/pull/1).
+- Retained hosted baseline at code `25ff0b895507b1efb97eecc3fc33e45cac2f23cb`: [native export](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40631403113), [17 Android runtime checks](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40631403183), [full gameplay QA](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40631403216). It covered 22 normal-policy sessions and 18 synthetic stress cases; active gravity-field Android/physical-phone performance remains unverified.
+- Persistent owner signing remains unconfigured. Debug APKs are diagnostic and may not update an existing installation with a different certificate. No Play Protect bypass, release bundle, connected-phone test or human fun validation is claimed.
+
+The sections below preserve historical results and artifact references with their original revision counts.
+
+## Historical Android pipeline verification
+
 Verified 2026-10-27 on development branch `development/android-validation`; [PR #1](https://github.com/jplopez21-crypto/NULL-SWARM/pull/1). Game/test code verified at `9fcd304bc232c6014ab9533bb45960bb70a992d0`. Main remains unchanged pending merge.
 
 ## Passed checks

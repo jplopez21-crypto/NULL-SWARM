@@ -1,4 +1,23 @@
-# Development status — Corruption Protocol 0.5 / 2026-10-27
+# Development status — NULL//SWARM / 2026-10-28
+
+## Current checkpoint
+
+- Playable ten-minute offline run: six base weapons, four slots, three mutations including Singularity Lance, Warden/Architect encounters, adaptive formations and optional corruption links. Three earned starting kits and Foundry research are integrated.
+- Android touch/controller/keyboard controls, ranked upgrades, defensive feedback, portable progress backups and reliable local progression are implemented. Art/audio remain original development assets.
+- Added numeric memory/next-level readout and opening collection guidance. A four-session, five-second XP trace compares the two unchanged navigation policies in recurring QA. It identifies collection stalls without modifying XP or difficulty.
+- Local verification: nine strict suites passed, including 430 system checks and 924 UI checks across 88 layouts. Trace outcomes/limits: docs/UPGRADE_PACING.md. Current revision's hosted build/runtime/QA results are attached to PR #1; main is not merged.
+- Latest retained baseline Android evidence: Singularity code 25ff0b895507b1efb97eecc3fc33e45cac2f23cb passed native run 40631403113, runtime run 40631403183 (17 checks), and full QA run 40631403216. Native diagnostic package is com.nullswarm.game.development, not a release build.
+
+## Active priorities and blockers
+
+1. Review rendered onboarding and rerun Android/native/full QA after this presentation pass. Preserve the cautious-bot baseline and inspect collection evidence before changing global balance.
+2. Measure actual ARM64 Mobile rendering, active gravity-field performance, touch comfort, cutouts and phone thermals. Local SDK/emulator/KVM and a connected physical phone are unavailable; CI supplies x86_64 Compatibility runtime coverage.
+3. Provision persistent Preview signing through the documented protected owner secrets. Current diagnostic keys rotate, so in-place updates across builds are not guaranteed. Preserve existing phone installations/saves. No owner key was provisioned; no release AAB is claimed.
+4. Continue commercial content, character differentiation, accessibility and human balance work after verified milestones. Final artwork/audio and Google Play preparation remain unfinished.
+
+TEST_RESULTS.md records local checks and retained hosted evidence; PR #1 links the newest workflow artifacts. The following sections preserve earlier milestone history and their then-current counts/packages.
+
+## Historical milestone notes
 
 ## Completed features
 

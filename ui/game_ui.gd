@@ -32,6 +32,7 @@ var hud: VBoxContainer
 var health_bar: ProgressBar
 var shield_bar: ProgressBar
 var xp_bar: ProgressBar
+var xp_label: Label
 var status_label: Label
 var health_label: Label
 var operative_title: String = "VANGUARD"
@@ -179,7 +180,14 @@ func _build_hud() -> void:
 	status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button_at(top, "II  PAUSE", func(): pause_run.emit())
-	xp_bar = _bar(hud, Color("5e9fff"), 5)
+	xp_bar = _bar(hud, Color("5e9fff"), 20)
+	xp_label = label_at(xp_bar, "", 13)
+	xp_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	xp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	xp_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	xp_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	xp_label.add_theme_color_override("font_outline_color", Color("081722"))
+	xp_label.add_theme_constant_override("outline_size", 4)
 	weapons_label = label_at(hud, "PULSE RIFLE  /  AUTOMATIC", 15, MUTED)
 	adaptation_label = label_at(hud, "SWARM // OBSERVING", 14, Color("ffcf85"))
 	corruption_label = label_at(hud, "CORRUPTION 0/3 // CLEAN SIGNAL", 14, Color("efa6ff"))
@@ -411,6 +419,7 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	health_bar.value = 100.0 * player.health.current / player.health.maximum
 	shield_bar.value = 100.0 * player.health.shield / maxf(1.0, player.health.max_shield)
 	xp_bar.value = 100.0 * progress.xp / progress.threshold()
+	xp_label.text = "MEMORY %d / %d  //  NEXT LEVEL %02d" % [progress.xp, progress.threshold(), progress.level + 1]
 	status_label.text = "%s / 10:00     LV %02d     %d KILLS" % [clock(combat.director.elapsed), progress.level, combat.kills]
 	var names: Array[String] = [Arsenal.equipped_title("pulse", combat.mutations)]
 	for id in Arsenal.DATA:
@@ -442,6 +451,10 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	corruption_bar.value = 100.0 * combat.corruption.accepted.size() / CorruptionProtocol.MAX_LINKS
 	var time := combat.director.elapsed
 	hint_label.visible = time < 22.0
+	if time < 10.0:
+		hint_label.text = "DRAG LEFT SIDE TO MOVE     TAP DASH TO EVADE" if OS.has_feature("mobile") else "MOVE: WASD / LEFT STICK     DASH: SPACE / A"
+	else:
+		hint_label.text = "COLLECT BLUE MEMORY TO UPGRADE // CYAN ARROW POINTS TO MORE"
 	notices.text = "STRIKER SIGNALS DETECTED • ORANGE LANES WARN OF CHARGES" if time > 22.0 and time < 29.0 else ("SENTRY SIGNALS DETECTED • AVOID VIOLET FIRING LANES" if time > 62.0 and time < 70.0 else "")
 	if perf_label.visible:
 		var fps := Engine.get_frames_per_second()
