@@ -201,7 +201,7 @@ try:
     while time.monotonic() < deadline:
         s = read()
         if s['state'] == 'results':
-            raise AssertionError('run ended before XP/upgrade smoke completed')
+            raise AssertionError('run ended before XP/upgrade/checkpoint smoke completed')
         if s['state'] == 'upgrading':
             capture('upgrade')
             before_ranks = s['ranks']
@@ -209,7 +209,7 @@ try:
             wait(lambda x: x.get('ranks') != before_ranks)
             selected = True
         elif s['state'] == 'playing':
-            if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0:
+            if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0 and s.get('salvage', 0) > 0:
                 break
             targets = s.get('targets', [])
             if targets:
@@ -220,6 +220,7 @@ try:
                 time.sleep(.5)
         time.sleep(.2)
     check(selected and s.get('xp', 0) > 0 and s.get('kills', 0) > 0, 'auto combat, XP collection and real upgrade touch passed')
+    check(s.get('salvage', 0) > 0, 'normal gameplay checkpoints nonzero earned salvage before lifecycle tests')
     report['gameplay_snapshot'] = s
     capture('after-upgrade')
     adb('shell', 'input', 'keyevent', '3')
@@ -241,7 +242,7 @@ try:
     adb('shell', 'am', 'force-stop', args.package)
     launch()
     s = wait(lambda x: x['state'] == 'menu' and x['process'] != old_process)
-    check(s['salvage'] >= salvage, 'force-stop/relaunch retains banked progression and opens menu')
+    check(s['salvage'] == salvage and salvage > 0, 'force-stop/relaunch retains exact nonzero banked progression and opens menu')
     check(s['settings']['shake'] == new_shake, 'touch-changed setting survives Android force-stop/relaunch')
     capture('relaunched')
     check(True, 'relaunch menu is visibly rendered')
@@ -262,7 +263,7 @@ try:
     s = wait(lambda x: any(b['text'] == 'RESTORE THIS BACKUP' for b in x['buttons']))
     tap('RESTORE THIS BACKUP', s)
     s = wait(lambda x: x.get('backup_recovery_available', False) and any(b['text'] == 'EXPORT MY PROGRESS' for b in x['buttons']))
-    check(s['settings'] == backup_before['settings'] and s['salvage'] == backup_before['salvage'],
+    check(s['settings'] == backup_before['settings'] and s['salvage'] == backup_before['salvage'] and s['salvage'] > 0,
           'touch-confirmed backup restore preserves progress and creates recovery copy')
     capture('progress-restored')
     tap('COMMAND MENU', s)
@@ -280,7 +281,7 @@ try:
         check(new_version > old_version, 'Android accepts higher-version same-signer APK update')
         launch()
         s = wait(lambda x: x['state'] == 'menu' and x['process'] != before_update['process'])
-        check(s['settings'] == before_update['settings'] and s['salvage'] == before_update['salvage'],
+        check(s['settings'] == before_update['settings'] and s['salvage'] == before_update['salvage'] and s['salvage'] > 0,
               'in-place APK update retains changed settings and banked progression')
         capture('updated-install')
         report['apk_update'] = {'from_version': old_version, 'to_version': new_version,

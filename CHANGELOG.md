@@ -6,6 +6,7 @@
 - Added optional five-second XP traces and four fixed-seed navigation comparisons to recurring QA. Preserved both established bot policies and all combat/progression rules.
 - Expanded UI coverage to 88 layouts and added staged onboarding capture. Current local check evidence and pacing limits are documented in TEST_RESULTS.md and docs/UPGRADE_PACING.md.
 - Fixed Preview workflow runner-context validation and added hash-pinned actionlint checks for all workflows in native CI.
+- Strengthened Android lifecycle/restore/update acceptance to earn and retain exact nonzero salvage through normal gameplay, rather than accepting an empty wallet.
 
 ## 0.1.0 — 2026-10-26
 

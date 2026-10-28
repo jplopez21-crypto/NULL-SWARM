@@ -6,6 +6,7 @@
 - Android touch/controller/keyboard controls, ranked upgrades, defensive feedback, portable progress backups and reliable local progression are implemented. Art/audio remain original development assets.
 - Added numeric memory/next-level readout and opening collection guidance. A four-session, five-second XP trace compares the two unchanged navigation policies in recurring QA. It identifies collection stalls without modifying XP or difficulty.
 - Fixed invalid runner context in the manual Preview workflow. Native CI now checks all workflow contexts with hash-pinned actionlint 1.7.12 before installing build dependencies; signing secrets remain unprovisioned.
+- Hardened Android persistence acceptance: ordinary touch play must bank positive salvage before relaunch, restore and update; all three then require exact retained currency. Earlier 17-check reports sometimes retained an empty wallet. New gate has 18 checks; actual results are linked in PR #1.
 - Local verification: nine strict suites passed, including 430 system checks and 924 UI checks across 88 layouts. Trace outcomes/limits: docs/UPGRADE_PACING.md. Current revision's hosted build/runtime/QA results are attached to PR #1; main is not merged.
 - Latest retained baseline Android evidence: Singularity code 25ff0b895507b1efb97eecc3fc33e45cac2f23cb passed native run 40631403113, runtime run 40631403183 (17 checks), and full QA run 40631403216. Native diagnostic package is com.nullswarm.game.development, not a release build.
 
