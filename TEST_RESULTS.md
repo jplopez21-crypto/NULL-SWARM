@@ -134,3 +134,5 @@ Boss render review: first native export passed signature/integrity checks, but o
 - Full current local suite snapshot is stored under docs/qa/defensive-feedback; final CI/runtime/comparison evidence is linked in PR #1 after execution. Human comfort, audible shield cue quality and physical ARM64 FPS remain unverified.
 
 Final local defensive-feedback verification: all nine isolated suites passed (409 system, 21 input, 720 UI checks/72 layouts, 12 GUI, 9 audio, 5 probe, 49 resources, 41 corruption and scene smoke). Strict script/engine/leak scan clean. Python Android-driver compilation also passed.
+
+Defensive render review: first native APK passed signing/hash/archive checks. The staged dash image showed incomplete HUD text during rapid fixture changes; added explicit post-draw waits to defensive screenshots and cleared the introductory toast only in capture fixtures. Normal gameplay timing is unchanged. Revised captures must be inspected in the final artifact.

@@ -389,6 +389,8 @@ func _capture_session() -> void:
 	await get_tree().create_timer(0.5).timeout
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_locator.png")
 	# Staged defensive feedback: freeze visual samples, then restore the fixture.
+	ui.toast_time = 0
+	ui.damage_texts.clear()
 	var saved_defense := Vector4(player.health.current, player.health.shield, player.health.invulnerable, player.health.recharge_delay)
 	var saved_position := player.position
 	state = State.PAUSED
@@ -398,6 +400,8 @@ func _capture_session() -> void:
 	player.tick(0.06, Vector2.ZERO, false)
 	ui.update_hud(player, progress, combat)
 	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/shield_feedback.png")
 	player.health.invulnerable = 0
 	player.health.shield = 0
@@ -405,6 +409,8 @@ func _capture_session() -> void:
 	player.tick(0.06, Vector2.ZERO, false)
 	ui.update_hud(player, progress, combat)
 	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/hull_feedback.png")
 	player.health.current = saved_defense.x
 	player.health.shield = saved_defense.y
@@ -420,6 +426,8 @@ func _capture_session() -> void:
 	ui.toast_time = 0
 	ui.update_hud(player, progress, combat)
 	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/dash_feedback.png")
 	input_router.reset()
 	player.position = saved_position
