@@ -146,3 +146,7 @@ Defensive render review: first native APK passed signing/hash/archive checks. Th
 - Standard CI adds this bot profile and gravity stress; native snapshots add singularity_offer.png, singularity_field.png and singularity_upgrade.png. Final branch CI/render evidence is linked in PR #1 after execution. Physical active-field Android rendering and human balance are not claimed.
 
 Final local Singularity verification: all nine isolated suites passed, with 430 system checks, 872 UI checks/84 layouts, 50 resource checks, 21 input, 12 GUI, 9 audio, 5 probe, 41 corruption and scene smoke. Strict errors/leak scan clean. QA workflow YAML and shell syntax validated.
+
+Singularity render review: inspected the first native offer/field/evolved-upgrade captures and verified APK signing/integrity. Added explicit Tether rank readout so the prerequisite is directly visible; corrected staged Tether-3 attraction values to reflect all three passive ranks. Four additional UI assertions cover the rank text. These are presentation/fixture changes, not normal-run stat grants.
+
+Post-render UI review passed 876 checks across 84 layouts with no script/engine/leak warnings; snapshot: docs/qa/singularity/ui-rank-review.json.

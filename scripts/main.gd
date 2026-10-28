@@ -320,7 +320,7 @@ func upgrade_description(id: String) -> String:
 		"speed": return "SERVO OVERDRIVE\nSpeed %.1f → %.1f\nOutrun the machine tide." % [player.effective_speed(), (player.speed + 0.65) * player.walk_multiplier]
 		"health": return "REINFORCED CHASSIS\nMax HP %d → %d\nAlso restores 25 health." % [int(player.health.maximum), int(player.health.maximum + 20)]
 		"shield": return "AEGIS CAPACITOR\nShield %d → %d\nRecharges after 5s unharmed." % [int(player.health.max_shield), int(player.health.max_shield + 12)]
-		"magnet": return "MEMORY TETHER\nAttraction %.1fm → %.1fm\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3" % [player.magnet, player.magnet + 1.2]
+		"magnet": return "MEMORY TETHER\nRANK %d → %d\nAttraction %.1fm → %.1fm\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3" % [int(progress.ranks.get("magnet", 0)), int(progress.ranks.get("magnet", 0)) + 1, player.magnet, player.magnet + 1.2]
 	return "FIELD REPAIR\nRestore 35 HP\nAll systems fully upgraded."
 
 func select_upgrade(id: String) -> void:
@@ -549,6 +549,7 @@ func _capture_session() -> void:
 	# New evolution is shown through the real upgrade transaction in a staged fixture.
 	start_run()
 	progress.ranks = {"rail": 2, "magnet": 3, "arc": 2, "drone": 2}
+	player.magnet += 3 * 1.2
 	combat.update_build(progress.ranks)
 	progress.level = 8
 	progress.pending = 1

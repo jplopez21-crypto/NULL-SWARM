@@ -166,6 +166,8 @@ func run() -> void:
 		game._process(0.3)
 		check(not game.ui.memory_visible and not is_instance_valid(game.ui.memory_packet), "restart clears freed packet reference")
 		game.progress.ranks = {"rail": 2, "magnet": 3}
+		game.player.magnet += 3 * 1.2
+		check(game.upgrade_description("magnet").contains("RANK 3 → 4"), "Tether card shows explicit mutation prerequisite rank")
 		game.combat.update_build(game.progress.ranks)
 		game.progress.level = 8
 		game.progress.pending = 1
