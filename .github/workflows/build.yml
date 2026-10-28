@@ -17,6 +17,15 @@ jobs:
       GODOT_VERSION: 4.6.3
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Validate all workflow contexts and syntax
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/actionlint builds/qa
+          curl --fail --location --retry 3 -o /tmp/actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          printf '%s  %s\n' '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8' /tmp/actionlint.tar.gz | sha256sum --check -
+          tar -xzf /tmp/actionlint.tar.gz -C /tmp/actionlint
+          /tmp/actionlint/actionlint -version 2>&1 | tee builds/qa/actionlint-version.log
+          /tmp/actionlint/actionlint -shellcheck= -pyflakes= 2>&1 | tee builds/qa/actionlint.log
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
