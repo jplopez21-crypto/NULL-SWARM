@@ -4,7 +4,8 @@
 
 - Upgrade headings show how many choices are ready, including the current choice, with correct singular wording for the last one.
 - Rerolls keep the count; normal upgrades and accepted corruption links consume one choice. Combat resumes after the queue is empty. Existing progression/combat rules are unchanged.
-- Added real GUI-dispatch regressions and expanded staged UI coverage to 100 layouts. Hosted verification is required while the shell environment is unavailable.
+- Added real GUI-dispatch regressions and expanded staged UI coverage to 100 layouts. Native CI emits a bounded staged preview and structured results for remote verification.
+- Verified code 0f592f7ea0d0fad3d5a0f112820407119ebd0879 passed all three hosted gates, including 24 GUI checks, 1,140 UI checks, 18 Android checks and the full gameplay/stress matrix. Local execution/independent APK-byte verification remain unavailable; current evidence is in TEST_RESULTS.md.
 
 ## Development — 2026-10-28 / Memory collection clarity
 
