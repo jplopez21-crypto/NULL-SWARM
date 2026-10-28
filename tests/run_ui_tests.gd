@@ -24,6 +24,8 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 	check(root.size == size, "%s %s: requested window size applied" % [size, stage])
 	if game.ui.boss_cue_label.is_visible_in_tree():
 		check(bounds.encloses(game.ui.boss_cue_label.get_global_rect()), "%s %s: boss cue fits viewport" % [size, stage])
+	if is_instance_valid(game.ui.upgrade_header) and game.ui.upgrade_header.is_visible_in_tree():
+		check(bounds.encloses(game.ui.upgrade_header.get_global_rect()), "%s %s: upgrade queue heading fits viewport" % [size, stage])
 	var buttons: int = 0
 	for node in game.ui.root.find_children("*", "Button", true, false):
 		if node.is_visible_in_tree():
@@ -131,16 +133,26 @@ func run() -> void:
 		game.resume_run()
 		game._process(0.3)
 		check(game.ui.memory_visible and game.input_router.stick == Vector2.ZERO, "resume reacquires cue without stuck movement")
-		game.progress.pending = 1
+		game.progress.add_xp(100)
 		game.show_upgrade()
 		game._process(0.1)
 		check(not game.ui.memory_visible, "upgrade selection hides memory cue")
+		check(game.progress.pending == 3 and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "real XP overflow displays three ready upgrades")
 		await inspect(game, "upgrades", size)
+		var before_reroll: int = game.progress.rerolls
+		game.reroll_upgrades()
+		check(game.progress.pending == 3 and game.progress.rerolls == before_reroll - 1 and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "reroll preserves queued-upgrade readout")
+		game.select_upgrade(game.offered[0])
+		check(game.state == game.State.UPGRADING and game.progress.pending == 2 and game.ui.upgrade_header.text.contains("2 UPGRADES READY"), "first upgrade advances queue without resuming")
+		await inspect(game, "upgrades-two", size)
+		game.select_upgrade(game.offered[0])
+		check(game.state == game.State.UPGRADING and game.progress.pending == 1 and game.ui.upgrade_header.text.contains("1 UPGRADE READY"), "final queued card uses singular count")
+		await inspect(game, "upgrades-one", size)
 		game.select_upgrade(game.offered[0])
 		game._process(0.3)
-		check(game.state == game.State.PLAYING and game.ui.memory_visible, "legal upgrade returns to guidance")
+		check(game.state == game.State.PLAYING and game.ui.memory_visible and game.progress.pending == 0, "last queued upgrade returns to guidance")
 		game.progress.level = 5
-		game.progress.pending = 1
+		game.progress.pending = 2
 		game.show_upgrade()
 		await inspect(game, "unstable_offer", size)
 		var saved_offer: Array = game.offered.duplicate()
@@ -149,11 +161,15 @@ func run() -> void:
 		await inspect(game, "corruption", size)
 		check(game.corruption_panel, "optional corruption panel opens at level five")
 		game.return_upgrades()
-		check(game.offered == saved_offer and game.combat.rng.state == saved_rng, "declining corruption preserves upgrade cards")
+		check(game.offered == saved_offer and game.combat.rng.state == saved_rng and game.progress.pending == 2 and game.ui.upgrade_header.text.contains("2 UPGRADES READY"), "declining corruption preserves upgrade cards and queue count")
 		game.show_corruption()
 		game.select_corruption("redline")
 		game._process(0.3)
-		check(game.state == game.State.PLAYING and game.player.health.maximum == 80 and game.ui.corruption_label.text.contains("1/3"), "accepted link updates gameplay and HUD")
+		check(game.state == game.State.UPGRADING and game.progress.pending == 1 and game.player.health.maximum == 80 and game.ui.upgrade_header.text.contains("1 UPGRADE READY"), "accepted link consumes one queued choice and applies its cost")
+		await inspect(game, "corruption-queued", size)
+		game.select_upgrade(game.offered[0])
+		game._process(0.3)
+		check(game.state == game.State.PLAYING and game.progress.pending == 0 and game.ui.corruption_label.text.contains("1/3"), "last choice after corruption returns to gameplay and HUD")
 		await inspect(game, "corrupted", size)
 		var encounters: EncounterDirector = game.combat.encounters
 		encounters.mini = encounters._spawn(game.combat, game.player.position, false)

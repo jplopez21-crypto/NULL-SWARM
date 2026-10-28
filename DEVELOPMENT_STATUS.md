@@ -2,6 +2,7 @@
 
 ## Current checkpoint
 
+- In progress: stacked level-up screens display the actual pending upgrade count, including the active choice. Rerolls preserve it; ordinary/corruption selections consume one. Added GUI dispatch and 100-layout UI coverage; this revision awaits hosted verification because the selected shell environment is unavailable.
 - Playable ten-minute offline run: six base weapons, four slots, three mutations including Singularity Lance, Warden/Architect encounters, adaptive formations and optional corruption links. Three earned starting kits and Foundry research are integrated.
 - Android touch/controller/keyboard controls, ranked upgrades, defensive feedback, portable progress backups and reliable local progression are implemented. Art/audio remain original development assets.
 - Added numeric memory/next-level readout and opening collection guidance. A four-session, five-second XP trace compares the two unchanged navigation policies in recurring QA. It identifies collection stalls without modifying XP or difficulty.

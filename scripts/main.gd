@@ -261,7 +261,7 @@ func show_upgrade() -> void:
 	_render_upgrades()
 
 func _render_upgrades() -> void:
-	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level))
+	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level), progress.pending)
 
 func show_corruption() -> void:
 	if state != State.UPGRADING or progress.pending <= 0 or not combat.corruption.available(progress.level):
@@ -600,6 +600,13 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_onboarding.png")
+	# Restore the three pending choices from this staged 100-XP fixture.
+	progress.pending = 3
+	show_upgrade()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/upgrade_queue.png")
 	audio.shutdown()
 	get_tree().quit()
 

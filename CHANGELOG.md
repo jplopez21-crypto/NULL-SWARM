@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-10-28 / Queued upgrade clarity
+
+- Upgrade headings show how many choices are ready, including the current choice, with correct singular wording for the last one.
+- Rerolls keep the count; normal upgrades and accepted corruption links consume one choice. Combat resumes after the queue is empty. Existing progression/combat rules are unchanged.
+- Added real GUI-dispatch regressions and expanded staged UI coverage to 100 layouts. Hosted verification is required while the shell environment is unavailable.
+
 ## Development — 2026-10-28 / Memory collection clarity
 
 - Added numeric memory/next-level readout and a brief opening collection hint, with touch input passing through the readout.

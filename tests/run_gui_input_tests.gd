@@ -72,6 +72,58 @@ func run() -> void:
 	click(game, "RESUME")
 	check(game.state == game.State.PLAYING and retained_until_frame_end(old_panel), "resume click safely returns to combat")
 	await settle()
+	# A real XP overflow must display and consume every pending choice once.
+	game.progress.add_xp(100)
+	game.show_upgrade()
+	await settle()
+	check(game.progress.pending == 3 and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "XP overflow shows all three pending choices")
+	var frozen_clock: float = game.combat.director.elapsed
+	game._physics_process(5.0)
+	check(game.combat.director.elapsed == frozen_clock, "queued selection keeps combat paused")
+	var rerolls_before: int = game.progress.rerolls
+	var ranks_before: Dictionary = game.progress.ranks.duplicate()
+	click(game, "REROLL")
+	await settle()
+	check(game.progress.pending == 3 and game.progress.rerolls == rerolls_before - 1 and game.progress.ranks == ranks_before and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "real reroll changes offers without spending a queued upgrade")
+	old_panel = game.ui.screen
+	click(game, "01\n")
+	check(game.state == game.State.UPGRADING and game.progress.pending == 2 and game.ui.upgrade_header.text.contains("2 UPGRADES READY") and retained_until_frame_end(old_panel), "first queued GUI choice safely advances to two remaining")
+	await settle()
+	ranks_before = game.progress.ranks.duplicate()
+	game.select_upgrade("not-offered")
+	check(game.progress.pending == 2 and game.progress.ranks == ranks_before, "invalid selection cannot spend a queued choice")
+	click(game, "01\n")
+	await settle()
+	check(game.state == game.State.UPGRADING and game.progress.pending == 1 and game.ui.upgrade_header.text.contains("1 UPGRADE READY"), "second queued GUI choice shows singular final upgrade")
+	var last_choice: String = game.offered[0]
+	click(game, "01\n")
+	await settle()
+	check(game.state == game.State.PLAYING and game.progress.pending == 0, "last queued GUI choice resumes combat")
+	ranks_before = game.progress.ranks.duplicate()
+	game.select_upgrade(last_choice)
+	check(game.progress.pending == 0 and game.progress.ranks == ranks_before, "repeated final selection cannot apply an extra upgrade")
+	# A corruption link replaces exactly one of two staged legal level-five choices.
+	game.progress.level = 5
+	game.progress.pending = 2
+	game.show_upgrade()
+	await settle()
+	var offer_before: Array = game.offered.duplicate()
+	var rng_before: int = game.combat.rng.state
+	click(game, "UNSTABLE LINK")
+	await settle()
+	check(game.corruption_panel and game.progress.pending == 2, "opening corruption preserves queued choices")
+	click(game, "KEEP MY UPGRADE CHOICES")
+	await settle()
+	check(game.progress.pending == 2 and game.offered == offer_before and game.combat.rng.state == rng_before and game.ui.upgrade_header.text.contains("2 UPGRADES READY"), "declining corruption restores the same queued offer and count")
+	var hull_before: float = game.player.health.maximum
+	click(game, "UNSTABLE LINK")
+	await settle()
+	click(game, CorruptionProtocol.TITLES["redline"])
+	await settle()
+	check(game.state == game.State.UPGRADING and game.progress.pending == 1 and game.player.health.maximum == hull_before - CorruptionProtocol.HEALTH_COST and game.ui.upgrade_header.text.contains("1 UPGRADE READY"), "accepted corruption consumes exactly one queued choice and applies its cost")
+	click(game, "01\n")
+	await settle()
+	check(game.state == game.State.PLAYING and game.progress.pending == 0, "ordinary choice after corruption completes the queue")
 	game.go_menu()
 	await settle()
 	click(game, "PROGRESS BACKUP")

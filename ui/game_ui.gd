@@ -33,6 +33,7 @@ var health_bar: ProgressBar
 var shield_bar: ProgressBar
 var xp_bar: ProgressBar
 var xp_label: Label
+var upgrade_header: Label
 var status_label: Label
 var health_label: Label
 var operative_title: String = "VANGUARD"
@@ -328,9 +329,10 @@ func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: i
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
 
-func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false) -> void:
+func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1) -> void:
 	var box := _panel()
-	label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d" % level, 18, CYAN)
+	var ready := "%d %s READY" % [maxi(0, pending), "UPGRADE" if pending == 1 else "UPGRADES"]
+	upgrade_header = label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d  /  %s" % [level, ready], 18, CYAN)
 	label_at(box, "CHOOSE YOUR ADVANTAGE", 32)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
