@@ -2,8 +2,9 @@
 
 ## Industrial deck presentation — 2026-10-29
 
-- Added original static beveled deck panels with hatches/grilles and restrained markings, replacing the bright checker palette. Existing two floor batches/400 instances share two single-surface meshes and one lit material. Geometry rises from 4,800 to a bounded 20,800 triangles; no GPU/FPS gain claim.
+- Added original static beveled deck panels with hatches/grilles and restrained markings, replacing the bright checker palette. Existing two floor batches/400 instances share two single-surface meshes and one lit material. Geometry rises from 4,800 to a bounded 15,200 triangles; no GPU/FPS gain claim.
 - All ten local suites pass: 896 systems, 57 resources, 2,244 headless UI checks/160 layouts plus established coverage. Initial transform-placement assertion failed because Dummy rendering returns identity; reproduced the limitation and moved actual placement verification to the rendered UI suite (one extra check). No local rendered capture was executed.
+- Initial native build 40918799729/source a79f362 passed all strict suites/export/signature, and its downloaded hashes/CRCs/package/payloads passed. Visual review found excessive repeating hatch detail; reduced hatch density to one in four and lowered seam contrast before acceptance. Revised local and hosted verification is pending.
 - Native capture artifact is split from the install ZIP to keep APK downloads small while preserving android/null-swarm-development-debug.apk. Hosted renders/actual Android/full-QA and visual acceptance are pending; prior APK below remains the verified build. Method: docs/INDUSTRIAL_DECK.md.
 
 ## Projectile query allocations — 2026-10-29

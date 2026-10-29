@@ -14,11 +14,12 @@ func _ready() -> void:
 		var batch := MultiMesh.new()
 		batch.transform_format = MultiMesh.TRANSFORM_3D
 		batch.mesh = DECK_PANELS.mesh(parity)
-		batch.instance_count = 200
+		batch.instance_count = 300 if parity == 0 else 100
 		var idx: int = 0
 		for x in range(20):
 			for z in range(20):
-				if (x + z) % 2 == parity:
+				var service_panel: bool = x % 2 == 0 and z % 2 == 0
+				if int(service_panel) == parity:
 					batch.set_instance_transform(idx, Transform3D(Basis(), Vector3(x * 5 - 47.5, -0.08, z * 5 - 47.5)))
 					idx += 1
 		instance.multimesh = batch

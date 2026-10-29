@@ -385,7 +385,8 @@ func run() -> void:
 	check(deck_batches.size() == 2, "arena retains exactly two floor batches")
 	for batch_node in deck_batches:
 		var batch: MultiMeshInstance3D = batch_node
-		check(batch.multimesh.instance_count == 200 and batch.material_override == panels.material() and batch.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "floor batch retains 200 instances, shared material and no shadows")
+		var expected_panels: int = 300 if batch.name == "DeckPanels0" else 100
+		check(batch.multimesh.instance_count == expected_panels and batch.material_override == panels.material() and batch.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "floor batches use three plain panels per service hatch, shared material and no shadows")
 	check(game.arena.find_children("*", "CollisionObject3D", true, false).is_empty(), "decorative deck cannot add collision or obstruct movement")
 	for definition in CombatWorld.DEFINITIONS:
 		check(definition.projectile_hit_radius_squared == pow(definition.radius + 0.2, 2) and definition.player_contact_radius_squared == pow(definition.radius + 0.45, 2), "loaded collision caches retain exact original arithmetic")
