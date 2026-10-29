@@ -234,6 +234,19 @@ try:
     time.sleep(1)
     check(abs(read()['time'] - elapsed) < .05, 'touch pause freezes simulation')
     capture('paused')
+    ranks_before_build = s['ranks']
+    tap('BUILD // MUTATIONS', s)
+    s = wait(lambda x: 'DEPLOYMENT BUILD' in x.get('build_text', ''))
+    check(all(name in s['build_text'] for name in ['PULSE RIFLE', 'ARCSTORM RIFLE', 'SOLAR HALO', 'SINGULARITY LANCE']),
+          'Android touch opens real equipped-weapon and mutation guide')
+    capture('build-overview')
+    time.sleep(1)
+    s = read()
+    check(s['state'] == 'paused' and abs(s['time'] - elapsed) < .05 and s['ranks'] == ranks_before_build,
+          'build guide keeps Android combat and ranks paused')
+    tap('BACK TO PAUSE', s)
+    s = wait(lambda x: not x.get('build_text', '') and any(b['text'] == 'RESUME' for b in x['buttons']))
+    check(s['state'] == 'paused', 'Android guide back returns to pause')
     tap('RESUME')
     wait(lambda x: x['state'] == 'playing')
     check(True, 'touch resume returns to combat')

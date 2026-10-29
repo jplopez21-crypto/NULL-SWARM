@@ -56,9 +56,28 @@ func run() -> void:
 	check(retained_until_frame_end(old_panel), "deploy hides panel without detaching during GUI dispatch")
 	await settle()
 	check(not is_instance_valid(old_panel), "retired panel is freed at frame end")
+	game.open_build()
+	check(game.state == game.State.PLAYING and game.ui.screen == null, "build view cannot open during active combat")
 	click(game, "PAUSE")
 	check(game.state == game.State.PAUSED, "real GUI pause click pauses gameplay")
 	await settle()
+	var frozen_build_clock: float = game.combat.director.elapsed
+	var frozen_build_rng: int = game.combat.rng.state
+	var frozen_build_save: Dictionary = game.save.data.duplicate(true)
+	var frozen_build_ranks: Dictionary = game.progress.ranks.duplicate(true)
+	old_panel = game.ui.screen
+	click(game, "BUILD // MUTATIONS")
+	check(retained_until_frame_end(old_panel), "build transition safely retires pause panel during dispatch")
+	await settle()
+	var build_text: String = game.ui.visible_build_text()
+	check(build_text.contains("WEAPONS 1/4") and build_text.contains("AMPLIFIED PULSE 0/3") and build_text.contains("ARCSTORM RIFLE") and build_text.contains("SOLAR HALO") and build_text.contains("SINGULARITY LANCE"), "actual GUI opens complete current-loadout and mutation guide")
+	game._physics_process(10)
+	check(game.state == game.State.PAUSED and game.combat.director.elapsed == frozen_build_clock and game.combat.rng.state == frozen_build_rng and game.save.data == frozen_build_save and game.progress.ranks == frozen_build_ranks, "opening guide advances no combat RNG progression or save state")
+	old_panel = game.ui.screen
+	click(game, "BACK TO PAUSE")
+	check(game.state == game.State.PAUSED and retained_until_frame_end(old_panel), "build back returns to pause without resuming")
+	await settle()
+	check(game.ui.visible_build_text().is_empty(), "retired guide contributes no visible diagnostic text")
 	old_panel = game.ui.screen
 	click(game, "SETTINGS")
 	check(retained_until_frame_end(old_panel), "settings transition preserves current dispatch target")

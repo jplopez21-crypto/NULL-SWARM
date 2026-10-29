@@ -6,6 +6,7 @@ signal resume_run
 signal restart
 signal return_menu
 signal pause_run
+signal build_requested
 signal dash
 signal upgrade_selected(id: String)
 signal corruption_requested
@@ -34,6 +35,7 @@ var shield_bar: ProgressBar
 var xp_bar: ProgressBar
 var xp_label: Label
 var upgrade_header: Label
+var build_heading: Label
 var status_label: Label
 var health_label: Label
 var operative_title: String = "VANGUARD"
@@ -307,9 +309,78 @@ func show_pause(settings: Dictionary) -> void:
 	label_at(box, "SIGNAL HELD", 38, CYAN)
 	label_at(box, "Deployment paused", 20, MUTED)
 	var resume_button := button_at(box, "RESUME", func(): resume_run.emit())
+	button_at(box, "BUILD // MUTATIONS", func(): build_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(settings, func(): show_pause(settings)))
 	button_at(box, "END DEPLOYMENT", func(): return_menu.emit())
 	resume_button.grab_focus()
+
+func _build_card(parent: Node, color: Color) -> VBoxContainer:
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("102632")
+	style.border_color = color.darkened(0.35)
+	style.border_width_left = 3
+	style.set_corner_radius_all(4)
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	panel.add_theme_stylebox_override("panel", style)
+	parent.add_child(panel)
+	var box := VBoxContainer.new()
+	panel.add_child(box)
+	return box
+
+func show_build(progress: RunProgression, active: Array[String], back: Callable) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 1000
+	build_heading = label_at(box, "DEPLOYMENT BUILD", 30, CYAN)
+	label_at(box, "Combat paused. Mutations activate automatically when both ranks are reached.", 16, MUTED)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 20)
+	box.add_child(row)
+	var weapons := VBoxContainer.new()
+	weapons.custom_minimum_size.x = 300
+	row.add_child(weapons)
+	label_at(weapons, "WEAPONS %d/%d" % [progress.equipped(), Arsenal.MAX_SLOTS], 18, CYAN)
+	var equipped: Array[String] = ["pulse"]
+	for id in Arsenal.DATA:
+		if int(progress.ranks.get(id, 0)) > 0:
+			equipped.append(id)
+	for slot in range(Arsenal.MAX_SLOTS):
+		var id: String = equipped[slot] if slot < equipped.size() else ""
+		var card := _build_card(weapons, Arsenal.color(id) if not id.is_empty() else MUTED.darkened(0.4))
+		label_at(card, "%02d // %s" % [slot + 1, Arsenal.equipped_title(id, active) if not id.is_empty() else "EMPTY SLOT"], 17, Arsenal.color(id) if not id.is_empty() else MUTED)
+		var detail := "New weapons fill empty slots."
+		if id == "pulse":
+			detail = "AMPLIFIED PULSE RANK %d" % int(progress.ranks.get("damage", 0))
+		elif not id.is_empty():
+			detail = "RANK %d / %d" % [int(progress.ranks[id]), int(RunProgression.CAPS[id])]
+		label_at(card, detail, 14, MUTED)
+	var recipes := VBoxContainer.new()
+	recipes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(recipes)
+	label_at(recipes, "MUTATION PATHS", 18, Color("ffe39b"))
+	for recipe in Arsenal.mutation_progress(progress.ranks, active, progress.equipped()):
+		var color := CYAN if recipe["status"] == "ACTIVE" else Color("ffcf85")
+		var card := _build_card(recipes, color)
+		label_at(card, "%s // %s" % [recipe["title"], recipe["status"]], 17, color)
+		label_at(card, recipe["requirements"], 14)
+		label_at(card, recipe["effect"], 14, MUTED)
+		if recipe["status"] == "SLOTS BLOCKED":
+			label_at(card, "%d weapon slots needed / %d free. Slots cannot be replaced this run." % [recipe["missing_weapons"], recipe["free_slots"]], 13, Color("ffcf85"))
+	label_at(box, "Weapon mutations keep their slot. Run upgrades reset on redeployment.", 15, MUTED)
+	var back_button := button_at(box, "BACK TO PAUSE", back)
+	back_button.grab_focus()
+
+func visible_build_text() -> String:
+	if not is_instance_valid(build_heading) or not build_heading.is_visible_in_tree() or screen == null:
+		return ""
+	var lines: Array[String] = []
+	for label in screen.find_children("*", "Label", true, false):
+		if label.is_visible_in_tree():
+			lines.append(label.text)
+	return "\n".join(lines)
 
 func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: int, salvage: int = 0, wallet: int = 0, breakdown: Dictionary = {}, unlocks: Array[String] = []) -> void:
 	set_hud(false)

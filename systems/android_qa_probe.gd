@@ -53,6 +53,7 @@ func snapshot() -> void:
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
 	data["performance_stats_visible"] = game.ui.perf_label.is_visible_in_tree()
 	data["performance_stats_text"] = game.ui.perf_label.text
+	data["build_text"] = game.ui.visible_build_text()
 	for node in game.ui.root.find_children("*", "Button", true, false):
 		if node.is_visible_in_tree():
 			var rect: Rect2 = node.get_global_rect()

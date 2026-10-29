@@ -1,6 +1,8 @@
-# Development status — NULL//SWARM / 2026-10-28
+# Development status — NULL//SWARM / 2026-10-29
 
 ## Current checkpoint
+
+- In progress: Pause → Build // Mutations shows actual weapon slots/ranks, evolved names and all three mutation paths, including insufficient-slot warnings. Local nine-suite validation passed: 447 systems, 36 GUI, eight probe, 1,708 UI checks/120 layouts plus established input/audio/resource/corruption/smoke coverage. Android driver targets 25 checks; hosted execution/render review/APK verification are pending. Mechanics: docs/BUILD_GUIDE.md. No combat or progression rule changes.
 
 - Completed saved Performance stats under menu/pause Settings, synchronized F3/checkbox state, default-off legacy compatibility and 4Hz diagnostic sampling. All nine local/hosted strict suites passed: 438 systems, 30 GUI, six probe, 1,188 UI checks/104 layouts, 21 input, nine audio, 50 resources, 41 corruption and scene smoke. Usage/measurement scope: docs/PERFORMANCE_STATS.md.
 - Verified follow-up code 000dd701a5ffc4dd7d6b365e23d677a302d42ab3 passed native 40783288386 and Android 40783288421 (22 checks). Android touch, combat/XP/upgrades, lifecycle, clipboard recovery and version 7→8 same-signer update retained exact positive earned salvage/settings. Downloaded APK/archive hashes, CRCs and package/ARM64/probe-disabled checks passed; CI apksigner passed. Actual Android HUD capture inspected. Evidence: docs/qa/performance-stats/verified-ci.json.

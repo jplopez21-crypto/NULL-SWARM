@@ -15,6 +15,36 @@ const MUTATIONS: Dictionary = {
  "singularity": {"weapon": "rail", "title": "SINGULARITY LANCE", "requires": {"rail": 3, "magnet": 3}, "effect": "RAIL IMPACTS LEAVE GRAVITY FIELDS"}
 }
 const MAX_SLOTS: int = 4
+const PASSIVE_TITLES: Dictionary = {"damage": "AMPLIFIED PULSE", "magnet": "MEMORY TETHER"}
+
+static func mutation_progress(ranks: Dictionary, active: Array[String], slots_used: int) -> Array[Dictionary]:
+	# Read-only presentation query. Multiple missing weapons must all fit the run.
+	var result: Array[Dictionary] = []
+	for id in MUTATIONS:
+		var definition: Dictionary = MUTATIONS[id]
+		var requirements: Array[String] = []
+		var missing_weapons: int = 0
+		var ready: bool = true
+		for prerequisite in definition["requires"]:
+			var rank: int = int(ranks.get(prerequisite, 0))
+			var needed: int = int(definition["requires"][prerequisite])
+			var name: String = PASSIVE_TITLES.get(prerequisite, title(prerequisite))
+			requirements.append("%s %d/%d" % [name, rank, needed])
+			ready = ready and rank >= needed
+			if DATA.has(prerequisite) and rank <= 0:
+				missing_weapons += 1
+		var free_slots: int = maxi(0, MAX_SLOTS - slots_used)
+		var status := "IN PROGRESS"
+		if active.has(id):
+			status = "ACTIVE"
+		elif missing_weapons > free_slots:
+			status = "SLOTS BLOCKED"
+		elif ready:
+			status = "REQUIREMENTS MET"
+		result.append({"id": id, "title": definition["title"], "effect": definition["effect"],
+			"requirements": " + ".join(requirements), "status": status,
+			"missing_weapons": missing_weapons, "free_slots": free_slots})
+	return result
 
 static func color(id: String) -> Color:
 	return Color("8eb5ff") if id == "singularity" else DATA.get(id, {}).get("color", Color("78f8d4"))

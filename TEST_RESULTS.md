@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Paused build and mutation guide — 2026-10-29
+
+- Implemented Pause → Build // Mutations with actual four-slot equipment, ranks, evolved names and registry-driven mutation requirements/status. Slot feasibility counts every missing weapon; two missing prerequisites cannot share one free slot. The screen never advances combat, consumes RNG, grants equipment or persists data.
+- Executed all nine isolated local suites: passed, strict script/engine/leak scan clean. Counts: 447 systems, 36 GUI, eight probe, 1,708 UI checks/120 layouts, 21 input, nine audio, 50 resources, 41 corruption and scene smoke. GUI tests use actual input events; layout fixtures cover empty, partial, active/full and Solar Halo builds at four window sizes.
+- Python driver compilation and diff checks passed. Android driver adds three real-touch checks for the guide, frozen ranks/combat and returning to pause (25 total). Local Android SDK/emulator/KVM remain unavailable; hosted Android execution is pending. Headless death/victory checks do not replace device testing.
+- Native capture adds staged empty/full-build screenshots; the full guide is included in bounded CI previews. Final rendered review, CI results, APK and independent artifact verification remain pending. No new Android pass or APK is claimed yet.
+
 ## Touch-accessible performance stats — 2026-10-28
 
 - First hosted implementation `ffc043586b53f2821028d295b53c8bae804ce3a5` passed native 40780539601, Android 40780539615 (22 checks), and QA 40780539661. Downloaded APK/archives passed independent integrity checks; all 28 prior gameplay/XP cases, four pacing cases and 18 stress fingerprints matched. Actual Android settings and restored HUD captures were inspected.

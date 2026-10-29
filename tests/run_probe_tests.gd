@@ -50,6 +50,14 @@ func run() -> void:
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["state"] == "paused", "probe observes normal pause transition")
+	game.open_build()
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(data["build_text"].contains("DEPLOYMENT BUILD") and data["build_text"].contains("AMPLIFIED PULSE 0/3"), "probe reads visible build guide labels without inventing ranks")
+	game.resume_run()
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(data["build_text"].is_empty(), "probe clears build text after resume")
 	game.audio.shutdown()
 	# Drain queued UI tweens and audio-thread releases before destroying the scene.
 	await create_timer(0.20).timeout

@@ -50,6 +50,7 @@ func _ready() -> void:
 	ui.resume_run.connect(resume_run)
 	ui.return_menu.connect(go_menu)
 	ui.pause_run.connect(pause_run)
+	ui.build_requested.connect(open_build)
 	ui.dash.connect(func(): input_router.dash_requested = true)
 	ui.upgrade_selected.connect(select_upgrade)
 	ui.reroll_requested.connect(reroll_upgrades)
@@ -221,6 +222,11 @@ func resume_run() -> void:
 	input_router.reset()
 	ui.hide_panel()
 	state = State.PLAYING
+
+func open_build() -> void:
+	if state != State.PAUSED or not is_instance_valid(combat):
+		return
+	ui.show_build(progress, combat.mutations, func(): ui.show_pause(save.data["settings"]))
 
 func go_menu() -> void:
 	if state in [State.PAUSED, State.UPGRADING, State.PLAYING]:
@@ -617,6 +623,20 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/upgrade_queue.png")
+	# Staged guide captures cover a new and a full mutated build, not earned play.
+	state = State.PLAYING
+	pause_run()
+	open_build()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/build_overview_empty.png")
+	progress.ranks = {"damage": 3, "arc": 3, "rail": 3, "magnet": 3, "drone": 1}
+	combat.update_build(progress.ranks)
+	ui.toast_time = 0
+	open_build()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/build_overview.png")
 	audio.shutdown()
 	get_tree().quit()
 

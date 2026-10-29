@@ -21,6 +21,8 @@ Use writable `XDG_DATA_HOME`, `XDG_CONFIG_HOME`, and `XDG_CACHE_HOME` locations 
 
 ## Android debug build
 
+During a deployment, **Pause → Build // Mutations** shows equipped weapons, actual ranks and mutation paths, including recipes blocked by the four-slot limit. See [build guide](docs/BUILD_GUIDE.md). Combat stays paused while reviewing.
+
 Install matching Godot 4.6.3 export templates, Java 21 and Android SDK platform-tools, platform 35 and build-tools 35.0.1. Set Android SDK, Java SDK and debug keystore paths in Godot Editor Settings → Export → Android. Export with:
 
 ```sh

@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-10-29 / Build and mutation guide
+
+- Added Pause → Build // Mutations with live equipment slots/ranks, evolved titles and all three mutation recipes from the content registry.
+- Explained active/in-progress paths and blocked recipes, including the two-missing-weapons/one-free-slot edge case. Existing weapons can still evolve at full slots.
+- Kept the guide read-only and combat paused, with touch/controller navigation back to pause. Added GUI/data/probe regressions, 16 more layout fixtures and three Android touch checks. Local nine-suite validation passed; hosted results are tracked in TEST_RESULTS.md.
+
 ## Development — 2026-10-28 / Touch performance stats
 
 - Reduced emulator smoke overhead by caching fixed display dimensions instead of capturing a PNG for each input coordinate. Added a quiet fresh-deployment observation without input/screencaps; it has no phone-FPS acceptance gate.

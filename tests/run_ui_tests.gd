@@ -36,6 +36,9 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 			check(node.size.y >= 55.0, "%s %s: undersized button" % [size, stage])
 	if game.ui.screen != null:
 		check(bounds.encloses(game.ui.screen.get_global_rect()), "%s %s: panel outside viewport" % [size, stage])
+		if not game.ui.visible_build_text().is_empty():
+			for label in game.ui.screen.find_children("*", "Label", true, false):
+				check(bounds.encloses(label.get_global_rect()), "%s %s: build label fits viewport: %s" % [size, stage, label.text])
 	layouts.append({"window": [size.x, size.y], "observed_window": [root.size.x, root.size.y], "canvas": [game.ui.root.size.x, game.ui.root.size.y], "scale_aspect": root.content_scale_aspect, "stage": stage, "visible_buttons": buttons})
 	if captures:
 		await create_timer(0.20).timeout
@@ -141,6 +144,28 @@ func run() -> void:
 		game._physics_process(10.0)
 		check(game.combat.director.elapsed == clock, "paused UI preserves simulation clock")
 		await inspect(game, "pause", size)
+		var saved_ranks: Dictionary = game.progress.ranks.duplicate(true)
+		var saved_mutations: Array[String] = game.combat.mutations.duplicate()
+		game.open_build()
+		check(game.ui.visible_build_text().contains("WEAPONS 1/4"), "initial guide shows starting weapon and empty slots")
+		await inspect(game, "build-empty", size)
+		game.progress.ranks = {"damage": 2, "arc": 3, "rail": 2, "magnet": 2}
+		game.open_build()
+		check(game.ui.visible_build_text().contains("AMPLIFIED PULSE 2/3") and game.ui.visible_build_text().contains("2 weapon slots needed / 1 free"), "guide shows partial ranks and insufficient two-weapon slot path")
+		await inspect(game, "build-progress", size)
+		game.progress.ranks = {"damage": 3, "arc": 3, "rail": 3, "magnet": 3, "drone": 1}
+		game.combat.mutations.assign(["arcstorm", "singularity"])
+		game.open_build()
+		check(game.ui.visible_build_text().contains("WEAPONS 4/4") and game.ui.visible_build_text().contains("SINGULARITY LANCE // ACTIVE") and game.ui.visible_build_text().contains("SOLAR HALO // SLOTS BLOCKED"), "full guide shows active mutations and blocked alternate recipe")
+		await inspect(game, "build-active-full", size)
+		game.progress.ranks = {"orbit": 3, "thermal": 3, "rail": 1}
+		game.combat.mutations.assign(["halo"])
+		game.open_build()
+		check(game.ui.visible_build_text().contains("SOLAR HALO // ACTIVE") and game.ui.visible_build_text().contains("PLASMA ORBITALS 3/3"), "Halo replaces its weapon title while keeping original recipe names")
+		await inspect(game, "build-halo", size)
+		game.progress.ranks = saved_ranks
+		game.combat.mutations = saved_mutations
+		check(game.state == game.State.PAUSED and game.combat.director.elapsed == clock, "all guide states preserve paused combat")
 		game.resume_run()
 		game._process(0.3)
 		check(game.ui.memory_visible and game.input_router.stick == Vector2.ZERO, "resume reacquires cue without stuck movement")
