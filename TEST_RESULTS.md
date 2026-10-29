@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Kill-chain and Overclock feedback — 2026-10-29
+
+- Implemented fixed-row pass-through feedback with kill progress, remaining-kill/deadline hints and an independent bonus-duration gauge. Idle feedback clears; new runs refresh the HUD immediately. Shared constants replace existing literals without changing the 20-kill / three-second / six-second / 1.6-cycle rules or arithmetic order.
+- Executed all ten isolated local suites: passed, strict script/engine/leak scan clean. Counts: 455 systems, 2,244 UI checks/160 layouts, 27 Engineer, 36 GUI, nine audio, eight probe, 53 resources, 21 input, 41 corruption and scene smoke. New tests exercise actual twentieth/fortieth destruction, duplicate rejection, retained bonus, pause, expiry/reset, milestone arithmetic, control pass-through and gauge/text geometry with boss cues visible.
+- Python Android-driver compilation and diff checks passed. Driver adds one observed live-feedback check during ordinary touch combat (33 expected total), with no stat/chain grants. Staged native chain-ready/Overclock images and current import/export/signature/render checks remain pending hosted CI. No new APK or Android success is claimed yet. Rules/scope: docs/OVERCLOCK.md.
+
 ## Engineer / Dash Uplink — 2026-10-29
 
 - Implemented Architect-earned Engineer with real Drone Hive rank 1, weak rifle, 80 HP and one reusable dash-origin sentry. It uses normal targeting/damage attribution, rank/rate bonuses, bounded effects and pause/reset rules. Added two-column Foundry kits and a visible passive/HUD readout. Desktop debug captures are explicitly disabled on Android and release builds.

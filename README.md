@@ -10,6 +10,7 @@ Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. De
 - Build guide: **Pause → Build // Mutations** shows current weapons, ranks and slot-aware evolution paths while combat is paused. See [guide](docs/BUILD_GUIDE.md).
 - Engineer: defeat The Architect once, then select it in the Foundry. Successful dashes leave one temporary sentry; it starts with Drone Hive and lower health. See [mechanics and test scope](docs/ENGINEER.md).
 - Performance overlay: F3.
+- Overclock: chain 20 kills with gaps under three seconds for six seconds of faster firing. The HUD shows the remaining kills, chain deadline and bonus duration. See [feedback rules](docs/OVERCLOCK.md).
 
 ## Verification
 

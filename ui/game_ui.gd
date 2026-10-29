@@ -62,6 +62,8 @@ var boss_bar: ProgressBar
 var boss_cue_label: Label
 var boss_label: Label
 var surge_label: Label
+var surge_gauge: ProgressBar
+var surge_fill: StyleBoxFlat
 var sentry_label: Label
 var toast_title: Label
 var toast_detail: Label
@@ -215,6 +217,21 @@ func _build_hud() -> void:
 	boss_cue_label.visible = false
 	surge_label = label_at(hud, "", 18, Color("b9f66b"))
 	surge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	surge_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	surge_label.custom_minimum_size.y = 32
+	surge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	surge_gauge = _bar(surge_label, CYAN, 4)
+	surge_gauge.visible = false
+	surge_gauge.step = 0.01
+	surge_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	surge_gauge.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	surge_gauge.anchor_left = 0.25
+	surge_gauge.anchor_right = 0.75
+	surge_gauge.offset_left = 0
+	surge_gauge.offset_right = 0
+	surge_gauge.offset_top = -5
+	surge_gauge.offset_bottom = -1
+	surge_fill = surge_gauge.get_theme_stylebox("fill") as StyleBoxFlat
 	sentry_label = label_at(hud, "", 14, Arsenal.color("drone"))
 	sentry_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	sentry_label.visible = false
@@ -222,7 +239,7 @@ func _build_hud() -> void:
 	toast_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast_detail = label_at(hud, "", 16, MUTED)
 	toast_detail.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	for notice in [toast_title, toast_detail, boss_label, boss_cue_label]:
+	for notice in [toast_title, toast_detail, boss_label, boss_cue_label, surge_label]:
 		notice.add_theme_color_override("font_outline_color", Color("081722"))
 		notice.add_theme_constant_override("outline_size", 4)
 	var spacer := Control.new()
@@ -527,7 +544,7 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 		if boss.exposed_time > 0.0:
 			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
-	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
+	_update_overclock(combat)
 	sentry_label.visible = combat.sentry.enabled
 	sentry_label.text = (("FIELD SENTRY %.1fs // NEXT DASH REPOSITIONS IT" % combat.sentry.remaining) if combat.sentry.remaining > 0.0 else "ENGINEER // DASH TO DEPLOY A 3s SENTRY") if combat.sentry.enabled else ""
 	dash_gauge.value = clampf(100.0 * (1.0 - player.dash_cooldown / SwarmPlayer.DASH_COOLDOWN), 0.0, 100.0)
@@ -559,6 +576,27 @@ func set_performance_stats(enabled: bool) -> void:
 	perf_next_sample_ms = 0
 	if is_instance_valid(perf_toggle):
 		perf_toggle.set_pressed_no_signal(enabled)
+
+func _update_overclock(combat: CombatWorld) -> void:
+	var powered: bool = combat.overclock > 0.0
+	var chaining: bool = combat.streak > 0 and combat.streak_time > 0.0
+	surge_gauge.visible = powered or chaining
+	if not surge_gauge.visible:
+		surge_label.text = ""
+		surge_gauge.value = 0
+		return
+	var next_at: int = (combat.streak / CombatWorld.CHAIN_KILLS + 1) * CombatWorld.CHAIN_KILLS
+	if powered:
+		surge_label.text = "OVERCLOCK %.1fs // FIRE RATE +%d%%" % [combat.overclock, roundi((CombatWorld.OVERCLOCK_RATE - 1.0) * 100)]
+		if chaining:
+			surge_label.text += " // CHAIN %d (NEXT %d)" % [combat.streak, next_at]
+		surge_gauge.value = clampf(100.0 * combat.overclock / CombatWorld.OVERCLOCK_DURATION, 0, 100)
+		surge_fill.bg_color = Color("b9f66b")
+	else:
+		var needed: int = next_at - combat.streak
+		surge_label.text = "CHAIN %d // %d %s TO OVERCLOCK // BREAKS IN %.1fs" % [combat.streak, needed, "KILL" if needed == 1 else "KILLS", combat.streak_time]
+		surge_gauge.value = 100.0 * (combat.streak % CombatWorld.CHAIN_KILLS) / CombatWorld.CHAIN_KILLS
+		surge_fill.bg_color = CYAN
 
 static func clock(seconds: float) -> String:
 	return "%02d:%02d" % [int(seconds) / 60, int(seconds) % 60]

@@ -53,6 +53,7 @@ func snapshot() -> void:
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
 	data["performance_stats_visible"] = game.ui.perf_label.is_visible_in_tree()
 	data["performance_stats_text"] = game.ui.perf_label.text
+	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}
 	data["build_text"] = game.ui.visible_build_text()
 	data["selected_kit"] = game.save.data["selected_kit"]
 	data["architects"] = game.save.data["architects"]

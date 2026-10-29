@@ -126,6 +126,7 @@ func start_run() -> void:
 		if critical:
 			audio.play("hit"))
 	player.health.depleted.connect(func(): finish_run(false))
+	ui.update_hud(player, progress, combat)
 	ui.hide_panel()
 	ui.set_hud(true)
 	state = State.PLAYING
@@ -670,6 +671,28 @@ func _capture_session() -> void:
 	await get_tree().create_timer(0.3).timeout
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/engineer_build.png")
+	# Staged reward readouts; these values are not earned gameplay evidence.
+	ui.hide_panel()
+	ui.damage_texts.clear()
+	ui.toast_time = 0
+	combat.streak = 19
+	combat.streak_time = 0.8
+	combat.overclock = 0
+	combat.kills = 19
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/chain_ready.png")
+	combat.streak = 20
+	combat.streak_time = CombatWorld.CHAIN_GAP
+	combat.overclock = CombatWorld.OVERCLOCK_DURATION
+	combat.kills = 20
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/overclock.png")
 	audio.shutdown()
 	get_tree().quit()
 

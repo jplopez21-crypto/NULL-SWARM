@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-10-29 / Kill-chain and Overclock feedback
+
+- Added a compact fixed-row gauge with remaining kills/chain deadline and independent Overclock duration. Text outlines and touch pass-through preserve readability/control; no new flashes or particles.
+- Shared existing combat constants and refreshed new-run HUD immediately. Damage, spawn/XP/RNG rules and 20-kill / 3s-gap / 6s-bonus / +60% cycle timing stay unchanged.
+- Local ten-suite checks passed, with lifecycle/clock regressions and 20 more layout fixtures. Android observes live feedback through normal kills; hosted results are tracked in TEST_RESULTS.md.
+
 ## Development — 2026-10-29 / Engineer and Dash Uplink
 
 - Added Architect-earned Engineer: Drone Hive, weak rifle, 80 HP and a real dash-origin sentry passive. One model is refreshed/repositioned rather than stacked; Drone Hive ranks and normal cycle bonuses scale its attacks.

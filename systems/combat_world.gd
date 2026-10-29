@@ -7,6 +7,10 @@ signal impact(at: Vector3, amount: float, critical: bool)
 signal notice(title: String, detail: String, color: Color)
 signal weapon_fired(id: String)
 signal cache_recovered
+const CHAIN_KILLS: int = 20
+const CHAIN_GAP: float = 3.0
+const OVERCLOCK_DURATION: float = 6.0
+const OVERCLOCK_RATE: float = 1.6
 var gravity: GravityField
 var sentry: FieldSentry
 var effects: CombatEffects
@@ -141,7 +145,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 	grid.rebuild(enemies)
 	gravity.tick(delta, self)
 	target = grid.nearest(player.position, weapon.definition.range_m)
-	var fired := weapon.ready_to_fire(delta * (1.6 if overclock > 0.0 else 1.0) * corruption.cycle_rate(), target != null)
+	var fired := weapon.ready_to_fire(delta * (OVERCLOCK_RATE if overclock > 0.0 else 1.0) * corruption.cycle_rate(), target != null)
 	if fired:
 		fire(player.position, target.position - player.position)
 		if corruption.extra_rounds() > 0:
@@ -212,9 +216,9 @@ func _damage(enemy: SwarmEnemy, amount: float, knockback: Vector3 = Vector3.ZERO
 	enemy.deactivate()
 	kills += 1
 	streak += 1
-	streak_time = 3.0
-	if streak % 20 == 0:
-		overclock = 6.0
+	streak_time = CHAIN_GAP
+	if streak % CHAIN_KILLS == 0:
+		overclock = OVERCLOCK_DURATION
 		notice.emit("OVERCLOCK // %d CHAIN" % streak, "FIRE RATE +60% FOR 6 SECONDS", Color("b9f66b"))
 		weapon_fired.emit("overclock")
 	enemy_destroyed.emit(at, enemy.definition.xp)
@@ -249,7 +253,7 @@ func _tick_arsenal(delta: float, player: SwarmPlayer) -> void:
 		var rank: int = int(loadout.get(id, 0))
 		if rank <= 0:
 			continue
-		timers[id] = maxf(0.0, float(timers.get(id, 0.0)) - delta * (1.6 if overclock > 0.0 else 1.0) * corruption.cycle_rate())
+		timers[id] = maxf(0.0, float(timers.get(id, 0.0)) - delta * (OVERCLOCK_RATE if overclock > 0.0 else 1.0) * corruption.cycle_rate())
 		if float(timers[id]) > 0.0:
 			continue
 		var definition: Dictionary = Arsenal.DATA[id]

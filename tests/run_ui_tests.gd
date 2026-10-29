@@ -28,6 +28,10 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 		check(bounds.encloses(game.ui.perf_label.get_global_rect()), "%s %s: performance stats fit viewport" % [size, stage])
 	if game.ui.sentry_label.is_visible_in_tree():
 		check(bounds.encloses(game.ui.sentry_label.get_global_rect()), "%s %s: sentry status fits viewport" % [size, stage])
+	if game.ui.surge_gauge.is_visible_in_tree():
+		check(bounds.encloses(game.ui.surge_label.get_global_rect()), "%s %s: chain feedback fits viewport" % [size, stage])
+		check(game.ui.surge_label.get_global_rect().encloses(game.ui.surge_gauge.get_global_rect()), "%s %s: reward gauge fits its HUD row" % [size, stage])
+		check(game.ui.surge_gauge.position.y >= game.ui.surge_label.get_line_height(), "%s %s: gauge stays below reward text" % [size, stage])
 	if is_instance_valid(game.ui.upgrade_header) and game.ui.upgrade_header.is_visible_in_tree():
 		check(bounds.encloses(game.ui.upgrade_header.get_global_rect()), "%s %s: upgrade queue heading fits viewport" % [size, stage])
 	var buttons: int = 0
@@ -228,6 +232,25 @@ func run() -> void:
 		encounters.mini.exposed_time = 1.2
 		game._process(0.1)
 		await inspect(game, "boss-exposed", size)
+		for fixture in [["chain-start", 1, 3.0, 0.0, 5.0], ["chain-near", 19, 0.8, 0.0, 95.0], ["overclock-full", 20, 3.0, 6.0, 100.0], ["overclock-sustain", 0, 0.0, 3.0, 50.0], ["chain-next-cycle", 25, 2.0, 0.0, 25.0]]:
+			game.combat.streak = fixture[1]
+			game.combat.streak_time = fixture[2]
+			game.combat.overclock = fixture[3]
+			game._process(0)
+			check(game.ui.surge_gauge.is_visible_in_tree() and is_equal_approx(game.ui.surge_gauge.value, fixture[4]), "chain/bonus gauge reflects actual combat values")
+			check(game.ui.surge_label.mouse_filter == Control.MOUSE_FILTER_IGNORE and game.ui.surge_gauge.mouse_filter == Control.MOUSE_FILTER_IGNORE, "reward feedback passes movement input through")
+			if fixture[0] == "chain-near":
+				check(game.ui.surge_label.text.contains("1 KILL TO OVERCLOCK") and game.ui.surge_label.text.contains("0.8s"), "near-reward hint explains the final kill and gap")
+			if fixture[0] == "overclock-sustain":
+				check(not game.ui.surge_label.text.contains("CHAIN") and game.ui.surge_label.text.contains("+60%"), "retained bonus is readable after chain expiry")
+			if fixture[0] == "chain-next-cycle":
+				check(game.ui.surge_label.text.contains("15 KILLS TO OVERCLOCK"), "next cycle counts remaining kills rather than all lifetime kills")
+			await inspect(game, fixture[0], size)
+		game.combat.streak = 0
+		game.combat.streak_time = 0
+		game.combat.overclock = 0
+		game._process(0)
+		check(not game.ui.surge_gauge.visible and game.ui.surge_label.text.is_empty(), "idle feedback clears without leaving a filled gauge")
 		game._notification(MainLoop.NOTIFICATION_APPLICATION_FOCUS_OUT)
 		game._process(0.1)
 		check(game.state == game.State.PAUSED and not game.ui.memory_visible, "focus loss pauses and hides guidance")

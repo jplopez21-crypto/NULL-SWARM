@@ -471,7 +471,35 @@ func run() -> void:
 	var combo_victim: SwarmEnemy = game.combat.spawn(0, Vector3(3, 0, 0))
 	game.combat._damage(combo_victim, 999)
 	check(game.combat.overclock > 0, "twentieth chained kill triggers Overclock")
+	check(game.combat.overclock == 6 and game.combat.streak_time == 3 and CombatWorld.OVERCLOCK_RATE == 1.6, "Overclock retains its established duration gap and cycle bonus")
+	game.combat.overclock = 5
+	game.combat._damage(combo_victim, 999)
+	check(game.combat.streak == 20 and game.combat.overclock == 5, "duplicate destruction cannot refresh the reward")
+	game.combat.streak = 39
+	var refresh_victim: SwarmEnemy = game.combat.spawn(0, Vector3(4, 0, 0))
+	game.combat._damage(refresh_victim, 999)
+	check(game.combat.streak == 40 and game.combat.overclock == 6, "next twenty kills refresh the same six-second reward")
+	# Isolate clock behavior from unrelated spawn/encounter attacks.
+	game.combat.director.elapsed = 600
+	game.combat.encounters.mini_spawned = true
+	game.combat.encounters.boss_spawned = true
+	game.combat.encounters.boss_defeated = true
+	game.combat.tick(3.01, game.player)
+	check(game.combat.streak == 0 and is_equal_approx(game.combat.overclock, 2.99), "breaking a chain does not cancel its earned bonus")
+	game._process(0)
+	check(game.ui.surge_gauge.visible and game.ui.surge_label.text.contains("OVERCLOCK") and not game.ui.surge_label.text.contains("CHAIN"), "live HUD distinguishes retained bonus from expired chain")
+	game.pause_run()
+	var frozen_bonus: float = game.combat.overclock
+	var frozen_gauge: float = game.ui.surge_gauge.value
+	game._physics_process(1)
+	game._process(0)
+	check(game.combat.overclock == frozen_bonus and game.ui.surge_gauge.value == frozen_gauge, "pause freezes actual reward and its gauge together")
+	game.resume_run()
+	game.combat.tick(3.1, game.player)
+	game._process(0)
+	check(game.combat.overclock == 0 and not game.ui.surge_gauge.visible and game.ui.surge_label.text.is_empty(), "expired chain and bonus clear all reward feedback")
 	game.start_run()
+	check(not game.ui.surge_gauge.visible and game.ui.surge_gauge.value == 0, "restart immediately resets reward feedback")
 	game.set_physics_process(false)
 	game.progress.pending = 1
 	game.show_upgrade()

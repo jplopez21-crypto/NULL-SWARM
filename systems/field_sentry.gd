@@ -48,7 +48,7 @@ func tick(delta: float, world: CombatWorld) -> void:
 		remaining = 0.0
 		visible = false
 		return
-	var cycle_rate: float = (1.6 if world.overclock > 0.0 else 1.0) * world.corruption.cycle_rate()
+	var cycle_rate: float = (CombatWorld.OVERCLOCK_RATE if world.overclock > 0.0 else 1.0) * world.corruption.cycle_rate()
 	attack_clock = maxf(0.0, attack_clock - delta * cycle_rate)
 	if attack_clock > 0.0:
 		return

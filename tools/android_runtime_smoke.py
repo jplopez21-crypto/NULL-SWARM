@@ -253,6 +253,7 @@ try:
     check(True, 'touch resume returns to combat')
     deadline = time.monotonic() + 120
     selected = False
+    chain_sampled = False
     while time.monotonic() < deadline:
         s = read()
         if s['state'] == 'results':
@@ -264,6 +265,11 @@ try:
             wait(lambda x: x.get('ranks') != before_ranks)
             selected = True
         elif s['state'] == 'playing':
+            feedback = s.get('chain_feedback', {})
+            if not chain_sampled and s.get('kills', 0) > 0 and feedback.get('visible') and 0 < feedback.get('value', 0) <= 100 and any(text in feedback.get('text', '') for text in ['CHAIN', 'OVERCLOCK']):
+                report['chain_feedback_sample'] = {**feedback, 'kills': s['kills']}
+                capture('chain-feedback')
+                chain_sampled = True
             if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0 and s.get('salvage', 0) > 0:
                 break
             targets = s.get('targets', [])
@@ -276,6 +282,7 @@ try:
         time.sleep(.2)
     check(selected and s.get('xp', 0) > 0 and s.get('kills', 0) > 0, 'auto combat, XP collection and real upgrade touch passed')
     check(s.get('salvage', 0) > 0, 'normal gameplay checkpoints nonzero earned salvage before lifecycle tests')
+    check(chain_sampled, 'actual Android kills display live chain or Overclock gauge')
     report['gameplay_snapshot'] = s
     capture('after-upgrade')
     adb('shell', 'input', 'keyevent', '3')
