@@ -42,26 +42,30 @@ func scenario(count: int, kind: String, radius: float) -> Dictionary:
 	var points: Array[Vector3] = []
 	for i in range(QUERIES):
 		points.append(Vector3(rng.randf_range(-extent, extent), 0, rng.randf_range(-extent, extent)))
+	var parity: bool = true
 	for point in points:
 		if grid.call(kind, point, radius) != legacy.call(kind, point, radius):
+			parity = false
 			failures.append("Ordered grid result differs from reference")
 	var legacy_samples: Array[float] = []
 	var current_samples: Array[float] = []
 	var samples: Dictionary = {"legacy": legacy_samples, "current": current_samples}
 	var checksums: Dictionary = {}
 	for round_index in range(ROUNDS):
+		checksums.clear()
 		# Alternate AB/BA order on the same objects/process to reduce order bias.
 		for variant in (["legacy", "current"] if round_index % 2 == 0 else ["current", "legacy"]):
 			var measured: Dictionary = measure(Callable(legacy if variant == "legacy" else grid, kind), points, radius)
 			samples[variant].append(measured["us_per_query"])
 			checksums[variant] = measured["checksum"]
-	if checksums["legacy"] != checksums["current"]:
-		failures.append("Timed grid checksums differ")
+		if checksums["legacy"] != checksums["current"]:
+			parity = false
+			failures.append("Timed grid checksums differ")
 	var legacy_median: float = median(legacy_samples)
 	var current_median: float = median(current_samples)
 	var row := {"allocated_targets": count, "kind": kind, "radius": radius, "queries_per_round": QUERIES * LOOPS,
 		"rounds_us_per_query": samples, "legacy_median_us": legacy_median, "current_median_us": current_median,
-		"speedup": legacy_median / maxf(0.00001, current_median), "checksum": checksums["current"], "ordered_parity": true}
+		"speedup": legacy_median / maxf(0.00001, current_median), "checksum": checksums["current"], "ordered_parity": parity}
 	grid.cells.clear()
 	legacy.cells.clear()
 	for target in targets:

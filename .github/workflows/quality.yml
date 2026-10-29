@@ -31,6 +31,12 @@ jobs:
           godot --headless --editor --import --quit 2>&1 | tee builds/qa/import.log
           if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' builds/qa/import.log; then exit 1; fi
           python3 tools/run_headless_checks.py
+      - name: Paired spatial-query kernels
+        run: |
+          set -o pipefail
+          timeout 120s godot --headless --script tests/run_grid_benchmark.gd 2>&1 | tee builds/qa/grid-benchmark.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/grid-benchmark.log; then exit 1; fi
+          test -s builds/qa/grid-benchmark.json
       - name: Normal-rules bot playtests
         run: |
           set -o pipefail
@@ -102,7 +108,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           set -o pipefail
-          timeout 600s godot --headless --script tests/run_benchmark.gd -- --engineer-stress 2>&1 | tee builds/qa/engineer-stress.log
+          timeout 600s godot --headless --script tests/run_benchmark.gd -- --engineer-stress --phase-profile 2>&1 | tee builds/qa/engineer-stress.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-stress.log; then exit 1; fi
           test -s builds/qa/engineer-stress-report.json
       - name: Publish QA summaries
