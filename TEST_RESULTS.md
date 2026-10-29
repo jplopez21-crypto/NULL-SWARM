@@ -1,5 +1,15 @@
 # NULL//SWARM test results
 
+## Engineer / Dash Uplink — 2026-10-29
+
+- Implemented Architect-earned Engineer with real Drone Hive rank 1, weak rifle, 80 HP and one reusable dash-origin sentry. It uses normal targeting/damage attribution, rank/rate bonuses, bounded effects and pause/reset rules. Added two-column Foundry kits and a visible passive/HUD readout. Desktop debug captures are explicitly disabled on Android and release builds.
+- Initial local run exposed an inferred-type error in the new test fixture; corrected it to SwarmEnemy. That run failed Engineer/resource checks and is not counted as a pass. Editor import registered classes but its TCP listeners were blocked by the local sandbox; clean hosted import remains a separate gate.
+- Subsequent complete local run passed all ten isolated strict suites: 27 Engineer, 36 GUI, nine audio, eight probe, 53 resources, 21 input, 447 systems, 41 corruption, 2,008 UI checks/140 layouts and scene smoke. No strict script/engine/leak errors in those runtime logs. Python compilation and all workflow YAML/bash syntax checks passed.
+- Two normal-rules earned-kit sessions (seeds 101/202) won, with 17/22 accepted dash deployments and 94/143 actual sentry shots. Architect ownership is an explicit starting fixture; no research, XP, forced kills or damage immunity is granted in those sessions. Reports: docs/qa/engineer/engineer-probe.json.
+- Six new synthetic Engineer stress cases passed load assertions and low/high gameplay parity. Fixed sustained enemies/projectiles/pickups, corruption links and gravity fields stay active while accepted dashes deploy the single sentry. This fixture uses explicit invulnerability and huge enemy HP; its CPU timings are not phone FPS. Report: docs/qa/engineer/engineer-stress-report.json.
+- Android driver adds seven earned-kit fixture checks after ordinary progression/lifecycle/update checks (32 expected total). It restores a labelled synthetic Architect code through the normal backup UI, then uses real Foundry selection/dash/combat/pause/relaunch input; the probe contains no grant logic. Hosted execution and physical-phone validation remain pending. The emulator APK is now a separate artifact so screenshots/logs stay independently downloadable.
+- Native staged Engineer Foundry/sentry/build captures and current APK export/signature/integrity review are pending hosted execution. No new APK or Android success is claimed yet. Mechanics/limits: docs/ENGINEER.md.
+
 ## Paused build and mutation guide — 2026-10-29
 
 - Implemented Pause → Build // Mutations with actual four-slot equipment, ranks, evolved names and registry-driven mutation requirements/status. Slot feasibility counts every missing weapon; two missing prerequisites cannot share one free slot. The screen never advances combat, consumes RNG, grants equipment or persists data.

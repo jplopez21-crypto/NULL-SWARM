@@ -79,7 +79,7 @@ jobs:
           report = json.loads(Path('builds/qa/headless-results.json').read_text())
           assert report['status'] == 'passed'
           print('CI_HEADLESS_REPORT ' + json.dumps(report, separators=(',', ':')))
-          for name, prefix in [('upgrade_queue', 'CI_QUEUE'), ('performance_stats', 'CI_PERF'), ('build_overview', 'CI_BUILD')]:
+          for name, prefix in [('upgrade_queue', 'CI_QUEUE'), ('performance_stats', 'CI_PERF'), ('build_overview', 'CI_BUILD'), ('engineer_sentry', 'CI_ENGINEER')]:
               capture = Path('builds/screenshots/' + name + '.png').read_bytes()
               assert capture.startswith(b'\x89PNG\r\n\x1a\n')
               if len(capture) <= 262144:

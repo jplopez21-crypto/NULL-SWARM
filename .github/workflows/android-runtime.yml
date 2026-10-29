@@ -124,7 +124,8 @@ jobs:
       - name: Touch, gameplay, pause and lifecycle smoke
         run: |
           set -o pipefail
-          timeout 300s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk 2>&1 | tee builds/android-runtime/smoke.log
+          godot --headless --script tests/create_engineer_fixture.gd
+          timeout 420s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk --engineer-backup builds/qa/engineer-fixture.txt 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |
@@ -136,6 +137,15 @@ jobs:
         if: ${{ always() }}
         with:
           name: null-swarm-android-runtime
-          path: builds/android-runtime/
+          path: |
+            builds/android-runtime/
+            !builds/android-runtime/*.apk
           retention-days: 14
           if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-emulator-apk
+          path: builds/android-runtime/emulator-debug.apk
+          retention-days: 14
+          if-no-files-found: warn

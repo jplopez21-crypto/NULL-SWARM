@@ -8,6 +8,7 @@ Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. De
 - Dash: Space, controller A, or the onscreen button.
 - Pause: Escape, controller Start, or onscreen Pause.
 - Build guide: **Pause → Build // Mutations** shows current weapons, ranks and slot-aware evolution paths while combat is paused. See [guide](docs/BUILD_GUIDE.md).
+- Engineer: defeat The Architect once, then select it in the Foundry. Successful dashes leave one temporary sentry; it starts with Drone Hive and lower health. See [mechanics and test scope](docs/ENGINEER.md).
 - Performance overlay: F3.
 
 ## Verification

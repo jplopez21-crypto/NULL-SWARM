@@ -26,6 +26,8 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 		check(bounds.encloses(game.ui.boss_cue_label.get_global_rect()), "%s %s: boss cue fits viewport" % [size, stage])
 	if game.ui.perf_label.is_visible_in_tree():
 		check(bounds.encloses(game.ui.perf_label.get_global_rect()), "%s %s: performance stats fit viewport" % [size, stage])
+	if game.ui.sentry_label.is_visible_in_tree():
+		check(bounds.encloses(game.ui.sentry_label.get_global_rect()), "%s %s: sentry status fits viewport" % [size, stage])
 	if is_instance_valid(game.ui.upgrade_header) and game.ui.upgrade_header.is_visible_in_tree():
 		check(bounds.encloses(game.ui.upgrade_header.get_global_rect()), "%s %s: upgrade queue heading fits viewport" % [size, stage])
 	var buttons: int = 0
@@ -265,6 +267,31 @@ func run() -> void:
 		await inspect(game, "results", size)
 		game.ui.show_lab(game.save.data, func(): game.go_menu())
 		await inspect(game, "foundry", size)
+		var saved_progression: Dictionary = game.save.data.duplicate(true)
+		game.go_menu()
+		game.save.data["architects"] = 1
+		game.open_lab()
+		game.select_kit("engineer")
+		await inspect(game, "foundry-engineer", size)
+		game.start_run()
+		game._process(0.3)
+		check(game.ui.sentry_label.visible and game.ui.sentry_label.text.contains("DASH TO DEPLOY") and game.ui.sentry_label.mouse_filter == Control.MOUSE_FILTER_IGNORE, "Engineer HUD explains passive without blocking touch")
+		await inspect(game, "engineer-ready", size)
+		game.input_router.stick = Vector2.RIGHT
+		game.input_router.dash_requested = true
+		game._physics_process(1.0 / 60.0)
+		game._process(0.1)
+		check(game.combat.sentry.visible and game.ui.sentry_label.text.contains("FIELD SENTRY"), "actual Engineer dash shows sentry and lifetime readout")
+		await inspect(game, "engineer-sentry", size)
+		game.pause_run()
+		game.open_build()
+		check(game.ui.visible_build_text().contains("ENGINEER // DASH UPLINK") and game.ui.visible_build_text().contains("WEAPONS 2/4"), "Engineer build guide shows passive and actual starting equipment")
+		await inspect(game, "engineer-build", size)
+		game.run_unlocks.assign(["conductor", "sentinel", "engineer"])
+		game.finish_run(true)
+		await inspect(game, "results-unlocks", size)
+		game.go_menu()
+		game.save.data = saved_progression
 	game.audio.shutdown()
 	game.queue_free()
 	await settle()

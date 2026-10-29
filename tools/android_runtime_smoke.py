@@ -17,6 +17,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
 parser.add_argument('--output', default='builds/android-runtime')
 parser.add_argument('--upgrade-apk', help='Install a same-signer higher-version APK after lifecycle checks')
+parser.add_argument('--engineer-backup', help='Explicit synthetic earned-kit code; restored through GUI only after ordinary persistence checks')
 args = parser.parse_args()
 out = Path(args.output)
 out.mkdir(parents=True, exist_ok=True)
@@ -346,6 +347,84 @@ try:
         check(True, 'saved performance diagnostics appear on deployment after APK update')
         capture('performance-restored')
         report['quiet_profile'] = quiet_profile()
+    if args.engineer_backup:
+        code = Path(args.engineer_backup).read_text().strip()
+        if not re.fullmatch(r'NS1\.[A-Za-z0-9+/=]+\.[0-9a-f]{64}', code):
+            raise AssertionError('Invalid synthetic Engineer fixture format')
+        # Standard earned-salvage/lifecycle/update assertions above use ordinary
+        # play. Only now replace progress with a labelled earned-kit fixture.
+        tap('PAUSE')
+        s = wait(lambda x: x['state'] == 'paused')
+        tap('END DEPLOYMENT', s)
+        s = wait(lambda x: x['state'] == 'menu')
+        tap('PROGRESS BACKUP', s)
+        s = wait(lambda x: bool(x.get('edit_fields')))
+        x, y, w, h = s['edit_fields'][0]
+        px, py = screen_point(x + w / 2, y + h / 2, s)
+        adb('shell', 'input', 'tap', str(px), str(py))
+        adb('shell', 'input', 'text', code)
+        s = wait(lambda x: x.get('backup_code_length') == len(code))
+        tap('PREVIEW RESTORE', s)
+        s = wait(lambda x: any('RESTORE THIS BACKUP' in b['text'] for b in x['buttons']))
+        tap('RESTORE THIS BACKUP', s)
+        s = wait(lambda x: x.get('architects', 0) == 1 and any('COMMAND MENU' in b['text'] for b in x['buttons']))
+        tap('COMMAND MENU', s)
+        s = wait(lambda x: any('FOUNDRY' in b['text'] for b in x['buttons']))
+        tap('FOUNDRY', s)
+        s = wait(lambda x: any('ENGINEER' in b['text'] and not b['disabled'] for b in x['buttons']))
+        tap('ENGINEER', s)
+        s = wait(lambda x: x.get('selected_kit') == 'engineer')
+        check(True, 'synthetic Architect fixture restores through GUI and real Foundry touch selects Engineer')
+        capture('engineer-foundry')
+        tap('BACK', s)
+        s = wait(lambda x: any('DEPLOY ENGINEER' in b['text'] for b in x['buttons']))
+        tap('DEPLOY ENGINEER', s)
+        s = wait(lambda x: x['state'] == 'playing' and x.get('sentry', {}).get('enabled'))
+        check(s['hp'] == 80 and s['ranks'] == {'drone': 1} and s['sentry']['remaining'] == 0,
+              'Engineer deployment has actual advertised equipment health and passive')
+        origin = s['position']
+        tap('DASH', s)
+        s = wait(lambda x: x.get('sentry', {}).get('activations', 0) == 1 and math.dist(x['position'], origin) > 1)
+        check(math.dist(s['sentry']['position'], origin) < .1 and s['sentry']['remaining'] > 0,
+              'Engineer real touch dash leaves sentry at takeoff')
+        tap('DASH', s)
+        time.sleep(.4)
+        s = read()
+        check(s['sentry']['activations'] == 1, 'rejected Android dash cannot stack or refresh Engineer sentries')
+        tap('PAUSE', s)
+        s = wait(lambda x: x['state'] == 'paused')
+        frozen = s['sentry']['remaining']
+        time.sleep(1)
+        check(frozen > 0 and read()['sentry']['remaining'] == frozen, 'Android pause freezes active Engineer sentry lifetime')
+        tap('RESUME')
+        deadline = time.monotonic() + 90
+        while time.monotonic() < deadline:
+            s = read()
+            if s['state'] == 'results':
+                raise AssertionError('Engineer run ended before sentry firing was exercised')
+            if s['state'] == 'upgrading':
+                tap('01\n', s)
+                wait(lambda x: x['state'] != 'upgrading')
+                continue
+            if s['sentry']['shots'] > 0:
+                break
+            if s.get('dash_readiness', 0) >= 99:
+                tap('DASH', s)
+            goals = s.get('targets', [])
+            if goals:
+                goal = min(goals, key=lambda p: math.dist(s['position'], p))
+                move(goal[0] - s['position'][0], goal[1] - s['position'][1], s, 650)
+            else:
+                move(math.cos(s['time'] * .15), math.sin(s['time'] * .15), s, 650)
+        s = read()
+        check(s['sentry']['shots'] > 0, 'Engineer sentry fires during normal Android touch combat')
+        capture('engineer-combat')
+        report['engineer_fixture'] = {'method': 'Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe',
+                                      'sentry': s['sentry'], 'simulation_seconds': s['time'], 'hp': s['hp'], 'kills': s['kills']}
+        adb('shell', 'am', 'force-stop', args.package)
+        launch()
+        s = wait(lambda x: x['state'] == 'menu' and x.get('selected_kit') == 'engineer')
+        check(True, 'earned-kit fixture Engineer selection survives Android relaunch')
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]

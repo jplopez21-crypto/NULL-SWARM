@@ -14,7 +14,7 @@ permissions:
 jobs:
   gameplay-qa:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 30
     env:
       GODOT_VERSION: 4.6.3
     steps:
@@ -49,6 +49,12 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd -- --extended-seeds 2>&1 | tee builds/qa/extended.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/extended.log; then exit 1; fi
           test -s builds/qa/extended-seeds.json
+      - name: Normal-rules earned Engineer sessions
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --engineer-probe 2>&1 | tee builds/qa/engineer-probe.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-probe.log; then exit 1; fi
+          test -s builds/qa/engineer-probe.json
       - name: UI lifecycle and window-size captures
         run: |
           set -o pipefail
@@ -92,10 +98,17 @@ jobs:
           timeout 600s godot --headless --script tests/run_benchmark.gd -- --gravity-stress 2>&1 | tee builds/qa/gravity-stress.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/gravity-stress.log; then exit 1; fi
           test -s builds/qa/gravity-stress-report.json
+      - name: Engineer sentry CPU benchmark
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          timeout 600s godot --headless --script tests/run_benchmark.gd -- --engineer-stress 2>&1 | tee builds/qa/engineer-stress.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-stress.log; then exit 1; fi
+          test -s builds/qa/engineer-stress-report.json
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

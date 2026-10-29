@@ -6,7 +6,8 @@ const PROFILES: Dictionary = {
  "arcstorm": ["arc", "drone", "rail"],
  "kinetic": ["rail", "drone", "orbit"],
  "electric": ["arc", "orbit", "thermal"],
- "singularity": ["rail", "drone", "arc"]
+ "singularity": ["rail", "drone", "arc"],
+ "engineer": ["drone", "rail", "arc"]
 }
 var profile: String = "halo"
 var reaction: float = 0.0

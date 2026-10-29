@@ -71,7 +71,7 @@ func _ready() -> void:
 		var probe: Node = load("res://systems/android_qa_probe.gd").new()
 		probe.game = self
 		add_child(probe)
-	if "--capture" in OS.get_cmdline_user_args():
+	if OS.is_debug_build() and not OS.has_feature("android") and "--capture" in OS.get_cmdline_user_args():
 		_capture_session()
 	boot_smoke = "--smoke" in OS.get_cmdline_user_args()
 	if boot_smoke:
@@ -142,6 +142,9 @@ func _physics_process(delta: float) -> void:
 	var before_move := player.position
 	if player.tick(delta, input_router.movement(), input_router.dash_requested):
 		audio.play("dash")
+		if combat.sentry.deploy(before_move):
+			audio.play("sentry")
+			combat.effects.emit_fx("ring", before_move, before_move, Arsenal.color("drone"), 1.3)
 		combat.effects.emit_fx("ring", player.position, player.position, Color("78f8d4"), 1.7)
 		dash_trail_clock = 0.0
 	input_router.dash_requested = false
@@ -226,7 +229,7 @@ func resume_run() -> void:
 func open_build() -> void:
 	if state != State.PAUSED or not is_instance_valid(combat):
 		return
-	ui.show_build(progress, combat.mutations, func(): ui.show_pause(save.data["settings"]))
+	ui.show_build(progress, combat.mutations, func(): ui.show_pause(save.data["settings"]), combat.sentry.enabled)
 
 func go_menu() -> void:
 	if state in [State.PAUSED, State.UPGRADING, State.PLAYING]:
@@ -637,6 +640,36 @@ func _capture_session() -> void:
 	await get_tree().create_timer(0.3).timeout
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/build_overview.png")
+	# Explicit earned-kit presentation fixture, not a naturally unlocked run.
+	go_menu()
+	save.data = SaveStore.defaults()
+	save.data["architects"] = 1
+	save.data["selected_kit"] = "engineer"
+	open_lab()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/engineer_foundry.png")
+	start_run()
+	ui.toast_time = 0
+	for i in range(4):
+		var target: SwarmEnemy = combat.spawn(0, Vector3(-5 - i, 0, -4))
+		target.hp = 500
+	input_router.stick = Vector2.RIGHT
+	input_router.dash_requested = true
+	_physics_process(1.0 / 60.0)
+	input_router.stick = Vector2.ZERO
+	for i in range(34):
+		_physics_process(1.0 / 60.0)
+	state = State.PAUSED
+	ui.update_hud(player, progress, combat)
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/engineer_sentry.png")
+	open_build()
+	await get_tree().create_timer(0.3).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/engineer_build.png")
 	audio.shutdown()
 	get_tree().quit()
 

@@ -6,6 +6,7 @@ const SAMPLES: int = 600
 var failures: Array[String] = []
 var corrupted: bool = false
 var gravity_stress: bool = false
+var engineer_stress: bool = false
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -17,6 +18,9 @@ func scenario(count: int, quality: int) -> Dictionary:
 	game.set_process(false)
 	game.set_physics_process(false)
 	game.save.data = SaveStore.defaults()
+	if engineer_stress:
+		game.save.data["architects"] = 1
+		game.save.data["selected_kit"] = "engineer"
 	game.start_run()
 	game.audio.shutdown()
 	var world: CombatWorld = game.combat
@@ -67,7 +71,9 @@ func scenario(count: int, quality: int) -> Dictionary:
 		var angle: float = step * DT * 0.25
 		var moving := Vector2(cos(angle), sin(angle))
 		var start := Time.get_ticks_usec()
-		game.player.tick(DT, moving, false)
+		var takeoff: Vector3 = game.player.position
+		if game.player.tick(DT, moving, engineer_stress and step % 160 == 0):
+			world.sentry.deploy(takeoff)
 		world.tick(DT, game.player)
 		game.pickups.tick(DT, game.player)
 		# Sustain projectile and pickup work instead of silently draining the workload.
@@ -97,6 +103,8 @@ func scenario(count: int, quality: int) -> Dictionary:
 	var state := {"enemies": world.active_enemies, "kills": world.kills, "damage": world.damage_by_weapon.duplicate(),
 		"player_x": game.player.position.x, "player_z": game.player.position.z, "xp_collected": game.pickups.total_collected,
 		"shots": world.active_projectiles, "rng_state": world.rng.state}
+	if engineer_stress:
+		state["sentry"] = {"activations": world.sentry.activations, "shots": world.sentry.shots}
 	var total: float = 0.0
 	for value in samples:
 		total += value
@@ -107,6 +115,10 @@ func scenario(count: int, quality: int) -> Dictionary:
 		"minimum_pickups_after_refill": pickup_floor, "corruption": world.corruption.accepted.duplicate(), "drone_count": world.rig.drone_points.size(),
 		"memory_static_mb": Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0,
 		"gameplay_fingerprint": JSON.stringify(state).sha256_text(), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
+	if engineer_stress:
+		result["field_sentry"] = state["sentry"]
+		if world.sentry.activations == 0 or world.sentry.shots == 0:
+			failures.append("Engineer stress never exercised an accepted dash and firing sentry")
 	if gravity_stress and (world.gravity.activations == 0 or world.gravity.pulses_fired == 0):
 		failures.append("Gravity stress never exercised its field workload")
 	if corrupted and pickup_floor < 250:
@@ -120,7 +132,8 @@ func scenario(count: int, quality: int) -> Dictionary:
 	return result
 
 func run() -> void:
-	gravity_stress = "--gravity-stress" in OS.get_cmdline_user_args()
+	engineer_stress = "--engineer-stress" in OS.get_cmdline_user_args()
+	gravity_stress = engineer_stress or "--gravity-stress" in OS.get_cmdline_user_args()
 	corrupted = gravity_stress or "--corruption-stress" in OS.get_cmdline_user_args()
 	var report := QAReport.metadata("synthetic combat CPU benchmark")
 	report["limitations"] = ["Headless CPU simulation; excludes rendering, GPU, frame pacing and phone thermal behavior.",
@@ -128,9 +141,11 @@ func run() -> void:
 		"Fixture sustains at least 160 friendly + 160 hostile projectiles plus game-generated shots, 250 pickups and full weapon effects.",
 		"Timings include collision/AI/weapons/pickups/refill work but exclude bot decisions and render UI.",
 		"No absolute FPS/performance pass threshold on shared CI hardware."]
-	report["fixture_version"] = 4 if gravity_stress else (3 if corrupted else 2)
+	report["fixture_version"] = 5 if engineer_stress else (4 if gravity_stress else (3 if corrupted else 2))
 	report["loadout"] = "Singularity + Arc + Drone + Pulse/Arcstorm, Tether 3, all corruption links" if gravity_stress else "Pulse/Arcstorm + Arc + Rail + Drone, all three corruption links" if corrupted else "Pulse/Arcstorm + Arc + Orbit + Thermal, clean"
 	report["enemy_mix"] = "six regular archetypes including Insulator; differs from pre-0.4 fixed mix"
+	if engineer_stress:
+		report["loadout"] += "; Engineer dash sentry every 160 ticks, one reusable instance"
 	var rows: Array[Dictionary] = []
 	for count in [100, 300, 600]:
 		var low: Dictionary = await scenario(count, 0)
@@ -142,12 +157,12 @@ func run() -> void:
 		print("STRESS_CASE enemies=", count, " low_p95_ms=", low["p95_simulation_step_ms"], " high_p95_ms=", high["p95_simulation_step_ms"])
 	report["scenarios"] = rows
 	report["failures"] = failures
-	QAReport.write("res://builds/qa/" + ("gravity-stress-report.json" if gravity_stress else ("corruption-stress-report.json" if corrupted else "stress-report.json")), report)
+	QAReport.write("res://builds/qa/" + ("engineer-stress-report.json" if engineer_stress else ("gravity-stress-report.json" if gravity_stress else ("corruption-stress-report.json" if corrupted else "stress-report.json"))), report)
 	var markdown := "# Synthetic combat CPU benchmark\n\nHeadless simulation timing, NOT Android FPS. Synthetic invulnerable targets maintain load.\n\n| Enemies | Quality | Peak shots | Mean ms | p95 ms | p99 ms | Peak effects |\n|---:|---|---:|---:|---:|---:|---:|\n"
 	for row in rows:
 		markdown += "| %d | %s | %d | %.3f | %.3f | %.3f | %d |\n" % [row["requested_enemies"], row["quality"], row["projectile_peak"], row["mean_simulation_step_ms"], row["p95_simulation_step_ms"], row["p99_simulation_step_ms"], row["effect_peak"]]
 	markdown += "\nLow/high gameplay-state parity and fixed-load checks: %s. CPU: %s.\n" % ["passed" if failures.is_empty() else "FAILED", report["cpu"]]
-	QAReport.text_file("res://builds/qa/" + ("GRAVITY_STRESS_REPORT.md" if gravity_stress else ("CORRUPTION_STRESS_REPORT.md" if corrupted else "STRESS_REPORT.md")), markdown)
-	print("GRAVITY_STRESS_REPORT scenarios=" if gravity_stress else "CORRUPTION_STRESS_REPORT scenarios=" if corrupted else "STRESS_REPORT scenarios=", rows.size(), " failures=", failures.size())
+	QAReport.text_file("res://builds/qa/" + ("ENGINEER_STRESS_REPORT.md" if engineer_stress else ("GRAVITY_STRESS_REPORT.md" if gravity_stress else ("CORRUPTION_STRESS_REPORT.md" if corrupted else "STRESS_REPORT.md"))), markdown)
+	print("ENGINEER_STRESS_REPORT scenarios=" if engineer_stress else "GRAVITY_STRESS_REPORT scenarios=" if gravity_stress else "CORRUPTION_STRESS_REPORT scenarios=" if corrupted else "STRESS_REPORT scenarios=", rows.size(), " failures=", failures.size())
 	await create_timer(0.1).timeout
 	quit(0 if failures.is_empty() else 1)

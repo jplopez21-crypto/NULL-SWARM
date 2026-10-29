@@ -26,6 +26,8 @@ func _game(seed_value: int, kit: String, pickup_mode: String = "local") -> Node3
 		game.save.data["salvaged_kills"] = 150
 	if kit == "sentinel":
 		game.save.data["wardens"] = 1
+	if kit == "engineer":
+		game.save.data["architects"] = 1
 	game.save.data["selected_kit"] = kit
 	game.start_run()
 	if pickup_mode == "legacy":
@@ -147,6 +149,8 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"corruption": game.combat.corruption.accepted.duplicate(), "link_policy": link_policy,
 		"banked_salvage": int(game.save.data["ledger"].get("awarded", 0)), "upgrade_choices": bot.choices, "minute_snapshots": snapshots,
 		"simulation_step_p95_ms": QAReport.percentile(samples, 0.95), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
+	if kit == "engineer":
+		result["field_sentry"] = {"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots}
 	if result["outcome"] == "victory":
 		_check(result["architect_defeated"] and float(result["survived_seconds"]) >= 600.0, "invalid victory")
 	if trace_pacing:
@@ -189,6 +193,20 @@ func run() -> void:
 		markdown += "\nTrace samples include banked/uncollected XP, nearby packet distance, attraction state and player position. Cautious and value-aware policies are preserved.\n\nFailures: %d. No global XP/spawn/damage changes.\n" % failures.size()
 		QAReport.text_file("res://builds/qa/PACING_REPORT.md", markdown)
 		print("PACING_REPORT cases=", cases.size(), " failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--engineer-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules earned Engineer sessions")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202]:
+			var result: Dictionary = await simulate(seed_value, "engineer", "engineer")
+			cases.append(result)
+			_check(int(result["field_sentry"]["activations"]) > 0 and int(result["field_sentry"]["shots"]) > 0, "Engineer bot never exercised an actual dash sentry")
+			print("ENGINEER_CASE seed=", seed_value, " outcome=", result["outcome"], " sentry=", result["field_sentry"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Architect milestone is an explicit earned-kit starting fixture; no research, combat-stat, XP or damage immunity grants.", "Existing cautious navigation dashes for danger, not optimal sentry placement. Two seeds do not establish human balance."]
+		QAReport.write("res://builds/qa/engineer-probe.json", report)
 		quit(0 if failures.is_empty() else 1)
 		return
 	if "--corruption-probe" in OS.get_cmdline_user_args():

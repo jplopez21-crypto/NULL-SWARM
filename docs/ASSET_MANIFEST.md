@@ -34,3 +34,7 @@ Corruption 0.5 adds original purple UI elements and a fourth escort using the ex
 Gravity-field boundary/core are original procedural torus meshes with shared project materials; the evolved rail cue is original synthesized PCM in SwarmAudio. No external assets were downloaded. These remain development visuals/audio, not final commercial assets.
 
 The build/mutation guide uses original project-authored panel styles and existing Godot fallback typography. No new external images, fonts, music or models were added.
+
+## Engineer
+
+Field Sentry's reusable tripod, head/barrel and base ring are original procedural project geometry, using the existing Drone Hive palette/material helpers. Its deployment cue is original synthesized PCM. No external assets were downloaded; these remain development visuals/audio.

@@ -62,6 +62,7 @@ var boss_bar: ProgressBar
 var boss_cue_label: Label
 var boss_label: Label
 var surge_label: Label
+var sentry_label: Label
 var toast_title: Label
 var toast_detail: Label
 var toast_time: float = 0.0
@@ -214,6 +215,9 @@ func _build_hud() -> void:
 	boss_cue_label.visible = false
 	surge_label = label_at(hud, "", 18, Color("b9f66b"))
 	surge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sentry_label = label_at(hud, "", 14, Arsenal.color("drone"))
+	sentry_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	sentry_label.visible = false
 	toast_title = label_at(hud, "", 30, CYAN)
 	toast_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast_detail = label_at(hud, "", 16, MUTED)
@@ -331,11 +335,13 @@ func _build_card(parent: Node, color: Color) -> VBoxContainer:
 	panel.add_child(box)
 	return box
 
-func show_build(progress: RunProgression, active: Array[String], back: Callable) -> void:
+func show_build(progress: RunProgression, active: Array[String], back: Callable, engineer: bool = false) -> void:
 	var box := _panel()
 	box.custom_minimum_size.x = 1000
 	build_heading = label_at(box, "DEPLOYMENT BUILD", 30, CYAN)
 	label_at(box, "Combat paused. Mutations activate automatically when both ranks are reached.", 16, MUTED)
+	if engineer:
+		label_at(box, "ENGINEER // DASH UPLINK: one 3s sentry at takeoff. Drone Hive ranks boost its damage.", 16, Arsenal.color("drone"))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 20)
 	box.add_child(row)
@@ -522,6 +528,8 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
 	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
+	sentry_label.visible = combat.sentry.enabled
+	sentry_label.text = (("FIELD SENTRY %.1fs // NEXT DASH REPOSITIONS IT" % combat.sentry.remaining) if combat.sentry.remaining > 0.0 else "ENGINEER // DASH TO DEPLOY A 3s SENTRY") if combat.sentry.enabled else ""
 	dash_gauge.value = clampf(100.0 * (1.0 - player.dash_cooldown / SwarmPlayer.DASH_COOLDOWN), 0.0, 100.0)
 	if player.health.shield >= player.health.max_shield:
 		defense_label.text = "SHIELD ONLINE"
@@ -670,13 +678,19 @@ func show_lab(data: Dictionary, back: Callable, message: String = "") -> void:
 		purchase.disabled = cost < 0 or cost > int(data["salvage"])
 	label_at(box, "STARTING KITS // EACH HAS A TRADEOFF", 19, Color("ffe39b"))
 	var unlocked := Research.unlocked(data)
+	var kits := GridContainer.new()
+	kits.columns = 2
+	kits.add_theme_constant_override("h_separation", 12)
+	box.add_child(kits)
 	for id in Research.KITS:
 		var kit: Dictionary = Research.KITS[id]
 		var requirement := ""
 		if not unlocked.has(id):
-			requirement = "  LOCKED: %d/150 lifetime kills" % mini(150, int(data["salvaged_kills"])) if id == "conductor" else "  LOCKED: defeat the Warden"
+			requirement = "  LOCKED: %d/150 lifetime kills" % mini(150, int(data["salvaged_kills"])) if id == "conductor" else ("  LOCKED: defeat the Architect" if id == "engineer" else "  LOCKED: defeat the Warden")
+		# A dedicated line keeps requirements legible in the two-column layout.
+		requirement = "\n" + requirement.strip_edges() if not requirement.is_empty() else ""
 		var text: String = kit["title"] + ("  [SELECTED]" if data["selected_kit"] == id else "") + requirement + "\n" + kit["description"]
-		var select := button_at(box, text, func(): kit_selected.emit(id))
+		var select := button_at(kits, text, func(): kit_selected.emit(id))
 		select.add_theme_font_size_override("font_size", 16)
 		select.disabled = not unlocked.has(id) or data["selected_kit"] == id
 	var back_button := button_at(box, "BACK", back)

@@ -8,6 +8,7 @@ signal notice(title: String, detail: String, color: Color)
 signal weapon_fired(id: String)
 signal cache_recovered
 var gravity: GravityField
+var sentry: FieldSentry
 var effects: CombatEffects
 var rig: WeaponRig
 var encounters := EncounterDirector.new()
@@ -46,6 +47,8 @@ func _ready() -> void:
 	add_child(effects)
 	gravity = GravityField.new()
 	add_child(gravity)
+	sentry = FieldSentry.new()
+	add_child(sentry)
 	rig = WeaponRig.new()
 	add_child(rig)
 	# Large enough to accommodate the complete fixed initial pool reserve.
@@ -147,6 +150,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 	if target != null:
 		player.aim(target.position)
 	_tick_arsenal(delta, player)
+	sentry.tick(delta, self)
 	active_projectiles = 0
 	for shot in projectiles:
 		if not shot.active:

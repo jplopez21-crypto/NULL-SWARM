@@ -16,6 +16,8 @@ The pause build guide queries `Arsenal.MUTATIONS`, current ranks and active comb
 
 ## Foundry progression
 
+Engineer adds a fourth earned starting kit. `Research.apply` enables one `FieldSentry` on its fresh combat world; other kits allocate no sentry model. Main deploys it only when `SwarmPlayer.tick` accepts a dash, using the pre-move position. CombatWorld ticks it through the same paused simulation gate and damage/spatial/effect systems as other weapons. It has independent bounded lifetime/cooldown and reuses its model on refresh. No save schema change is needed: existing Architect milestones unlock the new kit and current v2 validation already checks earned selections.
+
 Research describes capped upgrades and starting-kit sidegrades independently of combat. SaveStore v2 migrates v1 data and owns the tokenized salvage ledger. Checkpoints award only the positive difference from the already-banked total; settlement closes a token once. Purchases persist immediately with in-memory rollback on write failure. Main composes research at deployment and checkpoints periodically and at lifecycle/encounter boundaries. Combat damage attribution records actual HP removed, excluding overkill; it is displayed in results and performs no online telemetry.
 
 ## Memory guidance

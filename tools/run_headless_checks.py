@@ -11,6 +11,7 @@ root = Path(__file__).resolve().parents[1]
 out = root / 'builds/qa'
 out.mkdir(parents=True, exist_ok=True)
 suites = [
+    ('engineer', ['--script', 'tests/run_engineer_tests.gd'], r'ENGINEER_RESULT checks=(\d+) failures=0'),
     ('gui-input', ['--script', 'tests/run_gui_input_tests.gd'], r'GUI_INPUT_RESULT checks=(\d+) failures=0'),
     ('audio', ['--script', 'tests/run_audio_tests.gd'], r'AUDIO_RESULT checks=(\d+) failures=0'),
     ('android-probe', ['--script', 'tests/run_probe_tests.gd'], r'PROBE_RESULT checks=(\d+) failures=0'),
@@ -18,7 +19,7 @@ suites = [
     ('input', ['--script', 'tests/run_input_tests.gd'], r'INPUT_RESULT checks=(\d+) failures=0'),
     ('systems', ['--script', 'tests/run_tests.gd'], r'TEST_RESULT checks=(\d+) failures=0'),
     ('corruption', ['--script', 'tests/run_corruption_tests.gd'], r'CORRUPTION_RESULT checks=(\d+) failures=0'),
-    ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=120 failures=0'),
+    ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=140 failures=0'),
     ('scene-smoke', ['--', '--smoke'], r'SCENE_SMOKE_OK'),
 ]
 results = []

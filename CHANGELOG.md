@@ -1,5 +1,12 @@
 # Changelog
 
+## Development — 2026-10-29 / Engineer and Dash Uplink
+
+- Added Architect-earned Engineer: Drone Hive, weak rifle, 80 HP and a real dash-origin sentry passive. One model is refreshed/repositioned rather than stacked; Drone Hive ranks and normal cycle bonuses scale its attacks.
+- Added passive lifetime/readiness HUD, build-guide description, original procedural tripod/deployment sound and a two-column Foundry kit layout.
+- Added ten-suite local coverage, two normal Engineer sessions, a six-case sustained Engineer load fixture and mobile GUI fixture tests after ordinary persistence validation. Separated emulator APK/evidence artifacts and restricted staged capture mode to desktop debug builds.
+- Local suites, normal sessions and synthetic load/parity checks passed. Hosted build/runtime/render evidence is pending and recorded in TEST_RESULTS.md; phone performance and human balance remain unverified.
+
 ## Development — 2026-10-29 / Build and mutation guide
 
 - Added Pause → Build // Mutations with live equipment slots/ranks, evolved titles and all three mutation recipes from the content registry.

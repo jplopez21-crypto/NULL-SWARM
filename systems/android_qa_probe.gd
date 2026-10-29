@@ -54,11 +54,17 @@ func snapshot() -> void:
 	data["performance_stats_visible"] = game.ui.perf_label.is_visible_in_tree()
 	data["performance_stats_text"] = game.ui.perf_label.text
 	data["build_text"] = game.ui.visible_build_text()
+	data["selected_kit"] = game.save.data["selected_kit"]
+	data["architects"] = game.save.data["architects"]
+	data["edit_fields"] = []
 	for node in game.ui.root.find_children("*", "Button", true, false):
 		if node.is_visible_in_tree():
 			var rect: Rect2 = node.get_global_rect()
 			data["buttons"].append({"text": node.text, "disabled": node.disabled, "rect": [rect.position.x, rect.position.y, rect.size.x, rect.size.y]})
 	if is_instance_valid(game.player) and is_instance_valid(game.combat):
+		data["sentry"] = {"enabled": game.combat.sentry.enabled, "remaining": game.combat.sentry.remaining,
+			"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots,
+			"position": [game.combat.sentry.position.x, game.combat.sentry.position.z], "status": game.ui.sentry_label.text}
 		data.merge({"dash_readiness": game.ui.dash_gauge.value, "operative_visible": game.player.body.visible,
 			"shield_status": game.ui.defense_label.text, "position": [game.player.position.x, game.player.position.z], "hp": game.player.health.current,
 			"time": game.combat.director.elapsed, "kills": game.combat.kills, "xp": game.pickups.total_collected,
@@ -70,6 +76,8 @@ func snapshot() -> void:
 	for field in game.ui.root.find_children("*", "TextEdit", true, false):
 		if field.is_visible_in_tree():
 			data["backup_code_length"] = field.text.length()
+			var rect: Rect2 = field.get_global_rect()
+			data["edit_fields"].append([rect.position.x, rect.position.y, rect.size.x, rect.size.y])
 	data["backup_recovery_available"] = FileAccess.file_exists(game.save.path + ".pre-import")
 	data["salvage"] = game.save.data["salvage"]
 	data["settings"] = game.save.data["settings"].duplicate(true)
