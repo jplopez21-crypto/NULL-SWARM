@@ -4,7 +4,7 @@
 
 - Added six original faceted regular-enemy hulls with clearer role shapes, shared cached meshes/materials and retained eye/warning cues. Bosses use their existing visual path.
 - Added geometry/cache/tint/role/pooling/accessibility regressions and an enlarged desktop-only review lineup. All ten local suites pass (954 systems/58 resources); equal six-type body instances/triangles decrease structurally, without an FPS claim.
-- Hosted render/runtime/full-QA acceptance pending. Enemy behavior, collision/damage/progression rules and normal camera are unchanged.
+- Verified source bc54a9468c39b457d8b9623a2e67faad41f82356 passed native export/signature, all 33 Android checks and full QA (26 normal sessions, 160 rendered layouts, 24 stress/nine kernel cases). Prior gameplay/XP/pacing results and stress fingerprints match; local/native/QA strict summaries agree. Inspected native lineup/ordinary combat and actual Android scenes. Exact artifacts/limits: TEST_RESULTS.md. Enemy behavior, collision/damage/progression rules and normal camera are unchanged.
 
 ## Development — 2026-10-29 / Industrial deck
 
