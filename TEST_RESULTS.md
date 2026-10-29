@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Combat phase profiling / grid query investigation — 2026-10-29
+
+- Added default-off per-phase timing and explicit reset/snapshot support. Benchmark opt-in excludes warm-up and reports CombatWorld-only work; player/pickups/refill/rendering are outside those phase totals. No timing-dependent gameplay or FPS pass threshold is introduced.
+- Baseline Engineer synthetic load: all six load/parity cases passed, and fingerprints match the prior non-profiled fixture. At 600 enemies, friendly projectiles account for about 60% of measured CombatWorld time. These are CPU-region wall durations with instrumentation overhead, not whole-frame costs or Android FPS.
+- Added a frozen legacy query reference, independent ordered-query/nearest parity checks and an alternating AB/BA static-kernel harness. Initial identical-code calibration passed parity but varied from roughly 0.95× to 1.09×, establishing observable noise. Candidate changes and paired whole-combat measurement remain in progress. Baseline reports: docs/qa/grid-query.
+
 ## Kill-chain and Overclock feedback — 2026-10-29
 
 - Implemented fixed-row pass-through feedback with kill progress, remaining-kill/deadline hints and an independent bonus-duration gauge. Idle feedback clears; new runs refresh the HUD immediately. Shared constants replace existing literals without changing the 20-kill / three-second / six-second / 1.6-cycle rules or arithmetic order.

@@ -41,6 +41,9 @@ var next_think_phase: Dictionary = {}
 var target: Node3D
 var active_enemies: int = 0
 var active_projectiles: int = 0
+var profile_enabled: bool = false
+var profile_frames: int = 0
+var profile_usec: Dictionary = {}
 const DEFINITIONS: Array[EnemyDefinition] = [preload("res://enemies/crawler.tres"), preload("res://enemies/striker.tres"), preload("res://enemies/sentry.tres"), preload("res://enemies/bulwark.tres"), preload("res://enemies/skimmer.tres"), preload("res://enemies/insulator.tres")]
 const ENEMY_RESERVE: int = 240
 
@@ -107,6 +110,8 @@ func fire(at: Vector3, direction: Vector3, hostile: bool = false, amount: float 
 	shot.activate(at, direction, 10.0 if hostile else weapon.definition.projectile_speed, amount if amount >= 0.0 else weapon.damage, 30.0 if hostile else weapon.definition.range_m, 0 if hostile else weapon.piercing)
 
 func tick(delta: float, player: SwarmPlayer) -> bool:
+	# Developer-only opt-in timing. No wall-clock reads when disabled.
+	var phase_start: int = Time.get_ticks_usec() if profile_enabled else 0
 	tick_index += 1
 	streak_time -= delta
 	if streak_time <= 0.0:
@@ -124,6 +129,8 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		if point.distance_to(player.position) < 18.0:
 			point = player.position - Vector3(cos(angle), 0, sin(angle)) * 25.0
 		spawn(director.archetype(rng, adaptation.preferred_kind(), adaptation.bias()), point)
+	if profile_enabled:
+		phase_start = _profile_phase("effects_and_spawning", phase_start)
 	active_enemies = 0
 	var regular_pace: float = corruption.enemy_pace()
 	for enemy in enemies:
@@ -141,9 +148,16 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			if player.health.take_damage(enemy.definition.damage):
 				player_hit.emit()
 			if player.health.current <= 0.0:
+				if profile_enabled:
+					_profile_phase("enemy_update", phase_start)
+					profile_frames += 1
 				return false
+	if profile_enabled:
+		phase_start = _profile_phase("enemy_update", phase_start)
 	grid.rebuild(enemies)
 	gravity.tick(delta, self)
+	if profile_enabled:
+		phase_start = _profile_phase("grid_and_gravity", phase_start)
 	target = grid.nearest(player.position, weapon.definition.range_m)
 	var fired := weapon.ready_to_fire(delta * (OVERCLOCK_RATE if overclock > 0.0 else 1.0) * corruption.cycle_rate(), target != null)
 	if fired:
@@ -153,8 +167,12 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		effects.emit_fx("spark", player.position, player.position, Color("c1ffe7"), 0.45)
 	if target != null:
 		player.aim(target.position)
+	if profile_enabled:
+		phase_start = _profile_phase("targeting_and_rifle", phase_start)
 	_tick_arsenal(delta, player)
 	sentry.tick(delta, self)
+	if profile_enabled:
+		phase_start = _profile_phase("arsenal_and_sentry", phase_start)
 	active_projectiles = 0
 	for shot in projectiles:
 		if not shot.active:
@@ -180,6 +198,8 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 				shot.deactivate()
 				break
 			shot.piercing -= 1
+	if profile_enabled:
+		phase_start = _profile_phase("friendly_projectiles", phase_start)
 	for shot in hostile_projectiles:
 		if not shot.active:
 			continue
@@ -190,7 +210,25 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			if player.health.take_damage(shot.damage):
 				player_hit.emit()
 			shot.deactivate()
+	if profile_enabled:
+		_profile_phase("hostile_projectiles", phase_start)
+		profile_frames += 1
 	return fired
+
+func _profile_phase(label: String, started: int) -> int:
+	var now: int = Time.get_ticks_usec()
+	profile_usec[label] = int(profile_usec.get(label, 0)) + now - started
+	return now
+
+func reset_profile() -> void:
+	profile_frames = 0
+	profile_usec.clear()
+
+func profile_snapshot() -> Dictionary:
+	var means: Dictionary = {}
+	for label in profile_usec:
+		means[label] = float(profile_usec[label]) / (1000.0 * maxi(1, profile_frames))
+	return {"frames": profile_frames, "mean_ms": means}
 
 func update_build(ranks: Dictionary) -> void:
 	loadout = ranks

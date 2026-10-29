@@ -7,6 +7,7 @@ var failures: Array[String] = []
 var corrupted: bool = false
 var gravity_stress: bool = false
 var engineer_stress: bool = false
+var phase_profile: bool = false
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -24,6 +25,7 @@ func scenario(count: int, quality: int) -> Dictionary:
 	game.start_run()
 	game.audio.shutdown()
 	var world: CombatWorld = game.combat
+	world.profile_enabled = phase_profile
 	world.rng.seed = 4242
 	world.director.elapsed = 600.0
 	world.encounters.mini_spawned = true
@@ -66,6 +68,8 @@ func scenario(count: int, quality: int) -> Dictionary:
 	var pickup_floor: int = 250
 	var wall_start := Time.get_ticks_usec()
 	for step in range(WARMUP + SAMPLES):
+		if phase_profile and step == WARMUP:
+			world.reset_profile()
 		# This fixture is deliberately synthetic and separate from normal-rules bot tests.
 		game.player.health.invulnerable = 1.0
 		var angle: float = step * DT * 0.25
@@ -119,6 +123,10 @@ func scenario(count: int, quality: int) -> Dictionary:
 		result["field_sentry"] = state["sentry"]
 		if world.sentry.activations == 0 or world.sentry.shots == 0:
 			failures.append("Engineer stress never exercised an accepted dash and firing sentry")
+	if phase_profile:
+		result["phase_profile"] = world.profile_snapshot()
+		if world.profile_frames != SAMPLES:
+			failures.append("Phase profile did not cover every measured combat tick")
 	if gravity_stress and (world.gravity.activations == 0 or world.gravity.pulses_fired == 0):
 		failures.append("Gravity stress never exercised its field workload")
 	if corrupted and pickup_floor < 250:
@@ -132,6 +140,7 @@ func scenario(count: int, quality: int) -> Dictionary:
 	return result
 
 func run() -> void:
+	phase_profile = "--phase-profile" in OS.get_cmdline_user_args()
 	engineer_stress = "--engineer-stress" in OS.get_cmdline_user_args()
 	gravity_stress = engineer_stress or "--gravity-stress" in OS.get_cmdline_user_args()
 	corrupted = gravity_stress or "--corruption-stress" in OS.get_cmdline_user_args()
@@ -144,6 +153,8 @@ func run() -> void:
 	report["fixture_version"] = 5 if engineer_stress else (4 if gravity_stress else (3 if corrupted else 2))
 	report["loadout"] = "Singularity + Arc + Drone + Pulse/Arcstorm, Tether 3, all corruption links" if gravity_stress else "Pulse/Arcstorm + Arc + Rail + Drone, all three corruption links" if corrupted else "Pulse/Arcstorm + Arc + Orbit + Thermal, clean"
 	report["enemy_mix"] = "six regular archetypes including Insulator; differs from pre-0.4 fixed mix"
+	if phase_profile:
+		report["phase_profile_scope"] = "CombatWorld only; excludes player/pickup/refill work and rendering. Instrumentation adds small timestamp/accounting overhead. Warm-up excluded."
 	if engineer_stress:
 		report["loadout"] += "; Engineer dash sentry every 160 ticks, one reusable instance"
 	var rows: Array[Dictionary] = []

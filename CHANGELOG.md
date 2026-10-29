@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-29 / Combat profiling and grid queries
+
+- Added opt-in seven-phase combat timing and a paired legacy/current query harness with ordered-result checks. Default gameplay does not collect timings; measured combat phases exclude rendering and surrounding fixture work.
+- Baseline load/parity checks and same-code calibration completed. Optimization decisions and hosted evidence are tracked in TEST_RESULTS.md.
+
 ## Development — 2026-10-29 / Kill-chain and Overclock feedback
 
 - Added a compact fixed-row gauge with remaining kills/chain deadline and independent Overclock duration. Text outlines and touch pass-through preserve readability/control; no new flashes or particles.

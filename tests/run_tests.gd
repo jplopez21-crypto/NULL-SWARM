@@ -71,12 +71,16 @@ func run() -> void:
 		target.position = Vector3(targeting_rng.randf_range(-30, 30), 0, targeting_rng.randf_range(-30, 30))
 		targets.append(target)
 	spatial.rebuild(targets)
+	var legacy_spatial: SpatialGrid = preload("res://tests/legacy_spatial_grid.gd").new()
+	legacy_spatial.cells = spatial.cells
 	# Include inactive stale cell entries, as enemies may die between grid rebuilds.
 	targets[1].active = false
 	for i in range(200):
 		var point := Vector3(targeting_rng.randf_range(-35, 35), 0, targeting_rng.randf_range(-35, 35))
 		var radius := targeting_rng.randf_range(0, 35)
 		var excluded: Array = [i % 80, (i + 1) % 80] if i % 2 == 0 else []
+		check(spatial.query(point, radius) == legacy_spatial.query(point, radius), "query matches independent legacy ordering and radial filtering")
+		check(spatial.nearest(point, radius, excluded) == legacy_spatial.nearest(point, radius, excluded), "nearest matches independent legacy implementation")
 		var expected: Node3D
 		var best := radius * radius
 		for target in spatial.query(point, radius):
@@ -500,6 +504,20 @@ func run() -> void:
 	check(game.combat.overclock == 0 and not game.ui.surge_gauge.visible and game.ui.surge_label.text.is_empty(), "expired chain and bonus clear all reward feedback")
 	game.start_run()
 	check(not game.ui.surge_gauge.visible and game.ui.surge_gauge.value == 0, "restart immediately resets reward feedback")
+	check(not game.combat.profile_enabled and game.combat.profile_snapshot()["frames"] == 0, "combat phase profiling defaults off")
+	game.combat.profile_enabled = true
+	game.combat.tick(0.01, game.player)
+	var phase_data: Dictionary = game.combat.profile_snapshot()
+	check(phase_data["frames"] == 1 and phase_data["mean_ms"].size() == 7, "opt-in profile records all seven combat phases")
+	var phase_values_valid: bool = true
+	for value in phase_data["mean_ms"].values():
+		phase_values_valid = phase_values_valid and is_finite(value) and value >= 0.0
+	check(phase_values_valid, "profile emits finite nonnegative durations")
+	game.combat.profile_enabled = false
+	game.combat.tick(0.01, game.player)
+	check(game.combat.profile_snapshot() == phase_data, "disabled profile does not accumulate counters or timing")
+	game.combat.reset_profile()
+	check(game.combat.profile_snapshot() == {"frames": 0, "mean_ms": {}}, "profile reset discards prior samples")
 	game.set_physics_process(false)
 	game.progress.pending = 1
 	game.show_upgrade()
