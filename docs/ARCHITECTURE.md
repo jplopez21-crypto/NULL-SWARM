@@ -20,8 +20,10 @@ Engineer adds a fourth earned starting kit. `Research.apply` enables one `FieldS
 
 Research describes capped upgrades and starting-kit sidegrades independently of combat. SaveStore v2 migrates v1 data and owns the tokenized salvage ledger. Checkpoints award only the positive difference from the already-banked total; settlement closes a token once. Purchases persist immediately with in-memory rollback on write failure. Main composes research at deployment and checkpoints periodically and at lifecycle/encounter boundaries. Combat damage attribution records actual HP removed, excluding overkill; it is displayed in results and performs no online telemetry.
 
-## Memory guidance
+## Overclock feedback
 
 CombatWorld owns the three-second chain gap, 20-kill threshold, six-second Overclock duration and 1.6 cycle multiplier as shared constants. The HUD reads those simulation clocks; it never advances them or uses wall time for reward feedback. Its fixed row avoids layout jumps, and fresh deployments update HUD state before first presentation. Staged native captures remain desktop-debug-only; Android telemetry observes the rendered label/gauge without granting rewards.
+
+## Memory guidance
 
 `PickupSystem.memory_target` is a read-only horizontal-distance query over stationary packets outside attraction range. `GameUI.update_memory` calls it at most four times per rendered second, with target-distance hysteresis. The UI projects the world direction into a player-relative chevron and distance label. It owns no collection or progression behavior, consumes no gameplay RNG and pauses/hides behind modal screens. The normal-rules bots retain their own unchanged navigation; bot outcome parity can validate simulation isolation, not whether humans find this cue helpful. Synthetic combat timing excludes this rendering/UI path.
