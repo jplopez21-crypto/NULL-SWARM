@@ -349,11 +349,39 @@ func run() -> void:
 	game.start_run()
 	game.set_physics_process(false)
 	for definition in CombatWorld.DEFINITIONS:
+		check(definition.projectile_hit_radius_squared == pow(definition.radius + 0.2, 2) and definition.player_contact_radius_squared == pow(definition.radius + 0.45, 2), "loaded collision caches retain exact original arithmetic")
 		var phases: Dictionary = {}
 		for pooled_enemy in game.combat.enemies:
 			if pooled_enemy.definition == definition:
 				phases[pooled_enemy.think_phase] = true
 		check(phases.size() == 6, "%s AI updates span every batch phase" % definition.title)
+	# Radius edits after activation must immediately affect real collision checks.
+	var editable: EnemyDefinition = CombatWorld.DEFINITIONS[0].duplicate()
+	var cache_target: SwarmEnemy = game.combat.spawn(0, Vector3(0.6, 0, 0))
+	cache_target.configure(editable)
+	cache_target.activate(Vector3(0.6, 0, 0), 1)
+	cache_target.hp = 1000
+	editable.radius = 0.1
+	game.player.health.invulnerable = 1
+	game.combat.fire(Vector3.ZERO, Vector3.FORWARD, false, 10)
+	game.combat.tick(0.001, game.player)
+	check(cache_target.hp == 1000, "small live radius retains projectile miss")
+	editable.radius = 0.5
+	game.combat.tick(0.001, game.player)
+	check(cache_target.hp < 1000, "increased live radius immediately permits projectile hit")
+	game.start_run()
+	cache_target = game.combat.spawn(0, Vector3(1.2, 0, 0))
+	cache_target.configure(editable)
+	cache_target.activate(Vector3(1.2, 0, 0), 1)
+	cache_target.hp = 1000
+	editable.radius = 0.1
+	var cache_shield: float = game.player.health.shield
+	game.combat.tick(0.001, game.player)
+	check(game.player.health.shield == cache_shield, "small live radius retains contact miss")
+	editable.radius = 1.0
+	game.combat.tick(0.001, game.player)
+	check(game.player.health.shield < cache_shield, "increased live radius immediately permits contact damage")
+	game.start_run()
 	var enemy: SwarmEnemy = game.combat.spawn(1, Vector3(10, 0, 0))
 	enemy.windup = 0.3
 	enemy.charging = 0.2

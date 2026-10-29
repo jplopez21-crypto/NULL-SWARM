@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--baseline', type=Path, required=True)
 parser.add_argument('--candidate', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
+parser.add_argument('--order', choices=['abba', 'baab'], default='abba')
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=True)
 roots = {'baseline': args.baseline.resolve(), 'candidate': args.candidate.resolve()}
@@ -26,14 +27,17 @@ for name, root in roots.items():
         'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),
         'dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=root, text=True).strip()),
         'sha256': {path: hashlib.sha256((root / path).read_bytes()).hexdigest()
-                   for path in ['systems/spatial_grid.gd', 'systems/combat_world.gd', 'tests/run_benchmark.gd']},
+                   for path in ['systems/spatial_grid.gd', 'resources/enemy_definition.gd', 'systems/combat_world.gd', 'tests/run_benchmark.gd']},
     }
 
 runs = []
 fingerprints = None
-for index, name in enumerate(['baseline', 'candidate', 'candidate', 'baseline']):
+order = ['baseline', 'candidate', 'candidate', 'baseline'] if args.order == 'abba' else ['candidate', 'baseline', 'baseline', 'candidate']
+for index, name in enumerate(order):
     root = roots[name]
     log = args.output / f'{index + 1}-{name}.log'
+    report_path = root / 'builds/qa/engineer-stress-report.json'
+    report_path.unlink(missing_ok=True)
     with tempfile.TemporaryDirectory(prefix='null-swarm-comparison-') as isolated:
         env = os.environ.copy()
         for key in ['XDG_DATA_HOME', 'XDG_CONFIG_HOME', 'XDG_CACHE_HOME']:
@@ -46,7 +50,8 @@ for index, name in enumerate(['baseline', 'candidate', 'candidate', 'baseline'])
     text = log.read_text()
     if completed.returncode or re.search(r'SCRIPT ERROR|^ERROR:|instances leaked|resources still in use', text, re.M):
         raise SystemExit(f'Failed benchmark: {log}')
-    report = json.loads((root / 'builds/qa/engineer-stress-report.json').read_text())
+    assert 'ENGINEER_STRESS_REPORT scenarios=6 failures=0' in text, f'Missing completion marker: {log}'
+    report = json.loads(report_path.read_text())
     assert not report['failures'] and len(report['scenarios']) == 6
     current = {(s['requested_enemies'], s['quality']): s['gameplay_fingerprint'] for s in report['scenarios']}
     if fingerprints is None:

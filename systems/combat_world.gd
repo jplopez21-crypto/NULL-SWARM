@@ -144,7 +144,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		var shot_direction := enemy.tick(delta)
 		if shot_direction != Vector3.ZERO:
 			fire(enemy.position, shot_direction, true, enemy.definition.damage)
-		if enemy.position.distance_squared_to(player.position) < pow(enemy.definition.radius + 0.45, 2):
+		if enemy.position.distance_squared_to(player.position) < enemy.definition.player_contact_radius_squared:
 			if player.health.take_damage(enemy.definition.damage):
 				player_hit.emit()
 			if player.health.current <= 0.0:
@@ -186,7 +186,7 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 			if shot.struck.has(enemy.index):
 				continue
 			var closest := Geometry3D.get_closest_point_to_segment(enemy.position, shot.previous, shot.position)
-			if enemy.position.distance_squared_to(closest) > pow(enemy.definition.radius + 0.2, 2):
+			if enemy.position.distance_squared_to(closest) > enemy.definition.projectile_hit_radius_squared:
 				continue
 			shot.struck.append(enemy.index)
 			var critical := rng.randf() < 0.08
