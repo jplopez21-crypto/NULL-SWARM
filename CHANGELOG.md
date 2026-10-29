@@ -4,7 +4,7 @@
 
 - Replaced bright checker floor with original chamfered panels, recessed hatches/grilles and restrained service/hazard paint. Two cached meshes share one lit material in the original two batches/400 placements.
 - Added bounded geometry/cache/material and rendered placement validation, plus desktop-only close capture. Split full native presentation captures from the install artifact, retaining its android/ path.
-- All ten local suites passed (896 systems/57 resources/2,244 headless UI checks); hosted visual/runtime/full-QA acceptance pending. Floor triangle count intentionally increases within a 64-triangle per-panel ceiling; no FPS improvement claim. Gameplay and ordinary camera remain unchanged.
+- All ten local suites passed (896 systems/57 resources/2,244 headless UI checks); Revised source 42b53896a8a498d327bb8ece0fa1f8ff6809a118 passed native export/signature, all 33 Android checks and full QA (26 normal sessions, 160 layouts, 24 stress/nine kernel cases). Rendered suite validates all 400 uploaded panel positions. Prior gameplay/XP/pacing results and stress fingerprints match; local/native/QA strict summaries agree. Native/Android visuals inspected after reducing pattern density. Exact artifacts/limits: TEST_RESULTS.md. Floor triangle count intentionally increases within a 64-triangle per-panel ceiling; no FPS improvement claim. Gameplay and ordinary camera remain unchanged.
 
 ## Development — 2026-10-29 / Projectile query allocations
 
