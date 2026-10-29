@@ -62,6 +62,15 @@ func run() -> void:
 	game.save.path = "user://qa_ui_lifecycle.json"
 	game.save.data = SaveStore.defaults()
 	game.audio.shutdown()
+	if captures:
+		# Dummy headless rendering returns identity for MultiMesh transform reads.
+		# Verify the actual uploaded placement only in the rendered capture suite.
+		var panel_positions: Dictionary = {}
+		for batch_node in game.arena.find_children("DeckPanels*", "MultiMeshInstance3D", true, false):
+			var batch: MultiMeshInstance3D = batch_node
+			for i in range(batch.multimesh.instance_count):
+				panel_positions[batch.multimesh.get_instance_transform(i).origin] = true
+		check(panel_positions.size() == 400 and panel_positions.has(Vector3(-47.5, -0.08, -47.5)) and panel_positions.has(Vector3(47.5, -0.08, 47.5)), "rendered deck preserves all 400 tile placements and original extent")
 	for size in [Vector2i(1280, 720), Vector2i(1600, 720), Vector2i(1280, 960), Vector2i(960, 600)]:
 		root.size = size
 		await settle()

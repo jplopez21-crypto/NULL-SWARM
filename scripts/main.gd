@@ -693,6 +693,13 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/overclock.png")
+	# Desktop-only staged close view of static deck art; normal camera is unchanged.
+	camera.size = 17.0
+	camera.position = Vector3(0, 24, 18)
+	camera.look_at(Vector3.ZERO)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/deck_detail.png")
 	audio.shutdown()
 	get_tree().quit()
 

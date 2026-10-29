@@ -1,6 +1,8 @@
 class_name ReactorArena
 extends Node3D
 
+const DECK_PANELS = preload("res://environments/deck_panels.gd")
+
 var reactor: Node3D
 var clock_time: float = 0.0
 
@@ -8,11 +10,10 @@ func _ready() -> void:
 	SwarmVisuals.box(self, Vector3(100, 0.4, 100), Vector3(0, -0.3, 0), Color("0b1823"))
 	for parity in range(2):
 		var instance := MultiMeshInstance3D.new()
+		instance.name = "DeckPanels%d" % parity
 		var batch := MultiMesh.new()
 		batch.transform_format = MultiMesh.TRANSFORM_3D
-		var mesh := BoxMesh.new()
-		mesh.size = Vector3(4.9, 0.08, 4.9)
-		batch.mesh = mesh
+		batch.mesh = DECK_PANELS.mesh(parity)
 		batch.instance_count = 200
 		var idx: int = 0
 		for x in range(20):
@@ -21,7 +22,8 @@ func _ready() -> void:
 					batch.set_instance_transform(idx, Transform3D(Basis(), Vector3(x * 5 - 47.5, -0.08, z * 5 - 47.5)))
 					idx += 1
 		instance.multimesh = batch
-		instance.material_override = SwarmVisuals.material(Color("142632") if parity == 0 else Color("192e3a"))
+		instance.material_override = DECK_PANELS.material()
+		instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(instance)
 	for side in [-1.0, 1.0]:
 		SwarmVisuals.box(self, Vector3(96, 0.08, 0.13), Vector3(0, 0, side * 47.8), Color("5be8c5"), true)

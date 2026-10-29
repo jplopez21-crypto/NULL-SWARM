@@ -38,3 +38,7 @@ The build/mutation guide uses original project-authored panel styles and existin
 ## Engineer
 
 Field Sentry's reusable tripod, head/barrel and base ring are original procedural project geometry, using the existing Drone Hive palette/material helpers. Its deployment cue is original synthesized PCM. No external assets were downloaded; these remain development visuals/audio.
+
+## Industrial deck
+
+Beveled deck panels, recessed hatch/grille geometry, fastener marks, service traces and restrained hazard/ID paint are original vertex-colored meshes authored in environments/deck_panels.gd for this project. Two cached single-surface meshes share one lit material and the existing floor batches. No external textures, fonts, models or audio were added. These are development artwork pending final commercial art review.

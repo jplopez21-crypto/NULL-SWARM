@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-10-29 / Industrial deck
+
+- Replaced bright checker floor with original chamfered panels, recessed hatches/grilles and restrained service/hazard paint. Two cached meshes share one lit material in the original two batches/400 placements.
+- Added bounded geometry/cache/material and rendered placement validation, plus desktop-only close capture. Split full native presentation captures from the install artifact, retaining its android/ path.
+- All ten local suites passed (896 systems/57 resources/2,244 headless UI checks); hosted visual/runtime/full-QA acceptance pending. Floor triangle count intentionally increases within a 64-triangle per-panel ceiling; no FPS improvement claim. Gameplay and ordinary camera remain unchanged.
+
 ## Development — 2026-10-29 / Projectile query allocations
 
 - Reuse a read-only empty fallback during spatial-cell lookup while preserving separate result snapshots for every attack. Only the shared fallback change is retained in production.

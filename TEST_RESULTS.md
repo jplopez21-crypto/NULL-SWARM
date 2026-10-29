@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Industrial deck presentation — 2026-10-29
+
+- Added original static beveled deck panels with hatches/grilles and restrained markings, replacing the bright checker palette. Existing two floor batches/400 instances share two single-surface meshes and one lit material. Geometry rises from 4,800 to a bounded 20,800 triangles; no GPU/FPS gain claim.
+- All ten local suites pass: 896 systems, 57 resources, 2,244 headless UI checks/160 layouts plus established coverage. Initial transform-placement assertion failed because Dummy rendering returns identity; reproduced the limitation and moved actual placement verification to the rendered UI suite (one extra check). No local rendered capture was executed.
+- Native capture artifact is split from the install ZIP to keep APK downloads small while preserving android/null-swarm-development-debug.apk. Hosted renders/actual Android/full-QA and visual acceptance are pending; prior APK below remains the verified build. Method: docs/INDUSTRIAL_DECK.md.
+
 ## Projectile query allocations — 2026-10-29
 
 - Retained a shared read-only empty bucket to avoid temporary Array containers during grid lookups. All queries still return independent mutable snapshots. A reusable-result-buffer experiment preserved gameplay but produced several slower whole-combat samples; its API/CombatWorld changes were removed before publication. Rejected raw evidence and final method: docs/PROJECTILE_QUERIES.md.

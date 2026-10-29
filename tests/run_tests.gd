@@ -357,6 +357,36 @@ func run() -> void:
 	game.set_physics_process(false)
 	game.start_run()
 	game.set_physics_process(false)
+	var panels: Script = preload("res://environments/deck_panels.gd")
+	for variant in range(2):
+		var deck: ArrayMesh = panels.mesh(variant)
+		check(deck == panels.mesh(variant), "deck geometry is cached across arena instances")
+		check(deck.get_surface_count() == 1 and deck.surface_get_primitive_type(0) == Mesh.PRIMITIVE_TRIANGLES, "deck variant uses one triangle surface")
+		var data: Array = deck.surface_get_arrays(0)
+		var vertices: PackedVector3Array = data[Mesh.ARRAY_VERTEX]
+		var normals: PackedVector3Array = data[Mesh.ARRAY_NORMAL]
+		var colors: PackedColorArray = data[Mesh.ARRAY_COLOR]
+		check(vertices.size() % 3 == 0 and vertices.size() / 3 <= 64, "deck stays within the static 64-triangle per-panel budget")
+		check(normals.size() == vertices.size() and colors.size() == vertices.size(), "every deck vertex has a normal and color")
+		var valid_geometry: bool = true
+		var valid_palette: bool = true
+		for i in range(vertices.size()):
+			var v: Vector3 = vertices[i]
+			valid_geometry = valid_geometry and v.is_finite() and absf(v.x) <= 2.451 and absf(v.z) <= 2.451 and v.y >= 0 and v.y <= 0.05 and normals[i].is_normalized()
+			valid_palette = valid_palette and colors[i].a == 1 and minf(colors[i].r, minf(colors[i].g, colors[i].b)) >= 0 and maxf(colors[i].r, maxf(colors[i].g, colors[i].b)) <= 0.45
+		for i in range(0, vertices.size(), 3):
+			var front: Vector3 = (vertices[i + 2] - vertices[i]).cross(vertices[i + 1] - vertices[i])
+			valid_geometry = valid_geometry and front.length_squared() > 0.0000001 and front.normalized().dot(normals[i]) > 0.99 and front.y > 0
+		check(valid_geometry, "deck triangles are finite, bounded, nondegenerate and face the lit top")
+		check(valid_palette, "deck uses opaque restrained colors without bright warning-like decoration")
+	check(panels.mesh(0) != panels.mesh(1) and panels.mesh(-1) == panels.mesh(0) and panels.mesh(99) == panels.mesh(1) and panels.meshes.size() == 2, "deck cache is bounded to two original service layouts")
+	check(panels.material() == panels.material() and panels.material().vertex_color_use_as_albedo and panels.material().vertex_color_is_srgb and panels.material().shading_mode == BaseMaterial3D.SHADING_MODE_PER_PIXEL, "deck uses one shared lit vertex-color material")
+	var deck_batches: Array[Node] = game.arena.find_children("DeckPanels*", "MultiMeshInstance3D", true, false)
+	check(deck_batches.size() == 2, "arena retains exactly two floor batches")
+	for batch_node in deck_batches:
+		var batch: MultiMeshInstance3D = batch_node
+		check(batch.multimesh.instance_count == 200 and batch.material_override == panels.material() and batch.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "floor batch retains 200 instances, shared material and no shadows")
+	check(game.arena.find_children("*", "CollisionObject3D", true, false).is_empty(), "decorative deck cannot add collision or obstruct movement")
 	for definition in CombatWorld.DEFINITIONS:
 		check(definition.projectile_hit_radius_squared == pow(definition.radius + 0.2, 2) and definition.player_contact_radius_squared == pow(definition.radius + 0.45, 2), "loaded collision caches retain exact original arithmetic")
 		var phases: Dictionary = {}
