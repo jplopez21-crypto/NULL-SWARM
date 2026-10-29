@@ -3,7 +3,7 @@
 ## Development — 2026-10-29 / Projectile query allocations
 
 - Reuse a read-only empty fallback during spatial-cell lookup while preserving separate result snapshots for every attack. Only the shared fallback change is retained in production.
-- Added nested-area/piercing/next-shot and snapshot-ownership regressions. All ten local suites passed (878 systems/56 resources); kernels now include the immediately prior verified reference and nine ordered-parity cases. Final paired timing and hosted acceptance are pending. No gameplay rules, CombatWorld code or budgets changed.
+- Added nested-area/piercing/next-shot and snapshot-ownership regressions. All ten local suites passed (878 systems/56 resources); kernels now include the immediately prior verified reference and nine ordered-parity cases. Verified source cfceb77d9af881ea4fcfd493a7c1925078031d81 passed native export/signature, all 33 Android checks and full QA (26 normal sessions, 160 layouts, 24 stress/nine kernel cases). Prior gameplay/XP/pacing results and stress fingerprints match; ten-suite local/native/QA summaries agree. Whole-combat timing remains mixed, without a general FPS gain claim. No gameplay rules, CombatWorld code or budgets changed.
 
 ## Development — 2026-10-29 / Combat profiling and grid queries
 
