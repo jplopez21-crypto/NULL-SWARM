@@ -4,7 +4,7 @@
 
 - Added opt-in seven-phase combat timing and a paired legacy/current query harness with ordered-result checks. Default gameplay does not collect timings; measured combat phases exclude rendering and surrounding fixture work.
 - Avoided absent nearest-target bucket arrays and repeated radius calculations; collision caches refresh on live definition edits. Exact ordered-query/hit behavior and all paired combat fingerprints are preserved.
-- All ten local suites and paired benchmarks passed. Heavy local fixture means improved while smaller cases were mixed; no uniform or phone FPS claim. Method/raw results: docs/COMBAT_PROFILING.md. Hosted acceptance is pending and tracked in TEST_RESULTS.md.
+- All ten local suites and paired benchmarks passed. Heavy local fixture means improved while smaller cases were mixed; no uniform or phone FPS claim. Method/raw results: docs/COMBAT_PROFILING.md. Verified source 738a047978ce53b61a6d64f8bfbfe89862f6bf98 passed native export/signature, 33 Android checks and full QA (26 normal sessions, 160 layouts, 24 stress/six kernel cases). All prior non-timing gameplay/pacing/XP results and stress fingerprints match; ten-suite local/native/QA summaries agree. Exact artifacts and limits are in TEST_RESULTS.md.
 
 ## Development — 2026-10-29 / Kill-chain and Overclock feedback
 
