@@ -728,6 +728,29 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/enemy_lineup.png")
+	# Paused desktop-only memory art reference at ordinary and close framing.
+	start_run()
+	state = State.PAUSED
+	player.position = Vector3.ZERO
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	camera.size = 29
+	camera.position = Vector3(0, 32, 23)
+	camera.look_at(Vector3.ZERO)
+	for row in range(3):
+		for col in range(5):
+			pickups.drop(Vector3((col - 2) * 1.3, 0, (row - 1) * 2.5), [5, 25, 100][row])
+	ui.update_hud(player, progress, combat)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_field.png")
+	player.position = Vector3(0, 0, 12)
+	camera.size = 9
+	camera.position = Vector3(0, 18, 13)
+	camera.look_at(Vector3.ZERO)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_detail.png")
 	audio.shutdown()
 	get_tree().quit()
 

@@ -349,6 +349,7 @@ func run() -> void:
 	collector.queue_free()
 	local_pickups.queue_free()
 	legacy_pickups.queue_free()
+	_test_memory_crystals()
 	var game = load("res://scenes/main.tscn").instantiate()
 	root.add_child(game)
 	game.save.path = "user://scene_test_progress.json"
@@ -837,3 +838,70 @@ func run() -> void:
 	await process_frame
 	print("TEST_RESULT checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)
+
+func _test_memory_crystals() -> void:
+	var art: Script = preload("res://effects/memory_crystals.gd")
+	var candidate := PickupSystem.new()
+	var reference: PickupSystem = preload("res://tests/round_pickup_fixture.gd").new()
+	var collector := SwarmPlayer.new()
+	root.add_child(candidate)
+	root.add_child(reference)
+	root.add_child(collector)
+	for xp in [1, 5, 24, 25, 99, 100, 1000000]:
+		var expected_tier: int = 2 if xp >= 100 else (1 if xp >= 25 else 0)
+		check(art.tier(xp) == expected_tier, "memory tier preserves exact 25/100 XP boundaries")
+		candidate.drop(Vector3(9, 0, 0), xp)
+		reference.drop(Vector3(9, 0, 0), xp)
+		var packet: MeshInstance3D = candidate.items.back()["mesh"]
+		var previous: MeshInstance3D = reference.items.back()["mesh"]
+		check(packet.mesh == art.mesh(xp) and packet.material_override == art.material(xp), "memory geometry and materials are shared by value tier")
+		check(packet.scale == previous.scale and packet.position == previous.position and packet.material_override.albedo_color == previous.material_override.albedo_color, "memory presentation preserves exact scale, position and tier tint")
+		check(packet.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "memory crystal cannot cast an expensive shadow")
+	for xp in [5, 25, 100]:
+		var shape: ArrayMesh = art.mesh(xp)
+		check(shape.get_surface_count() == 1 and shape.get_faces().size() / 3 == [8, 12, 16][art.tier(xp)], "memory tiers have one surface and bounded 8/12/16 triangles")
+		var data: Array = shape.surface_get_arrays(0)
+		var vertices: PackedVector3Array = data[Mesh.ARRAY_VERTEX]
+		var normals: PackedVector3Array = data[Mesh.ARRAY_NORMAL]
+		var colors: PackedColorArray = data[Mesh.ARRAY_COLOR]
+		var valid := vertices.size() == normals.size() and vertices.size() == colors.size()
+		var shades: Dictionary = {}
+		for i in range(vertices.size()):
+			valid = valid and vertices[i].is_finite() and normals[i].is_normalized()
+			valid = valid and colors[i].a == 1 and colors[i].r >= 0.55 and colors[i].r <= 1 and colors[i].r == colors[i].g and colors[i].r == colors[i].b
+			shades[colors[i]] = true
+		for i in range(0, vertices.size(), 3):
+			var outward := (vertices[i + 2] - vertices[i]).cross(vertices[i + 1] - vertices[i]).normalized()
+			valid = valid and outward.dot(normals[i]) > 0.999 and normals[i].dot((vertices[i] + vertices[i + 1] + vertices[i + 2]) / 3) > 0
+		check(valid and shades.size() == 3, "memory facets have outward clockwise normals and three opaque neutral brightness weights")
+		var bounds: AABB = shape.get_aabb()
+		check(bounds.position.x >= -0.16001 and bounds.position.y >= -0.16001 and bounds.position.z >= -0.16001 and bounds.end.x <= 0.16001 and bounds.end.y <= 0.16001 and bounds.end.z <= 0.16001 and is_equal_approx(bounds.size.y, 0.32), "memory tiers stay within the original orb envelope and retain full height")
+		check(art.material(xp).shading_mode == BaseMaterial3D.SHADING_MODE_UNSHADED and art.material(xp).vertex_color_use_as_albedo and art.material(xp).vertex_color_is_srgb, "memory facets retain tint without lighting or transparency")
+	check(art.mesh(-1) == art.mesh(5) and art.mesh(2147483647) == art.mesh(100) and art.meshes.size() == 3 and art.materials.size() == 3, "memory caches stay bounded even for unusual tier lookups")
+	# Local merging upgrades the same node's appearance; it must not displace XP.
+	while candidate.items.size() < PickupSystem.SOFT_BUDGET:
+		candidate.drop(Vector3(9, 0, 0), 5)
+		reference.drop(Vector3(9, 0, 0), 5)
+	for xp in [24, 25, 99, 100, 1000]:
+		candidate.drop(Vector3(9, 0, 0), xp)
+		reference.drop(Vector3(9, 0, 0), xp)
+		var merged: Dictionary = candidate.items.back()
+		check(merged["mesh"].mesh == art.mesh(merged["xp"]) and candidate.outstanding_xp() == reference.outstanding_xp() and candidate.items.size() == reference.items.size(), "local merge changes tier geometry while conserving location/count/XP")
+	candidate.vacuum()
+	reference.vacuum()
+	var parity := true
+	for step in range(90):
+		parity = parity and candidate.tick(1.0 / 60, collector) == reference.tick(1.0 / 60, collector)
+		parity = parity and candidate.outstanding_xp() == reference.outstanding_xp() and candidate.items.size() == reference.items.size()
+		for i in range(candidate.items.size()):
+			parity = parity and candidate.items[i]["mesh"].position == reference.items[i]["mesh"].position and candidate.items[i]["attract"] == reference.items[i]["attract"]
+	check(parity and candidate.items.is_empty() and candidate.total_collected == candidate.total_dropped, "crystals and round reference collect the same exact XP at the same positions and frames")
+	candidate.drop(Vector3.ZERO, 5)
+	var recycled: MeshInstance3D = candidate.items[0]["mesh"]
+	check(candidate.get_child_count() == PickupSystem.SOFT_BUDGET and recycled.mesh == art.mesh(5) and recycled.material_override == art.material(5) and recycled.scale == Vector3.ONE and recycled.visible, "recycled high-value crystal resets low-tier mesh, tint, size and visibility without allocating a node")
+	var old_shape: SphereMesh = reference.shape
+	var geometry := {"previous_triangles_per_packet": old_shape.get_faces().size() / 3, "new_triangles_per_tier": [8, 12, 16], "cached_meshes": art.meshes.size(), "cached_materials": art.materials.size(), "bounds": "0.32m cube before value scaling", "limits": "Structural counts only; no GPU draw-call, FPS or phone readability claim."}
+	QAReport.write("res://builds/qa/memory-crystal-geometry.json", geometry)
+	candidate.free()
+	reference.free()
+	collector.free()

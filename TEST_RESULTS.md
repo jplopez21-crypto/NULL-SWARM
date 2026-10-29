@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Memory crystals — implementation and local verification
+
+- Replaced only packet presentation and opening guidance; rules, coordinates, collection timing and XP are retained. Tests compare actual positions, per-frame collection and exact totals with the previous round presentation. Structural geometry: 8/12/16 triangles per tier versus 80 previously; same draw-instance count, no FPS claim.
+- First system run failed one over-strict assertion requiring a regular hexagonal tier to fill every axis of the old sphere AABB. Corrected it to require containment in the original envelope and exact height; no mesh or gameplay adjustment. The subsequent ten-suite run passed (1,002 systems, 60 resources, 2,244 UI checks/160 layouts). Final UI/capture wording follow-up was rechecked with all ten isolated suites passing with the same counts.
+- Local editor import initially emitted sandbox home-directory/cache/socket errors because XDG paths were not redirected. Isolated headless suites use writable temporary paths and are the authoritative local checks. Rendered import, APK and Android execution remain CI checks. No local rendered or physical-phone run claimed.
+- Hosted build, Android runtime and rendered/full gameplay QA: pending. Current downloadable verified APK remains the preceding enemy-chassis build.
+
 ## Regular enemy chassis — 2026-10-29
 
 - Added six original single-surface faceted hulls with distinct role shapes and definition tints. Existing eyes/warnings and boss/fallback body path remain; enemy activation/think/tick/hit function bodies match the previous verified source.

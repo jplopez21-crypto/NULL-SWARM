@@ -563,7 +563,7 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 	if time < 10.0:
 		hint_label.text = "DRAG LEFT SIDE TO MOVE     TAP DASH TO EVADE" if OS.has_feature("mobile") else "MOVE: WASD / LEFT STICK     DASH: SPACE / A"
 	else:
-		hint_label.text = "COLLECT BLUE MEMORY TO UPGRADE // CYAN ARROW POINTS TO MORE"
+		hint_label.text = "COLLECT MEMORY CRYSTALS TO UPGRADE // FOLLOW THE CYAN ARROW"
 	notices.text = "STRIKER SIGNALS DETECTED • ORANGE LANES WARN OF CHARGES" if time > 22.0 and time < 29.0 else ("SENTRY SIGNALS DETECTED • AVOID VIOLET FIRING LANES" if time > 62.0 and time < 70.0 else "")
 	if perf_label.visible and Time.get_ticks_msec() >= perf_next_sample_ms:
 		perf_next_sample_ms = Time.get_ticks_msec() + 250

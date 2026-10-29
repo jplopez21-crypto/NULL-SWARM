@@ -46,3 +46,7 @@ Beveled deck panels, recessed hatch/grille geometry, fastener marks, service tra
 ## Regular enemy chassis
 
 The six regular enemy hulls, tracked pods, dart/wing facets, shield plates, antenna forks and hexagonal insulation cage are original procedural geometry in enemies/chassis_models.gd. Single-surface hulls use shared lit materials tinted by the canonical definition colors; existing eye markers and warning geometry are retained. The enlarged labelled lineup is a desktop-debug-only review fixture using Godot's existing fallback font. No external models, textures, animation or audio were added. These remain development artwork pending commercial art and accessibility review.
+
+## Memory crystals
+
+Original four/six/eight-sided double-pyramid packet meshes and opaque grayscale facet weights are authored in effects/memory_crystals.gd. The existing blue/mint/gold packet palette is retained. No third-party art, models, shaders, fonts or audio were added. Paused field/detail captures are desktop-debug review fixtures. These are development assets pending physical-device readability and final commercial art review.

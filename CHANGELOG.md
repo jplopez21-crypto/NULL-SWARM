@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-29 / Memory crystals
+
+- Replaced round experience packets with original faceted blue/mint/gold crystals; retained XP tiers, exact colors/scaling and all collection/merge rules. Three cached single-surface meshes use 8/12/16 triangles versus 80 previously; draw-instance count is unchanged and no FPS gain is claimed.
+- Updated opening collection guidance and added paused normal/close desktop captures plus geometry, tier, round-reference, conservation and recycling tests. Hosted acceptance is pending until recorded in TEST_RESULTS.md.
+
 ## Development — 2026-10-29 / Enemy chassis
 
 - Added six original faceted regular-enemy hulls with clearer role shapes, shared cached meshes/materials and retained eye/warning cues. Bosses use their existing visual path.

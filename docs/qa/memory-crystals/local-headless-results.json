@@ -1,0 +1,75 @@
+{
+  "suites": [
+    {
+      "suite": "engineer",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 27,
+      "errors": []
+    },
+    {
+      "suite": "gui-input",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 36,
+      "errors": []
+    },
+    {
+      "suite": "audio",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 9,
+      "errors": []
+    },
+    {
+      "suite": "android-probe",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 8,
+      "errors": []
+    },
+    {
+      "suite": "resources",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 60,
+      "errors": []
+    },
+    {
+      "suite": "input",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 21,
+      "errors": []
+    },
+    {
+      "suite": "systems",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 1002,
+      "errors": []
+    },
+    {
+      "suite": "corruption",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 41,
+      "errors": []
+    },
+    {
+      "suite": "ui-headless",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 2244,
+      "errors": []
+    },
+    {
+      "suite": "scene-smoke",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": null,
+      "errors": []
+    }
+  ],
+  "status": "passed"
+}
