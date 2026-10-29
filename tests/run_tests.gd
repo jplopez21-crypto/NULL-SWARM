@@ -75,11 +75,14 @@ func run() -> void:
 	legacy_spatial.cells = spatial.cells
 	# Include inactive stale cell entries, as enemies may die between grid rebuilds.
 	targets[1].active = false
+	var scratch: Array = ["stale"]
 	for i in range(200):
 		var point := Vector3(targeting_rng.randf_range(-35, 35), 0, targeting_rng.randf_range(-35, 35))
 		var radius := targeting_rng.randf_range(0, 35)
 		var excluded: Array = [i % 80, (i + 1) % 80] if i % 2 == 0 else []
 		check(spatial.query(point, radius) == legacy_spatial.query(point, radius), "query matches independent legacy ordering and radial filtering")
+		spatial.query_into(point, radius, scratch)
+		check(scratch == legacy_spatial.query(point, radius), "reused buffer clears stale values and preserves legacy ordered results")
 		check(spatial.nearest(point, radius, excluded) == legacy_spatial.nearest(point, radius, excluded), "nearest matches independent legacy implementation")
 		var expected: Node3D
 		var best := radius * radius
@@ -103,6 +106,20 @@ func run() -> void:
 	check(spatial.nearest(Vector3.ZERO, 1) == null, "exact-radius boundary retains legacy strict comparison")
 	check(spatial.nearest(Vector3.ZERO, 0) == null, "zero range has no target")
 	check(spatial.nearest(Vector3.ZERO, 2, [0, 1]) == null, "all excluded produces no target")
+	var snapshot: Array = spatial.query(Vector3.ZERO, 1)
+	spatial.query_into(Vector3.ZERO, 1, scratch)
+	check(scratch == [targets[1], targets[0]], "buffered collision query retains inclusive boundary and cell order")
+	var returned: Array = spatial.query_into(Vector3(100, 0, 100), 0, scratch)
+	check(scratch.is_empty() and returned.is_empty(), "empty query clears previous candidates")
+	check(snapshot == [targets[1], targets[0]], "allocating query snapshot survives subsequent scratch reuse")
+	returned.append(targets[0])
+	check(scratch == [targets[0]], "buffer API returns caller-owned array rather than a replacement")
+	spatial.query_into(Vector3.ZERO, 2, scratch)
+	var nested_snapshot: Array = spatial.query(Vector3(100, 0, 100), 0)
+	check(nested_snapshot.is_empty() and scratch == snapshot, "nested allocating queries cannot overwrite scratch candidates")
+	scratch.clear()
+	check(spatial.query(Vector3.ZERO, 1) == snapshot, "scratch never aliases spatial buckets")
+	snapshot.clear()
 	for target in targets:
 		target.free()
 	var health := HealthComponent.new()
@@ -381,6 +398,27 @@ func run() -> void:
 	editable.radius = 1.0
 	game.combat.tick(0.001, game.player)
 	check(game.player.health.shield < cache_shield, "increased live radius immediately permits contact damage")
+	game.start_run()
+	# A nested attack query during a real piercing hit cannot clear later candidates.
+	game.combat.weapon.cooldown = 999
+	game.combat.weapon.piercing = 2
+	game.player.health.invulnerable = 1
+	for offset in [0.3, 0.5, 0.7]:
+		var piercing_target: SwarmEnemy = game.combat.spawn(0, Vector3(offset, 0, 0))
+		piercing_target.hp = 1000
+	var nested_calls: Array[int] = [0]
+	var nested_query: Callable = func(_at: Vector3, _amount: float, _critical: bool) -> void:
+		if nested_calls[0] == 0:
+			nested_calls[0] += 1
+			game.combat.area(Vector3(40, 0, 40), 1, 10)
+	game.combat.impact.connect(nested_query)
+	game.combat.fire(Vector3.ZERO, Vector3.FORWARD, false, 10)
+	game.combat.fire(Vector3(20, 0, 20), Vector3.FORWARD, false, 10)
+	game.combat.tick(0, game.player)
+	game.combat.impact.disconnect(nested_query)
+	check(nested_calls[0] == 1 and game.combat.projectiles[0].struck.size() == 3, "nested area query preserves all three ordered piercing hits")
+	check(not game.combat.projectiles[0].active and game.combat.projectiles[0].piercing == 0, "scratch reuse preserves piercing consumption and shot expiry")
+	check(game.combat.projectiles[1].active and game.combat.projectiles[1].struck.is_empty(), "next shot cannot reuse previous shot's stale candidates")
 	game.start_run()
 	var enemy: SwarmEnemy = game.combat.spawn(1, Vector3(10, 0, 0))
 	enemy.windup = 0.3

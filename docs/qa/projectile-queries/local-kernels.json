@@ -1,0 +1,245 @@
+{
+  "cases": [
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 1.02951388888889,
+      "kind": "query",
+      "legacy_median_us": 1.01736111111111,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          0.996527777777778,
+          0.932291666666667,
+          1.0625,
+          1.07986111111111
+        ],
+        "legacy": [
+          1.06076388888889,
+          0.973958333333333,
+          0.973958333333333,
+          1.69270833333333
+        ]
+      },
+      "speedup": 0.988195615514334
+    },
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 16.6892361111111,
+      "kind": "nearest",
+      "legacy_median_us": 22.9001736111111,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          16.9618055555556,
+          17.2517361111111,
+          16.3628472222222,
+          16.4166666666667
+        ],
+        "legacy": [
+          23.6041666666667,
+          23.171875,
+          22.5572916666667,
+          22.6284722222222
+        ]
+      },
+      "speedup": 1.37215229376885
+    },
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 0.860243055555556,
+      "kind": "query_into",
+      "legacy_median_us": 1.07204861111111,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          0.883680555555556,
+          0.836805555555556,
+          0.831597222222222,
+          1.11631944444444
+        ],
+        "legacy": [
+          1.06944444444444,
+          1.140625,
+          1.07465277777778,
+          0.942708333333333
+        ]
+      },
+      "speedup": 1.24621594349142
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 72,
+      "current_median_us": 1.30555555555556,
+      "kind": "query",
+      "legacy_median_us": 1.29166666666667,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          1.25520833333333,
+          1.35590277777778,
+          1.21701388888889,
+          1.37326388888889
+        ],
+        "legacy": [
+          1.37673611111111,
+          1.21006944444444,
+          1.234375,
+          1.34895833333333
+        ]
+      },
+      "speedup": 0.98936170212766
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 27711,
+      "current_median_us": 26.1232638888889,
+      "kind": "nearest",
+      "legacy_median_us": 32.5963541666667,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          25.8211805555556,
+          25.7222222222222,
+          26.4253472222222,
+          27.8958333333333
+        ],
+        "legacy": [
+          32.3055555555556,
+          33.4635416666667,
+          32.6267361111111,
+          32.5659722222222
+        ]
+      },
+      "speedup": 1.24779025719413
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 72,
+      "current_median_us": 1.13368055555556,
+      "kind": "query_into",
+      "legacy_median_us": 1.36197916666667,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          1.42361111111111,
+          1.09201388888889,
+          1.15277777777778,
+          1.11458333333333
+        ],
+        "legacy": [
+          1.23090277777778,
+          1.25347222222222,
+          1.47048611111111,
+          1.59027777777778
+        ]
+      },
+      "speedup": 1.20137825421133
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 4488,
+      "current_median_us": 8.65017361111111,
+      "kind": "query",
+      "legacy_median_us": 9.02256944444444,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          9.26041666666667,
+          8.30902777777778,
+          8.70138888888889,
+          8.59895833333333
+        ],
+        "legacy": [
+          9.73958333333333,
+          8.00173611111111,
+          8.47222222222222,
+          9.57291666666667
+        ]
+      },
+      "speedup": 1.0430506773708
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 175506,
+      "current_median_us": 139.814236111111,
+      "kind": "nearest",
+      "legacy_median_us": 149.698784722222,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          138.246527777778,
+          147.967013888889,
+          140.239583333333,
+          139.388888888889
+        ],
+        "legacy": [
+          146.550347222222,
+          153.661458333333,
+          152.847222222222,
+          145.024305555556
+        ]
+      },
+      "speedup": 1.07069772639787
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 4488,
+      "current_median_us": 9.21701388888889,
+      "kind": "query_into",
+      "legacy_median_us": 8.80989583333333,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          9.59722222222222,
+          9.17534722222222,
+          8.79340277777778,
+          9.25868055555556
+        ],
+        "legacy": [
+          8.53819444444444,
+          9.08159722222222,
+          8.36284722222222,
+          11.59375
+        ]
+      },
+      "speedup": 0.955829723111697
+    }
+  ],
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "failures": [],
+  "fixed_step": 0.0166666666666667,
+  "godot": "4.6.3-stable (official)",
+  "kind": "paired spatial-query kernel timing",
+  "limitations": [
+    "Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
+    "Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
+    "Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
+    "query_into reuses one bound caller-owned array; query allocates an independent snapshot for every request.",
+    "Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."
+  ],
+  "logical_cpus": 3,
+  "os": "Linux",
+  "rendering": "headless / no GPU frame measurements",
+  "schema": 1
+}

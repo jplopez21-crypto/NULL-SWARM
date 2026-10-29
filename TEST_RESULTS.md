@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Reusable projectile query snapshots — 2026-10-29
+
+- Added caller-owned query buffers and one tick-local projectile candidate container, with separate allocating snapshots for nested attacks. Shared read-only empty buckets avoid per-cell fallback containers. Engine storage may still resize; no zero-allocation claim.
+- All ten isolated local suites pass: 1,079 systems, 55 resources, 2,244 UI checks/160 layouts plus existing Engineer/GUI/input/audio/probe/corruption/smoke coverage. New randomized/ownership and actual nested-area/piercing/next-shot regressions pass. Paired timing and hosted acceptance are pending; the APK below remains the previous verified build. Method: docs/PROJECTILE_QUERIES.md.
+
 ## Combat phase profiling / grid query investigation — 2026-10-29
 
 - Added default-off per-phase timing and explicit reset/snapshot support. Benchmark opt-in excludes warm-up and reports CombatWorld-only work; player/pickups/refill/rendering are outside those phase totals. No timing-dependent gameplay or FPS pass threshold is introduced.

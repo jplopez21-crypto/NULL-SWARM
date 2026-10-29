@@ -42,9 +42,12 @@ func scenario(count: int, kind: String, radius: float) -> Dictionary:
 	var points: Array[Vector3] = []
 	for i in range(QUERIES):
 		points.append(Vector3(rng.randf_range(-extent, extent), 0, rng.randf_range(-extent, extent)))
+	var scratch: Array = []
+	var current_query := Callable(grid, kind).bind(scratch) if kind == "query_into" else Callable(grid, kind)
+	var legacy_query := Callable(legacy, "query" if kind == "query_into" else kind)
 	var parity: bool = true
 	for point in points:
-		if grid.call(kind, point, radius) != legacy.call(kind, point, radius):
+		if current_query.call(point, radius) != legacy_query.call(point, radius):
 			parity = false
 			failures.append("Ordered grid result differs from reference")
 	var legacy_samples: Array[float] = []
@@ -55,7 +58,7 @@ func scenario(count: int, kind: String, radius: float) -> Dictionary:
 		checksums.clear()
 		# Alternate AB/BA order on the same objects/process to reduce order bias.
 		for variant in (["legacy", "current"] if round_index % 2 == 0 else ["current", "legacy"]):
-			var measured: Dictionary = measure(Callable(legacy if variant == "legacy" else grid, kind), points, radius)
+			var measured: Dictionary = measure(legacy_query if variant == "legacy" else current_query, points, radius)
 			samples[variant].append(measured["us_per_query"])
 			checksums[variant] = measured["checksum"]
 		if checksums["legacy"] != checksums["current"]:
@@ -76,13 +79,14 @@ func run() -> void:
 	var report := QAReport.metadata("paired spatial-query kernel timing")
 	var rows: Array[Dictionary] = []
 	for count in [0, 100, 600]:
-		for kind in ["query", "nearest"]:
-			rows.append(scenario(count, kind, 2.0 if kind == "query" else 24.0))
+		for kind in ["query", "nearest", "query_into"]:
+			rows.append(scenario(count, kind, 24.0 if kind == "nearest" else 2.0))
 	report["cases"] = rows
 	report["failures"] = failures
 	report["limitations"] = ["Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
 		"Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
 		"Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
+		"query_into reuses one bound caller-owned array; query allocates an independent snapshot for every request.",
 		"Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."]
 	QAReport.write("res://builds/qa/grid-benchmark.json", report)
 	for row in rows:

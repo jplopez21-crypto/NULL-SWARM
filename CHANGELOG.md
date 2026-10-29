@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-29 / Projectile query snapshots
+
+- Reuse one candidate Array container per simulation tick across friendly shots, while nested attacks retain independent snapshots. Shared read-only empty buckets reduce temporary containers during grid traversal.
+- Added randomized buffer/ownership checks and real nested-area/piercing/next-shot collision regressions. All ten local suites passed; expanded kernels cover nine cases. Paired timings and hosted acceptance are pending. No gameplay rules or budgets changed.
+
 ## Development — 2026-10-29 / Combat profiling and grid queries
 
 - Added opt-in seven-phase combat timing and a paired legacy/current query harness with ordered-result checks. Default gameplay does not collect timings; measured combat phases exclude rendering and surrounding fixture work.

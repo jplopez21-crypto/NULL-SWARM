@@ -174,6 +174,8 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 	if profile_enabled:
 		phase_start = _profile_phase("arsenal_and_sentry", phase_start)
 	active_projectiles = 0
+	# Tick-local scratch survives across shots, while nested attacks own their queries.
+	var projectile_candidates: Array = []
 	for shot in projectiles:
 		if not shot.active:
 			continue
@@ -182,7 +184,8 @@ func tick(delta: float, player: SwarmPlayer) -> bool:
 		if not shot.active:
 			continue
 		var midpoint := (shot.previous + shot.position) * 0.5
-		for enemy in grid.query(midpoint, 2.0):
+		grid.query_into(midpoint, 2.0, projectile_candidates)
+		for enemy in projectile_candidates:
 			if shot.struck.has(enemy.index):
 				continue
 			var closest := Geometry3D.get_closest_point_to_segment(enemy.position, shot.previous, shot.position)
