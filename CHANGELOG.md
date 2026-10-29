@@ -4,7 +4,8 @@
 
 - Added Pause → Build // Mutations with live equipment slots/ranks, evolved titles and all three mutation recipes from the content registry.
 - Explained active/in-progress paths and blocked recipes, including the two-missing-weapons/one-free-slot edge case. Existing weapons can still evolve at full slots.
-- Kept the guide read-only and combat paused, with touch/controller navigation back to pause. Added GUI/data/probe regressions, 16 more layout fixtures and three Android touch checks. Local nine-suite validation passed; hosted results are tracked in TEST_RESULTS.md.
+- Kept the guide read-only and combat paused, with touch/controller navigation back to pause. Added GUI/data/probe regressions, 16 more layout fixtures and three Android touch checks.
+- Verified code d2320dfc3d697275ebc6362e53a3e8545a4dacf8 passed local/hosted nine-suite checks, ARM64 APK export, 25 Android checks and full gameplay QA (120 rendered layouts/18 stress cases). Prior non-timing gameplay/XP/pacing results and stress fingerprints are unchanged. Native/Android screenshots and downloaded APK/archive integrity verified; exact evidence and phone/signing limits are in TEST_RESULTS.md.
 
 ## Development — 2026-10-28 / Touch performance stats
 
