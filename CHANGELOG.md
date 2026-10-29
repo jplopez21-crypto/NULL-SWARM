@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-10-29 / Enemy chassis
+
+- Added six original faceted regular-enemy hulls with clearer role shapes, shared cached meshes/materials and retained eye/warning cues. Bosses use their existing visual path.
+- Added geometry/cache/tint/role/pooling/accessibility regressions and an enlarged desktop-only review lineup. All ten local suites pass (954 systems/58 resources); equal six-type body instances/triangles decrease structurally, without an FPS claim.
+- Hosted render/runtime/full-QA acceptance pending. Enemy behavior, collision/damage/progression rules and normal camera are unchanged.
+
 ## Development — 2026-10-29 / Industrial deck
 
 - Replaced bright checker floor with original chamfered panels, recessed hatches/grilles and restrained service/hazard paint. Two cached meshes share one lit material in the original two batches/400 placements.

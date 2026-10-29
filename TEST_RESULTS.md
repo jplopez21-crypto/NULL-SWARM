@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Regular enemy chassis — 2026-10-29
+
+- Added six original single-surface faceted hulls with distinct role shapes and definition tints. Existing eyes/warnings and boss/fallback body path remain; enemy activation/think/tick/hit function bodies match the previous verified source.
+- All ten local suites passed: 954 systems, 58 resources, 2,244 headless UI checks/160 layouts plus existing coverage. New cache/geometry/proportion/tint/pooling/recoil/accessibility and structural-budget checks passed. Equal six-type bodies plus eyes use 12 MeshInstances/467 triangles versus 22/747; this is structural accounting, not GPU/FPS evidence.
+- Added enlarged labelled desktop-only lineup capture. Normal-framing/actual Android and full QA/visual acceptance are pending; prior APK below remains the verified source. Method/limits: docs/ENEMY_CHASSIS.md.
+
 ## Industrial deck presentation — 2026-10-29
 
 - Added original static beveled deck panels with hatches/grilles and restrained markings, replacing the bright checker palette. Existing two floor batches/400 instances share two single-surface meshes and one lit material. Geometry rises from 4,800 to a bounded 15,200 triangles; no GPU/FPS gain claim.

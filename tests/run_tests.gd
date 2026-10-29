@@ -388,6 +388,67 @@ func run() -> void:
 		var expected_panels: int = 300 if batch.name == "DeckPanels0" else 100
 		check(batch.multimesh.instance_count == expected_panels and batch.material_override == panels.material() and batch.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "floor batches use three plain panels per service hatch, shared material and no shadows")
 	check(game.arena.find_children("*", "CollisionObject3D", true, false).is_empty(), "decorative deck cannot add collision or obstruct movement")
+	var chassis: Script = preload("res://enemies/chassis_models.gd")
+	var previous_parts: int = 0
+	var current_parts: int = 0
+	var previous_triangles: int = 0
+	var current_triangles: int = 0
+	var chassis_profiles: Dictionary = {}
+	for definition in CombatWorld.DEFINITIONS:
+		var hull: ArrayMesh = chassis.mesh(definition.id)
+		check(chassis.supports(definition.id) and hull == chassis.mesh(definition.id), "canonical enemy hull is cached")
+		check(hull.get_surface_count() == 1 and hull.surface_get_primitive_type(0) == Mesh.PRIMITIVE_TRIANGLES, "enemy hull uses one triangle surface")
+		var data: Array = hull.surface_get_arrays(0)
+		var vertices: PackedVector3Array = data[Mesh.ARRAY_VERTEX]
+		var normals: PackedVector3Array = data[Mesh.ARRAY_NORMAL]
+		var colors: PackedColorArray = data[Mesh.ARRAY_COLOR]
+		check(vertices.size() % 3 == 0 and vertices.size() / 3 <= 96 and normals.size() == vertices.size() and colors.size() == vertices.size(), "enemy hull respects the 96-triangle and vertex-attribute budget")
+		var valid_hull: bool = true
+		for i in range(vertices.size()):
+			var v: Vector3 = vertices[i]
+			valid_hull = valid_hull and v.is_finite() and absf(v.x) <= 0.95 and absf(v.z) <= 1.05 and v.y >= 0 and v.y <= 1.6 and normals[i].is_normalized()
+			valid_hull = valid_hull and colors[i].a == 1 and colors[i].r >= 0 and colors[i].r <= 1 and colors[i].r == colors[i].g and colors[i].g == colors[i].b
+		for i in range(0, vertices.size(), 3):
+			var front: Vector3 = (vertices[i + 2] - vertices[i]).cross(vertices[i + 1] - vertices[i])
+			valid_hull = valid_hull and front.length_squared() > 0.0000001 and front.normalized().dot(normals[i]) > 0.99
+		check(valid_hull, "enemy hull has finite bounded geometry, consistent winding and opaque tint weights")
+		chassis_profiles[hull.get_aabb().size] = true
+		var specimen := SwarmEnemy.new()
+		root.add_child(specimen)
+		specimen.configure(definition)
+		check(specimen.body.get_child_count() == 2 and specimen.body.get_node("Chassis").mesh == hull, "regular enemy uses one cached hull plus the existing eye marker")
+		check(specimen.body.get_node("Chassis").material_override == chassis.material(definition.id, definition.color) and chassis.material(definition.id, definition.color).albedo_color == definition.color, "shared hull material retains definition tint")
+		current_parts += specimen.body.get_child_count()
+		for child in specimen.body.get_children():
+			current_triangles += child.mesh.get_faces().size() / 3
+		specimen.visual_scale = 1.25
+		specimen.activate(Vector3.ZERO, 1)
+		specimen.hit(1, Vector3.ZERO)
+		specimen.tick(0.01)
+		check(specimen.body.scale != Vector3.ONE * 1.25 and specimen.body.visible, "new hull retains existing visible hit recoil")
+		specimen.deactivate()
+		specimen.activate(Vector3.ZERO, 1)
+		check(specimen.body.scale == Vector3.ONE * 1.25 and specimen.body.position == Vector3.ZERO and not specimen.telegraph.visible and specimen.body.get_node("Chassis").mesh == hull, "pool activation resets pose without rebuilding hull")
+		specimen.effects_enabled = false
+		specimen.hit(1, Vector3.ZERO)
+		specimen.tick(0.01)
+		check(specimen.body.scale == Vector3.ONE * 1.25 and specimen.body.position == Vector3.ZERO, "reduced-intensity setting suppresses new hull recoil")
+		specimen.free()
+		# Same old primitive path is retained for bosses and noncanonical visuals.
+		var reference := SwarmEnemy.new()
+		root.add_child(reference)
+		var previous_definition: EnemyDefinition = definition.duplicate()
+		previous_definition.id = &"visual_reference"
+		reference.configure(previous_definition)
+		previous_parts += reference.body.get_child_count()
+		for child in reference.body.get_children():
+			previous_triangles += child.mesh.get_faces().size() / 3
+		reference.free()
+	check(chassis_profiles.size() == 6, "six enemy archetypes have distinct hull proportions")
+	check(chassis.mesh(&"unknown") == chassis.mesh(&"crawler") and chassis.meshes.size() == 6 and chassis.materials.size() == 6, "enemy model caches remain bounded to six canonical IDs")
+	check(not chassis.supports(&"warden") and not chassis.supports(&"architect"), "bosses retain their existing body and embellishment path")
+	check(current_parts == 12 and current_parts < previous_parts and current_triangles < previous_triangles, "equal six-archetype sample reduces body mesh instances and total triangles")
+	print("CHASSIS_BUDGET old_parts=", previous_parts, " new_parts=", current_parts, " old_triangles=", previous_triangles, " new_triangles=", current_triangles)
 	for definition in CombatWorld.DEFINITIONS:
 		check(definition.projectile_hit_radius_squared == pow(definition.radius + 0.2, 2) and definition.player_contact_radius_squared == pow(definition.radius + 0.45, 2), "loaded collision caches retain exact original arithmetic")
 		var phases: Dictionary = {}

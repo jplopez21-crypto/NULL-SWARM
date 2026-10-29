@@ -42,3 +42,7 @@ Field Sentry's reusable tripod, head/barrel and base ring are original procedura
 ## Industrial deck
 
 Beveled deck panels, recessed hatch/grille geometry, fastener marks, service traces and restrained hazard/ID paint are original vertex-colored meshes authored in environments/deck_panels.gd for this project. Two cached single-surface meshes share one lit material and the existing floor batches. No external textures, fonts, models or audio were added. These are development artwork pending final commercial art review.
+
+## Regular enemy chassis
+
+The six regular enemy hulls, tracked pods, dart/wing facets, shield plates, antenna forks and hexagonal insulation cage are original procedural geometry in enemies/chassis_models.gd. Single-surface hulls use shared lit materials tinted by the canonical definition colors; existing eye markers and warning geometry are retained. The enlarged labelled lineup is a desktop-debug-only review fixture using Godot's existing fallback font. No external models, textures, animation or audio were added. These remain development artwork pending commercial art and accessibility review.

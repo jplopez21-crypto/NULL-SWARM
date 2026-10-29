@@ -1,0 +1,20 @@
+{
+  "scope": "One of each regular archetype, body plus unchanged eye; excludes telegraphs and bosses.",
+  "old_body_mesh_instances": 22,
+  "new_body_mesh_instances": 12,
+  "old_body_triangles": 747,
+  "new_body_triangles": 467,
+  "hull_triangles": {
+    "crawler": 66,
+    "striker": 27,
+    "sentry": 78,
+    "bulwark": 74,
+    "skimmer": 66,
+    "insulator": 84
+  },
+  "limit_per_hull": 96,
+  "limits": [
+    "Structural geometry/instance counts, not measured GPU draw calls or FPS.",
+    "Individual crawler/sentry/bulwark models have more triangles; reductions are across the equal six-type sample."
+  ]
+}

@@ -700,6 +700,33 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/deck_detail.png")
+	# Enlarged labelled lineup for desktop visual review, never an earned-play trace.
+	start_run()
+	state = State.PAUSED
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	player.position = Vector3(0, 0, 12)
+	camera.size = 24
+	camera.position = Vector3(0, 32, 23)
+	camera.look_at(Vector3.ZERO)
+	for i in range(CombatWorld.DEFINITIONS.size()):
+		var at := Vector3((i % 3 - 1) * 7, 0, (i / 3) * 6 + 1)
+		var specimen: SwarmEnemy = combat.spawn(i, at)
+		specimen.visual_scale = 1.6
+		specimen.body.scale = Vector3.ONE * 1.6
+		specimen.rotation.y = PI - 0.35
+		var caption := Label3D.new()
+		caption.text = str(specimen.definition.title).to_upper()
+		caption.font_size = 64
+		caption.pixel_size = 0.008
+		caption.outline_size = 8
+		caption.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		caption.position = at + Vector3(0, 0.15, 2)
+		combat.add_child(caption)
+	ui.update_hud(player, progress, combat)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/enemy_lineup.png")
 	audio.shutdown()
 	get_tree().quit()
 

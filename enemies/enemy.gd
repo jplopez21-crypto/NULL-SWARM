@@ -1,6 +1,8 @@
 class_name SwarmEnemy
 extends Node3D
 
+const CHASSIS = preload("res://enemies/chassis_models.gd")
+
 var active: bool = false
 var definition: EnemyDefinition
 var hp: float
@@ -23,6 +25,19 @@ func configure(resource: EnemyDefinition) -> void:
 	definition = resource
 	body = Node3D.new()
 	add_child(body)
+	if CHASSIS.supports(definition.id):
+		var hull := MeshInstance3D.new()
+		hull.name = "Chassis"
+		hull.mesh = CHASSIS.mesh(definition.id)
+		hull.material_override = CHASSIS.material(definition.id, definition.color)
+		body.add_child(hull)
+	else:
+		_build_legacy_body()
+	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
+	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
+	deactivate()
+
+func _build_legacy_body() -> void:
 	match definition.behavior:
 		0:
 			SwarmVisuals.box(body, Vector3(0.85, 0.55, 0.9), Vector3(0, 0.5, 0), definition.color)
@@ -55,9 +70,6 @@ func configure(resource: EnemyDefinition) -> void:
 			SwarmVisuals.ring(body, 0.85, Vector3(0, 0.7, 0), definition.color, 0.12)
 			for side in [-1.0, 1.0]:
 				SwarmVisuals.box(body, Vector3(0.18, 1.2, 0.22), Vector3(side * 0.55, 0.8, 0), definition.color, true)
-	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
-	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
-	deactivate()
 
 func activate(at: Vector3, health_scale: float) -> void:
 	position = at
