@@ -5,7 +5,7 @@
 - Added Architect-earned Engineer: Drone Hive, weak rifle, 80 HP and a real dash-origin sentry passive. One model is refreshed/repositioned rather than stacked; Drone Hive ranks and normal cycle bonuses scale its attacks.
 - Added passive lifetime/readiness HUD, build-guide description, original procedural tripod/deployment sound and a two-column Foundry kit layout.
 - Added ten-suite local coverage, two normal Engineer sessions, a six-case sustained Engineer load fixture and mobile GUI fixture tests after ordinary persistence validation. Separated emulator APK/evidence artifacts and restricted staged capture mode to desktop debug builds.
-- Local suites, normal sessions and synthetic load/parity checks passed. Hosted build/runtime/render evidence is pending and recorded in TEST_RESULTS.md; phone performance and human balance remain unverified.
+- Verified code e7c3775e7424b7a466faad7204792ff7ed45bb4e passed all ten local/hosted suites, signed ARM64 APK export, 32 Android checks, 140 rendered layouts, 26 normal sessions and 24 synthetic stress cases. Downloaded reports preserve prior gameplay/XP/pacing results and stress fingerprints; new Engineer cases/fingerprints match local runs. Actual Android and staged native visuals were inspected. Exact evidence and phone/signing limits are in TEST_RESULTS.md.
 
 ## Development — 2026-10-29 / Build and mutation guide
 

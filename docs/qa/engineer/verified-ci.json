@@ -1,0 +1,231 @@
+{
+  "verified_game_and_test_code": "e7c3775e7424b7a466faad7204792ff7ed45bb4e",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 53,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 447,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2008,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "ui_layouts": 140,
+  "native": {
+    "code": "e7c3775e7424b7a466faad7204792ff7ed45bb4e",
+    "run": 40859434307,
+    "artifact": 12890692747,
+    "zip_sha256": "a358c90f9f20d9da693420f4c2750eeb2c8c1b012fbbf58a2eb1070832aa9175",
+    "apk_sha256": "7374c172da9d9352fff20ab49e95ed3a3e6497eab9270868be5d80accd7dc6af",
+    "apk_bytes": 27765417,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "sentry_included_and_qa_fixture_excluded": true,
+    "archive_hashes_crcs": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "status": "passed"
+  },
+  "android": {
+    "run": 40859434184,
+    "artifact": 12891441214,
+    "zip_sha256": "d6a1f66ae79867c5c9c89a782cec3469f49fce54a8351342f458ef82c2c890ea",
+    "status": "passed",
+    "checks": 32,
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "ordinary_checkpoint": {
+      "kills": 37,
+      "simulation_seconds": 30.1666666666662,
+      "salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 4,
+        "enabled": true,
+        "position": [
+          30.4239082336426,
+          2.0801374912262
+        ],
+        "remaining": 2.46666666666667,
+        "shots": 1,
+        "status": "FIELD SENTRY 2.5s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 9.41666666666671,
+      "hp": 80,
+      "kills": 5
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.4667104207686131,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "emulator_apk_artifact": 12890688452,
+    "apk_separated_from_evidence": true
+  },
+  "gameplay_qa": {
+    "run": 40859434176,
+    "artifact": 12891557323,
+    "zip_sha256": "8995dedde21ed8161fc315928d2ac1ccf1f1234a71504241a6f9678dbcb3eb3e",
+    "status": "passed",
+    "normal_sessions": 26,
+    "standard_sessions": 14,
+    "corruption_sessions": 4,
+    "extended_sessions": 6,
+    "engineer_sessions": 2,
+    "pacing_probes": 4,
+    "xp_comparisons": 6,
+    "stress_cases": 24,
+    "full_report_comparison": {
+      "normal_sessions": 26,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 22
+      },
+      "prior_gameplay_and_xp_cases_match_except_timings": 28,
+      "prior_pacing_cases_match_except_timings": 4,
+      "prior_stress_fingerprints_match": 18,
+      "new_engineer_cases_match_local_except_timings": 2,
+      "new_vanguard_drone_priority_cases": [
+        {
+          "seed": 101,
+          "outcome": "victory"
+        },
+        {
+          "seed": 202,
+          "outcome": "victory"
+        }
+      ],
+      "new_engineer_stress_fingerprints_match_local": 6,
+      "engineer_cases": [
+        {
+          "seed": 101,
+          "outcome": "victory",
+          "sentry": {
+            "activations": 17,
+            "shots": 94
+          }
+        },
+        {
+          "seed": 202,
+          "outcome": "victory",
+          "sentry": {
+            "activations": 22,
+            "shots": 143
+          }
+        }
+      ],
+      "ui_checks": 2008,
+      "ui_layouts": 140,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_summary_matches_local_native_qa": true
+    }
+  },
+  "visual_review": {
+    "inspected": true,
+    "sources": [
+      "native engineer_sentry.png (staged)",
+      "native engineer_foundry.png (staged)",
+      "native engineer_build.png (staged)",
+      "actual Android engineer-combat.png"
+    ],
+    "observations": [
+      "Sentry stays at takeoff, separate from operative/orbiting drone.",
+      "Passive lifetime and two occupied weapon slots are visible.",
+      "Foundry and passive/build description fit the existing UI."
+    ]
+  },
+  "limits": [
+    "Android Engineer selection uses a labelled synthetic Architect milestone restored through the normal GUI after ordinary progression/update checks; it does not prove earning the unlock on-device.",
+    "Phone ARM64 Mobile rendering/FPS, Android 10, cutouts, thermals and human balance remain unverified.",
+    "Quiet observation is a fresh standard Vanguard deployment under x86_64 SWANGLE software rendering, not Engineer phone FPS or a causal performance comparison.",
+    "Persistent owner signing has not been provisioned/verified here; diagnostic keys rotate. Preserve existing installations/saves.",
+    "Original procedural visuals/audio remain development assets; no release AAB is claimed."
+  ],
+  "failures_before_fix": [
+    "Initial local Engineer/resource suites rejected an inferred-type error in the new test fixture; corrected before the successful local/hosted runs."
+  ],
+  "current_failures": []
+}
