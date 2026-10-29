@@ -24,7 +24,7 @@ func measure(fn: Callable, points: Array[Vector3], radius: float) -> Dictionary:
 
 func scenario(count: int, kind: String, radius: float) -> Dictionary:
 	var grid := SpatialGrid.new()
-	var legacy: SpatialGrid = preload("res://tests/legacy_spatial_grid.gd").new()
+	var legacy: SpatialGrid = (preload("res://tests/verified_spatial_grid.gd") if kind == "query_verified" else preload("res://tests/legacy_spatial_grid.gd")).new()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 91827 + count
 	var targets: Array = []
@@ -42,9 +42,9 @@ func scenario(count: int, kind: String, radius: float) -> Dictionary:
 	var points: Array[Vector3] = []
 	for i in range(QUERIES):
 		points.append(Vector3(rng.randf_range(-extent, extent), 0, rng.randf_range(-extent, extent)))
-	var scratch: Array = []
-	var current_query := Callable(grid, kind).bind(scratch) if kind == "query_into" else Callable(grid, kind)
-	var legacy_query := Callable(legacy, "query" if kind == "query_into" else kind)
+	var method: String = "query" if kind == "query_verified" else kind
+	var current_query := Callable(grid, method)
+	var legacy_query := Callable(legacy, method)
 	var parity: bool = true
 	for point in points:
 		if current_query.call(point, radius) != legacy_query.call(point, radius):
@@ -66,7 +66,7 @@ func scenario(count: int, kind: String, radius: float) -> Dictionary:
 			failures.append("Timed grid checksums differ")
 	var legacy_median: float = median(legacy_samples)
 	var current_median: float = median(current_samples)
-	var row := {"allocated_targets": count, "kind": kind, "radius": radius, "queries_per_round": QUERIES * LOOPS,
+	var row := {"allocated_targets": count, "kind": kind, "radius": radius, "reference": "verified 738a047 query" if kind == "query_verified" else "original legacy", "queries_per_round": QUERIES * LOOPS,
 		"rounds_us_per_query": samples, "legacy_median_us": legacy_median, "current_median_us": current_median,
 		"speedup": legacy_median / maxf(0.00001, current_median), "checksum": checksums["current"], "ordered_parity": parity}
 	grid.cells.clear()
@@ -79,14 +79,14 @@ func run() -> void:
 	var report := QAReport.metadata("paired spatial-query kernel timing")
 	var rows: Array[Dictionary] = []
 	for count in [0, 100, 600]:
-		for kind in ["query", "nearest", "query_into"]:
+		for kind in ["query", "nearest", "query_verified"]:
 			rows.append(scenario(count, kind, 24.0 if kind == "nearest" else 2.0))
 	report["cases"] = rows
 	report["failures"] = failures
 	report["limitations"] = ["Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
 		"Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
 		"Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
-		"query_into reuses one bound caller-owned array; query allocates an independent snapshot for every request.",
+		"query_verified compares the current query with the immediately prior verified implementation; other modes retain the original reference.",
 		"Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."]
 	QAReport.write("res://builds/qa/grid-benchmark.json", report)
 	for row in rows:

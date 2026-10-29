@@ -32,7 +32,7 @@
       "suite": "resources",
       "status": "passed",
       "exit_code": 0,
-      "checks": 55,
+      "checks": 56,
       "errors": []
     },
     {
@@ -46,7 +46,7 @@
       "suite": "systems",
       "status": "passed",
       "exit_code": 0,
-      "checks": 1079,
+      "checks": 878,
       "errors": []
     },
     {

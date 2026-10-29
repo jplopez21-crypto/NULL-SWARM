@@ -75,14 +75,11 @@ func run() -> void:
 	legacy_spatial.cells = spatial.cells
 	# Include inactive stale cell entries, as enemies may die between grid rebuilds.
 	targets[1].active = false
-	var scratch: Array = ["stale"]
 	for i in range(200):
 		var point := Vector3(targeting_rng.randf_range(-35, 35), 0, targeting_rng.randf_range(-35, 35))
 		var radius := targeting_rng.randf_range(0, 35)
 		var excluded: Array = [i % 80, (i + 1) % 80] if i % 2 == 0 else []
 		check(spatial.query(point, radius) == legacy_spatial.query(point, radius), "query matches independent legacy ordering and radial filtering")
-		spatial.query_into(point, radius, scratch)
-		check(scratch == legacy_spatial.query(point, radius), "reused buffer clears stale values and preserves legacy ordered results")
 		check(spatial.nearest(point, radius, excluded) == legacy_spatial.nearest(point, radius, excluded), "nearest matches independent legacy implementation")
 		var expected: Node3D
 		var best := radius * radius
@@ -107,19 +104,14 @@ func run() -> void:
 	check(spatial.nearest(Vector3.ZERO, 0) == null, "zero range has no target")
 	check(spatial.nearest(Vector3.ZERO, 2, [0, 1]) == null, "all excluded produces no target")
 	var snapshot: Array = spatial.query(Vector3.ZERO, 1)
-	spatial.query_into(Vector3.ZERO, 1, scratch)
-	check(scratch == [targets[1], targets[0]], "buffered collision query retains inclusive boundary and cell order")
-	var returned: Array = spatial.query_into(Vector3(100, 0, 100), 0, scratch)
-	check(scratch.is_empty() and returned.is_empty(), "empty query clears previous candidates")
-	check(snapshot == [targets[1], targets[0]], "allocating query snapshot survives subsequent scratch reuse")
-	returned.append(targets[0])
-	check(scratch == [targets[0]], "buffer API returns caller-owned array rather than a replacement")
-	spatial.query_into(Vector3.ZERO, 2, scratch)
-	var nested_snapshot: Array = spatial.query(Vector3(100, 0, 100), 0)
-	check(nested_snapshot.is_empty() and scratch == snapshot, "nested allocating queries cannot overwrite scratch candidates")
-	scratch.clear()
-	check(spatial.query(Vector3.ZERO, 1) == snapshot, "scratch never aliases spatial buckets")
+	check(snapshot == [targets[1], targets[0]], "collision query retains inclusive boundary and cell order")
+	var empty_snapshot: Array = spatial.query(Vector3(100, 0, 100), 0)
+	empty_snapshot.append(targets[0])
+	check(spatial.query(Vector3(100, 0, 100), 0).is_empty(), "empty results never alias the shared fallback or another result")
+	check(snapshot == [targets[1], targets[0]], "nested query leaves outer snapshot intact")
 	snapshot.clear()
+	check(spatial.query(Vector3.ZERO, 1) == [targets[1], targets[0]], "clearing query results cannot clear spatial buckets")
+	check(SpatialGrid.EMPTY_BUCKET.is_read_only() and SpatialGrid.EMPTY_BUCKET.is_empty(), "fallback is shared read-only empty storage")
 	for target in targets:
 		target.free()
 	var health := HealthComponent.new()
@@ -417,8 +409,8 @@ func run() -> void:
 	game.combat.tick(0, game.player)
 	game.combat.impact.disconnect(nested_query)
 	check(nested_calls[0] == 1 and game.combat.projectiles[0].struck.size() == 3, "nested area query preserves all three ordered piercing hits")
-	check(not game.combat.projectiles[0].active and game.combat.projectiles[0].piercing == 0, "scratch reuse preserves piercing consumption and shot expiry")
-	check(game.combat.projectiles[1].active and game.combat.projectiles[1].struck.is_empty(), "next shot cannot reuse previous shot's stale candidates")
+	check(not game.combat.projectiles[0].active and game.combat.projectiles[0].piercing == 0, "nested queries preserve piercing consumption and shot expiry")
+	check(game.combat.projectiles[1].active and game.combat.projectiles[1].struck.is_empty(), "next shot cannot inherit previous shot's stale candidates")
 	game.start_run()
 	var enemy: SwarmEnemy = game.combat.spawn(1, Vector3(10, 0, 0))
 	enemy.windup = 0.3

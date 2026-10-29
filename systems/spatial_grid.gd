@@ -2,6 +2,7 @@ class_name SpatialGrid
 extends RefCounted
 
 const CELL: float = 4.0
+# Read-only fallback; never returned as a caller's candidate array.
 const EMPTY_BUCKET: Array = []
 var cells: Dictionary = {}
 
@@ -16,12 +17,7 @@ func rebuild(entities: Array) -> void:
 		cells[key].append(entity)
 
 func query(point: Vector3, radius: float) -> Array:
-	return query_into(point, radius, [])
-
-func query_into(point: Vector3, radius: float, result: Array) -> Array:
-	# Caller owns the scratch array. Finish the ordered snapshot before any hits;
-	# nested allocating queries must never overwrite another attack's candidates.
-	result.clear()
+	var result: Array = []
 	var radius_squared: float = radius * radius
 	var low := Vector2i(floori((point.x - radius) / CELL), floori((point.z - radius) / CELL))
 	var high := Vector2i(floori((point.x + radius) / CELL), floori((point.z + radius) / CELL))

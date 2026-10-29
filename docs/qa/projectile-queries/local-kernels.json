@@ -3,227 +3,236 @@
     {
       "allocated_targets": 0,
       "checksum": 0,
-      "current_median_us": 1.02951388888889,
+      "current_median_us": 1.22048611111111,
       "kind": "query",
-      "legacy_median_us": 1.01736111111111,
+      "legacy_median_us": 1.17274305555556,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 2.0,
+      "reference": "original legacy",
       "rounds_us_per_query": {
         "current": [
-          0.996527777777778,
-          0.932291666666667,
-          1.0625,
-          1.07986111111111
+          1.84722222222222,
+          1.01215277777778,
+          1.28125,
+          1.15972222222222
         ],
         "legacy": [
-          1.06076388888889,
-          0.973958333333333,
-          0.973958333333333,
-          1.69270833333333
+          1.11979166666667,
+          1.296875,
+          0.994791666666667,
+          1.22569444444444
         ]
       },
-      "speedup": 0.988195615514334
+      "speedup": 0.960881934566145
     },
     {
       "allocated_targets": 0,
       "checksum": 0,
-      "current_median_us": 16.6892361111111,
+      "current_median_us": 21.0850694444444,
       "kind": "nearest",
-      "legacy_median_us": 22.9001736111111,
+      "legacy_median_us": 33.2109375,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 24.0,
+      "reference": "original legacy",
       "rounds_us_per_query": {
         "current": [
-          16.9618055555556,
-          17.2517361111111,
-          16.3628472222222,
-          16.4166666666667
+          20.5173611111111,
+          22.2552083333333,
+          21.6527777777778,
+          18.8072916666667
         ],
         "legacy": [
-          23.6041666666667,
-          23.171875,
-          22.5572916666667,
-          22.6284722222222
+          26.8993055555556,
+          43.1458333333333,
+          39.5225694444444,
+          24.5520833333333
         ]
       },
-      "speedup": 1.37215229376885
+      "speedup": 1.57509263071223
     },
     {
       "allocated_targets": 0,
       "checksum": 0,
-      "current_median_us": 0.860243055555556,
-      "kind": "query_into",
-      "legacy_median_us": 1.07204861111111,
+      "current_median_us": 0.953993055555556,
+      "kind": "query_verified",
+      "legacy_median_us": 1.125,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 2.0,
+      "reference": "verified 738a047 query",
       "rounds_us_per_query": {
         "current": [
-          0.883680555555556,
-          0.836805555555556,
-          0.831597222222222,
-          1.11631944444444
+          0.887152777777778,
+          0.857638888888889,
+          1.02083333333333,
+          3.09548611111111
         ],
         "legacy": [
-          1.06944444444444,
-          1.140625,
-          1.07465277777778,
-          0.942708333333333
+          1.65451388888889,
+          1.10243055555556,
+          0.973958333333333,
+          1.14756944444444
         ]
       },
-      "speedup": 1.24621594349142
+      "speedup": 1.17925386715196
     },
     {
       "allocated_targets": 100,
       "checksum": 72,
-      "current_median_us": 1.30555555555556,
+      "current_median_us": 1.41579861111111,
       "kind": "query",
-      "legacy_median_us": 1.29166666666667,
+      "legacy_median_us": 1.50694444444444,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 2.0,
+      "reference": "original legacy",
       "rounds_us_per_query": {
         "current": [
-          1.25520833333333,
-          1.35590277777778,
-          1.21701388888889,
-          1.37326388888889
+          1.51041666666667,
+          1.32118055555556,
+          1.17013888888889,
+          1.78472222222222
         ],
         "legacy": [
-          1.37673611111111,
-          1.21006944444444,
-          1.234375,
-          1.34895833333333
+          1.95138888888889,
+          1.25868055555556,
+          1.75520833333333,
+          1.21875
         ]
       },
-      "speedup": 0.98936170212766
+      "speedup": 1.06437768240343
     },
     {
       "allocated_targets": 100,
       "checksum": 27711,
-      "current_median_us": 26.1232638888889,
+      "current_median_us": 28.8741319444444,
       "kind": "nearest",
-      "legacy_median_us": 32.5963541666667,
+      "legacy_median_us": 35.8376736111111,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 24.0,
+      "reference": "original legacy",
       "rounds_us_per_query": {
         "current": [
-          25.8211805555556,
-          25.7222222222222,
-          26.4253472222222,
-          27.8958333333333
+          37.9756944444444,
+          25.9409722222222,
+          30.1701388888889,
+          27.578125
         ],
         "legacy": [
-          32.3055555555556,
-          33.4635416666667,
-          32.6267361111111,
-          32.5659722222222
+          37.2291666666667,
+          36.5034722222222,
+          35.171875,
+          34.03125
         ]
       },
-      "speedup": 1.24779025719413
+      "speedup": 1.24116886630791
     },
     {
       "allocated_targets": 100,
       "checksum": 72,
-      "current_median_us": 1.13368055555556,
-      "kind": "query_into",
-      "legacy_median_us": 1.36197916666667,
+      "current_median_us": 1.15190972222222,
+      "kind": "query_verified",
+      "legacy_median_us": 1.52777777777778,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 2.0,
+      "reference": "verified 738a047 query",
       "rounds_us_per_query": {
         "current": [
-          1.42361111111111,
-          1.09201388888889,
-          1.15277777777778,
-          1.11458333333333
+          1.14930555555556,
+          1.06770833333333,
+          1.15451388888889,
+          1.28298611111111
         ],
         "legacy": [
-          1.23090277777778,
-          1.25347222222222,
-          1.47048611111111,
-          1.59027777777778
+          1.48958333333333,
+          1.56597222222222,
+          1.66493055555556,
+          1.23611111111111
         ]
       },
-      "speedup": 1.20137825421133
+      "speedup": 1.32629992464205
     },
     {
       "allocated_targets": 600,
       "checksum": 4488,
-      "current_median_us": 8.65017361111111,
+      "current_median_us": 9.24565972222222,
       "kind": "query",
-      "legacy_median_us": 9.02256944444444,
+      "legacy_median_us": 9.60069444444444,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 2.0,
+      "reference": "original legacy",
       "rounds_us_per_query": {
         "current": [
-          9.26041666666667,
-          8.30902777777778,
-          8.70138888888889,
-          8.59895833333333
+          9.19965277777778,
+          9.08680555555556,
+          10.5208333333333,
+          9.29166666666667
         ],
         "legacy": [
-          9.73958333333333,
-          8.00173611111111,
-          8.47222222222222,
-          9.57291666666667
+          10.9670138888889,
+          9.64583333333333,
+          9.39583333333333,
+          9.55555555555556
         ]
       },
-      "speedup": 1.0430506773708
+      "speedup": 1.03840015022064
     },
     {
       "allocated_targets": 600,
       "checksum": 175506,
-      "current_median_us": 139.814236111111,
+      "current_median_us": 163.386284722222,
       "kind": "nearest",
-      "legacy_median_us": 149.698784722222,
+      "legacy_median_us": 166.789930555556,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 24.0,
+      "reference": "original legacy",
       "rounds_us_per_query": {
         "current": [
-          138.246527777778,
-          147.967013888889,
-          140.239583333333,
-          139.388888888889
+          162.184027777778,
+          164.588541666667,
+          151.989583333333,
+          175.545138888889
         ],
         "legacy": [
-          146.550347222222,
-          153.661458333333,
-          152.847222222222,
-          145.024305555556
+          208.423611111111,
+          164.630208333333,
+          168.949652777778,
+          160.869791666667
         ]
       },
-      "speedup": 1.07069772639787
+      "speedup": 1.02083189442198
     },
     {
       "allocated_targets": 600,
       "checksum": 4488,
-      "current_median_us": 9.21701388888889,
-      "kind": "query_into",
-      "legacy_median_us": 8.80989583333333,
+      "current_median_us": 8.93489583333333,
+      "kind": "query_verified",
+      "legacy_median_us": 9.00868055555556,
       "ordered_parity": true,
       "queries_per_round": 576,
       "radius": 2.0,
+      "reference": "verified 738a047 query",
       "rounds_us_per_query": {
         "current": [
-          9.59722222222222,
-          9.17534722222222,
-          8.79340277777778,
-          9.25868055555556
+          8.13020833333333,
+          8.84201388888889,
+          9.88888888888889,
+          9.02777777777778
         ],
         "legacy": [
-          8.53819444444444,
-          9.08159722222222,
-          8.36284722222222,
-          11.59375
+          9.38020833333333,
+          8.453125,
+          8.63715277777778,
+          10.5902777777778
         ]
       },
-      "speedup": 0.955829723111697
+      "speedup": 1.00825803944428
     }
   ],
   "cpu": "AMD EPYC 9V74 80-Core Processor",
@@ -235,7 +244,7 @@
     "Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
     "Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
     "Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
-    "query_into reuses one bound caller-owned array; query allocates an independent snapshot for every request.",
+    "query_verified compares the current query with the immediately prior verified implementation; other modes retain the original reference.",
     "Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."
   ],
   "logical_cpus": 3,

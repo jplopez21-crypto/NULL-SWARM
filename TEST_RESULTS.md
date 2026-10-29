@@ -1,9 +1,9 @@
 # NULL//SWARM test results
 
-## Reusable projectile query snapshots — 2026-10-29
+## Projectile query allocations — 2026-10-29
 
-- Added caller-owned query buffers and one tick-local projectile candidate container, with separate allocating snapshots for nested attacks. Shared read-only empty buckets avoid per-cell fallback containers. Engine storage may still resize; no zero-allocation claim.
-- All ten isolated local suites pass: 1,079 systems, 55 resources, 2,244 UI checks/160 layouts plus existing Engineer/GUI/input/audio/probe/corruption/smoke coverage. New randomized/ownership and actual nested-area/piercing/next-shot regressions pass. Paired timing and hosted acceptance are pending; the APK below remains the previous verified build. Method: docs/PROJECTILE_QUERIES.md.
+- Retained a shared read-only empty bucket to avoid temporary Array containers during grid lookups. All queries still return independent mutable snapshots. A reusable-result-buffer experiment preserved gameplay but produced several slower whole-combat samples; its API/CombatWorld changes were removed before publication. Rejected raw evidence and final method: docs/PROJECTILE_QUERIES.md.
+- All ten isolated local suites pass: 878 systems, 56 resources, 2,244 UI checks/160 layouts plus established coverage. New real nested-area/piercing/next-shot and snapshot-ownership checks pass. All nine local kernel cases preserve ordered results/checksums; versus immediately prior verified query, observed ratios are 1.179× empty/1.326× sparse/1.008× dense. These are static kernels, not FPS. Final paired timing and hosted acceptance are pending; APK below remains the previous verified source.
 
 ## Combat phase profiling / grid query investigation — 2026-10-29
 

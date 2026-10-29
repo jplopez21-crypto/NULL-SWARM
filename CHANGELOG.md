@@ -1,9 +1,9 @@
 # Changelog
 
-## Development — 2026-10-29 / Projectile query snapshots
+## Development — 2026-10-29 / Projectile query allocations
 
-- Reuse one candidate Array container per simulation tick across friendly shots, while nested attacks retain independent snapshots. Shared read-only empty buckets reduce temporary containers during grid traversal.
-- Added randomized buffer/ownership checks and real nested-area/piercing/next-shot collision regressions. All ten local suites passed; expanded kernels cover nine cases. Paired timings and hosted acceptance are pending. No gameplay rules or budgets changed.
+- Reuse a read-only empty fallback during spatial-cell lookup while preserving separate result snapshots for every attack. Only the shared fallback change is retained in production.
+- Added nested-area/piercing/next-shot and snapshot-ownership regressions. All ten local suites passed (878 systems/56 resources); kernels now include the immediately prior verified reference and nine ordered-parity cases. Final paired timing and hosted acceptance are pending. No gameplay rules, CombatWorld code or budgets changed.
 
 ## Development — 2026-10-29 / Combat profiling and grid queries
 
