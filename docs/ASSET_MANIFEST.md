@@ -50,3 +50,7 @@ The six regular enemy hulls, tracked pods, dart/wing facets, shield plates, ante
 ## Memory crystals
 
 Original four/six/eight-sided double-pyramid packet meshes and opaque grayscale facet weights are authored in effects/memory_crystals.gd. The existing blue/mint/gold packet palette is retained. No third-party art, models, shaders, fonts or audio were added. Paused field/detail captures are desktop-debug review fixtures. These are development assets pending physical-device readability and final commercial art review.
+
+## Memory collection cue
+
+The quiet rising memory cue is original synthesized sixteen-bit mono PCM authored in SwarmAudio.memory_chime, using two sinusoidal partials and smooth amplitude envelopes. No external samples, instruments, models, fonts or licensed recordings were downloaded. The QA WAV export is the same original development audio, pending human listening and final commercial mix review.

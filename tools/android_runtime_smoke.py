@@ -270,7 +270,7 @@ try:
                 report['chain_feedback_sample'] = {**feedback, 'kills': s['kills']}
                 capture('chain-feedback')
                 chain_sampled = True
-            if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0 and s.get('salvage', 0) > 0:
+            if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0 and s.get('salvage', 0) > 0 and s.get('memory_audio_plays', 0) > 0:
                 break
             targets = s.get('targets', [])
             if targets:
@@ -281,6 +281,9 @@ try:
                 time.sleep(.5)
         time.sleep(.2)
     check(selected and s.get('xp', 0) > 0 and s.get('kills', 0) > 0, 'auto combat, XP collection and real upgrade touch passed')
+    check(s.get('memory_audio_plays', 0) > 0, 'ordinary Android XP collection requests dedicated memory audio playback')
+    report['memory_audio_sample'] = {'accepted_plays': s.get('memory_audio_plays', 0), 'collected_xp': s.get('xp', 0),
+                                   'level': s.get('level'), 'scope': 'Actual accepted playback calls; emulator audio is disabled, not a human listening test.'}
     check(s.get('salvage', 0) > 0, 'normal gameplay checkpoints nonzero earned salvage before lifecycle tests')
     check(chain_sampled, 'actual Android kills display live chain or Overclock gauge')
     report['gameplay_snapshot'] = s

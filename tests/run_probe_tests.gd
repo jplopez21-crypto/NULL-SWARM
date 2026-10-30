@@ -31,6 +31,7 @@ func run() -> void:
 	probe.snapshot()
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["state"] == "playing" and data["ranks"] == game.progress.ranks, "probe reports real game state")
+	check(data["memory_audio_plays"] == game.audio.memory_plays and game.audio.memory_plays == 0, "probe reads the actual audio counter without starting or granting anything")
 	var settings_match: bool = true
 	for key in game.save.data["settings"]:
 		var expected: Variant = game.save.data["settings"][key]

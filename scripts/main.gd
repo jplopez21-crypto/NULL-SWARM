@@ -82,6 +82,7 @@ func _build_arena() -> void:
 	add_child(arena)
 
 func start_run() -> void:
+	audio.reset_memory_feedback()
 	corruption_panel = false
 	ui.set_performance_stats(bool(save.data["settings"].get("performance_stats", false)))
 	dash_trail_clock = 0.0
@@ -159,7 +160,9 @@ func _physics_process(delta: float) -> void:
 	# Depletion callbacks can change state during combat.tick.
 	if state != State.PLAYING:
 		return
-	progress.add_xp(pickups.tick(delta, player))
+	var collected: int = pickups.tick(delta, player)
+	progress.add_xp(collected)
+	audio.memory_collected(collected, progress.pending > 0)
 	if combat.director.elapsed >= checkpoint_time:
 		_checkpoint_progress()
 		checkpoint_time = combat.director.elapsed + 30.0

@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-30 / Memory collection audio
+
+- Added original quiet collection chime on a dedicated SFX voice, with aggregate-per-tick feedback, common rate limit, bounded batch pitch and level-up priority. Existing combat voices, XP rules and volume controls are retained.
+- Added PCM/routing/playback/lifecycle and real-physics collection integration tests, a human-review WAV export and read-only Android acceptance counter. Hosted acceptance remains pending until recorded in TEST_RESULTS.md.
+
 ## Development — 2026-10-29 / Memory crystals
 
 - Replaced round experience packets with original faceted blue/mint/gold crystals; retained XP tiers, exact colors/scaling and all collection/merge rules. Three cached single-surface meshes use 8/12/16 triangles versus 80 previously; draw-instance count is unchanged and no FPS gain is claimed.

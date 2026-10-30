@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Memory collection audio — local implementation
+
+- Added a dedicated quiet memory SFX voice, aggregate-per-tick rate limit, bounded batch pitch and suppression on level-up batches. Actual XP/merge/collection/progression rules remain unchanged.
+- First local runner attempt failed audio/resource validation because a new test preference dictionary lacked an explicit type annotation. Corrected the test declaration; the standalone audio suite then passed all 32 checks with no engine/leak errors. Final strict ten-suite run passed: 32 audio, nine probe, 1,002 systems, 60 resources, 2,244 UI checks/160 layouts, 27 Engineer, 36 GUI, 21 input, 41 corruption and scene smoke. No strict script/engine/resource-leak errors. Python driver compilation and all four workflow YAML/bash checks passed.
+- Offline waveform/routing/playback and actual physics tests cover conservation, level queue, pause, reset and teardown. Android acceptance adds a read-only actual-play counter. Exported WAV is available for later human listening; CI audio is disabled, so audible quality/phone mix is not claimed.
+- Hosted Android/native/full QA results and replacement APK: pending. Previously accepted crystal build remains available below.
+
 ## Memory crystals — verified 2026-10-29
 
 Verified game/test/CI source: `f9f582967b53cfe9789eb02fa832f01e6a554903`. This final report checkpoint changes documentation/evidence only.

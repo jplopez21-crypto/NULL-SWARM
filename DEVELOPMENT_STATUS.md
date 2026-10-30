@@ -1,6 +1,8 @@
-# Development status — NULL//SWARM / 2026-10-29
+# Development status — NULL//SWARM / 2026-10-30
 
 ## Current checkpoint
+
+- In progress: bounded original memory collection audio, preserving twelve combat voices and exact XP accounting. All ten strict local suites passed (32 audio/nine probe/1,002 systems/60 resources/2,244 UI checks); hosted build/runtime/full QA acceptance is pending. The crystal APK below remains the latest fully accepted build until this pass is verified.
 
 - Completed original faceted blue/mint/gold memory crystals with shared 8/12/16-triangle tiers (previously 80), updated collection guidance and exact round-reference frame/XP parity. Collection/merge/locator rules, tint/scale and pooled nodes are retained. Ten local/native/QA summaries match (1,002 systems/60 resources/2,244 headless UI checks). Source f9f582967b53cfe9789eb02fa832f01e6a554903 passed native 40974100738, Android 40974100897 (all 33 checks) and full QA 40974100771 (26 normal sessions, 160 rendered layouts, 24 stress/nine kernel cases). All prior gameplay/XP/pacing results and stress fingerprints match. Exact results: TEST_RESULTS.md; method: docs/MEMORY_CRYSTALS.md. Final report checkpoint changes docs/evidence only.
 - Current verified APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40974100738/artifacts/12941263891. Extract android/null-swarm-development-debug.apk. CI signature and independent hash/CRC/package/ARM64/probe-exclusion checks passed. Actual final desktop crystal detail/onboarding and Android visuals inspected. Emulator pin drift was caught before installation, reviewed and corrected to 37.2.13.0/build 16740729 with image 9 retained. Quiet software-emulator median 4 FPS remains below target; no causal performance gain claim. Physical-phone FPS/readability and owner-protected signing remain open; preserve installs/saves. Main remains unmerged. Evidence: docs/qa/memory-crystals/verified-ci.json.

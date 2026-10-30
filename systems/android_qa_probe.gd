@@ -55,6 +55,7 @@ func snapshot() -> void:
 	data["performance_stats_text"] = game.ui.perf_label.text
 	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}
 	data["build_text"] = game.ui.visible_build_text()
+	data["memory_audio_plays"] = game.audio.memory_plays
 	data["selected_kit"] = game.save.data["selected_kit"]
 	data["architects"] = game.save.data["architects"]
 	data["edit_fields"] = []
