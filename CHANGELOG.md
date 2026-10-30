@@ -3,7 +3,7 @@
 ## Development — 2026-10-29 / Memory crystals
 
 - Replaced round experience packets with original faceted blue/mint/gold crystals; retained XP tiers, exact colors/scaling and all collection/merge rules. Three cached single-surface meshes use 8/12/16 triangles versus 80 previously; draw-instance count is unchanged and no FPS gain is claimed.
-- Updated opening collection guidance and added paused normal/close desktop captures plus geometry, tier, round-reference, conservation and recycling tests. Hosted acceptance is pending until recorded in TEST_RESULTS.md.
+- Updated opening collection guidance and added paused normal/close desktop captures plus geometry, tier, round-reference, conservation and recycling tests. Verified source f9f582967b53cfe9789eb02fa832f01e6a554903 passed native APK/signature, all 33 Android checks and full gameplay/rendered QA. Local/native/QA strict summaries match; all prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match. Exact artifacts/limits: TEST_RESULTS.md.
 - Reviewed Android emulator 37.2.13.0/build 16740729 after the strict version gate caught SDK drift; retained image revision 9 and the enforced version guard, and exposed the observed version in logs. No game code changes in this CI follow-up.
 
 ## Development — 2026-10-29 / Enemy chassis

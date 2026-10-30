@@ -13,3 +13,7 @@ Opening guidance now names memory crystals and keeps the cyan-arrow instruction.
 New regressions cover all tier boundaries, cached resources, exact previous tint/scale/positions, opaque finite outward geometry, original bounds, merge tier transitions, a frame-by-frame round-orb reference comparison, exact XP conservation and recycled high-to-low reset without new nodes.
 
 Local and hosted results, failures/fixes and exact artifact identity are recorded in TEST_RESULTS.md. Physical-phone FPS, human readability/accessibility and final commercial art review remain open.
+
+## Hosted acceptance
+
+Source f9f582967b53cfe9789eb02fa832f01e6a554903 passed native 40974100738, Android 40974100897 (all 33 checks) and full QA 40974100771. Local/native/QA strict summaries match (1,002 systems/60 resources/2,244 headless UI checks); rendered UI passes 2,245 checks/160 layouts. All prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match the accepted enemy-chassis source. Actual crystal detail/normal field/onboarding and Android images were inspected. The SDK emulator patch drift was caught before app installation and deliberately reviewed; version 37.2.13.0/build 16740729 and image revision 9 are now required. Report identity, independent download verification, initial failures/fixes and hardware/signing limits are in TEST_RESULTS.md and qa/memory-crystals/verified-ci.json.

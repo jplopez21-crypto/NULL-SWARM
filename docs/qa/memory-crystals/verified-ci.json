@@ -1,0 +1,291 @@
+{
+  "verified_game_and_test_code": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+  "report_checkpoint_only": true,
+  "source_history": {
+    "first_source": "99592f214f2f4c57d20680746af92952d8a17288",
+    "ci_followup_source": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+    "first_native_run": 40973519825,
+    "first_android_run": 40973519577,
+    "first_android_failure": "Enforced emulator pin stopped before app install: 37.2.13.0/build 16740729 observed vs 37.2.12.0 expected; image revision remains 9.",
+    "first_android_artifact": 12940859493,
+    "first_android_artifact_sha256": "ddce799e36af56432e5b13fe7853d4bd5915c9db5c866668a85fe00948d444c1",
+    "final_native_run": 40974100738,
+    "final_android_run": 40974100897,
+    "final_qa_run": 40974100771,
+    "previous_verified_source": "bc54a9468c39b457d8b9623a2e67faad41f82356",
+    "emulator_version": "37.2.13.0",
+    "emulator_build": "16740729",
+    "image_revision": 9
+  },
+  "workflows": [
+    {
+      "id": 40974100738,
+      "name": "Validate and build Android",
+      "head_sha": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+      "conclusion": "success",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40974100738"
+    },
+    {
+      "id": 40974100897,
+      "name": "Android emulator runtime",
+      "head_sha": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+      "conclusion": "success",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40974100897"
+    },
+    {
+      "id": 40974100771,
+      "name": "Repeatable gameplay QA",
+      "head_sha": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+      "conclusion": "success",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40974100771"
+    }
+  ],
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 60,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1002,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2244,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "825cc5c6752861d532b0ddf032aa8156b52b3218771b58bc1708581e7c634804",
+    "apk_bytes": 27782296,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "new_crystal_module_sha256": "d40eff1130c782b7f3163ade4863dc084218df488efb43a2d5207e4490315134",
+    "unchanged_previous_compiled_modules": [
+      "assets/bosses/encounter_director.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/systems/research.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/systems/android_qa_probe.gdc",
+      "assets/enemies/enemy.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/scripts/player.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/systems/input_router.gdc",
+      "assets/enemies/chassis_models.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/systems/progression.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/weapons/weapon_rig.gdc",
+      "assets/components/health.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/systems/spawn_director.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/systems/combat_world.gdc"
+    ],
+    "ci_only_followup_all_compiled_modules_match_initial": 32
+  },
+  "native_downloads": [
+    {
+      "kind": "native",
+      "artifact": 12941263891,
+      "run": 40974100738,
+      "source": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+      "sha256": "332a3dcdeef04576da00168794484669d905d5fe6db615e08bb0fe88a07a40d2",
+      "bytes": 27863158,
+      "entries": 4,
+      "hash_crc": "passed"
+    },
+    {
+      "kind": "headless",
+      "artifact": 12941024343,
+      "run": 40974100738,
+      "source": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+      "sha256": "1b13fa5a7c14e875fd91f844640be19e5c39f8f23a0f0a3bd72cd282d079e744",
+      "bytes": 6322,
+      "entries": 23,
+      "hash_crc": "passed"
+    },
+    {
+      "kind": "captures",
+      "artifact": 12940914862,
+      "run": 40974100738,
+      "source": "f9f582967b53cfe9789eb02fa832f01e6a554903",
+      "sha256": "7780dff7b0e4c9369a68fbb78d53c8464816d5767b4aaa55b0fcb350a6131e29",
+      "bytes": 4201942,
+      "entries": 74,
+      "hash_crc": "passed"
+    }
+  ],
+  "gameplay_comparison": {
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2245,
+    "ui_layouts": 160,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "android": {
+    "run": 40974100897,
+    "artifact": 12941053752,
+    "zip_sha256": "152cd2485ede693bfd895a185b758cc956c8e63a4ec9e896be2cfa0b9dafc9d3",
+    "status": "passed",
+    "checks": 33,
+    "variant": "x86_64 Android35 / Compatibility / read-only opt-in probe",
+    "emulator": "37.2.13.0/build16740729",
+    "image_revision": 9,
+    "chain_feedback_sample": {
+      "text": "CHAIN 1 // 19 KILLS TO OVERCLOCK // BREAKS IN 2.8s",
+      "value": 5.0,
+      "visible": true,
+      "kills": 1
+    },
+    "ordinary_checkpoint": {
+      "kills": 35,
+      "simulation_seconds": 30.2166666666662,
+      "salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 2,
+        "enabled": true,
+        "position": [
+          11.042893409729,
+          -1.61816430091858
+        ],
+        "remaining": 2.2,
+        "shots": 1,
+        "status": "FIELD SENTRY 2.2s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 4.03333333333332,
+      "hp": 80.0,
+      "kills": 1
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.48453755166025003,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "archive_hash_crc_and_logcat_scans": "passed"
+  },
+  "qa_download": {
+    "run": 40974100771,
+    "artifact": 12941579233,
+    "zip_sha256": "a215d3ed885179bb1f482966c800534f03b473cd8b3bb56a7557ac0eecce39bc",
+    "bytes": 18593835,
+    "hash_crc": "passed"
+  },
+  "visual_review": {
+    "captures": [
+      "memory_detail.png",
+      "memory_field.png",
+      "memory_onboarding.png",
+      "Android chain-feedback.png",
+      "Android after-upgrade.png"
+    ],
+    "scope": "Actual Godot desktop captures and Android emulator imagery inspected. Desktop memory field/detail and onboarding are staged debug fixtures, not earned gameplay; no phone readability acceptance claim."
+  },
+  "limits": [
+    "Development art and staged desktop review fixtures; final commercial art and human fun/readability remain open.",
+    "Structural triangles decrease from 80 to 8/12/16 per packet; draw-instance count is unchanged; no GPU/FPS improvement claim.",
+    "Android runtime is x86_64 Android35 Compatibility/SWANGLE with emulator 37.2.13.0 build 16740729/image revision 9. Quiet workload is unseeded; prior emulator 37.2.12.0 differs, so no causal frame-rate comparison.",
+    "Software-emulator FPS remains below targets; physical S23 Ultra ARM64 Mobile FPS, thermals, Android 10 and cutouts are unverified.",
+    "Diagnostic keys rotate across workflows; preserve installs/saves. Protected owner Preview/release signing is unconfigured; no AAB claimed."
+  ]
+}
