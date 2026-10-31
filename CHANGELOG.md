@@ -3,7 +3,7 @@
 ## Development — 2026-10-31 / Mobile pause and dash readiness
 
 - Fixed Pause while the movement joystick is held, using the proven native touch handler shared with dash. Menu/upgrade/pause transitions reset both HUD actions; resume cannot replay stale walking/dash.
-- Positive dash cooldown now displays at least 0.1s and below-full readiness until the timer reaches zero. No timer, movement, combat or save changes. Added 97 engine-input/GUI/physics checks across three sizes; all 14 local strict suites pass. Hosted 52-check Android/render/full QA and updated APK are pending in TEST_RESULTS.md.
+- Positive dash cooldown now displays at least 0.1s and below-full readiness until the timer reaches zero. No timer, movement, combat or save changes. Added 97 engine-input/GUI/physics checks across three sizes; all 14 local strict suites pass. Source a8187ecece5b6db5937ad55e88863ad3a5582537 passes all 14 strict suites, 52 Android checks and full gameplay/rendered QA. Added test-only post-free audio ownership verification after initial exit warning; strict diagnostics retained. Verified APK/results: TEST_RESULTS.md.
 
 ## Development — 2026-10-31 / Machine destruction
 
