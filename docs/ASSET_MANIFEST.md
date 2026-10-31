@@ -58,3 +58,7 @@ The quiet rising memory cue is original synthesized sixteen-bit mono PCM authore
 ## Performance report UI
 
 The offline report screen reuses original project panel/button styles, standard Godot TextEdit and existing built-in fallback typography. The desktop review capture labels its synthetic metrics explicitly. No external art, fonts, models or audio were added; final visual/physical-device review remains required.
+
+## Operative armor
+
+The chamfered torso/helmet/shoulder plates, backpack, shin/boot geometry, visor/crown marker and shaped energy rifle are original procedural, vertex-colored meshes authored in effects/operative_model.gd. Four cached meshes and two shared lit/unshaded materials replace the previous seven-box body; the existing two leg pivots and rifle recoil pivot remain. No external models, textures, animations, fonts, shaders or audio were downloaded. These are development assets pending physical-device readability, human art review and final commercial asset acceptance. Desktop close-up poses are labelled art-review fixtures, not gameplay or performance evidence.

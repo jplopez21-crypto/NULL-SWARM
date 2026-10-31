@@ -69,6 +69,14 @@ func snapshot() -> void:
 			var rect: Rect2 = node.get_global_rect()
 			data["buttons"].append({"text": node.text, "disabled": node.disabled, "rect": [rect.position.x, rect.position.y, rect.size.x, rect.size.y]})
 	if is_instance_valid(game.player) and is_instance_valid(game.combat):
+		var model := {"instances": 0, "surfaces": 0, "triangles": 0}
+		for node in game.player.body.get_children():
+			if node is MeshInstance3D:
+				model["instances"] += 1
+				model["surfaces"] += node.mesh.get_surface_count()
+				for surface in range(node.mesh.get_surface_count()):
+					model["triangles"] += node.mesh.surface_get_array_len(surface) / 3
+		data["operative_visuals"] = model
 		data["sentry"] = {"enabled": game.combat.sentry.enabled, "remaining": game.combat.sentry.remaining,
 			"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots,
 			"position": [game.combat.sentry.position.x, game.combat.sentry.position.z], "status": game.ui.sentry_label.text}

@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Operative armor — local verification 2026-10-31
+
+- Added original shared procedural armor, helmet, visor/crown, shoulders, backpack, boots and a shaped energy rifle. Five body mesh instances/six surface instances replace seven boxes; body triangles increase 84→296. Two existing identity/damage rings are retained. This is a bounded one-player art change, not an FPS improvement claim.
+- Executed 41 operative geometry/cache/material/pivot/pose checks. A fixed 2,400-frame movement, dash, health/shield, aiming and animation trace matches the previously recorded source f1d3de7 fingerprint exactly (13 accepted dashes/14 damage events). Player tick/aim/damage and ordinary main physics/camera source bodies are byte-identical; proof: docs/qa/operative-armor/unchanged-behavior-sources.json.
+- All 12 isolated strict local suites passed: 41 operative, 69 touch-dash, 23 input, 13 probe, 66 resources, 1,030 systems, 43 GUI, 32 audio, 2,340 UI checks/168 layouts, 27 Engineer, 41 corruption and scene smoke. No strict script/engine/resource-leak errors. Python compilation and four workflow YAML/bash checks passed. Hosted build/render/Android/full QA results are pending at this checkpoint. No new APK or human/physical-device art acceptance is claimed. The prior moving-dash APK remains latest fully verified. Initial trace-recorder invocation ran before node readiness and failed; deferred recorder execution produced the accepted baseline before mesh replacement. No gameplay source was changed to accommodate the fixture.
+- Desktop-only labelled front/rear/ordinary-framing captures and actual read-only Android geometry inspection are configured. Local rendering/Android SDK/ADB/emulator are unavailable; CI supplies Godot/templates/Android dependencies. Asset origin is documented; new geometry remains development art.
+
 ## Moving touch dash — verified 2026-10-31
 
 Verified game/test/CI source: `f1d3de77181d7b27d4c12e845f08b6a7954f48c9`. Final report checkpoint changes documentation/evidence only.

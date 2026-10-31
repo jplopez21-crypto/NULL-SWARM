@@ -342,6 +342,9 @@ try:
     s = wait(lambda x: x['dashes'] > dash_before and x.get('dash_readiness', 100) < 100)
     check(True, 'touch dash activated')
     check(s.get('operative_visible', False) and 0 <= s['dash_readiness'] < 100, 'dash keeps operative visible and updates readiness gauge')
+    check(s.get('operative_visuals') == {'instances': 5, 'surfaces': 6, 'triangles': 296},
+          'Android operative uses the actual shared faceted armor and rifle geometry')
+    report['operative_visuals'] = s['operative_visuals']
     capture('combat')
     s = wait(lambda x: x.get('performance_stats_visible', False) and 'ENEMIES' in x.get('performance_stats_text', ''))
     check(True, 'performance diagnostics are visibly active during real Android gameplay')

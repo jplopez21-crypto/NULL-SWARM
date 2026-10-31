@@ -834,6 +834,36 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/performance_report.png")
+	# Desktop-debug art references; normal Android/game camera never enters this.
+	start_run()
+	state = State.PAUSED
+	player.position = Vector3.ZERO
+	player.body.rotation.y = PI + 0.45
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	ui.set_hud(false)
+	var art_label := ui.label_at(ui.root, "OPERATIVE ARMOR // STAGED QA ART REVIEW\nSTATIC POSE // NOT A GAMEPLAY OR PERFORMANCE SAMPLE", 20, Color("80ffdb"))
+	art_label.position = Vector2(26, 20)
+	camera.size = 4.8
+	camera.position = Vector3(3, 3.5, 5)
+	camera.look_at(Vector3(0, 0.9, 0))
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/operative_front.png")
+	player.body.rotation.y = 0.45
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/operative_rear.png")
+	art_label.queue_free()
+	ui.set_hud(true)
+	player.body.rotation.y = PI + 0.45
+	camera.size = 29
+	camera.position = Vector3(0, 32, 23)
+	camera.look_at(Vector3.ZERO)
+	ui.update_hud(player, progress, combat)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/operative_field.png")
 	audio.shutdown()
 	get_tree().quit()
 

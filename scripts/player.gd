@@ -1,6 +1,7 @@
 class_name SwarmPlayer
 extends Node3D
 
+const MODEL = preload("res://effects/operative_model.gd")
 const DASH_COOLDOWN: float = 2.5
 const DASH_DURATION: float = 0.18
 const DASH_PROTECTION: float = 0.24
@@ -28,14 +29,10 @@ func _ready() -> void:
 	hit_ring.visible = false
 	body = Node3D.new()
 	add_child(body)
-	SwarmVisuals.box(body, Vector3(0.85, 1.05, 0.65), Vector3(0, 0.85, 0), Color("264859"))
-	SwarmVisuals.box(body, Vector3(0.66, 0.42, 0.65), Vector3(0, 1.58, 0), Color("80ffdb"), true)
-	SwarmVisuals.box(body, Vector3(1.25, 0.3, 0.6), Vector3(0, 1.15, 0), Color("457b89"))
-	for side in [-1.0, 1.0]:
-		legs.append(SwarmVisuals.box(body, Vector3(0.27, 0.5, 0.3), Vector3(side * 0.25, 0.28, 0), Color("355966")))
+	var parts: Dictionary = MODEL.build(body)
+	legs.assign(parts["legs"])
+	gun = parts["gun"]
 	SwarmVisuals.ring(self, 0.8, Vector3(0, 0.06, 0), Color("5be8c5"), 0.035)
-	SwarmVisuals.box(body, Vector3(0.75, 0.1, 0.12), Vector3(0, 1.58, -0.36), Color("e5fff5"), true)
-	gun = SwarmVisuals.box(body, Vector3(0.23, 0.22, 1.0), Vector3(0.5, 1.0, -0.5), Color("d8fff1"), true)
 
 func tick(delta: float, movement: Vector2, dash: bool) -> bool:
 	health.tick(delta)

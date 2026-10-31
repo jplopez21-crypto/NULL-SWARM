@@ -18,6 +18,7 @@ suites = [
     ('resources', ['--script', 'tests/validate_resources.gd'], r'RESOURCE_RESULT checks=(\d+) failures=0'),
     ('input', ['--script', 'tests/run_input_tests.gd'], r'INPUT_RESULT checks=(\d+) failures=0'),
     ('touch-dash', ['--script', 'tests/run_touch_dash_tests.gd'], r'TOUCH_DASH_RESULT checks=(\d+) failures=0'),
+    ('operative', ['--script', 'tests/run_operative_tests.gd'], r'OPERATIVE_RESULT checks=(\d+) failures=0'),
     ('systems', ['--script', 'tests/run_tests.gd'], r'TEST_RESULT checks=(\d+) failures=0'),
     ('corruption', ['--script', 'tests/run_corruption_tests.gd'], r'CORRUPTION_RESULT checks=(\d+) failures=0'),
     ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=168 failures=0'),

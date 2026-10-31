@@ -1,0 +1,9 @@
+{
+  "accepted_damage_events": 14,
+  "accepted_dashes": 13,
+  "accepted_source": "f1d3de77181d7b27d4c12e845f08b6a7954f48c9",
+  "fingerprint": "3d80f9759422f3aac28f99d8e12fff51e628fb5f871bc8d2267ebc41f8258c74",
+  "fixed_step": 0.0166666666666667,
+  "frames": 2400,
+  "scope": "Synthetic 2400-frame movement/health/aim/dash/animation trace recorded before operative mesh changes. Not device performance."
+}

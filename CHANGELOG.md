@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-31 / Operative armor
+
+- Replaced box-body operative visuals with original shared faceted armor, helmet/visor, shoulder plates, boots and an energy rifle. Existing stride, aim, recoil, dash and damage feedback are retained. Five body mesh instances/six surface instances, 296 triangles; no FPS gain claimed.
+- Added geometry/resource/pose tests and accepted-source 2,400-frame behavior parity, desktop art references and actual Android geometry inspection. Hosted visual/runtime/full QA acceptance and a new APK are pending in TEST_RESULTS.md. Development art status and origin are documented.
+
 ## Development — 2026-10-31 / Moving touch dash
 
 - Fixed second-finger dash while holding the joystick. Dash now tracks its own native touch, fires on press and suppresses duplicate emulated mouse events. Joystick release preserves an independent dash queued in the same physics frame.
