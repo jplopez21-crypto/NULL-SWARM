@@ -32,7 +32,7 @@
       "suite": "resources",
       "status": "passed",
       "exit_code": 0,
-      "checks": 69,
+      "checks": 70,
       "errors": []
     },
     {
@@ -60,7 +60,7 @@
       "suite": "destruction",
       "status": "passed",
       "exit_code": 0,
-      "checks": 58,
+      "checks": 59,
       "errors": []
     },
     {

@@ -2,18 +2,20 @@ extends RefCounted
 
 # Synthetic accepted-source reference for effect caps, RNG, flight and recycling.
 # Mesh topology is intentionally excluded; all effect state/poses are retained.
-static func run(parent: Node) -> Array:
+static func run(parent: Node, prototype: Script = null) -> Array:
 	var cases: Array = []
 	for quality in range(3):
 		for flashes in [false, true]:
 			seed(1729 + quality * 10 + int(flashes))
-			var fx := CombatEffects.new()
+			var fx: Node3D = prototype.new() if prototype != null else CombatEffects.new()
 			parent.add_child(fx)
 			fx.quality = quality
 			fx.flashes = flashes
 			var digest := HashingContext.new()
 			digest.start(HashingContext.HASH_SHA256)
 			var peak: int = 0
+			var frame_fingerprints: Array[String] = []
+			var sampled_frames: Dictionary = {}
 			for frame in range(180):
 				var at := Vector3(2, 0.5, -3)
 				if frame % 11 == 0:
@@ -42,11 +44,15 @@ static func run(parent: Node) -> Array:
 					for i in range(1, state.size()):
 						state[i] = snappedf(state[i], 0.000001)
 					row.append(state)
-				digest.update(JSON.stringify(row).to_utf8_buffer())
+				var text: String = JSON.stringify(row)
+				digest.update(text.to_utf8_buffer())
+				frame_fingerprints.append(text.sha256_text())
+				if frame in [0, 1, 7, 8, 30, 31, 39, 60, 120, 179]:
+					sampled_frames[str(frame)] = row
 			fx.tick(100)
 			cases.append({"quality": quality, "flashes": flashes, "frames": 180, "peak": peak,
 				"recycled": fx.live.is_empty() and fx.pool.size() == 160,
-				"fingerprint": digest.finish().hex_encode(), "next_random": snappedf(randf(), 0.000001)})
+				"fingerprint": digest.finish().hex_encode(), "next_random": snappedf(randf(), 0.000001), "frame_fingerprints": frame_fingerprints, "sampled_frames": sampled_frames})
 			parent.remove_child(fx)
 			fx.free()
 	return cases

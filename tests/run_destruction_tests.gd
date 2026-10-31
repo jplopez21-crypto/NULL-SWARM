@@ -1,6 +1,7 @@
 extends SceneTree
 
 const FRAGMENTS = preload("res://effects/debris_fragment.gd")
+const LEGACY = preload("res://tests/box_destruction_fixture.gd")
 const TRACE = preload("res://tests/destruction_trace.gd")
 var checks: int = 0
 var failures: Array[String] = []
@@ -65,14 +66,21 @@ func run() -> void:
 			check(fx.live.is_empty() and fx.pool.size() == 160, "all geometry types recycle into the original fixed pool")
 			fx.free()
 	var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/destruction-baseline.json"))
+	var reference_meta: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/box-destruction-source.json"))
+	check(("class_name CombatEffects\n" + FileAccess.get_file_as_string("res://tests/box_destruction_fixture.gd")).sha256_text() == reference_meta["source_sha256"], "paired box emitter is the exact frozen accepted source")
+	var reference: Array = TRACE.run(root, LEGACY)
 	var traces: Array = TRACE.run(root)
+	var golden_matches: bool = true
 	for i in range(traces.size()):
 		var a: Dictionary = traces[i]
-		var b: Dictionary = baseline["cases"][i]
+		var b: Dictionary = reference[i]
+		golden_matches = golden_matches and b["fingerprint"] == baseline["cases"][i]["fingerprint"]
 		check(a["fingerprint"] == b["fingerprint"] and a["quality"] == int(b["quality"]) and a["flashes"] == b["flashes"] and a["peak"] == int(b["peak"]) and a["recycled"] == b["recycled"] and is_equal_approx(a["next_random"], b["next_random"]), "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case %d remains identical" % i)
 	var cue := await audio_tests()
-	QAReport.write("res://builds/qa/destruction-tests.json", {"checks": checks, "failures": failures, "fragment_triangles": 8, "previous_fragment_triangles": 12, "trace_cases": traces, "destruction_cue": cue, "scope": "Synthetic simulation/PCM/routing checks; no phone FPS or human listening acceptance."})
+	QAReport.write("res://builds/qa/destruction-tests.json", {"checks": checks, "failures": failures, "fragment_triangles": 8, "previous_fragment_triangles": 12, "trace_cases": traces, "paired_reference_cases": reference, "golden_fingerprints_match_reference": golden_matches, "reference_source": reference_meta, "destruction_cue": cue, "scope": "Synthetic simulation/PCM/routing checks; no phone FPS or human listening acceptance."})
 	print("DESTRUCTION_RESULT checks=", checks, " failures=", failures.size())
+	await process_frame
+	await process_frame
 	quit(0 if failures.is_empty() else 1)
 
 func audio_tests() -> Dictionary:

@@ -1,0 +1,94 @@
+{
+  "source": "1340077ce2c3ccfd7dd01966afbe2d5b38a48488",
+  "native_run": 41238749988,
+  "job": 124647975611,
+  "artifact": 13056920629,
+  "zip_sha256": "3fe021b2da55fff6738f052bae49658736f575e31f2ec69969cf2bd9ade7f178",
+  "conclusion": "failure",
+  "failure": "All six cross-host golden effect fingerprints differed; effect counts/caps/recycling/next RNG, PCM and other twelve suites passed. ObjectDB warning also observed; strict gate retained.",
+  "failed_destruction_report": {
+    "checks": 58,
+    "destruction_cue": {
+      "dc_offset": 0.00101117281454993,
+      "duration_seconds": 0.14,
+      "largest_sample_step": 0.25732421875,
+      "minimum_interval_ms": 65,
+      "mono": true,
+      "peak": 0.311126708984375,
+      "raw_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe",
+      "rms": 0.0377789711859846,
+      "sample_rate": 22050,
+      "scope": "Offline PCM/playback/routing; emulator audio disabled, human listening/mix unverified.",
+      "voices": 12
+    },
+    "failures": [
+      "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case 0 remains identical",
+      "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case 1 remains identical",
+      "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case 2 remains identical",
+      "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case 3 remains identical",
+      "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case 4 remains identical",
+      "accepted-source effect flight/scale/cap/lifetime/recycling/RNG case 5 remains identical"
+    ],
+    "fragment_triangles": 8,
+    "previous_fragment_triangles": 12,
+    "scope": "Synthetic simulation/PCM/routing checks; no phone FPS or human listening acceptance.",
+    "trace_cases": [
+      {
+        "fingerprint": "437c126d2def473cb61716adc31751aabf9b835db4a0d6222f5177a7ff0ab812",
+        "flashes": false,
+        "frames": 180,
+        "next_random": 0.452393,
+        "peak": 40,
+        "quality": 0,
+        "recycled": true
+      },
+      {
+        "fingerprint": "4b6f269edb8dbcaa60883c6974e4b9cb0cc29990bd2822bea654be0a75a9e127",
+        "flashes": true,
+        "frames": 180,
+        "next_random": 0.517894,
+        "peak": 40,
+        "quality": 0,
+        "recycled": true
+      },
+      {
+        "fingerprint": "fc3ad7973e3066efa6dabd004fd9d7c8cb89243705017fbad6ff5ad413f8545a",
+        "flashes": false,
+        "frames": 180,
+        "next_random": 0.673953,
+        "peak": 85,
+        "quality": 1,
+        "recycled": true
+      },
+      {
+        "fingerprint": "eca67ddd2c80a1c983e2ee7717b89fc59304189da09dcbaa591c95c51137b590",
+        "flashes": true,
+        "frames": 180,
+        "next_random": 0.526996,
+        "peak": 85,
+        "quality": 1,
+        "recycled": true
+      },
+      {
+        "fingerprint": "f36659dc9d438264d1a49982a12a9546be6d9502d54cc9c31bf66fb75f2c4bcc",
+        "flashes": false,
+        "frames": 180,
+        "next_random": 0.512134,
+        "peak": 150,
+        "quality": 2,
+        "recycled": true
+      },
+      {
+        "fingerprint": "1089cd1d277c5a7c687237627476b5cf4f822e86776f6458d43b74d2f8e34788",
+        "flashes": true,
+        "frames": 180,
+        "next_random": 0.666231,
+        "peak": 150,
+        "quality": 2,
+        "recycled": true
+      }
+    ]
+  },
+  "correction": "Run the exact frozen accepted emitter and current emitter in paired cases on each worker; preserve original goldens and record diagnostic frame samples/digests. Verify frozen source hash; drain teardown frames. Local paired/current/golden fingerprints agree; hosted comparison remains pending.",
+  "verification": "Downloaded digest/CRC verified. No production game/asset code changed by correction."
+}
