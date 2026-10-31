@@ -245,6 +245,52 @@ def multitouch_dash(order):
     wait(lambda x: x['state'] == 'menu')
 
 
+def multitouch_pause():
+    s = wait(lambda x: x['state'] == 'menu' and any('DEPLOY' in b['text'] for b in x['buttons']))
+    tap('DEPLOY', s)
+    s = wait(lambda x: x['state'] == 'playing')
+    button = next(b for b in s['buttons'] if 'PAUSE' in b['text'])
+    x, y, w, h = button['rect']
+    pause = screen_point(x + w / 2, y + h / 2, s)
+    origin = screen_point(120, s['canvas'][1] - 110, s)
+    held = screen_point(195, s['canvas'][1] - 110, s)
+    start = s['position']
+    samples = {}
+    with MultiTouch() as fingers:
+        fingers.send('down', 7, origin)
+        fingers.send('move', 7, held)
+        s = wait(lambda x: x['state'] == 'playing' and x.get('touch_controls', {}).get('stick', [0, 0])[0] > .9
+                 and math.dist(x['position'], start) > .2)
+        samples['walking'] = touch_sample(s)
+        fingers.send('down', 11, pause)
+        s = wait(lambda x: x['state'] == 'paused')
+        controls = s['touch_controls']
+        check(controls['joystick_id'] == controls['dash_id'] == controls['pause_id'] == -1
+              and controls['stick'] == [0, 0] and not controls['pause_enabled'] and not controls['dash_enabled'],
+              'held joystick plus second-finger Pause freezes and clears both HUD actions')
+        samples['paused_while_fingers_held'] = touch_sample(s)
+        elapsed, position, dashes = s['time'], s['position'], s['dashes']
+        time.sleep(1)
+        frozen = read()
+        check(frozen['state'] == 'paused' and frozen['time'] == elapsed and frozen['position'] == position and frozen['dashes'] == dashes,
+              'two-finger Pause keeps actual simulation and dash frozen')
+        capture('multitouch-paused')
+        fingers.send('up', 11, pause)
+        fingers.send('up', 7, held)
+    tap('RESUME')
+    s = wait(lambda x: x['state'] == 'playing' and x['time'] > elapsed)
+    controls = s['touch_controls']
+    check(controls['joystick_id'] == controls['dash_id'] == controls['pause_id'] == -1 and controls['stick'] == [0, 0]
+          and controls['pause_enabled'] and controls['dash_enabled'] and s['position'] == position and s['dashes'] == dashes,
+          'touch Resume restores controls without stale walking or deferred dash')
+    samples['resumed'] = touch_sample(s)
+    actions.append({'multitouch_pause': True, 'injection': 'shell UID / real Android two-pointer MotionEvent', 'samples': samples})
+    tap('PAUSE', s)
+    s = wait(lambda x: x['state'] == 'paused')
+    tap('END DEPLOYMENT', s)
+    wait(lambda x: x['state'] == 'menu')
+
+
 def dismiss_system_dialogs():
     # Only emulator OS onboarding/launcher failures may be dismissed. Never game ANRs.
     for _ in range(3):
@@ -342,6 +388,9 @@ try:
     s = wait(lambda x: x['dashes'] > dash_before and x.get('dash_readiness', 100) < 100)
     check(True, 'touch dash activated')
     check(s.get('operative_visible', False) and 0 <= s['dash_readiness'] < 100, 'dash keeps operative visible and updates readiness gauge')
+    dash_label = next(b['text'] for b in s['buttons'] if 'DASH' in b['text'])
+    check('READY' not in dash_label and '0.0s' not in dash_label,
+          'active Android dash cooldown text agrees with unavailable readiness')
     check(s.get('operative_visuals') == {'instances': 5, 'surfaces': 6, 'triangles': 296},
           'Android operative uses the actual shared faceted armor and rifle geometry')
     report['operative_visuals'] = s['operative_visuals']
@@ -586,6 +635,7 @@ try:
         check(True, 'earned-kit fixture Engineer selection survives Android relaunch')
     for order in ['joystick-first', 'dash-first']:
         multitouch_dash(order)
+    multitouch_pause()
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]

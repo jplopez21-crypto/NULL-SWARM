@@ -1,0 +1,11 @@
+# Mobile control follow-up
+
+Pause now uses the same native-pointer action handler as dash. One finger can keep the floating left joystick held while another presses the upper-right Pause button. Action fires on touch-down; duplicate emulated mouse events cannot activate it twice. Opening any panel or hiding HUD disables/resets both buttons. Existing main pause/resume/lifecycle methods clear the joystick and pending dash; resume does not resurrect old touch input. Keyboard/controller/mouse paths remain supported.
+
+ui/touch_action_button.gd contains the original touch handler moved without changing its executable statements. The named TouchDashButton remains as a thin inherited type for compatibility; Pause uses the common script directly. Ordinary menu buttons retain their existing navigation behavior. No movement, dash, damage, cooldown or progression parameters change.
+
+The dash label shows at least 0.1s for any positive cooldown, then READY at zero. Its gauge retains hundredth precision and is capped at 99.99 while unavailable; only actual readiness produces 100. The label/gauge never alter timers or queue input. A labelled desktop-only synthetic 0.001s capture makes the last-positive-frame readout reviewable without asserting device timing.
+
+`godot --headless --script tests/run_touch_pause_tests.gd` runs real engine screen/mouse emulation/GUI/physics across three sizes: held movement + pause, pointer/third-finger arbitration, frozen clock/health/dash/save, release outside, GUI resume without stale input, canceled/outside touches, paused/upgrade/menu guards, keyboard/controller and near-zero readiness. The original 69 dash regressions remain in the runner.
+
+Android smoke adds a real two-pointer joystick/Pause gesture, frozen-state and stale-free Resume checks after existing ordinary progression/lifecycle/update acceptance. Fresh Engineer touch fixtures follow an explicitly labelled Architect backup restored through normal GUI, not an earned-on-device unlock claim. The emulator-only probe reads actual pause/joystick/dash ownership; it cannot grant stats or inject game actions. CI remains API35 x86_64 Compatibility software rendering, not physical S23 Ultra latency or Mobile performance validation. Exact current results/artifacts are in TEST_RESULTS.md.

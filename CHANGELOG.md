@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-31 / Mobile pause and dash readiness
+
+- Fixed Pause while the movement joystick is held, using the proven native touch handler shared with dash. Menu/upgrade/pause transitions reset both HUD actions; resume cannot replay stale walking/dash.
+- Positive dash cooldown now displays at least 0.1s and below-full readiness until the timer reaches zero. No timer, movement, combat or save changes. Added 97 engine-input/GUI/physics checks across three sizes; all 14 local strict suites pass. Hosted 52-check Android/render/full QA and updated APK are pending in TEST_RESULTS.md.
+
 ## Development — 2026-10-31 / Machine destruction
 
 - Added original eight-triangle faceted destruction chips and a synthesized 140 ms mechanical breakup cue. Preserved effect counts/caps/flight/recycling/RNG, reduced-flash suppression and existing SFX trigger/voices/gate/volume. No gameplay balance changes or FPS claim.

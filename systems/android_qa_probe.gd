@@ -60,7 +60,8 @@ func snapshot() -> void:
 	data["memory_audio_plays"] = game.audio.memory_plays
 	data["touch_controls"] = {"joystick_id": game.input_router.touch_id,
 		"stick": [game.input_router.stick.x, game.input_router.stick.y],
-		"dash_id": game.ui.dash_button.touch_id, "dash_enabled": game.ui.dash_button.input_enabled}
+		"dash_id": game.ui.dash_button.touch_id, "dash_enabled": game.ui.dash_button.input_enabled,
+		"pause_id": game.ui.pause_button.touch_id, "pause_enabled": game.ui.pause_button.input_enabled}
 	data["performance_report_text"] = game.ui.visible_performance_report()
 	data["performance_copy_status"] = game.ui.performance_copy_status.text if is_instance_valid(game.ui.performance_copy_status) and game.ui.performance_copy_status.is_visible_in_tree() else ""
 	data["selected_kit"] = game.save.data["selected_kit"]

@@ -37,7 +37,7 @@ func run() -> void:
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["destruction_feedback"]["fragments_live"] == 4 and game.combat.effects.live.size() == 5, "probe counts actual pooled chips without spawning or advancing effects")
-	check(data["touch_controls"] == {"joystick_id": -1.0, "stick": [0.0, 0.0], "dash_id": -1.0, "dash_enabled": true}, "probe reads actual idle touch ownership without injecting input")
+	check(data["touch_controls"] == {"joystick_id": -1.0, "stick": [0.0, 0.0], "dash_id": -1.0, "dash_enabled": true, "pause_id": -1.0, "pause_enabled": true}, "probe reads actual idle touch ownership without injecting input")
 	check(data["memory_audio_plays"] == game.audio.memory_plays and game.audio.memory_plays == 0, "probe reads the actual audio counter without starting or granting anything")
 	var settings_match: bool = true
 	for key in game.save.data["settings"]:
@@ -58,6 +58,7 @@ func run() -> void:
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["state"] == "paused", "probe observes normal pause transition")
+	check(not data["touch_controls"]["pause_enabled"] and not data["touch_controls"]["dash_enabled"] and data["touch_controls"]["pause_id"] == -1 and data["touch_controls"]["joystick_id"] == -1, "probe observes actual cleared/disabled controls after pause without injecting reset")
 	game.open_build()
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))

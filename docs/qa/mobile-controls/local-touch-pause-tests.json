@@ -1,0 +1,7 @@
+{
+  "checks": 97,
+  "engine_mouse_emulation": true,
+  "failures": [],
+  "layouts": 3,
+  "scope": "Actual engine input/GUI and controlled physics; no physical phone latency claim."
+}

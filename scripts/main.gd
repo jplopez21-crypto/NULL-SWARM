@@ -897,6 +897,18 @@ func _capture_session() -> void:
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/destruction_reduced.png")
 	debris_label.queue_free()
 	ui.backdrop.show()
+	# Last positive cooldown is a labelled synthetic HUD reference, not a timer change.
+	start_run()
+	state = State.PAUSED
+	player.dash_cooldown = 0.001
+	ui.toast("DASH READINESS // STAGED QA", "SYNTHETIC LAST COOLDOWN FRAME // TIMER 0.001s", Color("80ffdb"))
+	camera.size = 29
+	camera.position = Vector3(0, 32, 23)
+	camera.look_at(Vector3.ZERO)
+	ui.update_hud(player, progress, combat)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/dash_near_ready.png")
 	audio.shutdown()
 	get_tree().quit()
 

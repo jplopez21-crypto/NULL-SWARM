@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Mobile pause and dash readiness — local verification 2026-10-31
+
+- Reproduced accepted source 77675f8: held joystick + second-finger Pause leaves PLAYING; stopped Pause works. Positive 0.001s dash timer displayed 0.0s. Current engine reproduction pauses while held and displays 0.1s. Exact before/after data: docs/qa/mobile-controls/reproduction.json.
+- Extracted proven dash native-pointer code into shared TouchAction script with unchanged executable statements, retaining named dash type. Pause uses independent native touches/on-press activation and duplicate-mouse suppression. Panels/HUD reset/disable both actions; existing main pause/resume/physics/input and player code are unchanged. Any positive dash timer displays at least 0.1s and gauge below 100; only zero displays READY/100. UI does not modify timers, movement or progression.
+- All 14 isolated strict suites passed: 97 touch-pause, 69 touch-dash, 23 input, 16 probe, 72 resources, 41 operative, 59 destruction, 1,030 systems, 43 GUI, 32 audio, 2,340 UI checks/168 layouts, 27 Engineer, 41 corruption and scene smoke; no strict script/engine/leak errors. Python compilation and four workflow YAML/bash checks passed. New tests use real engine touch/mouse emulation, three sizes, actual GUI dispatch and physics/state snapshots. Initial Resume test clicked before the new container layout settled; waiting normal UI frames fixed the harness without production workarounds.
+- Configured real Android two-pointer moving Pause/frozen state/Resume and active dash-readout checks (52 total target), plus labelled desktop synthetic last-positive-frame HUD capture. Hosted build/render/Android/full QA and new APK are pending. Local SDK/ADB/emulator/rendering and physical phone are unavailable. Previous destruction APK below remains latest verified; preserve backups while diagnostic signing rotates. Method/source proof: docs/MOBILE_CONTROLS.md and docs/qa/mobile-controls/.
+
 ## Machine destruction — verified 2026-10-31
 
 Verified game/test/CI source: `77675f86015ec8a1a1b1cc06ea03e3093fffef17`. Final report checkpoint changes documentation/evidence only.
