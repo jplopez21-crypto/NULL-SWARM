@@ -3,7 +3,7 @@
 ## Development — 2026-10-30 / Memory collection audio
 
 - Added original quiet collection chime on a dedicated SFX voice, with aggregate-per-tick feedback, common rate limit, bounded batch pitch and level-up priority. Existing combat voices, XP rules and volume controls are retained.
-- Added PCM/routing/playback/lifecycle and real-physics collection integration tests, a human-review WAV export and read-only Android acceptance counter. Hosted acceptance remains pending until recorded in TEST_RESULTS.md.
+- Added PCM/routing/playback/lifecycle and real-physics collection integration tests, a human-review WAV export and read-only Android acceptance counter. Verified source a64caa8f3df88f8ed4e7da1b2698102617022cea passed native APK/signature, all 34 Android checks and full gameplay/rendered QA. All prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match; local/native/QA summaries and raw PCM receipts agree. Exact artifacts and hardware/listening/signing limits: TEST_RESULTS.md.
 
 ## Development — 2026-10-29 / Memory crystals
 
