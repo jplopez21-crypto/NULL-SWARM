@@ -22,6 +22,8 @@ signal backup_preview_requested(code: String)
 signal backup_recovery_requested
 signal backup_restore_requested
 signal setting_changed(key: String, value: Variant)
+signal performance_report_requested
+signal performance_copy_requested
 const CYAN := Color("78f8d4")
 const MUTED := Color("8cabb9")
 var root: Control
@@ -42,6 +44,8 @@ var operative_title: String = "VANGUARD"
 var weapons_label: Label
 var perf_label: Label
 var perf_toggle: CheckButton
+var performance_report_field: TextEdit
+var performance_copy_status: Label
 var perf_next_sample_ms: int = 0
 var hint_label: Label
 var dash_gauge: ProgressBar
@@ -518,8 +522,38 @@ func show_settings(settings: Dictionary, back: Callable) -> void:
 	options.selected = int(settings["quality"])
 	row.add_child(options)
 	options.item_selected.connect(func(index: int): setting_changed.emit("quality", index))
-	var back_button := button_at(box, "BACK", back)
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	button_at(actions, "PERFORMANCE REPORT", func(): performance_report_requested.emit())
+	var back_button := button_at(actions, "BACK", back)
 	back_button.grab_focus()
+
+func show_performance_report(text: String, back: Callable) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 560
+	label_at(box, "PERFORMANCE REPORT", 25, CYAN)
+	var hint := label_at(box, "Enable Performance stats, play, then pause to review.\nOnly active combat is sampled. Nothing is sent online.", 16, MUTED)
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	performance_report_field = TextEdit.new()
+	performance_report_field.editable = false
+	performance_report_field.text = text
+	performance_report_field.custom_minimum_size = Vector2(0, 230)
+	box.add_child(performance_report_field)
+	performance_copy_status = label_at(box, "", 16, MUTED)
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	var copy := button_at(actions, "COPY REPORT", func(): performance_copy_requested.emit())
+	copy.disabled = not DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD)
+	if copy.disabled:
+		performance_copy_status.text = "Clipboard unavailable on this platform."
+	button_at(actions, "BACK TO SETTINGS", back).grab_focus()
+
+func visible_performance_report() -> String:
+	return performance_report_field.text if is_instance_valid(performance_report_field) and performance_report_field.is_visible_in_tree() else ""
+
+func set_performance_copy_status(copied: bool) -> void:
+	if is_instance_valid(performance_copy_status) and performance_copy_status.is_visible_in_tree():
+		performance_copy_status.text = "Report copied." if copied else "Clipboard unavailable; report was not copied."
 
 func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWorld) -> void:
 	health_label.text = "%s / %d HP + %d SHIELD" % [operative_title, ceili(player.health.current), ceili(player.health.shield)]

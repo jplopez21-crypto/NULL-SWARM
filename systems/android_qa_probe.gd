@@ -56,6 +56,8 @@ func snapshot() -> void:
 	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}
 	data["build_text"] = game.ui.visible_build_text()
 	data["memory_audio_plays"] = game.audio.memory_plays
+	data["performance_report_text"] = game.ui.visible_performance_report()
+	data["performance_copy_status"] = game.ui.performance_copy_status.text if is_instance_valid(game.ui.performance_copy_status) and game.ui.performance_copy_status.is_visible_in_tree() else ""
 	data["selected_kit"] = game.save.data["selected_kit"]
 	data["architects"] = game.save.data["architects"]
 	data["edit_fields"] = []
@@ -76,7 +78,7 @@ func snapshot() -> void:
 				data["targets"].append([item["mesh"].position.x, item["mesh"].position.z])
 	data["backup_code_length"] = 0
 	for field in game.ui.root.find_children("*", "TextEdit", true, false):
-		if field.is_visible_in_tree():
+		if field.is_visible_in_tree() and field.editable:
 			data["backup_code_length"] = field.text.length()
 			var rect: Rect2 = field.get_global_rect()
 			data["edit_fields"].append([rect.position.x, rect.position.y, rect.size.x, rect.size.y])

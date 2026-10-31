@@ -350,6 +350,8 @@ func run() -> void:
 	local_pickups.queue_free()
 	legacy_pickups.queue_free()
 	_test_memory_crystals()
+	_test_performance_history()
+	_test_performance_capture()
 	var game = load("res://scenes/main.tscn").instantiate()
 	root.add_child(game)
 	game.save.path = "user://scene_test_progress.json"
@@ -905,3 +907,73 @@ func _test_memory_crystals() -> void:
 	candidate.free()
 	reference.free()
 	collector.free()
+
+func _test_performance_history() -> void:
+	var history = preload("res://systems/performance_history.gd").new()
+	var values := {"fps": 60.0, "enemies": 20, "shots": 10, "draws": 80, "engine_bytes": 1024, "simulation_seconds": 1.0, "quality": 1}
+	var empty: Dictionary = history.report({"platform": "fixture", "salvage": 900, "backup_code": "private"})
+	check(empty["status"] == "empty" and empty["summary"] == {"observations": 0} and not empty["device"].has("salvage") and not empty["device"].has("backup_code"), "empty performance reports never invent FPS or include progression/backup context")
+	check(not history.record(-1, values) and history.record(0, values), "performance history accepts the first valid observation and rejects negative clocks")
+	check(not history.record(249, values) and history.record(250, values), "observations obey the exact 250ms sampling gate")
+	values["fps"] = 0.4
+	check(history.record(500, values), "sub-one-FPS observations remain visible rather than becoming warm-up zero")
+	values["fps"] = 500.0
+	check(history.samples.back()["fps"] == 0.4, "stored performance samples do not alias caller dictionaries")
+	for bad in [0.0, -1.0, INF, NAN, "60", null]:
+		var invalid: Dictionary = values.duplicate()
+		invalid["fps"] = bad
+		check(not history.record(1000, invalid), "invalid or warm-up FPS cannot become a benchmark observation")
+	var missing: Dictionary = values.duplicate()
+	missing.erase("engine_bytes")
+	check(not history.record(1000, missing) and history.samples.size() == 3, "missing monitors leave the existing history intact")
+	var invalid_quality: Dictionary = values.duplicate()
+	invalid_quality["quality"] = 3
+	check(not history.record(1000, invalid_quality), "unknown effect presets cannot enter the report")
+	invalid_quality["quality"] = 0.5
+	check(not history.record(1000, invalid_quality), "fractional effect presets cannot masquerade as valid settings")
+	var ctx := {"platform": "fixture", "window": [1280, 720], "account": "private"}
+	var exported: Dictionary = history.report(ctx)
+	exported["samples"][0]["fps"] = 999
+	exported["device"]["window"][0] = 1
+	check(history.samples[0]["fps"] == 60 and ctx["window"][0] == 1280 and not exported["device"].has("account"), "reports own their snapshots and allow only non-identifying device fields")
+	history.clear()
+	values["extra_secret"] = "private"
+	for i in range(125):
+		values["fps"] = float(i + 1)
+		history.record(i * 250, values)
+	var full: Dictionary = history.report({})
+	check(history.samples.size() == 120 and history.samples.front()["fps"] == 6 and history.samples.back()["fps"] == 125, "history stays bounded and retains the newest 120 observations")
+	check(full["summary"]["median_reported_fps"] == 65.5 and full["summary"]["minimum_reported_fps"] == 6 and full["summary"]["maximum_reported_fps"] == 125, "reported FPS summary uses the observation window without fake frame-time percentiles")
+	check(not history.samples[0].has("extra_secret") and JSON.parse_string(JSON.stringify(full))["samples"].size() == 120, "only whitelisted metrics appear in valid portable JSON")
+	history.clear()
+	check(history.samples.is_empty() and history.next_ms == 0 and history.report({})["status"] == "empty", "new deployments clear observations and sampling deadlines")
+
+func _test_performance_capture() -> void:
+	var game: Node3D = load("res://scenes/main.tscn").instantiate()
+	root.add_child(game)
+	game.set_process(false)
+	game.set_physics_process(false)
+	game.save.path = "user://qa_performance_capture.json"
+	game.save.data = SaveStore.defaults()
+	game.audio.shutdown()
+	game.start_run()
+	check(not game._sample_performance(1000, 60) and game.performance_history.samples.is_empty(), "disabled diagnostic preference performs no observation")
+	game.change_setting("performance_stats", true)
+	var original_rng: int = game.combat.rng.state
+	var original_save: Dictionary = game.save.data.duplicate(true)
+	check(game._sample_performance(1000, 60), "enabled playing sampler accepts supplied FPS with actual combat counters")
+	var sample: Dictionary = game.performance_history.samples.back()
+	check(sample["enemies"] == game.combat.active_enemies and sample["shots"] == game.combat.active_projectiles and sample["simulation_seconds"] == game.combat.director.elapsed, "capture records real world counts and run time")
+	check(game.combat.rng.state == original_rng and game.save.data == original_save and game.progress.level == 1, "measurement cannot advance combat RNG or mutate progress/save data")
+	game.pause_run()
+	check(not game._sample_performance(2000, 60) and game.performance_history.samples.size() == 1, "paused sampler retains the last combat observations without adding menu FPS")
+	game.go_menu()
+	check(not game._sample_performance(3000, 60) and game.performance_history.samples.size() == 1, "menu keeps the completed run report but cannot add observations")
+	game.ui.show_settings(game.save.data["settings"], func(): game.go_menu())
+	game.open_performance_report()
+	var report: Dictionary = JSON.parse_string(game.ui.visible_performance_report())
+	check(report["status"] == "observations" and report["summary"]["observations"] == 1 and report["device"].has("renderer"), "menu report exports actual retained observations and renderer context")
+	game.start_run()
+	check(game.performance_history.samples.is_empty() and game.performance_history.next_ms == 0 and not game._sample_performance(0, 0), "new deployment clears old evidence while zero FPS stays a warm-up")
+	game.audio.shutdown()
+	game.free()

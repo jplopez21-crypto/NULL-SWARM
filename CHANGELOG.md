@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-31 / Offline performance report
+
+- Added bounded active-combat performance observations, read-only Settings report, honest empty/warm-up states and clipboard export with readback verification. New deployment clears history; pause/menu/upgrade frames and progression/account data are excluded.
+- Added 168-layout headless coverage, actual GUI/state/ownership/finite-data tests, and a paired seeded replay proving diagnostics preserve the accepted gameplay fingerprint. Android acceptance is configured for 37 checks, including report/copy/paused return. Full hosted/rendered acceptance and APK are pending until recorded in TEST_RESULTS.md.
+
 ## Development — 2026-10-30 / Memory collection audio
 
 - Added original quiet collection chime on a dedicated SFX voice, with aggregate-per-tick feedback, common rate limit, bounded batch pitch and level-up priority. Existing combat voices, XP rules and volume controls are retained.

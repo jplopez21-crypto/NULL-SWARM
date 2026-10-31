@@ -54,3 +54,7 @@ Original four/six/eight-sided double-pyramid packet meshes and opaque grayscale 
 ## Memory collection cue
 
 The quiet rising memory cue is original synthesized sixteen-bit mono PCM authored in SwarmAudio.memory_chime, using two sinusoidal partials and smooth amplitude envelopes. No external samples, instruments, models, fonts or licensed recordings were downloaded. The QA WAV export is the same original development audio, pending human listening and final commercial mix review.
+
+## Performance report UI
+
+The offline report screen reuses original project panel/button styles, standard Godot TextEdit and existing built-in fallback typography. The desktop review capture labels its synthetic metrics explicitly. No external art, fonts, models or audio were added; final visual/physical-device review remains required.

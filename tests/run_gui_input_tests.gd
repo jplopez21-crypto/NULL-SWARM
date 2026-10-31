@@ -83,6 +83,26 @@ func run() -> void:
 	check(retained_until_frame_end(old_panel), "settings transition preserves current dispatch target")
 	await settle()
 	check(game.ui.screen != null, "settings panel remains usable")
+	var report_time: float = game.combat.director.elapsed
+	var report_rng: int = game.combat.rng.state
+	var report_save: Dictionary = game.save.data.duplicate(true)
+	var old_observations: Array = game.performance_history.samples.duplicate(true)
+	click(game, "PERFORMANCE REPORT")
+	await settle()
+	var report: Dictionary = JSON.parse_string(game.ui.visible_performance_report())
+	check(report["status"] == "empty" and not game.ui.performance_report_field.editable, "real GUI opens an honest read-only empty performance report")
+	game._process(1)
+	game._physics_process(1)
+	check(game.state == game.State.PAUSED and game.combat.director.elapsed == report_time and game.combat.rng.state == report_rng and game.save.data == report_save and game.performance_history.samples == old_observations, "viewing a paused report cannot sample menu FPS or alter combat RNG or progression")
+	if not DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
+		game.copy_performance_report()
+		check(game.ui.performance_copy_status.text.contains("not copied"), "unsupported clipboard never claims report-copy success")
+	else:
+		game.copy_performance_report()
+		check(DisplayServer.clipboard_get() == game.ui.visible_performance_report(), "supported clipboard receives the actual report")
+	click(game, "BACK TO SETTINGS")
+	await settle()
+	check(game.ui.visible_performance_report().is_empty() and game.state == game.State.PAUSED, "report back restores Settings without resuming combat")
 	click(game, "Performance stats")
 	await settle()
 	check(game.save.data["settings"]["performance_stats"] and game.ui.perf_label.visible and game.save._read(game.save.path)["settings"]["performance_stats"], "GUI diagnostic toggle applies and saves its boolean preference")

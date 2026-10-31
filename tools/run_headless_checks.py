@@ -19,7 +19,7 @@ suites = [
     ('input', ['--script', 'tests/run_input_tests.gd'], r'INPUT_RESULT checks=(\d+) failures=0'),
     ('systems', ['--script', 'tests/run_tests.gd'], r'TEST_RESULT checks=(\d+) failures=0'),
     ('corruption', ['--script', 'tests/run_corruption_tests.gd'], r'CORRUPTION_RESULT checks=(\d+) failures=0'),
-    ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=160 failures=0'),
+    ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=168 failures=0'),
     ('scene-smoke', ['--', '--smoke'], r'SCENE_SMOKE_OK'),
 ]
 results = []

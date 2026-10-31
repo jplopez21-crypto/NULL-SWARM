@@ -1,6 +1,7 @@
 extends Node3D
 
 const RUN_SECONDS: float = 600.0
+const PERFORMANCE_HISTORY = preload("res://systems/performance_history.gd")
 enum State { MENU, PLAYING, UPGRADING, PAUSED, RESULTS }
 var pending_backup_code: String = ""
 var state: State = State.MENU
@@ -12,6 +13,7 @@ var player: SwarmPlayer
 var pickups: PickupSystem
 var ui: GameUI
 var audio: SwarmAudio
+var performance_history := PERFORMANCE_HISTORY.new()
 var camera: Camera3D
 var arena: Node3D
 var run_root: Node3D
@@ -61,6 +63,8 @@ func _ready() -> void:
 	ui.research_requested.connect(purchase_research)
 	ui.kit_selected.connect(select_kit)
 	ui.setting_changed.connect(change_setting)
+	ui.performance_report_requested.connect(open_performance_report)
+	ui.performance_copy_requested.connect(copy_performance_report)
 	ui.backup_requested.connect(open_backup)
 	ui.backup_export_requested.connect(export_backup)
 	ui.backup_preview_requested.connect(preview_backup)
@@ -82,6 +86,7 @@ func _build_arena() -> void:
 	add_child(arena)
 
 func start_run() -> void:
+	performance_history.clear()
 	audio.reset_memory_feedback()
 	corruption_panel = false
 	ui.set_performance_stats(bool(save.data["settings"].get("performance_stats", false)))
@@ -192,6 +197,32 @@ func _process(delta: float) -> void:
 		camera.size = maxf(29.0, aspect * 16.0)
 		ui.update_hud(player, progress, combat)
 		ui.update_memory(delta, pickups, player, state == State.PLAYING)
+		if state == State.PLAYING and save.data["settings"]["performance_stats"]:
+			_sample_performance(Time.get_ticks_msec(), Engine.get_frames_per_second())
+
+func _sample_performance(now_ms: int, fps: float) -> bool:
+	if state != State.PLAYING or not save.data["settings"]["performance_stats"] or not is_instance_valid(combat) or not performance_history.due(now_ms):
+		return false
+	return performance_history.record(now_ms, {"fps": fps, "enemies": combat.active_enemies, "shots": combat.active_projectiles, "draws": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), "engine_bytes": Performance.get_monitor(Performance.MEMORY_STATIC), "simulation_seconds": combat.director.elapsed, "quality": save.data["settings"]["quality"]})
+
+func open_performance_report() -> void:
+	if state not in [State.MENU, State.PAUSED]:
+		return
+	var window: Vector2i = DisplayServer.window_get_size()
+	var canvas: Vector2 = ui.root.size
+	var report := performance_history.report({"platform": OS.get_name(), "model": OS.get_model_name(), "os_version": OS.get_version(), "engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "window": [window.x, window.y], "canvas": [canvas.x, canvas.y]})
+	var back: Callable = ui.settings_return
+	ui.show_performance_report(JSON.stringify(report, "  "), func(): ui.show_settings(save.data["settings"], back))
+
+func copy_performance_report() -> void:
+	if state not in [State.MENU, State.PAUSED] or ui.visible_performance_report().is_empty():
+		return
+	var copied := false
+	if DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
+		var text: String = ui.visible_performance_report()
+		DisplayServer.clipboard_set(text)
+		copied = DisplayServer.clipboard_get() == text
+	ui.set_performance_copy_status(copied)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F3:
@@ -754,6 +785,16 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/memory_detail.png")
+	# Explicit synthetic metrics fixture, never presented as device FPS evidence.
+	go_menu()
+	performance_history.clear()
+	performance_history.record(1000, {"fps": 60.0, "enemies": 600, "shots": 320, "draws": 900, "engine_bytes": 100000000, "simulation_seconds": 300.0, "quality": 2})
+	ui.show_settings(save.data["settings"], func(): go_menu())
+	open_performance_report()
+	ui.performance_copy_status.text = "STAGED QA / SYNTHETIC METRICS / NOT DEVICE RESULTS"
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/performance_report.png")
 	audio.shutdown()
 	get_tree().quit()
 

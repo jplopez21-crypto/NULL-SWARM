@@ -59,6 +59,14 @@ func run() -> void:
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["build_text"].is_empty(), "probe clears build text after resume")
+	game.pause_run()
+	game.ui.show_settings(game.save.data["settings"], func(): game.ui.show_pause(game.save.data["settings"]))
+	game.open_performance_report()
+	var report_save: Dictionary = game.save.data.duplicate(true)
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(data["performance_report_text"] == game.ui.visible_performance_report() and not data["performance_report_text"].is_empty(), "probe reads the actual report without inventing observations")
+	check(data["edit_fields"].is_empty() and data["backup_code_length"] == 0 and game.save.data == report_save, "read-only performance text is never advertised as a backup input or progression grant")
 	game.audio.shutdown()
 	# Drain queued UI tweens and audio-thread releases before destroying the scene.
 	await create_timer(0.20).timeout

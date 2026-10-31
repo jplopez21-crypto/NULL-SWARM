@@ -1,6 +1,7 @@
 extends SceneTree
 
 var failures: Array[String] = []
+var diagnostic_observations: int = 0
 const DT: float = 1.0 / 60.0
 const MAX_SECONDS: float = 720.0
 
@@ -63,9 +64,11 @@ func _pacing_sample(game: Node3D) -> Dictionary:
 		"position": [snappedf(game.player.position.x, 0.01), snappedf(game.player.position.z, 0.01)],
 		"speed": game.player.effective_speed(), "magnet": game.player.magnet, "kills": game.combat.kills}
 
-func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean", trace_pacing: bool = false) -> Dictionary:
+func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean", trace_pacing: bool = false, diagnostics: bool = false) -> Dictionary:
 	var starting_failures: int = failures.size()
 	var game := _game(seed_value, kit, pickup_mode)
+	if diagnostics:
+		game.change_setting("performance_stats", true)
 	var bot: PlaytestBot = ValueAwareBot.new() if bot_policy == "value_aware" else PlaytestBot.new()
 	bot.profile = profile
 	var steps: int = 0
@@ -95,6 +98,9 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		bot.tick(game, DT)
 		var start := Time.get_ticks_usec()
 		game._physics_process(DT)
+		if diagnostics:
+			# Synthetic FPS drives the real read-only sampling path; not device data.
+			game._sample_performance(steps * 17, 60.0)
 		samples.append(float(Time.get_ticks_usec() - start) / 1000.0)
 		steps += 1
 		max_enemies = maxi(max_enemies, game.combat.active_enemies)
@@ -161,6 +167,9 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 			var completed_levels: int = int(sample["level"]) - 1
 			var spent_xp: int = completed_levels * 18 + 5 * completed_levels * (completed_levels - 1)
 			_check(sample["collected"] == spent_xp + sample["xp"], "pacing trace disagrees with accumulated level costs")
+	if diagnostics:
+		diagnostic_observations = game.performance_history.samples.size()
+		_check(diagnostic_observations > 0 and diagnostic_observations <= 120, "diagnostic replay failed to sustain a bounded observation window")
 	game.audio.shutdown()
 	game.queue_free()
 	await process_frame
@@ -175,6 +184,19 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--diagnostics-parity" in OS.get_cmdline_user_args():
+		var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/diagnostic-baseline.json"))
+		var disabled: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
+		var enabled: Dictionary = await simulate(909, "halo", "vanguard", 180.0, "local", "cautious", "clean", false, true)
+		_check(fingerprint(disabled) == fingerprint(enabled), "diagnostics changed seeded gameplay or upgrade choices")
+		_check(fingerprint(disabled) == baseline["fingerprint"], "diagnostic replay differs from the previously accepted baseline")
+		var report := QAReport.metadata("diagnostic observation gameplay parity")
+		report.merge({"cases": [disabled, enabled], "fingerprint": fingerprint(disabled), "diagnostic_observations": diagnostic_observations, "failures": failures,
+			"limits": "Synthetic supplied 60FPS forces sampler execution during the seeded normal-rules replay; not a rendered/device FPS measurement or human balance test."})
+		QAReport.write("res://builds/qa/diagnostics-parity.json", report)
+		print("DIAGNOSTICS_PARITY_RESULT cases=2 failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--pacing-probe" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("Singularity upgrade-gap navigation comparison")
 		var cases: Array[Dictionary] = []

@@ -37,6 +37,12 @@ jobs:
           timeout 120s godot --headless --script tests/run_grid_benchmark.gd 2>&1 | tee builds/qa/grid-benchmark.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/grid-benchmark.log; then exit 1; fi
           test -s builds/qa/grid-benchmark.json
+      - name: Diagnostic observation gameplay parity
+        run: |
+          set -o pipefail
+          timeout 180s godot --headless --script tests/run_playtests.gd -- --diagnostics-parity 2>&1 | tee builds/qa/diagnostics-parity.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/diagnostics-parity.log; then exit 1; fi
+          test -s builds/qa/diagnostics-parity.json
       - name: Normal-rules bot playtests
         run: |
           set -o pipefail

@@ -45,6 +45,8 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 		if not game.ui.visible_build_text().is_empty():
 			for label in game.ui.screen.find_children("*", "Label", true, false):
 				check(bounds.encloses(label.get_global_rect()), "%s %s: build label fits viewport: %s" % [size, stage, label.text])
+	if not game.ui.visible_performance_report().is_empty():
+		check(bounds.encloses(game.ui.performance_report_field.get_global_rect()), "%s %s: report text field fits viewport" % [size, stage])
 	layouts.append({"window": [size.x, size.y], "observed_window": [root.size.x, root.size.y], "canvas": [game.ui.root.size.x, game.ui.root.size.y], "scale_aspect": root.content_scale_aspect, "stage": stage, "visible_buttons": buttons})
 	if captures:
 		await create_timer(0.20).timeout
@@ -83,6 +85,10 @@ func run() -> void:
 		game.go_menu()
 		game.ui.show_settings(game.save.data["settings"], func(): game.go_menu())
 		await inspect(game, "settings", size)
+		game.performance_history.clear()
+		game.open_performance_report()
+		check(not game.ui.performance_report_field.editable and JSON.parse_string(game.ui.visible_performance_report())["status"] == "empty", "empty performance JSON is honest and read-only")
+		await inspect(game, "performance-report-empty", size)
 		game.start_run()
 		game.set_physics_process(false)
 		game.pickups.drop(Vector3(12, 0, -5), 100)
@@ -159,6 +165,12 @@ func run() -> void:
 		game._physics_process(10.0)
 		check(game.combat.director.elapsed == clock, "paused UI preserves simulation clock")
 		await inspect(game, "pause", size)
+		# Synthetic metrics for geometry only, not device-performance evidence.
+		game.performance_history.record(Time.get_ticks_msec() + 10000, {"fps": 60.0, "enemies": 600, "shots": 320, "draws": 900, "engine_bytes": 100000000, "simulation_seconds": 300.0, "quality": 2})
+		game.ui.show_settings(game.save.data["settings"], func(): game.ui.show_pause(game.save.data["settings"]))
+		game.open_performance_report()
+		check(JSON.parse_string(game.ui.visible_performance_report())["summary"]["observations"] > 0, "report geometry fixture contains observations")
+		await inspect(game, "performance-report-filled", size)
 		var saved_ranks: Dictionary = game.progress.ranks.duplicate(true)
 		var saved_mutations: Array[String] = game.combat.mutations.duplicate()
 		game.open_build()

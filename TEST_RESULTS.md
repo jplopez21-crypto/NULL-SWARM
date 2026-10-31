@@ -1,5 +1,13 @@
 # NULL//SWARM test results
 
+## Offline performance report — local verification 2026-10-31
+
+- Implemented combat-only bounded diagnostics history, truthful read-only/empty report, context whitelist, new-deployment reset, clipboard capability guard and readback verification. This changes no physics, damage, XP, save schema, enemy budgets or presets.
+- Executed all ten strict isolated suites: 1,029 systems, 61 resources, 40 GUI, 11 probe, 32 audio, 2,332 headless UI checks/168 layouts, 27 Engineer, 21 input, 41 corruption and scene smoke passed. No strict script/engine/resource-leak errors. Python driver/runner compilation and all four workflow YAML/bash checks passed.
+- Executed the new paired 180-second seed 909/Halo/Vanguard replay. Sampler off/on cases both reached 180 seconds / 260 kills / level 19 with fingerprint cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a, identical to accepted source a64caa8. Enabled history retains 120 observations. Supplied 60 FPS is a synthetic test input, not rendered/device performance.
+- Configured full QA replay and 37 Android checks (including real report observations, clipboard and paused return). These new hosted/Android/rendered checks have not run yet; no new APK is claimed at this checkpoint. The last verified APK remains the memory-audio source a64caa8 linked below. Local clipboard support is unavailable in the headless renderer; tests verify honest failure/disabled UI rather than simulated success.
+- Local network download attempt failed to connect to the sandbox proxy; a request for permitted network access did not complete. GitHub file objects upload, but tree/commit/branch and report-write calls have timed out. Completed memory-audio reports were subsequently published at 9a1ff14c29f6a8b2ca7bf8c20b3d807819e7e87f; new performance-report publication/build is being retried. No external emails/messages were sent.
+
 ## Memory collection audio — verified 2026-10-31
 
 Verified game/test source: `a64caa8f3df88f8ed4e7da1b2698102617022cea`. Final report checkpoint changes documentation/evidence only.

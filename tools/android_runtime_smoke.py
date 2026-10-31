@@ -302,6 +302,23 @@ try:
     s = wait(lambda x: x['settings']['shake'] != old_shake)
     new_shake = s['settings']['shake']
     capture('settings-changed')
+    paused_clock = s['time']
+    paused_salvage = s['salvage']
+    tap('PERFORMANCE REPORT', s)
+    s = wait(lambda x: bool(x.get('performance_report_text')))
+    performance = json.loads(s['performance_report_text'])
+    check(performance['summary']['observations'] > 0 and all(row['fps'] > 0 for row in performance['samples'])
+          and performance['device']['renderer'] == s['renderer'] and not s.get('edit_fields'),
+          'Android report contains real positive combat observations and read-only device context')
+    capture('performance-report')
+    tap('COPY REPORT', s)
+    s = wait(lambda x: x.get('performance_copy_status') == 'Report copied.')
+    check(True, 'Android performance report clipboard write and readback passed')
+    report['performance_report_sample'] = performance
+    tap('BACK TO SETTINGS', s)
+    s = wait(lambda x: any('Camera shake' in b['text'] for b in x['buttons']))
+    check(s['state'] == 'paused' and s['time'] == paused_clock and s['salvage'] == paused_salvage,
+          'performance report back preserves paused combat and exact progression')
     tap('BACK', s)
     old_process = s['process']
     adb('shell', 'am', 'force-stop', args.package)
