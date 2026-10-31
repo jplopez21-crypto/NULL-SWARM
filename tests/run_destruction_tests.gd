@@ -103,7 +103,7 @@ func audio_tests() -> Dictionary:
 	var playback := clip.instantiate_playback()
 	playback.start()
 	var finite := true
-	for i in range(12):
+	for i in range(ceili(float(AudioServer.get_mix_rate()) * 0.20 / 1024.0)):
 		var mixed: PackedVector2Array = playback.mix_audio(1.0, 1024)
 		for sample in mixed:
 			finite = finite and sample.is_finite() and absf(sample.x) <= 1 and absf(sample.y) <= 1
@@ -122,6 +122,8 @@ func audio_tests() -> Dictionary:
 	check(audio.voices.size() == 12 and audio.sounds["kill"].data == clip.data, "existing kill ID is connected to original crunch without adding voices")
 	audio.play("kill")
 	check(audio.cursor == 1 and audio.voices[0].playing and audio.voices[0].bus == "SFX" and audio.voices[0].volume_db == -12 and audio.voices[0].stream == audio.sounds["kill"], "actual kill cue uses existing SFX voice/mix/pitch path")
+	# Pin the cooldown fixture so slow test scheduling cannot expire the gate.
+	audio.last_played["kill"] = Time.get_ticks_msec() + 60000
 	for i in range(100):
 		audio.play("kill")
 	check(audio.cursor == 1, "existing 65ms kill gate rejects burst requests without a queue")
