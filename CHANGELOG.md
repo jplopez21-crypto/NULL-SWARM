@@ -3,7 +3,7 @@
 ## Development — 2026-10-31 / Machine destruction
 
 - Added original eight-triangle faceted destruction chips and a synthesized 140 ms mechanical breakup cue. Preserved effect counts/caps/flight/recycling/RNG, reduced-flash suppression and existing SFX trigger/voices/gate/volume. No gameplay balance changes or FPS claim.
-- Added 59 destruction geometry/trace/PCM/routing/integration checks, six accepted-source effect traces, actual Android fragment/audio-dispatch inspection and labelled visual references. All 13 local strict suites pass; hosted acceptance and APK are pending in TEST_RESULTS.md. Assets remain development work pending human art/mix review.
+- Added 59 destruction geometry/trace/PCM/routing/integration checks, six accepted-source effect traces, actual Android fragment/audio-dispatch inspection and labelled visual references. All 13 strict suites, 48 Android checks and full gameplay/rendered QA pass at 77675f86015ec8a1a1b1cc06ea03e3093fffef17. Diagnosed cross-host cosmetic float-hash portability with exact frozen emitter pairs, preserved failed evidence and kept strict gates. Verified APK/results: TEST_RESULTS.md. Assets remain development work pending human art/mix review.
 
 ## Development — 2026-10-31 / Operative armor
 
