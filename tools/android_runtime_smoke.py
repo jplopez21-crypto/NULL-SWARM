@@ -9,6 +9,8 @@ import subprocess
 import time
 import re
 import statistics
+import select
+import os
 import xml.etree.ElementTree as ET
 from io import BytesIO
 from PIL import Image
@@ -132,6 +134,115 @@ def move(dx, dz, state, duration=800):
     finally:
         adb('shell', 'input', 'motionevent', 'UP', *map(str, end))
     actions.append({'held_drag': [*begin, *end, duration]})
+
+
+
+class MultiTouch:
+    """Drive genuine Android MotionEvents through a shell-only helper, with ACKs."""
+    def __enter__(self):
+        self.process = subprocess.Popen(
+            ['adb', 'shell', 'CLASSPATH=/data/local/tmp/null-swarm-touch.jar',
+             'app_process', '/', 'NullSwarmTouch'], stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+        self.buffer = b''
+        try:
+            self.expect('READY')
+        except Exception:
+            self.process.kill()
+            self.process.communicate()
+            raise
+        return self
+
+    def expect(self, expected):
+        deadline = time.monotonic() + 15
+        output = []
+        while time.monotonic() < deadline:
+            while b'\n' not in self.buffer:
+                if not select.select([self.process.stdout], [], [], max(0, deadline - time.monotonic()))[0]:
+                    raise AssertionError(f'Android touch injector timed out: {expected}; {output}')
+                chunk = os.read(self.process.stdout.fileno(), 4096)
+                if not chunk:
+                    raise AssertionError(f'Android touch injector closed: {expected}; {output}')
+                self.buffer += chunk
+            raw, self.buffer = self.buffer.split(b'\n', 1)
+            line = raw.decode('utf-8', errors='replace').strip()
+            if line == expected:
+                return
+            output.append(line)
+            if self.process.poll() is not None:
+                break
+        raise AssertionError(f'Android multi-touch injector did not acknowledge {expected}: {output}')
+
+    def send(self, action, pointer, xy):
+        command = f'{action} {pointer} {xy[0]} {xy[1]}'
+        self.process.stdin.write(command + '\n')
+        self.process.stdin.flush()
+        self.expect('ACK ' + command)
+
+    def __exit__(self, kind, value, traceback):
+        try:
+            self.process.stdin.write('quit\n')
+            self.process.stdin.flush()
+            self.process.communicate(timeout=10)
+        except (BrokenPipeError, subprocess.TimeoutExpired):
+            self.process.kill()
+            self.process.communicate()
+        if kind is None and self.process.returncode != 0:
+            raise AssertionError('Android multi-touch injector failed')
+
+
+def touch_sample(state):
+    return {key: state.get(key) for key in ['touch_controls', 'position', 'dashes', 'dash_readiness', 'time', 'state']}
+
+
+def multitouch_dash(order):
+    s = wait(lambda x: x['state'] == 'menu' and any('DEPLOY' in b['text'] for b in x['buttons']))
+    tap('DEPLOY', s)
+    s = wait(lambda x: x['state'] == 'playing' and x.get('dash_readiness', 0) >= 99)
+    before = s['dashes']
+    button = next(b for b in s['buttons'] if 'DASH' in b['text'])
+    x, y, w, h = button['rect']
+    dash = screen_point(x + w / 2, y + h / 2, s)
+    origin = screen_point(120, s['canvas'][1] - 110, s)
+    held = screen_point(195, s['canvas'][1] - 110, s)
+    samples = {}
+    with MultiTouch() as fingers:
+        if order == 'joystick-first':
+            fingers.send('down', 7, origin)
+            fingers.send('move', 7, held)
+            wait(lambda x: x.get('touch_controls', {}).get('stick', [0, 0])[0] > .9)
+            fingers.send('down', 11, dash)
+        else:
+            fingers.send('down', 11, dash)
+            wait(lambda x: x['dashes'] == before + 1 and x.get('touch_controls', {}).get('dash_id', -1) >= 0)
+            fingers.send('down', 7, origin)
+            fingers.send('move', 7, held)
+        s = wait(lambda x: x['state'] == 'playing' and x['dashes'] == before + 1
+                 and x.get('touch_controls', {}).get('dash_id', -1) >= 0
+                 and x.get('touch_controls', {}).get('joystick_id', -1) >= 0
+                 and x.get('touch_controls', {}).get('stick', [0, 0])[0] > .9)
+        controls = s['touch_controls']
+        check(controls['dash_id'] != controls['joystick_id'], f'{order}: independent held fingers activate dash and movement together')
+        samples['both_held'] = touch_sample(s)
+        capture('multitouch-' + order)
+        position = s['position']
+        fingers.send('up', 11, dash)
+        s = wait(lambda x: x.get('touch_controls', {}).get('dash_id', -2) == -1
+                 and x.get('touch_controls', {}).get('stick', [0, 0])[0] > .9
+                 and math.dist(x['position'], position) > .2)
+        check(s['touch_controls']['joystick_id'] >= 0, f'{order}: releasing dash preserves held movement')
+        samples['dash_released'] = touch_sample(s)
+        fingers.send('up', 7, held)
+        s = wait(lambda x: x.get('touch_controls', {}).get('joystick_id', -2) == -1
+                 and x.get('touch_controls', {}).get('stick') == [0, 0])
+        check(s['touch_controls']['dash_id'] == -1, f'{order}: both touch controls release cleanly')
+        check(s['dashes'] == before + 1, f'{order}: touch releases produce exactly one dash')
+        samples['released'] = touch_sample(s)
+    actions.append({'multitouch': order, 'injection': 'shell UID / real Android two-pointer MotionEvent', 'samples': samples})
+    tap('PAUSE', s)
+    s = wait(lambda x: x['state'] == 'paused')
+    tap('END DEPLOYMENT', s)
+    wait(lambda x: x['state'] == 'menu')
 
 
 def dismiss_system_dialogs():
@@ -458,6 +569,8 @@ try:
         launch()
         s = wait(lambda x: x['state'] == 'menu' and x.get('selected_kit') == 'engineer')
         check(True, 'earned-kit fixture Engineer selection survives Android relaunch')
+    for order in ['joystick-first', 'dash-first']:
+        multitouch_dash(order)
     log = adb('logcat', '-d')
     (out / 'logcat.txt').write_text(log)
     fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line))]

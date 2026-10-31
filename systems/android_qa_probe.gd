@@ -56,6 +56,9 @@ func snapshot() -> void:
 	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}
 	data["build_text"] = game.ui.visible_build_text()
 	data["memory_audio_plays"] = game.audio.memory_plays
+	data["touch_controls"] = {"joystick_id": game.input_router.touch_id,
+		"stick": [game.input_router.stick.x, game.input_router.stick.y],
+		"dash_id": game.ui.dash_button.touch_id, "dash_enabled": game.ui.dash_button.input_enabled}
 	data["performance_report_text"] = game.ui.visible_performance_report()
 	data["performance_copy_status"] = game.ui.performance_copy_status.text if is_instance_valid(game.ui.performance_copy_status) and game.ui.performance_copy_status.is_visible_in_tree() else ""
 	data["selected_kit"] = game.save.data["selected_kit"]

@@ -1,5 +1,13 @@
 # NULL//SWARM test results
 
+## Moving touch dash — local verification 2026-10-31
+
+- Reproduced the reported defect on accepted source aebf6c3 using actual engine Input.parse_input_event with mouse-from-touch enabled: joystick held + second-finger dash = false; stopped dash = true. Corrected source accepts both. Normal Button used the single emulated mouse pointer, so the joystick finger prevented the dash click.
+- Added independent native dash ownership, on-press activation, emulated-mouse duplicate suppression, and paused/upgrade/focus resets. Movement release no longer discards an independent same-frame dash request. No damage, cooldown, speed, progression or save parameters changed.
+- All 11 strict local isolated suites passed: 69 touch-dash checks across three screen sizes, 23 input, 12 probe, 63 resources, 1,030 systems, 43 GUI, 32 audio, 2,340 UI checks/168 layouts, 27 Engineer, 41 corruption and scene smoke. New touch cases use Input.parse_input_event (including real engine mouse emulation), actual GUI dispatch and a real physics tick. Cover both finger orders/nonzero IDs, third-finger rejection, release outside, same-frame release race, no repeat/duplicate, canceled touches, pause/upgrade/focus and keyboard/controller/mouse. Python compilation and all four workflow YAML/bash syntax checks passed.
+- Added genuine two-pointer Android MotionEvent injection through a separately built shell-UID helper. It is not part of either APK, cannot grant gameplay stats, and checks actual read-only ownership/physics telemetry while both fingers remain down. New Android/full QA/export acceptance is pending. Local Android SDK/ADB/emulator are unavailable; CI supplies pinned Godot, matching templates and Android packages. Editor import completed with sandbox socket-listener/absent SDK diagnostics; strict runtime tests are clean. Evidence: docs/qa/touch-dash/local-verification.json.
+- Latest fully verified install remains the performance-report APK linked below until a corrected build passes. Physical S23 Ultra touch feel/FPS is unverified; preserve backups because diagnostic signing rotates.
+
 ## Offline performance report — verified 2026-10-31
 
 Verified game/test source: `aebf6c374ab0b9bd679a12405ca3878d08581d92`. Final report checkpoint changes documentation/evidence only.

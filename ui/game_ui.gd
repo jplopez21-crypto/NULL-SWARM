@@ -51,7 +51,7 @@ var perf_next_sample_ms: int = 0
 var hint_label: Label
 var dash_gauge: ProgressBar
 var defense_label: Label
-var dash_button: Button
+var dash_button: TouchDashButton
 var world_camera: Camera3D
 var input_router: InputRouter
 var damage_texts: Array[Dictionary] = []
@@ -259,7 +259,13 @@ func _build_hud() -> void:
 	left.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bottom.add_child(left)
-	dash_button = button_at(bottom, "DASH  /  READY", func(): dash.emit())
+	dash_button = TouchDashButton.new()
+	dash_button.text = "DASH  /  READY"
+	dash_button.action_mode = BaseButton.ACTION_MODE_BUTTON_PRESS
+	bottom.add_child(dash_button)
+	dash_button.pressed.connect(func():
+		if dash_button.input_enabled:
+			dash.emit())
 	dash_button.custom_minimum_size = Vector2(180, 95)
 	dash_gauge = _bar(dash_button, CYAN, 4)
 	dash_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -270,6 +276,7 @@ func _build_hud() -> void:
 	dash_gauge.offset_bottom = -8
 
 func _panel() -> VBoxContainer:
+	dash_button.input_enabled = false
 	if screen != null:
 		# Keep the current GUI dispatch target in-tree until the frame ends.
 		screen.hide()
@@ -315,6 +322,8 @@ func show_menu(data: Dictionary) -> void:
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
+	if not value:
+		dash_button.input_enabled = false
 	hud_visible = value
 	memory_packet = null
 	memory_visible = false
@@ -323,6 +332,7 @@ func set_hud(value: bool) -> void:
 	joystick_canvas.queue_redraw()
 
 func hide_panel() -> void:
+	dash_button.input_enabled = true
 	if screen != null:
 		# Keep the current GUI dispatch target in-tree until the frame ends.
 		screen.hide()

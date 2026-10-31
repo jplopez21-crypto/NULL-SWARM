@@ -74,6 +74,12 @@ jobs:
           PYVERSION
           godot --headless --export-debug Android /tmp/emulator-upgrade.apk
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify /tmp/emulator-upgrade.apk
+      - name: Build shell-only multi-pointer touch injector
+        run: |
+          mkdir -p /tmp/null-swarm-touch/classes /tmp/null-swarm-touch/dex
+          javac -source 8 -target 8 -cp "$ANDROID_HOME/platforms/android-35/android.jar" -d /tmp/null-swarm-touch/classes tools/NullSwarmTouch.java
+          "$ANDROID_HOME/build-tools/35.0.1/d8" --min-api 29 --output /tmp/null-swarm-touch/dex /tmp/null-swarm-touch/classes/NullSwarmTouch.class
+          jar --create --file /tmp/null-swarm-touch.jar -C /tmp/null-swarm-touch/dex classes.dex
       - name: Install emulator Linux dependencies
         run: |
           sudo apt-get update
@@ -118,6 +124,7 @@ jobs:
           adb shell input keyevent 82
           sleep 15
           adb install -r builds/android-runtime/emulator-debug.apk
+          adb push /tmp/null-swarm-touch.jar /data/local/tmp/null-swarm-touch.jar
       - name: Install pinned image-check dependency
         run: |
           python3 -m venv /tmp/null-swarm-runtime-python
@@ -126,7 +133,7 @@ jobs:
         run: |
           set -o pipefail
           godot --headless --script tests/create_engineer_fixture.gd
-          timeout 420s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk --engineer-backup builds/qa/engineer-fixture.txt 2>&1 | tee builds/android-runtime/smoke.log
+          timeout 540s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk --engineer-backup builds/qa/engineer-fixture.txt 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |

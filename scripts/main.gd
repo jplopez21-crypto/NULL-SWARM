@@ -59,7 +59,9 @@ func _ready() -> void:
 	ui.return_menu.connect(go_menu)
 	ui.pause_run.connect(pause_run)
 	ui.build_requested.connect(open_build)
-	ui.dash.connect(func(): input_router.dash_requested = true)
+	ui.dash.connect(func():
+		if state == State.PLAYING:
+			input_router.dash_requested = true)
 	ui.upgrade_selected.connect(select_upgrade)
 	ui.reroll_requested.connect(reroll_upgrades)
 	ui.corruption_requested.connect(show_corruption)

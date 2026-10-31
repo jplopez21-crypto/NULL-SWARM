@@ -43,6 +43,14 @@ func run() -> void:
 	touch.index = 7
 	router.handle(touch, Vector2(1280, 720))
 	check(router.touch_id == -1 and router.movement() == Vector2.ZERO, "joystick release stops movement")
+	touch.pressed = true
+	router.handle(touch, Vector2(1280, 720))
+	router.dash_requested = true
+	touch.pressed = false
+	router.handle(touch, Vector2(1280, 720))
+	check(router.dash_requested and router.touch_id == -1, "joystick release preserves a same-frame independent dash")
+	router.reset()
+	check(not router.dash_requested, "explicit state reset still discards pending dash")
 	player.position = Vector3(46.9, 0, 46.9)
 	player.tick(0.1, Vector2.ONE.normalized(), false)
 	check(player.position.x <= 47 and player.position.z <= 47, "movement clamps to arena boundary")

@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-10-31 / Moving touch dash
+
+- Fixed second-finger dash while holding the joystick. Dash now tracks its own native touch, fires on press and suppresses duplicate emulated mouse events. Joystick release preserves an independent dash queued in the same physics frame.
+- Pause/upgrade/focus interruptions clear touch ownership; keyboard, controller and real mouse remain supported. Added 69 real-engine multitouch regressions and a shell-only Android two-pointer injector, excluded from game exports. Hosted APK/runtime verification is pending in TEST_RESULTS.md.
+
 ## Development — 2026-10-31 / Offline performance report
 
 - Added bounded active-combat performance observations, read-only Settings report, honest empty/warm-up states and clipboard export with readback verification. New deployment clears history; pause/menu/upgrade frames and progression/account data are excluded.
