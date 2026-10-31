@@ -9,3 +9,7 @@ Leg pivots at (+/-0.25, 0.28, 0) and rifle pivot at (0.5, 1.0, -0.5) are preserv
 `godot --headless --script tests/run_operative_tests.gd` validates sharing/independent poses, triangle/surface budgets, finite nondegenerate geometry/unit normals/opaque colors, material lighting, bounds/pivots and the accepted trace. Existing touch dash tests remain part of the strict runner. New read-only Android telemetry counts actual instantiated geometry; its smoke gate requires five body instances/six surfaces/296 triangles. QA helpers are excluded from the distributed APK.
 
 The existing desktop-debug capture mode adds labelled front/rear art references and an ordinary-framing field reference. It cannot be entered on Android and does not change the production camera. Physical S23 readability, human art acceptance and Mobile GPU performance remain open. Asset origin/status is in ASSET_MANIFEST.md; current executed tests/artifacts are in TEST_RESULTS.md.
+
+## Hosted acceptance
+
+Verified source ea3fdea9c19e91a037d9631da2c380e5717de848 passed native 41232045886, Android 41232045932 (46 checks) and full QA 41232045849. All 12 strict summaries and the accepted operative trace match. Actual Android geometry counts and both two-pointer dash orders passed. Corrected close art/normal-framing captures and actual Android images were inspected. Exact artifacts, initial backdrop-review correction, measured limits and APK identity are in TEST_RESULTS.md and qa/operative-armor/verified-ci.json.
