@@ -973,6 +973,7 @@ func _test_performance_capture() -> void:
 	game.open_performance_report()
 	var report: Dictionary = JSON.parse_string(game.ui.visible_performance_report())
 	check(report["status"] == "observations" and report["summary"]["observations"] == 1 and report["device"].has("renderer"), "menu report exports actual retained observations and renderer context")
+	check(game.ui.performance_report_summary.text.begins_with("1 COMBAT OBSERVATION\n") and game.ui.performance_report_summary.text.contains("MIN 60.0 / MEDIAN 60.0 / MAX 60.0"), "report summary presents the real observation count and sampled FPS range without scrolling")
 	game.start_run()
 	check(game.performance_history.samples.is_empty() and game.performance_history.next_ms == 0 and not game._sample_performance(0, 0), "new deployment clears old evidence while zero FPS stays a warm-up")
 	game.audio.shutdown()

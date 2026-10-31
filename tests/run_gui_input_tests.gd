@@ -90,19 +90,40 @@ func run() -> void:
 	click(game, "PERFORMANCE REPORT")
 	await settle()
 	var report: Dictionary = JSON.parse_string(game.ui.visible_performance_report())
-	check(report["status"] == "empty" and not game.ui.performance_report_field.editable, "real GUI opens an honest read-only empty performance report")
+	check(report["status"] == "empty" and not game.ui.performance_report_field.editable and game.ui.performance_report_summary.text == "NO COMBAT OBSERVATIONS YET", "real GUI opens an honest read-only empty performance report")
 	game._process(1)
 	game._physics_process(1)
 	check(game.state == game.State.PAUSED and game.combat.director.elapsed == report_time and game.combat.rng.state == report_rng and game.save.data == report_save and game.performance_history.samples == old_observations, "viewing a paused report cannot sample menu FPS or alter combat RNG or progression")
 	if not DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
 		game.copy_performance_report()
-		check(game.ui.performance_copy_status.text.contains("not copied"), "unsupported clipboard never claims report-copy success")
+		check(game.ui.performance_copy_status.text.contains("not verified"), "unsupported clipboard never claims report-copy success")
 	else:
 		game.copy_performance_report()
-		check(DisplayServer.clipboard_get() == game.ui.visible_performance_report(), "supported clipboard receives the actual report")
+		await settle()
+		check(JSON.parse_string(DisplayServer.clipboard_get()) == report and game.ui.performance_copy_status.text == "Report copied.", "supported clipboard receives the actual report data")
+	# Explicit fake OS backend: native clipboard execution remains Android coverage.
+	var clipboard: Dictionary = {"pending": "", "reads": 0, "writes": 0}
+	game.report_clipboard_available = func() -> bool: return true
+	game.report_clipboard_write = func(text: String) -> void:
+		clipboard["pending"] = text
+		clipboard["writes"] += 1
+	game.report_clipboard_read = func() -> String:
+		clipboard["reads"] += 1
+		return clipboard["pending"] if clipboard["reads"] >= 3 else "previous clipboard contents"
+	game.copy_performance_report()
+	game.copy_performance_report()
+	check(game.ui.performance_copy_status.text == "Copying report..." and clipboard["writes"] == 1, "copy waits honestly for readback and coalesces duplicate taps")
+	for i in range(6):
+		await process_frame
+	check(game.ui.performance_copy_status.text == "Report copied." and clipboard["reads"] == 3 and game.report_copy_pending.is_empty() and JSON.parse_string(clipboard["pending"]) == report and not clipboard["pending"].contains("\n"), "delayed clipboard readback preserves complete compact data without blocking or inventing success")
+	game.report_clipboard_read = func() -> String: return "blocked clipboard"
+	game.copy_performance_report()
+	await create_timer(3.2).timeout
+	check(game.ui.performance_copy_status.text.contains("not verified") and game.report_copy_pending.is_empty(), "supported but denied clipboard times out without claiming success")
+	game.copy_performance_report()
 	click(game, "BACK TO SETTINGS")
 	await settle()
-	check(game.ui.visible_performance_report().is_empty() and game.state == game.State.PAUSED, "report back restores Settings without resuming combat")
+	check(game.ui.visible_performance_report().is_empty() and game.state == game.State.PAUSED and game.report_copy_pending.is_empty(), "report back cancels pending verification and restores Settings without resuming combat")
 	click(game, "Performance stats")
 	await settle()
 	check(game.save.data["settings"]["performance_stats"] and game.ui.perf_label.visible and game.save._read(game.save.path)["settings"]["performance_stats"], "GUI diagnostic toggle applies and saves its boolean preference")

@@ -54,7 +54,13 @@ def wait(predicate, timeout=30):
         except (ValueError, subprocess.SubprocessError):
             pass
         time.sleep(.25)
-    raise AssertionError(f'Runtime condition timed out; last state: {last}')
+    if isinstance(last, dict):
+        compact = {k: v for k, v in last.items() if k not in {'performance_report_text', 'targets', 'build_text'}}
+        compact['performance_report_characters'] = len(last.get('performance_report_text', ''))
+        compact['target_count'] = len(last.get('targets', []))
+    else:
+        compact = last
+    raise AssertionError(f'Runtime condition timed out; last state: {compact}')
 
 
 def check(ok, name):
@@ -311,10 +317,10 @@ try:
           and performance['device']['renderer'] == s['renderer'] and not s.get('edit_fields'),
           'Android report contains real positive combat observations and read-only device context')
     capture('performance-report')
+    report['performance_report_sample'] = performance
     tap('COPY REPORT', s)
     s = wait(lambda x: x.get('performance_copy_status') == 'Report copied.')
     check(True, 'Android performance report clipboard write and readback passed')
-    report['performance_report_sample'] = performance
     tap('BACK TO SETTINGS', s)
     s = wait(lambda x: any('Camera shake' in b['text'] for b in x['buttons']))
     check(s['state'] == 'paused' and s['time'] == paused_clock and s['salvage'] == paused_salvage,

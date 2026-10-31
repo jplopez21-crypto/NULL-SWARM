@@ -47,6 +47,7 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 				check(bounds.encloses(label.get_global_rect()), "%s %s: build label fits viewport: %s" % [size, stage, label.text])
 	if not game.ui.visible_performance_report().is_empty():
 		check(bounds.encloses(game.ui.performance_report_field.get_global_rect()), "%s %s: report text field fits viewport" % [size, stage])
+		check(bounds.encloses(game.ui.performance_report_summary.get_global_rect()), "%s %s: report summary fits viewport" % [size, stage])
 	layouts.append({"window": [size.x, size.y], "observed_window": [root.size.x, root.size.y], "canvas": [game.ui.root.size.x, game.ui.root.size.y], "scale_aspect": root.content_scale_aspect, "stage": stage, "visible_buttons": buttons})
 	if captures:
 		await create_timer(0.20).timeout

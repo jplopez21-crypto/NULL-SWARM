@@ -99,7 +99,7 @@
       },
       "resisted_hits": 0,
       "seed": 909,
-      "simulation_step_p95_ms": 0.296,
+      "simulation_step_p95_ms": 0.31,
       "spawned_by_type": {
         "bulwark": 34,
         "crawler": 139,
@@ -183,7 +183,7 @@
           "id": "rail"
         }
       ],
-      "wall_seconds": 2.724883,
+      "wall_seconds": 2.810689,
       "warden_defeated": false,
       "warden_spawned": false,
       "weapons_and_ranks": {
@@ -295,7 +295,7 @@
       },
       "resisted_hits": 0,
       "seed": 909,
-      "simulation_step_p95_ms": 0.245,
+      "simulation_step_p95_ms": 0.3,
       "spawned_by_type": {
         "bulwark": 34,
         "crawler": 139,
@@ -379,7 +379,7 @@
           "id": "rail"
         }
       ],
-      "wall_seconds": 2.524405,
+      "wall_seconds": 2.774545,
       "warden_defeated": false,
       "warden_spawned": false,
       "weapons_and_ranks": {

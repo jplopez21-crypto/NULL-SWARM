@@ -14,6 +14,12 @@ var pickups: PickupSystem
 var ui: GameUI
 var audio: SwarmAudio
 var performance_history := PERFORMANCE_HISTORY.new()
+# Narrow OS ports allow deterministic delayed/denied clipboard regression tests.
+var report_clipboard_available: Callable = func() -> bool: return DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD)
+var report_clipboard_write: Callable = func(text: String) -> void: DisplayServer.clipboard_set(text)
+var report_clipboard_read: Callable = func() -> String: return DisplayServer.clipboard_get()
+var report_copy_generation: int = 0
+var report_copy_pending: String = ""
 var camera: Camera3D
 var arena: Node3D
 var run_root: Node3D
@@ -86,6 +92,8 @@ func _build_arena() -> void:
 	add_child(arena)
 
 func start_run() -> void:
+	report_copy_generation += 1
+	report_copy_pending = ""
 	performance_history.clear()
 	audio.reset_memory_feedback()
 	corruption_panel = false
@@ -212,17 +220,46 @@ func open_performance_report() -> void:
 	var canvas: Vector2 = ui.root.size
 	var report := performance_history.report({"platform": OS.get_name(), "model": OS.get_model_name(), "os_version": OS.get_version(), "engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "window": [window.x, window.y], "canvas": [canvas.x, canvas.y]})
 	var back: Callable = ui.settings_return
-	ui.show_performance_report(JSON.stringify(report, "  "), func(): ui.show_settings(save.data["settings"], back))
+	report_copy_generation += 1
+	report_copy_pending = ""
+	ui.show_performance_report(report, func(): ui.show_settings(save.data["settings"], back), bool(report_clipboard_available.call()))
 
 func copy_performance_report() -> void:
 	if state not in [State.MENU, State.PAUSED] or ui.visible_performance_report().is_empty():
 		return
-	var copied := false
-	if DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
-		var text: String = ui.visible_performance_report()
-		DisplayServer.clipboard_set(text)
-		copied = DisplayServer.clipboard_get() == text
-	ui.set_performance_copy_status(copied)
+	var text: String = ui.visible_performance_report()
+	if report_copy_pending == text:
+		return
+	if not report_clipboard_available.call():
+		ui.set_performance_copy_status(false)
+		return
+	var data: Variant = JSON.parse_string(text)
+	if not data is Dictionary:
+		ui.set_performance_copy_status(false)
+		return
+	# Keep the full data while avoiding a large pretty-printed Android clip.
+	var payload: String = JSON.stringify(data, "", false)
+	report_copy_generation += 1
+	var generation: int = report_copy_generation
+	report_copy_pending = text
+	report_clipboard_write.call(payload)
+	ui.set_performance_copy_pending()
+	var deadline_ms: int = Time.get_ticks_msec() + 3000
+	# Android applies clipboard writes on its UI thread. Never claim success until
+	# a later frame can read the exact payload, and never block the game/UI thread.
+	while Time.get_ticks_msec() < deadline_ms:
+		await get_tree().process_frame
+		if generation != report_copy_generation:
+			return
+		if state not in [State.MENU, State.PAUSED] or ui.visible_performance_report() != text:
+			report_copy_pending = ""
+			return
+		if report_clipboard_read.call() == payload:
+			report_copy_pending = ""
+			ui.set_performance_copy_status(true)
+			return
+	report_copy_pending = ""
+	ui.set_performance_copy_status(false)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F3:

@@ -11,7 +11,7 @@
       "suite": "gui-input",
       "status": "passed",
       "exit_code": 0,
-      "checks": 40,
+      "checks": 43,
       "errors": []
     },
     {
@@ -46,7 +46,7 @@
       "suite": "systems",
       "status": "passed",
       "exit_code": 0,
-      "checks": 1029,
+      "checks": 1030,
       "errors": []
     },
     {
@@ -60,7 +60,7 @@
       "suite": "ui-headless",
       "status": "passed",
       "exit_code": 0,
-      "checks": 2332,
+      "checks": 2340,
       "errors": []
     },
     {

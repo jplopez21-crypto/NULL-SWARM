@@ -1,6 +1,6 @@
 # Offline performance report
 
-Settings → PERFORMANCE REPORT previews a read-only JSON record. Enable Performance stats, resume combat, then pause and open Settings again to inspect the observations. COPY REPORT writes to the system clipboard and verifies readback; unsupported platforms disable it and never claim success. Back returns to Settings without resuming play. Nothing is uploaded or sent online.
+Settings → PERFORMANCE REPORT previews a read-only JSON record. Enable Performance stats, resume combat, then pause and open Settings again to inspect the observations. A visible summary shows the observation count and minimum/median/maximum reported FPS above the read-only JSON. COPY REPORT exports the complete data as compact JSON and verifies exact readback over subsequent frames, for up to three seconds. Duplicate taps coalesce; leaving the report or deploying cancels pending UI verification. Failure is labelled unverified, and unsupported platforms disable copying. Back returns to Settings without resuming play. Nothing is uploaded or sent online.
 
 One per-run PerformanceHistory object stores at most 120 observations, no faster than every 250 ms, only while diagnostics are enabled and the game is PLAYING. Pause, upgrades, menus and results cannot add samples. The last run remains inspectable from the command menu; a new deployment clears it. History is volatile and does not alter the save schema or progression.
 
@@ -10,7 +10,7 @@ The context whitelist includes platform, non-unique model description, OS/engine
 
 ## Tests and review
 
-Local strict suites cover finite values, startup/slow FPS, exact sampling gate, bounded retention, correct median, snapshot ownership, context/metric whitelists, preference/state gating, actual world counters, save/RNG non-interference, retained menu history, restart, real GUI navigation and unsupported clipboard feedback. Eight new staged UI layouts bring the headless matrix to 168. Synthetic metric fixtures used for geometry are not phone measurements.
+Local strict suites cover finite values, startup/slow FPS, exact sampling gate, bounded retention, correct median, snapshot ownership, context/metric whitelists, preference/state gating, actual world counters, save/RNG non-interference, retained menu history, restart, real GUI navigation, delayed/denied clipboard backends, duplicate-tap/cancellation behavior and unsupported clipboard feedback. Eight new staged UI layouts bring the headless matrix to 168. Synthetic metric fixtures used for geometry are not phone measurements.
 
 A reproducible --diagnostics-parity playtest runs seed 909/Halo/Vanguard for 180 simulated seconds with the sampler off and on. Supplied synthetic 60 FPS forces the production sampler path; it is not measured FPS. Both normal-rules cases preserve the accepted a64caa8 gameplay fingerprint, including upgrade choices, XP, enemies and outcomes, apart from excluded timing fields. Full QA includes this pair.
 
