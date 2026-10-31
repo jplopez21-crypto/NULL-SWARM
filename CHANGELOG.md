@@ -3,7 +3,7 @@
 ## Development — 2026-10-31 / Moving touch dash
 
 - Fixed second-finger dash while holding the joystick. Dash now tracks its own native touch, fires on press and suppresses duplicate emulated mouse events. Joystick release preserves an independent dash queued in the same physics frame.
-- Pause/upgrade/focus interruptions clear touch ownership; keyboard, controller and real mouse remain supported. Added 69 real-engine multitouch regressions and a shell-only Android two-pointer injector, excluded from game exports. Hosted APK/runtime verification is pending in TEST_RESULTS.md.
+- Pause/upgrade/focus interruptions clear touch ownership; keyboard, controller and real mouse remain supported. Added 69 real-engine multitouch regressions and a shell-only Android two-pointer injector, excluded from game exports. Verified source f1d3de77181d7b27d4c12e845f08b6a7954f48c9 passes all 11 local/native/QA suites, 45 Android checks including genuine two-finger gestures in both orders, and full gameplay QA. Corrected APK and exact evidence: TEST_RESULTS.md.
 
 ## Development — 2026-10-31 / Offline performance report
 
