@@ -6,6 +6,7 @@ signal resume_run
 signal restart
 signal return_menu
 signal pause_run
+signal build_requested
 signal dash
 signal upgrade_selected(id: String)
 signal corruption_requested
@@ -15,7 +16,14 @@ signal reroll_requested
 signal lab_requested
 signal research_requested(id: String)
 signal kit_selected(id: String)
+signal backup_requested
+signal backup_export_requested
+signal backup_preview_requested(code: String)
+signal backup_recovery_requested
+signal backup_restore_requested
 signal setting_changed(key: String, value: Variant)
+signal performance_report_requested
+signal performance_copy_requested
 const CYAN := Color("78f8d4")
 const MUTED := Color("8cabb9")
 var root: Control
@@ -27,13 +35,23 @@ var hud: VBoxContainer
 var health_bar: ProgressBar
 var shield_bar: ProgressBar
 var xp_bar: ProgressBar
+var xp_label: Label
+var upgrade_header: Label
+var build_heading: Label
 var status_label: Label
 var health_label: Label
 var operative_title: String = "VANGUARD"
 var weapons_label: Label
 var perf_label: Label
+var perf_toggle: CheckButton
+var performance_report_field: TextEdit
+var performance_report_summary: Label
+var performance_copy_status: Label
+var perf_next_sample_ms: int = 0
 var hint_label: Label
-var dash_button: Button
+var dash_gauge: ProgressBar
+var defense_label: Label
+var dash_button: TouchDashButton
 var world_camera: Camera3D
 var input_router: InputRouter
 var damage_texts: Array[Dictionary] = []
@@ -46,8 +64,12 @@ var corruption_label: Label
 var corruption_bar: ProgressBar
 var adaptation_label: Label
 var boss_bar: ProgressBar
+var boss_cue_label: Label
 var boss_label: Label
 var surge_label: Label
+var surge_gauge: ProgressBar
+var surge_fill: StyleBoxFlat
+var sentry_label: Label
 var toast_title: Label
 var toast_detail: Label
 var toast_time: float = 0.0
@@ -166,17 +188,28 @@ func _build_hud() -> void:
 	health_label = label_at(vital, "VANGUARD  /  100 HP", 18, CYAN)
 	health_bar = _bar(vital, CYAN, 13)
 	shield_bar = _bar(vital, Color("5cbbf6"), 6)
+	defense_label = label_at(vital, "SHIELD ONLINE", 13, MUTED)
 	status_label = label_at(top, "", 23)
 	status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button_at(top, "II  PAUSE", func(): pause_run.emit())
-	xp_bar = _bar(hud, Color("5e9fff"), 5)
+	xp_bar = _bar(hud, Color("5e9fff"), 22)
+	xp_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	xp_label = label_at(xp_bar, "", 15)
+	xp_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	xp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	xp_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	xp_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	xp_label.add_theme_color_override("font_outline_color", Color("081722"))
+	xp_label.add_theme_constant_override("outline_size", 4)
 	weapons_label = label_at(hud, "PULSE RIFLE  /  AUTOMATIC", 15, MUTED)
 	adaptation_label = label_at(hud, "SWARM // OBSERVING", 14, Color("ffcf85"))
 	corruption_label = label_at(hud, "CORRUPTION 0/3 // CLEAN SIGNAL", 14, Color("efa6ff"))
 	corruption_bar = _bar(hud, Color("cf7aff"), 3)
-	hint_label = label_at(hud, "MOVE: WASD / LEFT STICK     DASH: SPACE / A", 15, MUTED)
+	var movement_hint := "DRAG LEFT SIDE TO MOVE     TAP DASH TO EVADE" if OS.has_feature("mobile") else "MOVE: WASD / LEFT STICK     DASH: SPACE / A"
+	hint_label = label_at(hud, movement_hint, 15, MUTED)
 	perf_label = label_at(hud, "", 14, MUTED)
+	perf_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	perf_label.visible = false
 	notices = label_at(hud, "", 16, Color("ffbd78"))
 	boss_label = label_at(hud, "", 18, Color("ff9274"))
@@ -184,12 +217,36 @@ func _build_hud() -> void:
 	boss_bar = _bar(hud, Color("ff7652"), 7)
 	boss_label.visible = false
 	boss_bar.visible = false
+	boss_cue_label = label_at(hud, "", 16, Color("ffcf85"))
+	boss_cue_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	boss_cue_label.visible = false
 	surge_label = label_at(hud, "", 18, Color("b9f66b"))
 	surge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	surge_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	surge_label.custom_minimum_size.y = 32
+	surge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	surge_gauge = _bar(surge_label, CYAN, 4)
+	surge_gauge.visible = false
+	surge_gauge.step = 0.01
+	surge_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	surge_gauge.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	surge_gauge.anchor_left = 0.25
+	surge_gauge.anchor_right = 0.75
+	surge_gauge.offset_left = 0
+	surge_gauge.offset_right = 0
+	surge_gauge.offset_top = -5
+	surge_gauge.offset_bottom = -1
+	surge_fill = surge_gauge.get_theme_stylebox("fill") as StyleBoxFlat
+	sentry_label = label_at(hud, "", 14, Arsenal.color("drone"))
+	sentry_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	sentry_label.visible = false
 	toast_title = label_at(hud, "", 30, CYAN)
 	toast_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast_detail = label_at(hud, "", 16, MUTED)
 	toast_detail.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	for notice in [toast_title, toast_detail, boss_label, boss_cue_label, surge_label]:
+		notice.add_theme_color_override("font_outline_color", Color("081722"))
+		notice.add_theme_constant_override("outline_size", 4)
 	var spacer := Control.new()
 	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -202,12 +259,27 @@ func _build_hud() -> void:
 	left.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bottom.add_child(left)
-	dash_button = button_at(bottom, "DASH  /  READY", func(): dash.emit())
+	dash_button = TouchDashButton.new()
+	dash_button.text = "DASH  /  READY"
+	dash_button.action_mode = BaseButton.ACTION_MODE_BUTTON_PRESS
+	bottom.add_child(dash_button)
+	dash_button.pressed.connect(func():
+		if dash_button.input_enabled:
+			dash.emit())
 	dash_button.custom_minimum_size = Vector2(180, 95)
+	dash_gauge = _bar(dash_button, CYAN, 4)
+	dash_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dash_gauge.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	dash_gauge.offset_left = 16
+	dash_gauge.offset_right = -16
+	dash_gauge.offset_top = -12
+	dash_gauge.offset_bottom = -8
 
 func _panel() -> VBoxContainer:
+	dash_button.input_enabled = false
 	if screen != null:
-		overlay.remove_child(screen)
+		# Keep the current GUI dispatch target in-tree until the frame ends.
+		screen.hide()
 		screen.queue_free()
 	screen = PanelContainer.new()
 	var style := StyleBoxFlat.new()
@@ -241,12 +313,17 @@ func show_menu(data: Dictionary) -> void:
 	label_at(box, "WARDEN 03:00     //     ARCHITECT 09:00", 16, Color("ffb35c"))
 	var play := button_at(box, "DEPLOY %s     →" % Research.KITS[data["selected_kit"]]["title"], func(): deploy.emit())
 	button_at(box, "FOUNDRY  /  %d SALVAGE" % int(data["salvage"]), func(): lab_requested.emit())
-	button_at(box, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	button_at(actions, "SETTINGS", func(): show_settings(data["settings"], func(): show_menu(data)))
+	button_at(actions, "PROGRESS BACKUP", func(): backup_requested.emit())
 	label_at(box, "BEST  %s     /     DEPLOYMENTS  %d     /     VICTORIES  %d" % [clock(float(data["best_time"])), data["runs"], data["wins"]], 15, CYAN)
 	label_at(box, "BUILD 0.5  •  SWARM ANALYSIS STARTS AT 02:00", 13, MUTED)
 	play.grab_focus()
 
 func set_hud(value: bool) -> void:
+	if not value:
+		dash_button.input_enabled = false
 	hud_visible = value
 	memory_packet = null
 	memory_visible = false
@@ -255,8 +332,10 @@ func set_hud(value: bool) -> void:
 	joystick_canvas.queue_redraw()
 
 func hide_panel() -> void:
+	dash_button.input_enabled = true
 	if screen != null:
-		overlay.remove_child(screen)
+		# Keep the current GUI dispatch target in-tree until the frame ends.
+		screen.hide()
 		screen.queue_free()
 		screen = null
 
@@ -266,9 +345,80 @@ func show_pause(settings: Dictionary) -> void:
 	label_at(box, "SIGNAL HELD", 38, CYAN)
 	label_at(box, "Deployment paused", 20, MUTED)
 	var resume_button := button_at(box, "RESUME", func(): resume_run.emit())
+	button_at(box, "BUILD // MUTATIONS", func(): build_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(settings, func(): show_pause(settings)))
 	button_at(box, "END DEPLOYMENT", func(): return_menu.emit())
 	resume_button.grab_focus()
+
+func _build_card(parent: Node, color: Color) -> VBoxContainer:
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("102632")
+	style.border_color = color.darkened(0.35)
+	style.border_width_left = 3
+	style.set_corner_radius_all(4)
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	panel.add_theme_stylebox_override("panel", style)
+	parent.add_child(panel)
+	var box := VBoxContainer.new()
+	panel.add_child(box)
+	return box
+
+func show_build(progress: RunProgression, active: Array[String], back: Callable, engineer: bool = false) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 1000
+	build_heading = label_at(box, "DEPLOYMENT BUILD", 30, CYAN)
+	label_at(box, "Combat paused. Mutations activate automatically when both ranks are reached.", 16, MUTED)
+	if engineer:
+		label_at(box, "ENGINEER // DASH UPLINK: one 3s sentry at takeoff. Drone Hive ranks boost its damage.", 16, Arsenal.color("drone"))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 20)
+	box.add_child(row)
+	var weapons := VBoxContainer.new()
+	weapons.custom_minimum_size.x = 300
+	row.add_child(weapons)
+	label_at(weapons, "WEAPONS %d/%d" % [progress.equipped(), Arsenal.MAX_SLOTS], 18, CYAN)
+	var equipped: Array[String] = ["pulse"]
+	for id in Arsenal.DATA:
+		if int(progress.ranks.get(id, 0)) > 0:
+			equipped.append(id)
+	for slot in range(Arsenal.MAX_SLOTS):
+		var id: String = equipped[slot] if slot < equipped.size() else ""
+		var card := _build_card(weapons, Arsenal.color(id) if not id.is_empty() else MUTED.darkened(0.4))
+		label_at(card, "%02d // %s" % [slot + 1, Arsenal.equipped_title(id, active) if not id.is_empty() else "EMPTY SLOT"], 17, Arsenal.color(id) if not id.is_empty() else MUTED)
+		var detail := "New weapons fill empty slots."
+		if id == "pulse":
+			detail = "AMPLIFIED PULSE RANK %d" % int(progress.ranks.get("damage", 0))
+		elif not id.is_empty():
+			detail = "RANK %d / %d" % [int(progress.ranks[id]), int(RunProgression.CAPS[id])]
+		label_at(card, detail, 14, MUTED)
+	var recipes := VBoxContainer.new()
+	recipes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(recipes)
+	label_at(recipes, "MUTATION PATHS", 18, Color("ffe39b"))
+	for recipe in Arsenal.mutation_progress(progress.ranks, active, progress.equipped()):
+		var color := CYAN if recipe["status"] == "ACTIVE" else Color("ffcf85")
+		var card := _build_card(recipes, color)
+		label_at(card, "%s // %s" % [recipe["title"], recipe["status"]], 17, color)
+		label_at(card, recipe["requirements"], 14)
+		label_at(card, recipe["effect"], 14, MUTED)
+		if recipe["status"] == "SLOTS BLOCKED":
+			label_at(card, "%d weapon slots needed / %d free. Slots cannot be replaced this run." % [recipe["missing_weapons"], recipe["free_slots"]], 13, Color("ffcf85"))
+	label_at(box, "Weapon mutations keep their slot. Run upgrades reset on redeployment.", 15, MUTED)
+	var back_button := button_at(box, "BACK TO PAUSE", back)
+	back_button.grab_focus()
+
+func visible_build_text() -> String:
+	if not is_instance_valid(build_heading) or not build_heading.is_visible_in_tree() or screen == null:
+		return ""
+	var lines: Array[String] = []
+	for label in screen.find_children("*", "Label", true, false):
+		if label.is_visible_in_tree():
+			lines.append(label.text)
+	return "\n".join(lines)
 
 func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: int, salvage: int = 0, wallet: int = 0, breakdown: Dictionary = {}, unlocks: Array[String] = []) -> void:
 	set_hud(false)
@@ -291,9 +441,10 @@ func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: i
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
 
-func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false) -> void:
+func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1) -> void:
 	var box := _panel()
-	label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d" % level, 18, CYAN)
+	var ready := "%d %s READY" % [maxi(0, pending), "UPGRADE" if pending == 1 else "UPGRADES"]
+	upgrade_header = label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d  /  %s" % [level, ready], 18, CYAN)
 	label_at(box, "CHOOSE YOUR ADVANTAGE", 32)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
@@ -360,11 +511,18 @@ func show_settings(settings: Dictionary, back: Callable) -> void:
 		slider.custom_minimum_size = Vector2(300, 36)
 		row.add_child(slider)
 		slider.value_changed.connect(func(value: float): setting_changed.emit(key, value))
-	for pair in [["shake", "Camera shake"], ["flashes", "Impact flashes"]]:
+	var toggles := GridContainer.new()
+	toggles.columns = 2
+	toggles.add_theme_constant_override("h_separation", 14)
+	box.add_child(toggles)
+	for pair in [["shake", "Camera shake"], ["flashes", "Impact flashes"], ["performance_stats", "Performance stats"]]:
 		var check := CheckButton.new()
 		check.text = pair[1]
+		check.custom_minimum_size.y = 56
 		check.button_pressed = settings[pair[0]]
-		box.add_child(check)
+		toggles.add_child(check)
+		if pair[0] == "performance_stats":
+			perf_toggle = check
 		check.toggled.connect(func(value: bool): setting_changed.emit(pair[0], value))
 	var row := HBoxContainer.new()
 	box.add_child(row)
@@ -375,40 +533,128 @@ func show_settings(settings: Dictionary, back: Callable) -> void:
 	options.selected = int(settings["quality"])
 	row.add_child(options)
 	options.item_selected.connect(func(index: int): setting_changed.emit("quality", index))
-	var back_button := button_at(box, "BACK", back)
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	button_at(actions, "PERFORMANCE REPORT", func(): performance_report_requested.emit())
+	var back_button := button_at(actions, "BACK", back)
 	back_button.grab_focus()
+
+func show_performance_report(report: Dictionary, back: Callable, clipboard_available: bool) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 560
+	label_at(box, "PERFORMANCE REPORT", 25, CYAN)
+	var hint := label_at(box, "Enable Performance stats, play, then pause to review.\nOnly active combat is sampled. Nothing is sent online.", 16, MUTED)
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var summary: Dictionary = report["summary"]
+	var count: int = int(summary["observations"])
+	var summary_text := "NO COMBAT OBSERVATIONS YET"
+	if count > 0:
+		summary_text = "%d COMBAT OBSERVATION%s\nENGINE FPS / MIN %.1f / MEDIAN %.1f / MAX %.1f" % [count, "" if count == 1 else "S", summary["minimum_reported_fps"], summary["median_reported_fps"], summary["maximum_reported_fps"]]
+	performance_report_summary = label_at(box, summary_text, 16, CYAN)
+	performance_report_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	performance_report_field = TextEdit.new()
+	performance_report_field.editable = false
+	performance_report_field.text = JSON.stringify(report, "  ", false)
+	performance_report_field.add_theme_color_override("font_readonly_color", Color("c6dbe2"))
+	performance_report_field.add_theme_font_size_override("font_size", 16)
+	performance_report_field.custom_minimum_size = Vector2(0, 230)
+	box.add_child(performance_report_field)
+	performance_copy_status = label_at(box, "", 16, MUTED)
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	var copy := button_at(actions, "COPY REPORT", func(): performance_copy_requested.emit())
+	copy.disabled = not clipboard_available
+	if copy.disabled:
+		performance_copy_status.text = "Clipboard unavailable on this platform."
+	button_at(actions, "BACK TO SETTINGS", back).grab_focus()
+
+func visible_performance_report() -> String:
+	return performance_report_field.text if is_instance_valid(performance_report_field) and performance_report_field.is_visible_in_tree() else ""
+
+func set_performance_copy_status(copied: bool) -> void:
+	if is_instance_valid(performance_copy_status) and performance_copy_status.is_visible_in_tree():
+		performance_copy_status.text = "Report copied." if copied else "Copy not verified. Please try again."
+
+func set_performance_copy_pending() -> void:
+	if is_instance_valid(performance_copy_status) and performance_copy_status.is_visible_in_tree():
+		performance_copy_status.text = "Copying report..."
 
 func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWorld) -> void:
 	health_label.text = "%s / %d HP + %d SHIELD" % [operative_title, ceili(player.health.current), ceili(player.health.shield)]
 	health_bar.value = 100.0 * player.health.current / player.health.maximum
 	shield_bar.value = 100.0 * player.health.shield / maxf(1.0, player.health.max_shield)
 	xp_bar.value = 100.0 * progress.xp / progress.threshold()
+	xp_label.text = "MEMORY %d / %d  //  NEXT LEVEL %02d" % [progress.xp, progress.threshold(), progress.level + 1]
 	status_label.text = "%s / 10:00     LV %02d     %d KILLS" % [clock(combat.director.elapsed), progress.level, combat.kills]
-	var names: Array[String] = ["ARCSTORM" if combat.mutations.has("arcstorm") else "PULSE RIFLE"]
+	var names: Array[String] = [Arsenal.equipped_title("pulse", combat.mutations)]
 	for id in Arsenal.DATA:
 		if progress.ranks.has(id):
-			names.append(("SOLAR HALO" if id == "orbit" and combat.mutations.has("halo") else Arsenal.title(id)) + " %d" % progress.ranks[id])
+			names.append(Arsenal.equipped_title(id, combat.mutations) + " %d" % progress.ranks[id])
 	weapons_label.text = "   /   ".join(names) + "    [%d/4]" % progress.equipped()
 	var boss: SwarmEnemy = combat.encounters.boss if combat.encounters.boss != null and combat.encounters.boss.active else combat.encounters.mini
 	var boss_active := boss != null and boss.active
 	boss_bar.visible = boss_active
 	boss_label.visible = boss_active
+	boss_cue_label.visible = boss_active
 	if boss_active:
+		boss_cue_label.text = combat.encounters.cue(boss)
 		boss_label.text = boss.definition.title + "  //  PHASE %d" % combat.encounters.phase
 		if boss.exposed_time > 0.0:
 			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
-	surge_label.text = "OVERCLOCK  %.1fs  //  FIRE RATE +60%%" % combat.overclock if combat.overclock > 0.0 else ("%d CHAIN  //  NEXT OVERCLOCK AT %d" % [combat.streak, (combat.streak / 20 + 1) * 20] if combat.streak > 1 else "")
+	_update_overclock(combat)
+	sentry_label.visible = combat.sentry.enabled
+	sentry_label.text = (("FIELD SENTRY %.1fs // NEXT DASH REPOSITIONS IT" % combat.sentry.remaining) if combat.sentry.remaining > 0.0 else "ENGINEER // DASH TO DEPLOY A 3s SENTRY") if combat.sentry.enabled else ""
+	dash_gauge.value = clampf(100.0 * (1.0 - player.dash_cooldown / SwarmPlayer.DASH_COOLDOWN), 0.0, 100.0)
+	if player.health.shield >= player.health.max_shield:
+		defense_label.text = "SHIELD ONLINE"
+	elif player.health.recharge_delay > 0.0:
+		defense_label.text = ("SHIELD DOWN / RECHARGE IN %.1fs" if player.health.shield <= 0.0 else "RECHARGE IN %.1fs") % player.health.recharge_delay
+	else:
+		defense_label.text = "SHIELD RECHARGING"
 	dash_button.text = "DASH / %.1fs" % player.dash_cooldown if player.dash_cooldown > 0.0 else "DASH / READY"
 	adaptation_label.text = combat.adaptation.status()
 	corruption_label.text = combat.corruption.status()
 	corruption_bar.value = 100.0 * combat.corruption.accepted.size() / CorruptionProtocol.MAX_LINKS
 	var time := combat.director.elapsed
 	hint_label.visible = time < 22.0
+	if time < 10.0:
+		hint_label.text = "DRAG LEFT SIDE TO MOVE     TAP DASH TO EVADE" if OS.has_feature("mobile") else "MOVE: WASD / LEFT STICK     DASH: SPACE / A"
+	else:
+		hint_label.text = "COLLECT MEMORY CRYSTALS TO UPGRADE // FOLLOW THE CYAN ARROW"
 	notices.text = "STRIKER SIGNALS DETECTED • ORANGE LANES WARN OF CHARGES" if time > 22.0 and time < 29.0 else ("SENTRY SIGNALS DETECTED • AVOID VIOLET FIRING LANES" if time > 62.0 and time < 70.0 else "")
-	if perf_label.visible:
+	if perf_label.visible and Time.get_ticks_msec() >= perf_next_sample_ms:
+		perf_next_sample_ms = Time.get_ticks_msec() + 250
 		var fps := Engine.get_frames_per_second()
-		perf_label.text = "%d FPS / %.1fms  •  ENEMIES %d  •  SHOTS %d  •  DRAWS %d  •  STATIC %.1fMB" % [fps, 1000.0 / maxf(1.0, fps), combat.active_enemies, combat.active_projectiles, Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0]
+		var timing := "%d FPS / %.1fms AVG FRAME" % [fps, 1000.0 / fps] if fps > 0 else "FPS WARMING UP"
+		perf_label.text = "%s  •  ENEMIES %d  •  SHOTS %d  •  DRAWS %d  •  ENGINE %.1fMB" % [timing, combat.active_enemies, combat.active_projectiles, Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0]
+
+func set_performance_stats(enabled: bool) -> void:
+	perf_label.visible = enabled
+	perf_next_sample_ms = 0
+	if is_instance_valid(perf_toggle):
+		perf_toggle.set_pressed_no_signal(enabled)
+
+func _update_overclock(combat: CombatWorld) -> void:
+	var powered: bool = combat.overclock > 0.0
+	var chaining: bool = combat.streak > 0 and combat.streak_time > 0.0
+	surge_gauge.visible = powered or chaining
+	if not surge_gauge.visible:
+		surge_label.text = ""
+		surge_gauge.value = 0
+		return
+	var next_at: int = (combat.streak / CombatWorld.CHAIN_KILLS + 1) * CombatWorld.CHAIN_KILLS
+	if powered:
+		surge_label.text = "OVERCLOCK %.1fs // FIRE RATE +%d%%" % [combat.overclock, roundi((CombatWorld.OVERCLOCK_RATE - 1.0) * 100)]
+		if chaining:
+			surge_label.text += " // CHAIN %d (NEXT %d)" % [combat.streak, next_at]
+		surge_gauge.value = clampf(100.0 * combat.overclock / CombatWorld.OVERCLOCK_DURATION, 0, 100)
+		surge_fill.bg_color = Color("b9f66b")
+	else:
+		var needed: int = next_at - combat.streak
+		surge_label.text = "CHAIN %d // %d %s TO OVERCLOCK // BREAKS IN %.1fs" % [combat.streak, needed, "KILL" if needed == 1 else "KILLS", combat.streak_time]
+		surge_gauge.value = 100.0 * (combat.streak % CombatWorld.CHAIN_KILLS) / CombatWorld.CHAIN_KILLS
+		surge_fill.bg_color = CYAN
 
 static func clock(seconds: float) -> String:
 	return "%02d:%02d" % [int(seconds) / 60, int(seconds) % 60]
@@ -528,14 +774,49 @@ func show_lab(data: Dictionary, back: Callable, message: String = "") -> void:
 		purchase.disabled = cost < 0 or cost > int(data["salvage"])
 	label_at(box, "STARTING KITS // EACH HAS A TRADEOFF", 19, Color("ffe39b"))
 	var unlocked := Research.unlocked(data)
+	var kits := GridContainer.new()
+	kits.columns = 2
+	kits.add_theme_constant_override("h_separation", 12)
+	box.add_child(kits)
 	for id in Research.KITS:
 		var kit: Dictionary = Research.KITS[id]
 		var requirement := ""
 		if not unlocked.has(id):
-			requirement = "  LOCKED: %d/150 lifetime kills" % mini(150, int(data["salvaged_kills"])) if id == "conductor" else "  LOCKED: defeat the Warden"
+			requirement = "  LOCKED: %d/150 lifetime kills" % mini(150, int(data["salvaged_kills"])) if id == "conductor" else ("  LOCKED: defeat the Architect" if id == "engineer" else "  LOCKED: defeat the Warden")
+		# A dedicated line keeps requirements legible in the two-column layout.
+		requirement = "\n" + requirement.strip_edges() if not requirement.is_empty() else ""
 		var text: String = kit["title"] + ("  [SELECTED]" if data["selected_kit"] == id else "") + requirement + "\n" + kit["description"]
-		var select := button_at(box, text, func(): kit_selected.emit(id))
+		var select := button_at(kits, text, func(): kit_selected.emit(id))
 		select.add_theme_font_size_override("font_size", 16)
 		select.disabled = not unlocked.has(id) or data["selected_kit"] == id
 	var back_button := button_at(box, "BACK", back)
 	back_button.grab_focus()
+
+func show_backup(code: String = "", message: String = "") -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 560
+	label_at(box, "PROGRESS BACKUP", 30, CYAN)
+	label_at(box, "Transfer salvage, research, unlocks and settings.\nCurrent deployment equipment is not included.", 17, MUTED)
+	var field := TextEdit.new()
+	field.text = code
+	field.custom_minimum_size = Vector2(560, 100)
+	field.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	field.placeholder_text = "Paste a NULL//SWARM backup code here"
+	box.add_child(field)
+	var row := HBoxContainer.new()
+	box.add_child(row)
+	button_at(row, "EXPORT MY PROGRESS", func(): backup_export_requested.emit())
+	button_at(row, "PASTE CODE", func(): field.text = DisplayServer.clipboard_get())
+	button_at(box, "PREVIEW RESTORE", func(): backup_preview_requested.emit(field.text))
+	button_at(box, "PREVIEW PREVIOUS SAVE", func(): backup_recovery_requested.emit())
+	label_at(box, message, 16, CYAN)
+	button_at(box, "COMMAND MENU", func(): return_menu.emit())
+
+func show_backup_confirmation(current: Dictionary, imported: Dictionary) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 560
+	label_at(box, "RESTORE THIS PROGRESS?", 29, CYAN)
+	label_at(box, "Current: %d salvage / %d deployments\nBackup: %d salvage / %d deployments" % [current["salvage"], current["runs"], imported["salvage"], imported["runs"]], 20)
+	label_at(box, "Replaces progression and settings. Values are not added.\nA local recovery copy is kept before applying the backup.", 17, MUTED)
+	button_at(box, "RESTORE THIS BACKUP", func(): backup_restore_requested.emit())
+	button_at(box, "CANCEL", func(): backup_requested.emit())

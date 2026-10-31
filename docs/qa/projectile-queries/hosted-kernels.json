@@ -1,0 +1,254 @@
+{
+  "cases": [
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 1.11458333333333,
+      "kind": "query",
+      "legacy_median_us": 1.41753472222222,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "reference": "original legacy",
+      "rounds_us_per_query": {
+        "current": [
+          1.11979166666667,
+          1.16145833333333,
+          1.109375,
+          1.08680555555556
+        ],
+        "legacy": [
+          1.43576388888889,
+          1.42013888888889,
+          1.41493055555556,
+          1.39930555555556
+        ]
+      },
+      "speedup": 1.27180685358255
+    },
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 16.8307291666667,
+      "kind": "nearest",
+      "legacy_median_us": 34.8220486111111,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "reference": "original legacy",
+      "rounds_us_per_query": {
+        "current": [
+          16.7534722222222,
+          16.8420138888889,
+          17.09375,
+          16.8194444444444
+        ],
+        "legacy": [
+          34.4913194444444,
+          40.7829861111111,
+          35.1527777777778,
+          34.1701388888889
+        ]
+      },
+      "speedup": 2.0689566248904
+    },
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 1.140625,
+      "kind": "query_verified",
+      "legacy_median_us": 1.39930555555556,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "reference": "verified 738a047 query",
+      "rounds_us_per_query": {
+        "current": [
+          1.13368055555556,
+          1.14756944444444,
+          1.11805555555556,
+          1.15104166666667
+        ],
+        "legacy": [
+          1.37847222222222,
+          1.40972222222222,
+          1.38888888888889,
+          1.89930555555556
+        ]
+      },
+      "speedup": 1.22678843226788
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 72,
+      "current_median_us": 1.37673611111111,
+      "kind": "query",
+      "legacy_median_us": 1.61979166666667,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "reference": "original legacy",
+      "rounds_us_per_query": {
+        "current": [
+          1.37847222222222,
+          1.375,
+          1.38368055555556,
+          1.37326388888889
+        ],
+        "legacy": [
+          1.69965277777778,
+          1.57291666666667,
+          1.59722222222222,
+          1.64236111111111
+        ]
+      },
+      "speedup": 1.1765447667087
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 27711,
+      "current_median_us": 24.9270833333333,
+      "kind": "nearest",
+      "legacy_median_us": 40.5989583333333,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "reference": "original legacy",
+      "rounds_us_per_query": {
+        "current": [
+          24.9097222222222,
+          24.9444444444444,
+          24.8784722222222,
+          25.3107638888889
+        ],
+        "legacy": [
+          41.1145833333333,
+          40.4288194444444,
+          40.390625,
+          40.7690972222222
+        ]
+      },
+      "speedup": 1.62870873380694
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 72,
+      "current_median_us": 1.34375,
+      "kind": "query_verified",
+      "legacy_median_us": 1.61805555555556,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "reference": "verified 738a047 query",
+      "rounds_us_per_query": {
+        "current": [
+          1.34722222222222,
+          1.36805555555556,
+          1.34027777777778,
+          1.30555555555556
+        ],
+        "legacy": [
+          1.61979166666667,
+          1.61631944444444,
+          1.63715277777778,
+          1.53819444444444
+        ]
+      },
+      "speedup": 1.20413436692506
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 4488,
+      "current_median_us": 8.72829861111111,
+      "kind": "query",
+      "legacy_median_us": 9.13888888888889,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "reference": "original legacy",
+      "rounds_us_per_query": {
+        "current": [
+          8.83506944444444,
+          8.69965277777778,
+          8.73090277777778,
+          8.72569444444444
+        ],
+        "legacy": [
+          8.99131944444444,
+          9.19791666666667,
+          9.15798611111111,
+          9.11979166666667
+        ]
+      },
+      "speedup": 1.04704127299851
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 175506,
+      "current_median_us": 133.0078125,
+      "kind": "nearest",
+      "legacy_median_us": 148.006076388889,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "reference": "original legacy",
+      "rounds_us_per_query": {
+        "current": [
+          131.675347222222,
+          134.340277777778,
+          152.178819444444,
+          130.550347222222
+        ],
+        "legacy": [
+          148.277777777778,
+          147.734375,
+          149.246527777778,
+          146.378472222222
+        ]
+      },
+      "speedup": 1.1127622776962
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 4488,
+      "current_median_us": 8.51909722222222,
+      "kind": "query_verified",
+      "legacy_median_us": 8.79253472222222,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "reference": "verified 738a047 query",
+      "rounds_us_per_query": {
+        "current": [
+          8.59375,
+          8.65277777777778,
+          8.44444444444444,
+          8.35069444444444
+        ],
+        "legacy": [
+          9.05208333333333,
+          8.70659722222222,
+          8.87847222222222,
+          8.453125
+        ]
+      },
+      "speedup": 1.0320970042796
+    }
+  ],
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "failures": [],
+  "fixed_step": 0.0166666666666667,
+  "godot": "4.6.3-stable (official)",
+  "kind": "paired spatial-query kernel timing",
+  "limitations": [
+    "Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
+    "Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
+    "Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
+    "query_verified compares the current query with the immediately prior verified implementation; other modes retain the original reference.",
+    "Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."
+  ],
+  "logical_cpus": 4,
+  "os": "Linux",
+  "rendering": "headless / no GPU frame measurements",
+  "schema": 1
+}

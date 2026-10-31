@@ -1,0 +1,139 @@
+{
+  "verified_game_and_test_code": "0f592f7ea0d0fad3d5a0f112820407119ebd0879",
+  "report_checkpoint_only": true,
+  "development_method": "Initial changes used GitHub APIs/hosted CI while the executor was unavailable; restored-workspace verification subsequently passed.",
+  "headless": {
+    "suites": [
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 24,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 5,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 50,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 430,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1140,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "ui_layouts": 100,
+  "native": {
+    "run": 40767153218,
+    "artifact": 12850942138,
+    "zip_sha256": "sha256:31858cb812317000581858d5b23627303998addd027a83e17f5a392305352651",
+    "status": "passed",
+    "variant": "ARM64 Mobile debug export",
+    "signature": "CI apksigner verification passed",
+    "apk_sha256": "80fc96bf7a891c063b478137f2d204dfa016a2031ec4a24bd731c32317de7789",
+    "independent_archive_hash_manifest_checks": "passed after executor recovery"
+  },
+  "android": {
+    "run": 40767153246,
+    "artifact": 12851835173,
+    "zip_sha256": "sha256:4cdc8d23c4e90a79567287eed3a5aa06e1dfe48490389027ac908e75c78b7897",
+    "status": "passed",
+    "checks": 18,
+    "variant": "x86_64 Android 35 Compatibility; opt-in read-only probe",
+    "persistence": "Actual earned positive salvage retained exactly through relaunch, restore and same-run same-signer APK update"
+  },
+  "gameplay_qa": {
+    "run": 40767153234,
+    "artifact": 12851701040,
+    "zip_sha256": "sha256:d67930f26d335d35825dbf8295f501875be79756e0e435e4cff766a42f45e056",
+    "status": "passed",
+    "standard_corruption_extended_sessions": 22,
+    "pacing_probes": 4,
+    "xp_comparisons": 6,
+    "stress_cases": 18,
+    "deterministic_replay": "passed",
+    "logged_baseline_comparison": {
+      "summaries": 30,
+      "matches": true,
+      "baseline_run": 40685839146,
+      "scope": "Exact logged case summary lines; excludes unprinted JSON fields and CPU timings."
+    },
+    "full_report_comparison": {
+      "normal_sessions": 22,
+      "victories": 18,
+      "defeats": 4,
+      "unchanged_normal_and_xp_cases_except_timings": 28,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 18,
+      "ui_checks": 1140,
+      "ui_layouts": 100,
+      "deterministic_replay": true
+    }
+  },
+  "visual_review": {
+    "inspected": true,
+    "source": "Actual Godot staged upgrade_queue.png transmitted in bounded CI log chunks",
+    "width": 1280,
+    "height": 720,
+    "observations": [
+      "Three-upgrade heading fits the panel and is legible.",
+      "All three upgrade cards and reroll remain visible.",
+      "No added row or overlay obstruction."
+    ]
+  },
+  "limits": [
+    "Compound queued-choice paths were exercised by actual headless GUI events; Android smoke covers ordinary touch upgrades.",
+    "Physical ARM64 Mobile rendering/performance, cutouts, thermals, Android 10 runtime and human balance remain unverified.",
+    "Persistent Preview signing secrets are unprovisioned; diagnostic keys rotate and cross-run phone updates are not guaranteed."
+  ],
+  "failures": [],
+  "restored_executor_followup": "docs/qa/upgrade-queue/restored-executor-verification.json"
+}

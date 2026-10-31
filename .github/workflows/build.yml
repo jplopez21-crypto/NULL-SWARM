@@ -1,8 +1,12 @@
 name: Validate and build Android
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -13,6 +17,15 @@ jobs:
       GODOT_VERSION: 4.6.3
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Validate all workflow contexts and syntax
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/actionlint builds/qa
+          curl --fail --location --retry 3 -o /tmp/actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          printf '%s  %s\n' '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8' /tmp/actionlint.tar.gz | sha256sum --check -
+          tar -xzf /tmp/actionlint.tar.gz -C /tmp/actionlint
+          /tmp/actionlint/actionlint -version 2>&1 | tee builds/qa/actionlint-version.log
+          /tmp/actionlint/actionlint -shellcheck= -pyflakes= 2>&1 | tee builds/qa/actionlint.log
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
@@ -32,6 +45,7 @@ jobs:
           keytool -genkeypair -keystore /tmp/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -keysize 2048 -validity 10000
       - name: Import and configure Android exporter
         run: |
+          set -o pipefail
           godot --headless --editor --import --quit 2>&1 | tee /tmp/import.log
           if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
           mkdir -p "$HOME/.config/godot"
@@ -44,11 +58,11 @@ jobs:
           export/android/debug_keystore_user = "androiddebugkey"
           export/android/debug_keystore_pass = "android"
           SETTINGS
+      - name: Signing configuration regressions
+        run: python3 -m unittest discover -s tests -p 'test_preview_signing.py' -v
       - name: Automated tests and scene smoke
         run: |
-          godot --headless --script tests/run_tests.gd
-          timeout 120s godot --headless --script tests/run_corruption_tests.gd
-          godot --headless -- --smoke
+          python3 tools/run_headless_checks.py
       - name: Render presentation captures
         run: |
           if ! command -v xvfb-run; then
@@ -56,17 +70,50 @@ jobs:
             sudo apt-get install -y xvfb libgl1-mesa-dri
           fi
           LIBGL_ALWAYS_SOFTWARE=1 xvfb-run -a godot --rendering-method gl_compatibility --audio-driver Dummy -- --capture
+      - name: Emit bounded CI verification preview
+        run: |
+          python3 - <<'PY'
+          import base64
+          import json
+          from pathlib import Path
+          report = json.loads(Path('builds/qa/headless-results.json').read_text())
+          assert report['status'] == 'passed'
+          print('CI_HEADLESS_REPORT ' + json.dumps(report, separators=(',', ':')))
+          for name, prefix in [('upgrade_queue', 'CI_QUEUE'), ('performance_stats', 'CI_PERF'), ('build_overview', 'CI_BUILD'), ('engineer_sentry', 'CI_ENGINEER'), ('overclock', 'CI_OVERCLOCK')]:
+              capture = Path('builds/screenshots/' + name + '.png').read_bytes()
+              assert capture.startswith(b'\x89PNG\r\n\x1a\n')
+              if len(capture) <= 262144:
+                  encoded = base64.b64encode(capture).decode('ascii')
+                  for start in range(0, len(encoded), 12000):
+                      print(prefix + '_PREVIEW_PNG ' + encoded[start:start + 12000])
+              else:
+                  print(prefix + '_PREVIEW_SKIPPED bytes=' + str(len(capture)))
+          PY
       - name: Export debug APK
         run: |
           mkdir -p builds/android
-          godot --headless --export-debug Android builds/android/null-swarm-corruption-0.5-debug.apk
-          test -s builds/android/null-swarm-corruption-0.5-debug.apk
-          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-corruption-0.5-debug.apk
-          sha256sum builds/android/null-swarm-corruption-0.5-debug.apk > builds/android/SHA256SUMS
+          python3 tools/configure_development_export.py
+          godot --headless --export-debug Android builds/android/null-swarm-development-debug.apk
+          test -s builds/android/null-swarm-development-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-development-debug.apk
+          sha256sum builds/android/null-swarm-development-debug.apk > builds/android/SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: null-swarm-corruption-0.5-apk
+          name: null-swarm-development-apk
           path: |
             builds/android/
-            builds/screenshots/
+            builds/screenshots/overclock.png
           if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: null-swarm-presentation-captures
+          path: builds/screenshots/
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-headless-results
+          path: builds/qa/
+          retention-days: 14
+          if-no-files-found: warn

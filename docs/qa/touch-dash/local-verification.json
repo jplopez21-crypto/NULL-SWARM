@@ -1,0 +1,30 @@
+{
+  "accepted_source_before_fix": "aebf6c374ab0b9bd679a12405ca3878d08581d92",
+  "original_reproducer": {
+    "engine": "Godot 4.6.3 headless",
+    "event_path": "Input.parse_input_event + flush_buffered_events, default mouse-from-touch emulation",
+    "moving_dash_requested": false,
+    "stopped_dash_requested": true,
+    "held_stick": [
+      1,
+      0
+    ]
+  },
+  "corrected_reproducer": {
+    "moving_dash_requested": true,
+    "stopped_dash_requested": true,
+    "held_stick": [
+      1,
+      0
+    ]
+  },
+  "regression_suite": {
+    "checks": 69,
+    "engine_touch_mouse_emulation": true,
+    "failures": [],
+    "layouts": 3
+  },
+  "hosted_android": "pending",
+  "local_android_sdk": "unavailable",
+  "local_editor_import": "Completed resource/class import; sandbox socket-listener and absent Android SDK diagnostics occurred. Runtime strict suites are clean."
+}

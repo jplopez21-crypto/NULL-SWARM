@@ -1,5 +1,101 @@
 # Changelog
 
+## Development — 2026-10-31 / Operative armor
+
+- Replaced box-body operative visuals with original shared faceted armor, helmet/visor, shoulder plates, boots and an energy rifle. Existing stride, aim, recoil, dash and damage feedback are retained. Five body mesh instances/six surface instances, 296 triangles; no FPS gain claimed.
+- Added geometry/resource/pose tests and accepted-source 2,400-frame behavior parity, desktop art references and actual Android geometry inspection. Initial rendered review corrected menu-backdrop dimming in desktop close-up fixtures only; verified source ea3fdea9c19e91a037d9631da2c380e5717de848 passes all 12 strict suites, 46 Android checks and full gameplay/rendered QA. Corrected APK and exact receipts: TEST_RESULTS.md. Development art status and origin are documented.
+
+## Development — 2026-10-31 / Moving touch dash
+
+- Fixed second-finger dash while holding the joystick. Dash now tracks its own native touch, fires on press and suppresses duplicate emulated mouse events. Joystick release preserves an independent dash queued in the same physics frame.
+- Pause/upgrade/focus interruptions clear touch ownership; keyboard, controller and real mouse remain supported. Added 69 real-engine multitouch regressions and a shell-only Android two-pointer injector, excluded from game exports. Verified source f1d3de77181d7b27d4c12e845f08b6a7954f48c9 passes all 11 local/native/QA suites, 45 Android checks including genuine two-finger gestures in both orders, and full gameplay QA. Corrected APK and exact evidence: TEST_RESULTS.md.
+
+## Development — 2026-10-31 / Offline performance report
+
+- Added bounded active-combat performance observations, read-only Settings report, honest empty/warm-up states and clipboard export with readback verification. New deployment clears history; pause/menu/upgrade frames and progression/account data are excluded.
+- Added 168-layout headless coverage, actual GUI/state/ownership/finite-data tests, and a paired seeded replay proving diagnostics preserve the accepted gameplay fingerprint.
+- Render review added a visible FPS summary and improved JSON contrast. Android caught an immediate-readback clipboard failure; copy now uses compact complete JSON, bounded deferred verification, duplicate coalescing and cancellation, with delayed/denied-backend regressions. Android acceptance is configured for 37 checks, including report/copy/paused return. Verified source aebf6c374ab0b9bd679a12405ca3878d08581d92 passed native/signature, all 37 Android checks and full gameplay/rendered QA. Independent reports preserve all prior non-timing gameplay/XP/pacing cases and 24 stress fingerprints; observer-off/on replay matches the accepted baseline. Exact artifacts and hardware/signing limits: TEST_RESULTS.md.
+
+## Development — 2026-10-30 / Memory collection audio
+
+- Added original quiet collection chime on a dedicated SFX voice, with aggregate-per-tick feedback, common rate limit, bounded batch pitch and level-up priority. Existing combat voices, XP rules and volume controls are retained.
+- Added PCM/routing/playback/lifecycle and real-physics collection integration tests, a human-review WAV export and read-only Android acceptance counter. Verified source a64caa8f3df88f8ed4e7da1b2698102617022cea passed native APK/signature, all 34 Android checks and full gameplay/rendered QA. All prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match; local/native/QA summaries and raw PCM receipts agree. Exact artifacts and hardware/listening/signing limits: TEST_RESULTS.md.
+
+## Development — 2026-10-29 / Memory crystals
+
+- Replaced round experience packets with original faceted blue/mint/gold crystals; retained XP tiers, exact colors/scaling and all collection/merge rules. Three cached single-surface meshes use 8/12/16 triangles versus 80 previously; draw-instance count is unchanged and no FPS gain is claimed.
+- Updated opening collection guidance and added paused normal/close desktop captures plus geometry, tier, round-reference, conservation and recycling tests. Verified source f9f582967b53cfe9789eb02fa832f01e6a554903 passed native APK/signature, all 33 Android checks and full gameplay/rendered QA. Local/native/QA strict summaries match; all prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match. Exact artifacts/limits: TEST_RESULTS.md.
+- Reviewed Android emulator 37.2.13.0/build 16740729 after the strict version gate caught SDK drift; retained image revision 9 and the enforced version guard, and exposed the observed version in logs. No game code changes in this CI follow-up.
+
+## Development — 2026-10-29 / Enemy chassis
+
+- Added six original faceted regular-enemy hulls with clearer role shapes, shared cached meshes/materials and retained eye/warning cues. Bosses use their existing visual path.
+- Added geometry/cache/tint/role/pooling/accessibility regressions and an enlarged desktop-only review lineup. All ten local suites pass (954 systems/58 resources); equal six-type body instances/triangles decrease structurally, without an FPS claim.
+- Verified source bc54a9468c39b457d8b9623a2e67faad41f82356 passed native export/signature, all 33 Android checks and full QA (26 normal sessions, 160 rendered layouts, 24 stress/nine kernel cases). Prior gameplay/XP/pacing results and stress fingerprints match; local/native/QA strict summaries agree. Inspected native lineup/ordinary combat and actual Android scenes. Exact artifacts/limits: TEST_RESULTS.md. Enemy behavior, collision/damage/progression rules and normal camera are unchanged.
+
+## Development — 2026-10-29 / Industrial deck
+
+- Replaced bright checker floor with original chamfered panels, recessed hatches/grilles and restrained service/hazard paint. Two cached meshes share one lit material in the original two batches/400 placements.
+- Added bounded geometry/cache/material and rendered placement validation, plus desktop-only close capture. Split full native presentation captures from the install artifact, retaining its android/ path.
+- All ten local suites passed (896 systems/57 resources/2,244 headless UI checks); Revised source 42b53896a8a498d327bb8ece0fa1f8ff6809a118 passed native export/signature, all 33 Android checks and full QA (26 normal sessions, 160 layouts, 24 stress/nine kernel cases). Rendered suite validates all 400 uploaded panel positions. Prior gameplay/XP/pacing results and stress fingerprints match; local/native/QA strict summaries agree. Native/Android visuals inspected after reducing pattern density. Exact artifacts/limits: TEST_RESULTS.md. Floor triangle count intentionally increases within a 64-triangle per-panel ceiling; no FPS improvement claim. Gameplay and ordinary camera remain unchanged.
+
+## Development — 2026-10-29 / Projectile query allocations
+
+- Reuse a read-only empty fallback during spatial-cell lookup while preserving separate result snapshots for every attack. Only the shared fallback change is retained in production.
+- Added nested-area/piercing/next-shot and snapshot-ownership regressions. All ten local suites passed (878 systems/56 resources); kernels now include the immediately prior verified reference and nine ordered-parity cases. Verified source cfceb77d9af881ea4fcfd493a7c1925078031d81 passed native export/signature, all 33 Android checks and full QA (26 normal sessions, 160 layouts, 24 stress/nine kernel cases). Prior gameplay/XP/pacing results and stress fingerprints match; ten-suite local/native/QA summaries agree. Whole-combat timing remains mixed, without a general FPS gain claim. No gameplay rules, CombatWorld code or budgets changed.
+
+## Development — 2026-10-29 / Combat profiling and grid queries
+
+- Added opt-in seven-phase combat timing and a paired legacy/current query harness with ordered-result checks. Default gameplay does not collect timings; measured combat phases exclude rendering and surrounding fixture work.
+- Avoided absent nearest-target bucket arrays and repeated radius calculations; collision caches refresh on live definition edits. Exact ordered-query/hit behavior and all paired combat fingerprints are preserved.
+- All ten local suites and paired benchmarks passed. Heavy local fixture means improved while smaller cases were mixed; no uniform or phone FPS claim. Method/raw results: docs/COMBAT_PROFILING.md. Verified source 738a047978ce53b61a6d64f8bfbfe89862f6bf98 passed native export/signature, 33 Android checks and full QA (26 normal sessions, 160 layouts, 24 stress/six kernel cases). All prior non-timing gameplay/pacing/XP results and stress fingerprints match; ten-suite local/native/QA summaries agree. Exact artifacts and limits are in TEST_RESULTS.md.
+
+## Development — 2026-10-29 / Kill-chain and Overclock feedback
+
+- Added a compact fixed-row gauge with remaining kills/chain deadline and independent Overclock duration. Text outlines and touch pass-through preserve readability/control; no new flashes or particles.
+- Shared existing combat constants and refreshed new-run HUD immediately. Damage, spawn/XP/RNG rules and 20-kill / 3s-gap / 6s-bonus / +60% cycle timing stay unchanged.
+- Verified code baffa5db1aaaaf0ce11399e81a337a2d536b020e passed all ten local/hosted suites, signed ARM64 export, 33 Android checks, 160 rendered layouts, 26 normal sessions and 24 stress cases. All prior gameplay/XP/pacing results and stress fingerprints are unchanged. Inspected actual Android and staged native feedback; exact evidence and phone/signing limits are in TEST_RESULTS.md.
+
+## Development — 2026-10-29 / Engineer and Dash Uplink
+
+- Added Architect-earned Engineer: Drone Hive, weak rifle, 80 HP and a real dash-origin sentry passive. One model is refreshed/repositioned rather than stacked; Drone Hive ranks and normal cycle bonuses scale its attacks.
+- Added passive lifetime/readiness HUD, build-guide description, original procedural tripod/deployment sound and a two-column Foundry kit layout.
+- Added ten-suite local coverage, two normal Engineer sessions, a six-case sustained Engineer load fixture and mobile GUI fixture tests after ordinary persistence validation. Separated emulator APK/evidence artifacts and restricted staged capture mode to desktop debug builds.
+- Verified code e7c3775e7424b7a466faad7204792ff7ed45bb4e passed all ten local/hosted suites, signed ARM64 APK export, 32 Android checks, 140 rendered layouts, 26 normal sessions and 24 synthetic stress cases. Downloaded reports preserve prior gameplay/XP/pacing results and stress fingerprints; new Engineer cases/fingerprints match local runs. Actual Android and staged native visuals were inspected. Exact evidence and phone/signing limits are in TEST_RESULTS.md.
+
+## Development — 2026-10-29 / Build and mutation guide
+
+- Added Pause → Build // Mutations with live equipment slots/ranks, evolved titles and all three mutation recipes from the content registry.
+- Explained active/in-progress paths and blocked recipes, including the two-missing-weapons/one-free-slot edge case. Existing weapons can still evolve at full slots.
+- Kept the guide read-only and combat paused, with touch/controller navigation back to pause. Added GUI/data/probe regressions, 16 more layout fixtures and three Android touch checks.
+- Verified code d2320dfc3d697275ebc6362e53a3e8545a4dacf8 passed local/hosted nine-suite checks, ARM64 APK export, 25 Android checks and full gameplay QA (120 rendered layouts/18 stress cases). Prior non-timing gameplay/XP/pacing results and stress fingerprints are unchanged. Native/Android screenshots and downloaded APK/archive integrity verified; exact evidence and phone/signing limits are in TEST_RESULTS.md.
+
+## Development — 2026-10-28 / Touch performance stats
+
+- Reduced emulator smoke overhead by caching fixed display dimensions instead of capturing a PNG for each input coordinate. Added a quiet fresh-deployment observation without input/screencaps; it has no phone-FPS acceptance gate.
+- Added a saved default-off Performance stats toggle to menu/pause settings; F3 uses the same preference and ignores held-key repeats.
+- Added checkbox/HUD synchronization, optional-setting compatibility for old saves, and portable-backup retention.
+- Samples FPS/average frame interval, entities, draw calls and engine memory at 4Hz while enabled. The HUD passes touch through and changes no combat or effect budgets.
+- Expanded local coverage to 104 UI layouts and added Android touch/persistence/update acceptance checks. Execution/build evidence is tracked in TEST_RESULTS.md.
+- Follow-up native export and all 22 Android checks passed. Quiet software-emulator observation measured median 5 FPS (3–5); this remains below targets and is not phone performance validation. APK identity/integrity and revision-specific evidence are recorded under docs/qa/performance-stats.
+- Full QA passed with unchanged gameplay/XP/pacing results and 18 stress fingerprints. All 104 rendered UI layouts passed; local/native/QA strict-suite summaries match. Final report records executed code 000dd701a5ffc4dd7d6b365e23d677a302d42ab3.
+
+## Development — 2026-10-28 / Queued upgrade clarity
+
+- Upgrade headings show how many choices are ready, including the current choice, with correct singular wording for the last one.
+- Rerolls keep the count; normal upgrades and accepted corruption links consume one choice. Combat resumes after the queue is empty. Existing progression/combat rules are unchanged.
+- Added real GUI-dispatch regressions and expanded staged UI coverage to 100 layouts. Native CI emits a bounded staged preview and structured results for remote verification.
+- Verified code 0f592f7ea0d0fad3d5a0f112820407119ebd0879 passed all three hosted gates, including 24 GUI checks, 1,140 UI checks, 18 Android checks and the full gameplay/stress matrix. After executor recovery, all nine local suites and independent APK/archive checks also passed; full QA comparisons preserve 28 established cases, four pacing cases and 18 stress fingerprints. Current evidence is in TEST_RESULTS.md.
+
+## Development — 2026-10-28 / Memory collection clarity
+
+- Added numeric memory/next-level readout and a brief opening collection hint, with touch input passing through the readout.
+- Added optional five-second XP traces and four fixed-seed navigation comparisons to recurring QA. Preserved both established bot policies and all combat/progression rules.
+- Expanded UI coverage to 88 layouts and added staged onboarding capture. Current local check evidence and pacing limits are documented in TEST_RESULTS.md and docs/UPGRADE_PACING.md.
+- Fixed Preview workflow runner-context validation and added hash-pinned actionlint checks for all workflows in native CI.
+- Strengthened Android lifecycle/restore/update acceptance to earn and retain exact nonzero salvage through normal gameplay, rather than accepting an empty wallet.
+- Verified game/test code 15f5ad383dcff35fec8eb0ee2c4dea2a8b14ebe0 passed native export, 18 Android checks and full QA. Preserved 28 existing non-timing gameplay/XP results and 18 synthetic gameplay fingerprints. Final documentation records the exact build artifacts and verification limits.
+
 ## 0.1.0 — 2026-10-26
 
 - Created the Godot 4.6.3 project and five-minute survival loop.
@@ -139,3 +235,71 @@
 - Four legal corruption probes won; clean pre-existing case fields exactly match 0.4.1 excluding timing/new telemetry. Preserved all clean-bot defeats.
 - Verified signed APK, downloaded integrity/package/module contents and rendered panels/HUD. Archived reports in docs/qa/0.5.
 - Added separate local all-links stress fixture 3 and future daily CI step; six local scenarios passed parity/load checks. Recorded ~36.6–38.4ms p95 CPU at 600 enemies as an optimization concern, not Android FPS.
+
+### Android validation pipeline
+
+- Added explicit input/movement regressions, strict isolated headless orchestration and TEST_RESULTS.md.
+- Added Android 35 x86_64 Compatibility emulator export, opt-in read-only telemetry and real ADB touchscreen/gameplay/lifecycle checks with diagnostic artifacts.
+- Added concurrency cancellation for superseded branch/PR runs. Changes prepared on a development branch for review; Android runtime results pending.
+
+### Android runtime verification completed
+
+- Added real emulator touch, gameplay, rendered-frame readiness, background/relaunch and settings persistence checks; pinned SWANGLE tooling and diagnostic artifacts.
+- Fixed the procedural WAV loop boundary and unsafe UI panel detachment during clicks; added six audio and eight GUI-input regressions.
+- All development CI gates passed, including 12 Android runtime checks; TEST_RESULTS.md records resolved failures and untested hardware scope. Prepared on development/android-validation in PR #1.
+
+### Mobile onboarding follow-up
+
+- Show touch movement/dash instructions on mobile during the opening 22 seconds.
+- Record owner confirmation that the development APK installs and runs.
+
+### Target selection and rapid teardown
+
+- Select nearest enemies directly from spatial cells; share exclusion-aware targeting with chain attacks, preserving ordering and combat outcomes.
+- Add seeded targeting parity and boundary regressions and preserve before/after stress evidence.
+- Cancel pending music startup when a scene shuts down immediately, fixing the intermittent probe-test WAV playback leak; add startup/cancellation audio regressions.
+
+### Combat feedback pass
+
+- Shared four-point impact silhouettes replace box-shaped hit sparks; shorter impacts and eased rings improve visual separation.
+- Enemy visual squash/recovery now settles smoothly and pooled enemies reset their visual pose. Collision, health, movement and attack timing are unchanged.
+- Elongated tumbling wreckage remains inside existing quality/pool limits. Upgrade rings rise briefly after selection.
+- Upgrade confirmations name the selected weapon/passive and rank; mutation announcements retain priority. Added staged feedback.png to CI presentation captures.
+- Added feedback/accessibility/pooling/announcement regressions. Procedural visuals remain development assets.
+
+### Stable preview signing configuration
+
+- Add manual environment-secret preview build with pinned keystore/APK certificate checks, increasing versions and temporary credential cleanup.
+- New Preview package coexists with prior installs; seven real-keytool/configuration regressions pass.
+- Distribution is blocked until owner environment secrets are provisioned and workflow is registered on the default branch. No stable-signed APK or upgrade test is claimed.
+
+### APK upgrade acceptance test
+
+- Build a second higher-version emulator APK with the same test signer; install it using adb install -r and check saved settings/salvage after relaunch.
+- Keep the second APK outside uploaded artifacts; no real signing credentials or phone installation changes.
+
+### Portable progress backups
+
+- Added command-menu code export/paste, restore preview/confirmation and previous-save recovery.
+- Added bounded checksummed versioned progression transfer, shared save validation, ledger removal and rollback on write failure.
+- Added backup persistence/invalid-input checks, real GUI dispatch tests and 52 UI layouts. Android smoke covers real clipboard round-trip, confirmed restore and subsequent APK update.
+- This cannot access older installed apps without export support; no signing-key or billing changes.
+
+### Boss warning readability
+
+- Radial barrage markers follow the firing source and show a lane for each existing projectile direction. Area circles remain locked to their selected locations.
+- Added explicit barrage/impact/recharge/exposure HUD cues, steady warning-thickness progression and immediate marker hiding on cancellation.
+- Preserved attack deadlines, damage, counts, radii, phases and reward rules. Added eleven warning/shot/counterplay regressions and twelve boss UI layout captures.
+
+### Dash and defensive feedback
+
+- Keep the operative visible during dash/hit protection; replace blinking with brief shield-blue/hull-orange damage feedback rings.
+- Add pooled narrowing dash trails, an always-interactive cooldown gauge and explicit shield recharge status. Reduced flashes suppress trails and hit rings.
+- Add an original generated shield-absorption sound; hull damage retains its existing sound. Preserve damage, shield recharge, dash speed/cooldown/protection and collision rules.
+- Add defensive input/effect/HUD regressions and staged shield/hull/dash captures.
+
+### Singularity Lance mutation
+
+- Rail Lance 3 + Memory Tether 3 now unlocks a third evolution: piercing rail impacts leave a single refreshing gravity field with periodic damage and small-enemy pull. Bosses and committed attack lanes remain anchored.
+- Centralized mutation requirements/names; added evolved cards/HUD/results/SFX, incremental spatial reindexing and projectile-style adaptation accounting.
+- Added new normal-rules bot profile, field-clock/pull/refresh/reset tests, UI captures and synthetic gravity workload fixture 4. Two local mutation runs won; six local stress cases passed invariants. Human balance and device performance remain unverified.

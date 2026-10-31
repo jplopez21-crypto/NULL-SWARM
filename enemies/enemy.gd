@@ -1,6 +1,8 @@
 class_name SwarmEnemy
 extends Node3D
 
+const CHASSIS = preload("res://enemies/chassis_models.gd")
+
 var active: bool = false
 var definition: EnemyDefinition
 var hp: float
@@ -23,6 +25,19 @@ func configure(resource: EnemyDefinition) -> void:
 	definition = resource
 	body = Node3D.new()
 	add_child(body)
+	if CHASSIS.supports(definition.id):
+		var hull := MeshInstance3D.new()
+		hull.name = "Chassis"
+		hull.mesh = CHASSIS.mesh(definition.id)
+		hull.material_override = CHASSIS.material(definition.id, definition.color)
+		body.add_child(hull)
+	else:
+		_build_legacy_body()
+	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
+	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
+	deactivate()
+
+func _build_legacy_body() -> void:
 	match definition.behavior:
 		0:
 			SwarmVisuals.box(body, Vector3(0.85, 0.55, 0.9), Vector3(0, 0.5, 0), definition.color)
@@ -55,9 +70,6 @@ func configure(resource: EnemyDefinition) -> void:
 			SwarmVisuals.ring(body, 0.85, Vector3(0, 0.7, 0), definition.color, 0.12)
 			for side in [-1.0, 1.0]:
 				SwarmVisuals.box(body, Vector3(0.18, 1.2, 0.22), Vector3(side * 0.55, 0.8, 0), definition.color, true)
-	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
-	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
-	deactivate()
 
 func activate(at: Vector3, health_scale: float) -> void:
 	position = at
@@ -71,6 +83,7 @@ func activate(at: Vector3, health_scale: float) -> void:
 	exposed_time = 0.0
 	scale = Vector3.ONE
 	body.position = Vector3.ZERO
+	body.scale = Vector3.ONE * visual_scale
 	body.visible = true
 	telegraph.visible = false
 	active = true
@@ -109,7 +122,9 @@ func tick(delta: float) -> Vector3:
 	exposed_time = maxf(0.0, exposed_time - delta)
 	cooldown -= delta
 	flash = maxf(0.0, flash - delta)
-	body.scale = Vector3.ONE * visual_scale * (1.15 if flash > 0.0 and effects_enabled else 1.0)
+	var recoil: float = clampf(flash / 0.08, 0.0, 1.0) if effects_enabled else 0.0
+	body.scale = Vector3(1.0 + recoil * 0.22, 1.0 - recoil * 0.18, 1.0 + recoil * 0.22) * visual_scale
+	body.position.y = recoil * 0.10 * visual_scale
 	var shot := Vector3.ZERO
 	if definition.behavior == 1:
 		var reach: float = 15.0 * 0.55 * movement_multiplier

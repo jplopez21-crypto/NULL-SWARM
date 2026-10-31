@@ -1,0 +1,159 @@
+name: Android emulator runtime
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "53 3 * * 6"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  android-runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GODOT_VERSION: 4.6.3
+      EXPECTED_EMULATOR_VERSION: 37.2.13.0
+      EXPECTED_IMAGE_REVISION: 9
+      ANDROID_AVD_HOME: /tmp/null-swarm-avd
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install Godot and matching templates
+        run: |
+          curl --fail --location --retry 3 -o /tmp/godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          sudo install /tmp/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          curl --fail --location --retry 3 -o /tmp/templates.tpz "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q /tmp/templates.tpz -d /tmp/export
+          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mv /tmp/export/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/"
+      - name: Install Android SDK packages
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platform-tools' 'platforms;android-35' 'build-tools;35.0.1'
+          keytool -genkeypair -keystore /tmp/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -keysize 2048 -validity 10000
+      - name: Import and configure Android exporter
+        run: |
+          set -o pipefail
+          godot --headless --editor --import --quit 2>&1 | tee /tmp/import.log
+          if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' /tmp/import.log; then exit 1; fi
+          mkdir -p "$HOME/.config/godot"
+          cat > "$HOME/.config/godot/editor_settings-4.6.tres" <<SETTINGS
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          export/android/java_sdk_path = "$JAVA_HOME"
+          export/android/debug_keystore = "/tmp/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          SETTINGS
+      - name: Configure isolated emulator export
+        run: |
+          python3 tools/configure_emulator_export.py
+          godot --headless --editor --import --quit
+          mkdir -p builds/android-runtime
+          godot --headless --export-debug Android builds/android-runtime/emulator-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android-runtime/emulator-debug.apk
+          python3 - <<'PYVERSION'
+          from configparser import ConfigParser
+          from pathlib import Path
+          config = ConfigParser(interpolation=None)
+          config.optionxform = str
+          config.read('export_presets.cfg')
+          section = config['preset.0.options']
+          section['version/code'] = str(int(section['version/code']) + 1)
+          with Path('export_presets.cfg').open('w') as target:
+              config.write(target)
+          PYVERSION
+          godot --headless --export-debug Android /tmp/emulator-upgrade.apk
+          "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify /tmp/emulator-upgrade.apk
+      - name: Build shell-only multi-pointer touch injector
+        run: |
+          mkdir -p /tmp/null-swarm-touch/classes /tmp/null-swarm-touch/dex
+          javac -source 8 -target 8 -cp "$ANDROID_HOME/platforms/android-35/android.jar" -d /tmp/null-swarm-touch/classes tools/NullSwarmTouch.java
+          "$ANDROID_HOME/build-tools/35.0.1/d8" --min-api 29 --output /tmp/null-swarm-touch/dex /tmp/null-swarm-touch/classes/NullSwarmTouch.class
+          jar --create --file /tmp/null-swarm-touch.jar -C /tmp/null-swarm-touch/dex classes.dex
+      - name: Install emulator Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libpulse0 libnss3 libx11-6 libxcb1 libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libxkbcommon0 libgl1 libegl1 libvulkan1 libglu1-mesa libasound2t64
+      - name: Install Android emulator and system image
+        run: |
+          test -e /dev/kvm || { echo 'EMULATOR_BLOCKED: /dev/kvm is unavailable'; exit 1; }
+          sudo chmod 666 /dev/kvm
+          python3 - <<'PYSDK'
+          import os, subprocess
+          sdk = os.path.join(os.environ['ANDROID_HOME'], 'cmdline-tools/latest/bin/sdkmanager')
+          subprocess.run([sdk, 'emulator', 'system-images;android-35;google_apis;x86_64'], input='y\n'*100, text=True, check=True, timeout=900)
+          PYSDK
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force --name null_swarm_qa --package 'system-images;android-35;google_apis;x86_64'
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
+          echo "$ANDROID_HOME/emulator" >> "$GITHUB_PATH"
+      - name: Boot emulator
+        run: |
+          emulator -version > builds/android-runtime/emulator-version.txt 2>&1
+          cp "$ANDROID_HOME/system-images/android-35/google_apis/x86_64/package.xml" builds/android-runtime/system-image-package.xml
+          python3 - <<'PYPINS'
+          import os, pathlib, xml.etree.ElementTree as ET
+          version = pathlib.Path('builds/android-runtime/emulator-version.txt').read_text()
+          print(version.splitlines()[0], flush=True)
+          assert 'Android emulator version ' + os.environ['EXPECTED_EMULATOR_VERSION'] in version, 'Emulator version drift: update the reviewed pin deliberately'
+          root = ET.parse('builds/android-runtime/system-image-package.xml').getroot()
+          revisions = [n for n in root.iter() if n.tag.endswith('}revision') or n.tag == 'revision']
+          assert revisions and list(revisions[0])[0].text == os.environ['EXPECTED_IMAGE_REVISION'], 'Android image revision drift'
+          PYPINS
+          emulator -avd null_swarm_qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swangle -accel on -cores 2 -memory 2048 > builds/android-runtime/emulator.log 2>&1 &
+          echo $! > /tmp/null-swarm-emulator.pid
+          timeout 120s adb wait-for-device
+          timeout 300s bash -c 'until [ "$(adb shell getprop sys.boot_completed | tr -d "\r")" = 1 ]; do sleep 2; done'
+          adb shell settings put system accelerometer_rotation 0
+          adb shell settings put system user_rotation 1
+          adb shell wm size 720x1280
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+          adb shell settings put global animator_duration_scale 0
+          adb shell settings put secure immersive_mode_confirmations confirmed
+          adb shell input keyevent 82
+          sleep 15
+          adb install -r builds/android-runtime/emulator-debug.apk
+          adb push /tmp/null-swarm-touch.jar /data/local/tmp/null-swarm-touch.jar
+      - name: Install pinned image-check dependency
+        run: |
+          python3 -m venv /tmp/null-swarm-runtime-python
+          /tmp/null-swarm-runtime-python/bin/python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Touch, gameplay, pause and lifecycle smoke
+        run: |
+          set -o pipefail
+          godot --headless --script tests/create_engineer_fixture.gd
+          timeout 540s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk --engineer-backup builds/qa/engineer-fixture.txt 2>&1 | tee builds/android-runtime/smoke.log
+      - name: Collect Android diagnostics
+        if: ${{ always() }}
+        run: |
+          mkdir -p builds/android-runtime
+          timeout 15s "$ANDROID_HOME/platform-tools/adb" logcat -d > builds/android-runtime/final-logcat.txt 2>&1 || true
+          timeout 15s "$ANDROID_HOME/platform-tools/adb" shell dumpsys activity activities > builds/android-runtime/activities.txt 2>&1 || true
+          timeout 10s "$ANDROID_HOME/platform-tools/adb" emu kill || true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-android-runtime
+          path: |
+            builds/android-runtime/
+            !builds/android-runtime/*.apk
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-emulator-apk
+          path: builds/android-runtime/emulator-debug.apk
+          retention-days: 14
+          if-no-files-found: warn

@@ -28,3 +28,37 @@ The Insulator's braced body/ring is original procedural geometry using shared or
 The 0.4.1 memory locator uses original procedural line/chevron drawing and the existing Godot fallback font; it introduces no third-party assets.
 
 Corruption 0.5 adds original purple UI elements and a fourth escort using the existing project-authored drone geometry/materials; acceptance reuses original synthesized level-up audio. No third-party assets added.
+
+## Singularity Lance
+
+Gravity-field boundary/core are original procedural torus meshes with shared project materials; the evolved rail cue is original synthesized PCM in SwarmAudio. No external assets were downloaded. These remain development visuals/audio, not final commercial assets.
+
+The build/mutation guide uses original project-authored panel styles and existing Godot fallback typography. No new external images, fonts, music or models were added.
+
+## Engineer
+
+Field Sentry's reusable tripod, head/barrel and base ring are original procedural project geometry, using the existing Drone Hive palette/material helpers. Its deployment cue is original synthesized PCM. No external assets were downloaded; these remain development visuals/audio.
+
+## Industrial deck
+
+Beveled deck panels, recessed hatch/grille geometry, fastener marks, service traces and restrained hazard/ID paint are original vertex-colored meshes authored in environments/deck_panels.gd for this project. Two cached single-surface meshes share one lit material and the existing floor batches. No external textures, fonts, models or audio were added. These are development artwork pending final commercial art review.
+
+## Regular enemy chassis
+
+The six regular enemy hulls, tracked pods, dart/wing facets, shield plates, antenna forks and hexagonal insulation cage are original procedural geometry in enemies/chassis_models.gd. Single-surface hulls use shared lit materials tinted by the canonical definition colors; existing eye markers and warning geometry are retained. The enlarged labelled lineup is a desktop-debug-only review fixture using Godot's existing fallback font. No external models, textures, animation or audio were added. These remain development artwork pending commercial art and accessibility review.
+
+## Memory crystals
+
+Original four/six/eight-sided double-pyramid packet meshes and opaque grayscale facet weights are authored in effects/memory_crystals.gd. The existing blue/mint/gold packet palette is retained. No third-party art, models, shaders, fonts or audio were added. Paused field/detail captures are desktop-debug review fixtures. These are development assets pending physical-device readability and final commercial art review.
+
+## Memory collection cue
+
+The quiet rising memory cue is original synthesized sixteen-bit mono PCM authored in SwarmAudio.memory_chime, using two sinusoidal partials and smooth amplitude envelopes. No external samples, instruments, models, fonts or licensed recordings were downloaded. The QA WAV export is the same original development audio, pending human listening and final commercial mix review.
+
+## Performance report UI
+
+The offline report screen reuses original project panel/button styles, standard Godot TextEdit and existing built-in fallback typography. The desktop review capture labels its synthetic metrics explicitly. No external art, fonts, models or audio were added; final visual/physical-device review remains required.
+
+## Operative armor
+
+The chamfered torso/helmet/shoulder plates, backpack, shin/boot geometry, visor/crown marker and shaped energy rifle are original procedural, vertex-colored meshes authored in effects/operative_model.gd. Four cached meshes and two shared lit/unshaded materials replace the previous seven-box body; the existing two leg pivots and rifle recoil pivot remain. No external models, textures, animations, fonts, shaders or audio were downloaded. These are development assets pending physical-device readability, human art review and final commercial asset acceptance. Desktop close-up poses are labelled art-review fixtures, not gameplay or performance evidence.

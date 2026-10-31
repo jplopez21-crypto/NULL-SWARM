@@ -1,0 +1,19 @@
+# Memory crystal presentation
+
+Experience packets now use original faceted double-pyramid crystals instead of smooth round orbs. Blue (below 25 XP), mint (25–99 XP) and gold (100+ XP) retain the previous exact tint and value-dependent scale formula. Four/six/eight-sided tiers use 8/12/16 triangles, compared with the previous 80-triangle sphere. All stay within the original 0.32m envelope before value scaling. Flat opaque grayscale vertex colors make facets visible with the existing unlit tier tint.
+
+Three cached single-surface meshes and three shared materials replace the previous single shared sphere and existing three materials. There are no additional nodes per packet, glow layers, lights, timers, textures or random calls. At 300 basic packets geometry is 2,400 triangles versus 24,000, but packet draw-instance count is unchanged. These are structural counts; no GPU draw-call, frame-rate or phone readability gain is claimed.
+
+Local merging updates the same node to its new tier; recycled packets reset mesh, tint, scale and visibility. Drop positions, XP values, local merge radius/soft budget, magnet range, attraction speed, collection threshold/order, vacuum, locator and XP progression are unchanged. Source hashes for unchanged tick/locator/accounting functions are recorded under qa/memory-crystals.
+
+Opening guidance now names memory crystals and keeps the cyan-arrow instruction. Desktop debug presentation captures add a paused normal-framing field and enlarged close view. Both are staged review fixtures, not earned-play evidence; Android excludes capture mode. Existing combat captures and Android gameplay remain the runtime review.
+
+## Verification
+
+New regressions cover all tier boundaries, cached resources, exact previous tint/scale/positions, opaque finite outward geometry, original bounds, merge tier transitions, a frame-by-frame round-orb reference comparison, exact XP conservation and recycled high-to-low reset without new nodes.
+
+Local and hosted results, failures/fixes and exact artifact identity are recorded in TEST_RESULTS.md. Physical-phone FPS, human readability/accessibility and final commercial art review remain open.
+
+## Hosted acceptance
+
+Source f9f582967b53cfe9789eb02fa832f01e6a554903 passed native 40974100738, Android 40974100897 (all 33 checks) and full QA 40974100771. Local/native/QA strict summaries match (1,002 systems/60 resources/2,244 headless UI checks); rendered UI passes 2,245 checks/160 layouts. All prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match the accepted enemy-chassis source. Actual crystal detail/normal field/onboarding and Android images were inspected. The SDK emulator patch drift was caught before app installation and deliberately reviewed; version 37.2.13.0/build 16740729 and image revision 9 are now required. Report identity, independent download verification, initial failures/fixes and hardware/signing limits are in TEST_RESULTS.md and qa/memory-crystals/verified-ci.json.

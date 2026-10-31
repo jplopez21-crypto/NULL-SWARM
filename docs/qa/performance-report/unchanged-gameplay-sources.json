@@ -1,0 +1,15 @@
+{
+  "previous_verified_source": "a64caa8f3df88f8ed4e7da1b2698102617022cea",
+  "file_sha256": {
+    "systems/pickup_system.gd": "83770311dd6604322bce1d944a54c9e1483a8d0d1315ae735499d5bc19dc426a",
+    "systems/progression.gd": "63dfb90a20c4ce839f679aaf3e65835b41945807a623d50a7acc77b77cb765b2",
+    "systems/combat_world.gd": "db94d72738ac632f3613addc5294a1c13e97fa159adb2e4862d184a9d9b17f39",
+    "systems/spawn_director.gd": "a222dad1529a0ae9144f04969803a78a528cc2a081a52efa19ebb52e2da43521",
+    "systems/corruption_protocol.gd": "e8e79b67275b420f98f793edc0b3cd64b106385ce4b1fdb0d46e1f5e462d2b77",
+    "systems/swarm_adaptation.gd": "9793105e5dc13622a7b9fcf34b57d539ab1d856e4a591c0dd6fe7947e215f102",
+    "systems/save_store.gd": "461fcbb68e8e80dc035f7d87e3ba5b57429493640d0b27c41183e05861573be7",
+    "systems/audio_system.gd": "85345f30291a385b072127461c99813b8b0dd6924c8982c709345ad7c089a176",
+    "scripts/player.gd": "84cc8a4d742f1cd06fb5b4ec698e68f543cc4d0befc1d6210913e3759acfb6d1"
+  },
+  "main_physics_process_sha256": "63d400eec0ed8f2b2f4a828c94cdba8d6823fea4ff35558e301f035adc987461"
+}

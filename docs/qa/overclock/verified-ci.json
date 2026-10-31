@@ -1,0 +1,197 @@
+{
+  "verified_game_and_test_code": "baffa5db1aaaaf0ce11399e81a337a2d536b020e",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 53,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 455,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2244,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "ui_layouts": 160,
+  "native": {
+    "code": "baffa5db1aaaaf0ce11399e81a337a2d536b020e",
+    "run": 40869504087,
+    "artifact": 12895441388,
+    "zip_sha256": "d26b47fa9822b32911479b10a962ea3d3ecefa2fa5fae61432d390320e01b38d",
+    "apk_sha256": "dc37e2ac87214b13ba17929d91f2541787773d44afc96c1c3353269f4fee4e4b",
+    "apk_bytes": 27769513,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "status": "passed"
+  },
+  "android": {
+    "run": 40869503951,
+    "artifact": 12896145823,
+    "zip_sha256": "dc3b72472dceb3c385760fb3b4ac58c3b6409fc6e5f1d73bf2db497b830a9dcd",
+    "status": "passed",
+    "checks": 33,
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "chain_feedback_sample": {
+      "text": "CHAIN 1 // 19 KILLS TO OVERCLOCK // BREAKS IN 2.8s",
+      "value": 5,
+      "visible": true,
+      "kills": 1
+    },
+    "ordinary_checkpoint": {
+      "kills": 32,
+      "simulation_seconds": 30.0999999999996,
+      "salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 4,
+        "enabled": true,
+        "position": [
+          11.4680805206299,
+          18.6562900543213
+        ],
+        "remaining": 2.6,
+        "shots": 1,
+        "status": "FIELD SENTRY 2.6s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 9.2166666666667,
+      "hp": 80,
+      "kills": 3
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.48508543295684625,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    }
+  },
+  "gameplay_qa": {
+    "run": 40869503856,
+    "artifact": 12896181070,
+    "zip_sha256": "b6e9675ee25108870f093f932ab9428911655e02a76016e201cd2d146bd888f1",
+    "status": "passed",
+    "normal_sessions": 26,
+    "pacing_probes": 4,
+    "xp_comparisons": 6,
+    "stress_cases": 24,
+    "full_report_comparison": {
+      "normal_sessions": 26,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 22
+      },
+      "unchanged_gameplay_and_xp_cases_except_timings": 32,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 24,
+      "ui_checks": 2244,
+      "ui_layouts": 160,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_summary_matches_local_native_qa": true
+    }
+  },
+  "visual_review": {
+    "inspected": true,
+    "sources": [
+      "native chain_ready.png (staged)",
+      "native overclock.png (staged)",
+      "actual Android chain-feedback.png after ordinary kill"
+    ],
+    "observations": [
+      "Reward text and gauge do not overlap or clip.",
+      "Count/deadline and bonus duration remain distinct.",
+      "Fixed row keeps Engineer feedback/control placement stable."
+    ]
+  },
+  "limits": [
+    "Android observes live chain/bonus feedback after normal kills; it does not force or separately prove a mobile twentieth-kill activation.",
+    "Staged native/layout values are presentation fixtures. Actual threshold/refresh/clock lifecycle is covered by integration tests.",
+    "Android Engineer ownership remains a labelled synthetic backup restored after ordinary progression/update checks; no probe grant logic is used.",
+    "Quiet software-emulator values remain below targets and are not physical-phone FPS or a causal comparison.",
+    "Physical ARM64 Mobile performance, Android 10, cutouts, thermals and human fun remain unverified.",
+    "Diagnostic signing rotates; preserve existing installations/saves. No release AAB or final commercial artwork/audio is claimed."
+  ],
+  "failures": []
+}

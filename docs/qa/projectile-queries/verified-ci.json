@@ -1,0 +1,197 @@
+{
+  "verified_game_and_test_code": "cfceb77d9af881ea4fcfd493a7c1925078031d81",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 56,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 878,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2244,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "ce32987220003d3ceb120597c702075f44baf4976bb2bca4ef2d0871f04b0d8d",
+    "apk_bytes": 27769513,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "changed_grid_payload_sha256": "aaf95287d56d9bc2026856bbcb092ad6f9568e3b2479ee6aee34c1d1aba9d57c",
+    "world_and_collision_definition_payloads_unchanged": true,
+    "code": "cfceb77d9af881ea4fcfd493a7c1925078031d81",
+    "run": 40896657173,
+    "artifact": 12907901415,
+    "zip_sha256": "a5364b2ec24c42fb1eb10e4831abab9631fc393997a25ecb130f44ea0af564ec",
+    "status": "passed"
+  },
+  "android": {
+    "run": 40896657299,
+    "artifact": 12907732679,
+    "zip_sha256": "7c32b98f67425932f0ea91750ba7894e7b55063e983e3fb6feef75d13490b464",
+    "status": "passed",
+    "checks": 33,
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "chain_feedback_sample": {
+      "text": "CHAIN 1 // 19 KILLS TO OVERCLOCK // BREAKS IN 2.6s",
+      "value": 5.0,
+      "visible": true,
+      "kills": 1
+    },
+    "ordinary_checkpoint": {
+      "kills": 31,
+      "simulation_seconds": 30.0166666666662,
+      "salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 4,
+        "enabled": true,
+        "position": [
+          32.3828163146973,
+          6.30532169342041
+        ],
+        "remaining": 2.6,
+        "shots": 1,
+        "status": "FIELD SENTRY 2.6s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 9.48333333333338,
+      "hp": 80.0,
+      "kills": 6
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.49696703939194486,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "archive_hash_crc_and_logcat_scans": "passed"
+  },
+  "gameplay_qa": {
+    "run": 40896657801,
+    "artifact": 12908880318,
+    "zip_sha256": "b648c2e37da4a3b52061493b9f647d39746c826a0a7dd6d229b3af1449eedc1c",
+    "status": "passed",
+    "archive_hash_crc": "passed",
+    "full_report_comparison": {
+      "normal_sessions": 26,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 22
+      },
+      "unchanged_gameplay_and_xp_cases_except_timings": 32,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 24,
+      "ui_checks": 2244,
+      "ui_layouts": 160,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_summary_matches_local_native_qa": true,
+      "kernel_parity_cases": 9,
+      "profiled_engineer_cases": 6
+    }
+  },
+  "production_scope": "Only shared read-only spatial-query fallback; CombatWorld matches previous verified source. Independent result snapshots retained.",
+  "paired_measurement": {
+    "report": "final-combat-comparison.json",
+    "cases": 6,
+    "serial_runs": 4,
+    "all_fingerprints_match": true,
+    "timing_observation": "Mixed whole-fixture timings; no general CPU/FPS improvement or causal regression established. Static empty/sparse kernels improved; dense kernel essentially flat.",
+    "rejected_experiment": "Result-buffer API removed after several slower whole-combat samples; rejected-buffer-* preserves evidence."
+  },
+  "visual_review": {
+    "inspected": true,
+    "source": "Actual Android first-kill feedback capture; no presentation change intended."
+  },
+  "limits": [
+    "Two serial samples/version on a shared host; wall-clock profiling excludes rendering and includes instrumentation. No zero-allocation or whole-frame performance guarantee.",
+    "Software-rendered x86_64 Android 35 Compatibility runtime is not physical ARM64 Mobile performance validation.",
+    "Engineer Android tests use a labelled Architect backup fixture after ordinary earned-progress checks; no actual earning of that unlock on-device is claimed.",
+    "Physical phone FPS/thermals, Android 10, cutouts and human fun remain unverified.",
+    "Diagnostic signing rotates; preserve installations/saves. Persistent Preview signing needs protected owner credentials.",
+    "Main remains unmerged; no release AAB/final commercial art/audio is claimed."
+  ]
+}
