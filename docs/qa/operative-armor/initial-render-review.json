@@ -1,0 +1,10 @@
+{
+  "source": "5ad59e2bb414e579a5b4d4e03e6fb7819f14549f",
+  "native_run": 41231693406,
+  "capture_artifact": 13053554035,
+  "capture_sha256": "d2527c264774f850006e9738aea47b90caed197cc07122388ad920ad98451786",
+  "native_status": "success",
+  "review": "Normal-framing operative is clear. Front/rear close-ups were unintentionally dimmed by the menu backdrop after set_hud(false).",
+  "correction": "Hide the menu backdrop exclusively during the labelled desktop art reference and restore it afterward. Production camera/gameplay/model geometry are unchanged.",
+  "new_hosted_acceptance": "pending"
+}

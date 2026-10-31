@@ -842,6 +842,7 @@ func _capture_session() -> void:
 	ui.toast_time = 0
 	ui.damage_texts.clear()
 	ui.set_hud(false)
+	ui.backdrop.hide() # Hide menu dimming in the isolated art reference only.
 	var art_label := ui.label_at(ui.root, "OPERATIVE ARMOR // STAGED QA ART REVIEW\nSTATIC POSE // NOT A GAMEPLAY OR PERFORMANCE SAMPLE", 20, Color("80ffdb"))
 	art_label.position = Vector2(26, 20)
 	camera.size = 4.8
@@ -855,6 +856,7 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/operative_rear.png")
 	art_label.queue_free()
+	ui.backdrop.show()
 	ui.set_hud(true)
 	player.body.rotation.y = PI + 0.45
 	camera.size = 29
