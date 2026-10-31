@@ -13,7 +13,7 @@ out.mkdir(parents=True, exist_ok=True)
 suites = [
     ('engineer', ['--script', 'tests/run_engineer_tests.gd'], r'ENGINEER_RESULT checks=(\d+) failures=0'),
     ('gui-input', ['--script', 'tests/run_gui_input_tests.gd'], r'GUI_INPUT_RESULT checks=(\d+) failures=0'),
-    ('audio', ['--script', 'tests/run_audio_tests.gd'], r'AUDIO_RESULT checks=(\d+) failures=0'),
+    ('audio', ['--verbose', '--script', 'tests/run_audio_tests.gd'], r'AUDIO_RESULT checks=(\d+) failures=0'),
     ('android-probe', ['--script', 'tests/run_probe_tests.gd'], r'PROBE_RESULT checks=(\d+) failures=0'),
     ('resources', ['--script', 'tests/validate_resources.gd'], r'RESOURCE_RESULT checks=(\d+) failures=0'),
     ('input', ['--script', 'tests/run_input_tests.gd'], r'INPUT_RESULT checks=(\d+) failures=0'),

@@ -3,6 +3,7 @@ extends SceneTree
 var checks: int = 0
 var failures: Array[String] = []
 var memory_receipt: Dictionary = {}
+var watched_audio: Dictionary = {}
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -16,11 +17,13 @@ func check(ok: bool, message: String) -> void:
 func run() -> void:
 	var builder := SwarmAudio.new()
 	var music: AudioStreamWAV = builder.score_loop()
+	watch_resource(music)
 	var frames: int = music.data.size() / 2
 	check(music.format == AudioStreamWAV.FORMAT_16_BITS and not music.stereo, "procedural music declares mono sixteen-bit PCM")
 	check(frames == music.mix_rate * 8 and is_equal_approx(music.get_length(), 8), "music contains exactly eight seconds of PCM")
 	check(music.loop_mode == AudioStreamWAV.LOOP_FORWARD and music.loop_begin == 0 and music.loop_end == frames - 1, "loop end is the last valid sample, never one-past-buffer")
 	var playback: AudioStreamPlayback = music.instantiate_playback()
+	watch_resource(playback)
 	playback.start()
 	var remaining: int = int(AudioServer.get_mix_rate()) * 24
 	var finite_samples: bool = true
@@ -37,9 +40,11 @@ func run() -> void:
 	playback = null
 	music = null
 	var tone: AudioStreamWAV = builder.tone(460, 0.07)
+	watch_resource(tone)
 	check(tone.loop_mode == AudioStreamWAV.LOOP_DISABLED and not tone.stereo and tone.data.size() > 0, "one-shot effects stay non-looping mono PCM")
 	tone = null
 	var memory_clip: AudioStreamWAV = builder.memory_chime()
+	watch_resource(memory_clip)
 	check(memory_clip.format == AudioStreamWAV.FORMAT_16_BITS and not memory_clip.stereo and memory_clip.mix_rate == 22050 and memory_clip.loop_mode == AudioStreamWAV.LOOP_DISABLED, "memory cue is bounded non-looping mono PCM")
 	check(is_equal_approx(memory_clip.get_length(), float(int(22050 * 0.09)) / 22050) and memory_clip.data == builder.memory_chime().data, "memory cue is deterministic and ninety milliseconds long")
 	var peak: float = 0
@@ -67,6 +72,7 @@ func run() -> void:
 	var cancelled := SwarmAudio.new()
 	root.add_child(cancelled)
 	check(not cancelled.music.playing and cancelled.is_processing(), "music waits until the first process tick")
+	watch_audio(cancelled)
 	cancelled.shutdown()
 	await process_frame
 	check(not cancelled.is_processing() and cancelled.music.stream == null, "same-frame shutdown cancels pending music startup")
@@ -103,6 +109,7 @@ func run() -> void:
 	await create_timer(0.16).timeout
 	started.reset_memory_feedback()
 	check(started.memory_plays == 0 and started.memory_next_ms == 0 and not started.memory_voice.playing, "fresh deployment resets feedback counter, cooldown and playback")
+	watch_audio(started)
 	started.shutdown()
 	check(not started.memory_collected(5) and started.memory_voice.stream == null, "shutdown rejects collection feedback and releases its stream")
 	await create_timer(0.20).timeout
@@ -111,12 +118,15 @@ func run() -> void:
 	var immediate := SwarmAudio.new()
 	root.add_child(immediate)
 	immediate.memory_collected(5)
+	watch_audio(immediate)
 	immediate.shutdown()
 	immediate.queue_free()
 	await create_timer(0.20).timeout
 	check(not is_instance_valid(immediate), "same-frame collection/shutdown releases the node before strict engine-leak scan")
 	await _test_collection_integration()
-	QAReport.write("res://builds/qa/audio-tests.json", {"checks": checks, "failures": failures, "memory_cue": memory_receipt})
+	var released: bool = await drain_audio()
+	check(released, "all watched audio streams/playbacks release after queued-free and bounded mixer drain")
+	QAReport.write("res://builds/qa/audio-tests.json", {"checks": checks, "failures": failures, "memory_cue": memory_receipt, "teardown_release_verified": released})
 	print("AUDIO_RESULT checks=", checks, " failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
 
@@ -148,7 +158,42 @@ func _test_collection_integration() -> void:
 	check(game.state == game.State.UPGRADING and game.progress.pending == 3 and game.audio.memory_plays == 1, "real multi-level overflow gives priority to level-up audio without changing the upgrade queue")
 	game.start_run()
 	check(game.audio.memory_plays == 0 and game.audio.memory_next_ms == 0 and game.progress.level == 1, "ordinary restart resets feedback and run progression together")
+	watch_audio(game.audio)
 	game.audio.shutdown()
 	await create_timer(0.20).timeout
 	game.queue_free()
 	await process_frame
+
+func watch_resource(resource: RefCounted) -> void:
+	if resource != null:
+		# IDs do not keep Resource references alive.
+		watched_audio[resource.get_instance_id()] = resource.get_class()
+
+func watch_audio(audio: SwarmAudio) -> void:
+	for stream in audio.sounds.values():
+		watch_resource(stream)
+	var players: Array = audio.voices.duplicate()
+	players.append(audio.music)
+	players.append(audio.memory_voice)
+	for player in players:
+		if not is_instance_valid(player):
+			continue
+		watch_resource(player.stream)
+		if player.playing:
+			watch_resource(player.get_stream_playback())
+
+func drain_audio() -> bool:
+	# stop/null/free enqueue audio-server work; allow that work after node teardown.
+	var deadline: int = Time.get_ticks_msec() + 2000
+	var lingering: Array = []
+	while true:
+		await process_frame
+		await create_timer(0.01).timeout
+		lingering.clear()
+		for id in watched_audio:
+			if is_instance_id_valid(id):
+				lingering.append({"engine_id": id, "class": watched_audio[id]})
+		if lingering.is_empty() or Time.get_ticks_msec() >= deadline:
+			break
+	QAReport.write("res://builds/qa/audio-release-diagnostics.json", {"watched_instances": watched_audio.size(), "released": lingering.is_empty(), "lingering": lingering, "scope": "Per-process resource ownership after queued-free; engine IDs are not device/account identifiers."})
+	return lingering.is_empty()
