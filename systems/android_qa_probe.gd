@@ -3,6 +3,8 @@ extends Node
 # Read-only telemetry, enabled exclusively in the opt-in debug emulator export.
 var game: Node3D
 var remaining: float = 0.0
+var kill_stream_id: int = 0
+var kill_pcm_sha256: String = ""
 var touches: int = 0
 var drags: int = 0
 var dashes: int = 0
@@ -77,6 +79,24 @@ func snapshot() -> void:
 				for surface in range(node.mesh.get_surface_count()):
 					model["triangles"] += node.mesh.surface_get_array_len(surface) / 3
 		data["operative_visuals"] = model
+		var fragments: int = 0
+		for item in game.combat.effects.live:
+			if item["kind"] == "shard" and item["mesh"].mesh == game.combat.effects.shard_mesh:
+				fragments += 1
+		var cue: AudioStreamWAV = game.audio.sounds.get("kill")
+		if cue == null:
+			kill_stream_id = 0
+			kill_pcm_sha256 = ""
+		elif cue.get_instance_id() != kill_stream_id:
+			kill_stream_id = cue.get_instance_id()
+			var digest := HashingContext.new()
+			digest.start(HashingContext.HASH_SHA256)
+			digest.update(cue.data)
+			kill_pcm_sha256 = digest.finish().hex_encode()
+		data["destruction_feedback"] = {"fragments_live": fragments,
+			"fragment_triangles": game.combat.effects.shard_mesh.surface_get_array_len(0) / 3,
+			"kill_cue_last_dispatch_ms": game.audio.last_played.get("kill", -1),
+			"kill_cue_pcm_bytes": cue.data.size() if cue != null else 0, "kill_cue_pcm_sha256": kill_pcm_sha256}
 		data["sentry"] = {"enabled": game.combat.sentry.enabled, "remaining": game.combat.sentry.remaining,
 			"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots,
 			"position": [game.combat.sentry.position.x, game.combat.sentry.position.z], "status": game.ui.sentry_label.text}

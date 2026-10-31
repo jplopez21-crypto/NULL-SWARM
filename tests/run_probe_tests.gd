@@ -32,6 +32,11 @@ func run() -> void:
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["state"] == "playing" and data["ranks"] == game.progress.ranks, "probe reports real game state")
 	check(data["operative_visuals"] == {"instances": 5.0, "surfaces": 6.0, "triangles": 296.0}, "probe reads actual operative geometry without replacing or posing it")
+	check(data["destruction_feedback"] == {"fragments_live": 0.0, "fragment_triangles": 8.0, "kill_cue_last_dispatch_ms": -1.0, "kill_cue_pcm_bytes": 0.0, "kill_cue_pcm_sha256": ""}, "probe reports actual empty fragments and shut-down audio without inventing dispatch")
+	game.combat.effects.destruction(Vector3.ZERO, Color.RED, false)
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(data["destruction_feedback"]["fragments_live"] == 4 and game.combat.effects.live.size() == 5, "probe counts actual pooled chips without spawning or advancing effects")
 	check(data["touch_controls"] == {"joystick_id": -1.0, "stick": [0.0, 0.0], "dash_id": -1.0, "dash_enabled": true}, "probe reads actual idle touch ownership without injecting input")
 	check(data["memory_audio_plays"] == game.audio.memory_plays and game.audio.memory_plays == 0, "probe reads the actual audio counter without starting or granting anything")
 	var settings_match: bool = true

@@ -1,6 +1,7 @@
 class_name CombatEffects
 extends Node3D
 
+const FRAGMENTS = preload("res://effects/debris_fragment.gd")
 const DURATIONS: Dictionary = {"beam": 0.12, "dash": 0.16, "spark": 0.18, "shard": 0.65, "uplink": 0.65}
 
 var pool: Array[MeshInstance3D] = []
@@ -11,6 +12,7 @@ var ring_mesh: TorusMesh
 var impact_materials: Dictionary = {}
 var impact_mesh: ArrayMesh
 var beam_mesh: BoxMesh
+var shard_mesh: ArrayMesh
 
 func _ready() -> void:
 	# A shared four-point impact silhouette: one mesh, no lights or particles.
@@ -33,6 +35,7 @@ func _ready() -> void:
 	ring_mesh.outer_radius = 1.0
 	ring_mesh.rings = 24
 	ring_mesh.ring_segments = 6
+	shard_mesh = FRAGMENTS.mesh()
 	beam_mesh = BoxMesh.new()
 	beam_mesh.size = Vector3.ONE
 	for i in range(160):
@@ -47,8 +50,10 @@ func emit_fx(kind: String, at: Vector3, to: Vector3, color: Color, size: float =
 	if live.size() >= limit or pool.is_empty() or (not flashes and kind in ["spark", "dash"]):
 		return
 	var mesh: MeshInstance3D = pool.pop_back()
-	mesh.mesh = impact_mesh if kind == "spark" else (beam_mesh if kind in ["beam", "dash", "shard"] else ring_mesh)
-	if kind == "spark":
+	mesh.mesh = impact_mesh if kind == "spark" else (shard_mesh if kind == "shard" else (beam_mesh if kind in ["beam", "dash"] else ring_mesh))
+	if kind == "shard":
+		mesh.material_override = FRAGMENTS.material(color)
+	elif kind == "spark":
 		if not impact_materials.has(color):
 			var material: StandardMaterial3D = SwarmVisuals.material(color, true).duplicate()
 			material.cull_mode = BaseMaterial3D.CULL_DISABLED

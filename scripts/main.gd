@@ -866,6 +866,37 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/operative_field.png")
+	# Frozen desktop-only breakup reference; ordinary counts/clocks are retained.
+	start_run()
+	state = State.PAUSED
+	player.position = Vector3(0, 0, -20)
+	ui.toast_time = 0
+	ui.set_hud(false)
+	ui.backdrop.hide()
+	var debris_label := ui.label_at(ui.root, "MACHINE BREAKUP // STAGED QA ART REVIEW\nREGULAR LEFT / LARGE RIGHT // FROZEN HIGH-QUALITY EFFECTS", 20, Color("80ffdb"))
+	debris_label.position = Vector2(26, 20)
+	combat.effects.quality = 2
+	combat.effects.flashes = true
+	combat.effects.destruction(Vector3(5.6, 0, 8), Color("ff9274"), false)
+	combat.effects.destruction(Vector3(10.4, 0, 8), Color("ffcf85"), true)
+	combat.effects.tick(0.075)
+	camera.size = 11
+	camera.position = Vector3(8, 11, 16)
+	camera.look_at(Vector3(8, 0.7, 8))
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/destruction_detail.png")
+	combat.effects.tick(10)
+	combat.effects.flashes = false
+	combat.effects.destruction(Vector3(5.6, 0, 8), Color("ff9274"), false)
+	combat.effects.destruction(Vector3(10.4, 0, 8), Color("ffcf85"), true)
+	combat.effects.tick(0.075)
+	debris_label.text = "REDUCED FLASHES // STAGED QA ART REVIEW\nEXISTING RINGS RETAINED // NO DEBRIS OR SHARP SPARKS"
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/destruction_reduced.png")
+	debris_label.queue_free()
+	ui.backdrop.show()
 	audio.shutdown()
 	get_tree().quit()
 

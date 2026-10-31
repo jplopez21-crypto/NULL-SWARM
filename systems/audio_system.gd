@@ -22,8 +22,9 @@ func _ready() -> void:
 		var voice := AudioStreamPlayer.new()
 		add_child(voice)
 		voices.append(voice)
-	for spec in [["fire", 460.0, 0.07], ["hit", 170.0, 0.08], ["kill", 95.0, 0.14], ["level", 720.0, 0.35], ["damage", 65.0, 0.25], ["shield", 880.0, 0.12], ["ui", 520.0, 0.08], ["dash", 300.0, 0.16], ["orbit", 260.0, 0.10], ["arc", 1120.0, 0.15], ["rail", 85.0, 0.3], ["singularity", 140.0, 0.32], ["thermal", 52.0, 0.32], ["drone", 680.0, 0.06]]:
+	for spec in [["fire", 460.0, 0.07], ["hit", 170.0, 0.08], ["level", 720.0, 0.35], ["damage", 65.0, 0.25], ["shield", 880.0, 0.12], ["ui", 520.0, 0.08], ["dash", 300.0, 0.16], ["orbit", 260.0, 0.10], ["arc", 1120.0, 0.15], ["rail", 85.0, 0.3], ["singularity", 140.0, 0.32], ["thermal", 52.0, 0.32], ["drone", 680.0, 0.06]]:
 		sounds[spec[0]] = tone(spec[1], spec[2])
+	sounds["kill"] = destruction_crunch()
 	memory_voice = AudioStreamPlayer.new()
 	memory_voice.bus = "SFX"
 	memory_voice.volume_db = -18.0
@@ -115,6 +116,42 @@ func memory_chime() -> AudioStreamWAV:
 		var fundamental: float = sin(TAU * (880.0 * t + 200.0 * t * t)) * 0.16
 		var overtone: float = sin(TAU * (1320.0 * delayed + 300.0 * delayed * delayed)) * minf(1.0, delayed / 0.004) * 0.06
 		bytes.encode_s16(i * 2, int((fundamental + overtone) * envelope * 32767.0))
+	var clip := AudioStreamWAV.new()
+	clip.format = AudioStreamWAV.FORMAT_16_BITS
+	clip.mix_rate = rate
+	clip.stereo = false
+	clip.data = bytes
+	return clip
+
+func destruction_crunch() -> AudioStreamWAV:
+	# Original 140ms mechanical breakup: three noise transients and metal partials.
+	# Local integer noise never consumes the global/gameplay RNG stream.
+	var rate: int = 22050
+	var frames: int = int(rate * 0.14)
+	var bytes := PackedByteArray()
+	bytes.resize(frames * 2)
+	var noise_state: int = 0x4e554c4c
+	var low: float = 0.0
+	var starts: Array[float] = [0.0, 0.027, 0.056]
+	var weights: Array[float] = [1.0, 0.55, 0.25]
+	for i in range(frames):
+		noise_state = (noise_state ^ (noise_state << 13)) & 0xffffffff
+		noise_state = (noise_state ^ (noise_state >> 17)) & 0xffffffff
+		noise_state = (noise_state ^ (noise_state << 5)) & 0xffffffff
+		var white: float = float(noise_state & 0xffff) / 32767.5 - 1.0
+		low += (white - low) * 0.24
+		var t: float = float(i) / rate
+		var fraction: float = float(i) / (frames - 1)
+		var burst: float = 0.0
+		for j in range(starts.size()):
+			var dt: float = t - starts[j]
+			if dt >= 0:
+				burst += weights[j] * minf(1.0, dt / 0.002) * exp(-dt * 95.0)
+		var body: float = sin(TAU * (130.0 * t - 160.0 * t * t)) * exp(-t * 32.0) * 0.18
+		var metal: float = (sin(TAU * 1110.0 * t) + sin(TAU * 1730.0 * t) * 0.5) * exp(-t * 55.0) * 0.035
+		var envelope: float = minf(1.0, t / 0.002) * pow(1.0 - fraction, 2.0)
+		var sample: float = ((white - low * 0.7) * burst * 0.23 + body + metal) * envelope
+		bytes.encode_s16(i * 2, int(sample * 32767.0))
 	var clip := AudioStreamWAV.new()
 	clip.format = AudioStreamWAV.FORMAT_16_BITS
 	clip.mix_rate = rate

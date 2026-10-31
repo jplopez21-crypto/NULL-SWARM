@@ -374,6 +374,7 @@ try:
     deadline = time.monotonic() + 120
     selected = False
     chain_sampled = False
+    destruction_sampled = False
     while time.monotonic() < deadline:
         s = read()
         if s['state'] == 'results':
@@ -385,12 +386,17 @@ try:
             wait(lambda x: x.get('ranks') != before_ranks)
             selected = True
         elif s['state'] == 'playing':
+            destruction = s.get('destruction_feedback', {})
+            if not destruction_sampled and s.get('kills', 0) > 0 and destruction.get('fragments_live', 0) > 0 and destruction.get('fragment_triangles') == 8:
+                report['destruction_feedback_sample'] = {**destruction, 'kills': s['kills'], 'scope': 'Actual ordinary Android death/pooled geometry; audio dispatch/PCM metadata, emulator sound output disabled.'}
+                capture('destruction-feedback')
+                destruction_sampled = True
             feedback = s.get('chain_feedback', {})
             if not chain_sampled and s.get('kills', 0) > 0 and feedback.get('visible') and 0 < feedback.get('value', 0) <= 100 and any(text in feedback.get('text', '') for text in ['CHAIN', 'OVERCLOCK']):
                 report['chain_feedback_sample'] = {**feedback, 'kills': s['kills']}
                 capture('chain-feedback')
                 chain_sampled = True
-            if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0 and s.get('salvage', 0) > 0 and s.get('memory_audio_plays', 0) > 0:
+            if selected and s.get('kills', 0) > 0 and s.get('xp', 0) > 0 and s.get('salvage', 0) > 0 and s.get('memory_audio_plays', 0) > 0 and destruction_sampled:
                 break
             targets = s.get('targets', [])
             if targets:
@@ -406,6 +412,12 @@ try:
                                    'level': s.get('level'), 'scope': 'Actual accepted playback calls; emulator audio is disabled, not a human listening test.'}
     check(s.get('salvage', 0) > 0, 'normal gameplay checkpoints nonzero earned salvage before lifecycle tests')
     check(chain_sampled, 'actual Android kills display live chain or Overclock gauge')
+    check(destruction_sampled, 'ordinary Android enemy death displays actual pooled eight-triangle chips')
+    destruction = s.get('destruction_feedback', {})
+    check(destruction.get('kill_cue_last_dispatch_ms', -1) >= 0 and destruction.get('kill_cue_pcm_bytes') == 6174
+          and len(destruction.get('kill_cue_pcm_sha256', '')) == 64,
+          'ordinary Android enemy death dispatches original bounded destruction cue')
+    report['destruction_audio_sample'] = destruction
     report['gameplay_snapshot'] = s
     capture('after-upgrade')
     adb('shell', 'input', 'keyevent', '3')

@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Machine destruction — local verification 2026-10-31
+
+- Original faceted opaque eight-triangle chips replace twelve-triangle box debris; fixed pool/caps/counts/material tints, flight/lifetimes/expiry, RNG ordering and reduced-flash suppression are retained. Six accepted-source 180-frame mixed-effect/saturation traces match exactly, including next RNG sample. Initial comparison harness compared JSON text and rejected int/float serialization differences despite matching fingerprints; field-based fingerprint/integer/bool/tolerant-numeric comparison corrects the harness without changing the baseline/game. Main normal-game functions, effect tick/destruction, audio play/mix/music/memory-cue source bodies remain unchanged; source hashes are retained.
+- Added original deterministic 140 ms mono PCM mechanical breakup cue with local integer noise and body/metal partials. It retains existing kill trigger/ID, 12 voices, 65 ms gate and SFX routing/volume/pitch. PCM hash 320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe; peak 0.3111/RMS 0.03778/DC 0.00101; zero endpoints. Original memory/audio receipts remain unchanged. Human listening/mix is unverified.
+- All 13 isolated strict suites passed: 58 destruction, 41 operative, 69 touch-dash, 23 input, 15 probe, 69 resources, 1,030 systems, 43 GUI, 32 audio, 2,340 UI checks/168 layouts, 27 Engineer, 41 corruption and scene smoke; no strict script/engine/leak errors. Python compilation and four workflow YAML/bash checks passed. Destruction tests include actual one-shot playback/SFX mute/burst rejection and controlled real enemy-death XP/audio/geometry integration.
+- Actual read-only Android active-fragment and cue-dispatch/PCM inspection, plus ordinary kill capture, are configured (48-check target). Desktop frozen high-quality/reduced-flash references are labelled; production camera is unchanged. Hosted builds/render/Android/full QA and new APK remain pending. Local SDK/emulator/rendering and physical phone are unavailable. Previous operative APK below remains latest verified; preserve backups while signing rotates. Method/origin/evidence: docs/DESTRUCTION_FEEDBACK.md, docs/ASSET_MANIFEST.md and docs/qa/destruction-feedback/.
+
 ## Operative armor — verified 2026-10-31
 
 Verified game/test/CI source: `ea3fdea9c19e91a037d9631da2c380e5717de848`. Final report checkpoint changes documentation/evidence only.

@@ -62,3 +62,7 @@ The offline report screen reuses original project panel/button styles, standard 
 ## Operative armor
 
 The chamfered torso/helmet/shoulder plates, backpack, shin/boot geometry, visor/crown marker and shaped energy rifle are original procedural, vertex-colored meshes authored in effects/operative_model.gd. Four cached meshes and two shared lit/unshaded materials replace the previous seven-box body; the existing two leg pivots and rifle recoil pivot remain. No external models, textures, animations, fonts, shaders or audio were downloaded. These are development assets pending physical-device readability, human art review and final commercial asset acceptance. Desktop close-up poses are labelled art-review fixtures, not gameplay or performance evidence.
+
+## Machine destruction
+
+Eight-triangle opaque faceted chips are original procedural geometry/grayscale weights in effects/debris_fragment.gd, tinted by the existing enemy palette. The 140 ms mechanical breakup cue is original synthesized mono PCM in SwarmAudio.destruction_crunch, using local integer noise, three transients and metal/body sine partials; no external samples or recordings. The existing FX pool/flight and SFX voices/buses/volume gates are retained. No external art, models, fonts, shaders or audio were downloaded. These remain development visuals/audio pending human listening/readability and final commercial art/mix review. Desktop breakup boards are labelled frozen QA references.
