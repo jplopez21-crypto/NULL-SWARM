@@ -16,4 +16,8 @@ A reproducible --diagnostics-parity playtest runs seed 909/Halo/Vanguard for 180
 
 Android acceptance adds real report/sample inspection, clipboard write/readback and paused return checks. The read-only probe exposes the actual visible report; its TextEdit is not advertised as a progression-backup input. Desktop debug capture includes an explicitly marked synthetic report image.
 
-Current executed counts, pending Android/render/build results, exact revisions and artifact identities are recorded in TEST_RESULTS.md. Physical S23 Ultra FPS, thermals, cutouts, human readability and final commercial UI review remain open.
+Current executed counts, verified Android/render/build results, exact revisions and artifact identities are recorded in TEST_RESULTS.md. Physical S23 Ultra FPS, thermals, cutouts, human readability and final commercial UI review remain open.
+
+## Hosted acceptance
+
+Corrected source aebf6c374ab0b9bd679a12405ca3878d08581d92 passed native 41208628756, all 37 Android checks in 41208628814 and full QA 41208628729. Local/native/QA strict summaries match (1,030 systems/61 resources/43 GUI/11 probe/32 audio/2,340 headless UI checks). Rendered UI passes 2,341 checks/168 layouts. Actual Android recorded 120 positive combat observations, exported/read back the exact compact clipboard payload and returned without advancing paused combat or progression. Native synthetic and actual Android report captures were inspected. Paired observer replay, all prior non-timing gameplay/XP/pacing results and 24 stress fingerprints match the accepted baseline. Initial immediate-readback failure, correction, exact artifact identity and physical-device/signing limits are recorded in TEST_RESULTS.md and qa/performance-report/verified-ci.json.

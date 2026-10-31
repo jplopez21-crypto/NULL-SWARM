@@ -4,7 +4,7 @@
 
 - Added bounded active-combat performance observations, read-only Settings report, honest empty/warm-up states and clipboard export with readback verification. New deployment clears history; pause/menu/upgrade frames and progression/account data are excluded.
 - Added 168-layout headless coverage, actual GUI/state/ownership/finite-data tests, and a paired seeded replay proving diagnostics preserve the accepted gameplay fingerprint.
-- Render review added a visible FPS summary and improved JSON contrast. Android caught an immediate-readback clipboard failure; copy now uses compact complete JSON, bounded deferred verification, duplicate coalescing and cancellation, with delayed/denied-backend regressions. Android acceptance is configured for 37 checks, including report/copy/paused return. Full hosted/rendered acceptance and APK are pending until recorded in TEST_RESULTS.md.
+- Render review added a visible FPS summary and improved JSON contrast. Android caught an immediate-readback clipboard failure; copy now uses compact complete JSON, bounded deferred verification, duplicate coalescing and cancellation, with delayed/denied-backend regressions. Android acceptance is configured for 37 checks, including report/copy/paused return. Verified source aebf6c374ab0b9bd679a12405ca3878d08581d92 passed native/signature, all 37 Android checks and full gameplay/rendered QA. Independent reports preserve all prior non-timing gameplay/XP/pacing cases and 24 stress fingerprints; observer-off/on replay matches the accepted baseline. Exact artifacts and hardware/signing limits: TEST_RESULTS.md.
 
 ## Development — 2026-10-30 / Memory collection audio
 
