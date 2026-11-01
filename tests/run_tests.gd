@@ -143,6 +143,23 @@ func run() -> void:
 	check(Arsenal.mutation({"damage": 3, "arc": 3}).has("arcstorm"), "Arcstorm prerequisites")
 	check(not Arsenal.mutation({"damage": 2, "arc": 3}).has("arcstorm"), "mutation requires both prerequisites")
 	check(Arsenal.mutation({"orbit": 3, "thermal": 3}).has("halo"), "Solar Halo prerequisites")
+	var forecast := RunProgression.new()
+	for fixture in [["damage", "arc", "arcstorm"], ["arc", "damage", "arcstorm"], ["orbit", "thermal", "halo"], ["thermal", "orbit", "halo"], ["rail", "magnet", "singularity"], ["magnet", "rail", "singularity"]]:
+		forecast.ranks = {fixture[0]: 2, fixture[1]: 3}
+		var frozen_ranks: Dictionary = forecast.ranks.duplicate(true)
+		check(forecast.mutations_completed_by(fixture[0], []) == [fixture[2]], "either legal prerequisite can preview the exact completed mutation")
+		check(forecast.ranks == frozen_ranks and forecast.pending == 0 and forecast.rerolls == 2, "mutation preview changes no ranks, pending choices or rerolls")
+		check(forecast.mutations_completed_by(fixture[0], [fixture[2]]).is_empty(), "already-active mutations receive no new-pick badge")
+		forecast.ranks[fixture[1]] = 2
+		check(forecast.mutations_completed_by(fixture[0], []).is_empty(), "one remaining missing prerequisite cannot promise a mutation")
+	forecast.ranks = {"arc": 3, "rail": 3, "drone": 1, "magnet": 2}
+	check(forecast.equipped() == 4 and forecast.mutations_completed_by("magnet", []) == ["singularity"], "passive mutation completion remains valid with all four weapon slots occupied")
+	check(forecast.mutations_completed_by("orbit", []).is_empty(), "a slot-blocked new weapon cannot advertise an evolution")
+	forecast.ranks = {"arc": 3, "damage": 3}
+	check(forecast.mutations_completed_by("speed", []).is_empty(), "already-met inactive recipes are not attributed to an unrelated choice")
+	check(forecast.mutations_completed_by("repair", []).is_empty() and forecast.mutations_completed_by("invalid", []).is_empty(), "repair and unknown choices cannot preview mutations")
+	forecast.ranks = {"rail": 5, "magnet": 3}
+	check(forecast.mutations_completed_by("rail", []).is_empty(), "capped weapon upgrades cannot advertise further completion")
 	var build_ranks: Dictionary = {}
 	var recipes := Arsenal.mutation_progress(build_ranks, [], 1)
 	check(recipes.size() == Arsenal.MUTATIONS.size() and recipes[0]["requirements"] == "AMPLIFIED PULSE 0/3 + ARC EMITTER 0/3", "build guide reads current ranks and names the actual Pulse upgrade")

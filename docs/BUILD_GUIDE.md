@@ -15,3 +15,9 @@ The right column reads all recipes from `Arsenal.MUTATIONS`:
 Ranks are current/required, so `2/3` means one more rank is needed. **Active** reflects the combat system's actual active mutations. **In progress** means more ranks are needed. **Slots blocked** means the missing prerequisite weapons no longer all fit: Solar Halo needs two empty slots if neither of its weapons is owned, even if one slot remains. There is no weapon replacement during this run. Upgrading an already equipped weapon or a passive uses no additional slot.
 
 The guide is read-only. It spends no rerolls, chooses no upgrades, activates no mutations, changes no save data and consumes no gameplay RNG. Closing and reopening reads the current build. This screen explains available content; it does not add new recipes or change combat balance. Graphics presets and reduced-flash settings remain in Settings.
+
+## Upgrade card previews
+
+A gold **MUTATES: weapon name** line means that choosing this card completes a mutation recipe. It uses the card's existing blank line, and normal cards keep their usual appearance. The preview checks current ranks and slot eligibility; already completed or active recipes receive no new badge.
+
+Previewing spends nothing and does not activate the weapon. The normal upgrade choice still applies one rank, consumes one pending choice and activates any completed mutation through the existing combat system. Rerolling and returning from corruption recompute previews without changing offered choices or consuming extra RNG. All recipes come from the same Arsenal registry used by combat. Current tests, synthetic capture scope and APK: TEST_RESULTS.md.

@@ -454,7 +454,7 @@ func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: i
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
 
-func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1) -> void:
+func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1, mutation_hints: Dictionary = {}) -> void:
 	var box := _panel()
 	var ready := "%d %s READY" % [maxi(0, pending), "UPGRADE" if pending == 1 else "UPGRADES"]
 	upgrade_header = label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d  /  %s" % [level, ready], 18, CYAN)
@@ -466,14 +466,20 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerol
 	for i in range(ids.size()):
 		var id: String = ids[i]
 		var text: String = descriptions.call(id)
-		var button := button_at(row, "0%d\n\n%s" % [i + 1, text], func(): upgrade_selected.emit(id))
+		var predictions: Array = mutation_hints.get(id, [])
+		var badge: String = ""
+		for mutation in predictions:
+			badge += ("\n" if not badge.is_empty() else "") + "MUTATES: " + str(Arsenal.MUTATIONS[mutation]["title"])
+		# Reuse the existing blank line; do not move the card or touch target.
+		var button := button_at(row, "0%d\n%s\n%s" % [i + 1, badge, text], func(): upgrade_selected.emit(id))
 		button.custom_minimum_size = Vector2(292, 255)
 		button.add_theme_font_size_override("font_size", 17)
-		button.add_theme_color_override("font_color", Arsenal.color(id))
+		var card_color: Color = Color("ffe39b") if not predictions.is_empty() else Arsenal.color(id)
+		button.add_theme_color_override("font_color", card_color)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		var card_style: StyleBoxFlat = button.get_theme_stylebox("normal").duplicate()
 		card_style.border_width_left = 4
-		card_style.border_color = Arsenal.color(id)
+		card_style.border_color = card_color
 		button.add_theme_stylebox_override("normal", card_style)
 		if first == null:
 			first = button

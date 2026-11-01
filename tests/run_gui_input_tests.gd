@@ -201,6 +201,39 @@ func run() -> void:
 	click(game, "01\n")
 	await settle()
 	check(game.state == game.State.PLAYING and game.progress.pending == 0, "ordinary choice after corruption completes the queue")
+	# A synthetic legal near-mutation build exercises actual card GUI dispatch.
+	game.start_run()
+	game.progress.ranks = {"damage": 2, "arc": 3}
+	game.combat.weapon.damage += 12.0
+	game.combat.update_build(game.progress.ranks)
+	game.progress.level = 7
+	game.progress.pending = 1
+	game.offered.assign(["damage", "speed", "shield"])
+	game.state = game.State.UPGRADING
+	var preview_rng: int = game.combat.rng.state
+	var preview_ranks: Dictionary = game.progress.ranks.duplicate(true)
+	var preview_clock: float = game.combat.director.elapsed
+	game._render_upgrades()
+	await settle()
+	var predicted: Button
+	for button in game.ui.screen.find_children("*", "Button", true, false):
+		if button.text.begins_with("01\n"):
+			predicted = button
+	check(predicted != null and predicted.text.contains("MUTATES: ARCSTORM RIFLE") and predicted.get_theme_stylebox("normal").border_color == Color("ffe39b"), "real finisher card names and highlights the evolved weapon")
+	game._physics_process(2.0)
+	check(game.progress.ranks == preview_ranks and game.progress.pending == 1 and game.combat.mutations.is_empty() and game.combat.rng.state == preview_rng and game.combat.director.elapsed == preview_clock, "rendering mutation forecasts cannot spend choices, mutate weapons, advance combat or consume RNG")
+	click(game, "AMPLIFIED PULSE")
+	await settle()
+	check(game.state == game.State.PLAYING and game.progress.pending == 0 and game.progress.ranks["damage"] == 3 and game.combat.mutations.has("arcstorm") and game.ui.toast_title.text == "WEAPON MUTATION", "actual forecast pick activates exactly its advertised mutation through normal selection")
+	game.progress.pending = 1
+	game.state = game.State.UPGRADING
+	game.offered.assign(["damage", "speed", "shield"])
+	game._render_upgrades()
+	await settle()
+	var repeated_badge := false
+	for button in game.ui.screen.find_children("*", "Button", true, false):
+		repeated_badge = repeated_badge or button.text.contains("MUTATES:")
+	check(not repeated_badge, "active recipes do not leave a stale mutation badge on future offers")
 	game.go_menu()
 	await settle()
 	click(game, "PROGRESS BACKUP")

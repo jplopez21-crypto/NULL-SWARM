@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-11-01 / Mutation choice previews
+
+- Legal upgrade picks that complete a mutation now show its evolved name and a gold marker. Existing card spacing/index prefixes and selection/recipe/RNG rules remain unchanged. Read-only forecasts suppress capped, blocked, incomplete and already-ready/active paths.
+- All 15 local suites pass, including actual GUI selection and 176-layout coverage. Native card screenshots/receipts, Android/full QA and updated APK pending in TEST_RESULTS.md.
+
 ## Development — 2026-11-01 / Active timer clarity and restored verification
 
 - Active Engineer, shield, Overclock/chain and boss timers now display at least 0.1s until actual zero. Timer/state rules and expired/ordinary values remain unchanged. Five engine snapshots, all 15 strict suites, 53 Android checks and full gameplay QA pass. Signed native APK, independent integrity/startup checks and exact gameplay comparisons are verified in TEST_RESULTS.md.

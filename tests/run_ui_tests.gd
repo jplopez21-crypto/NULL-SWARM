@@ -281,6 +281,24 @@ func run() -> void:
 		await settle()
 		game._process(0.3)
 		check(not game.ui.memory_visible and not is_instance_valid(game.ui.memory_packet), "restart clears freed packet reference")
+		var preview_damage: float = game.combat.weapon.damage
+		game.combat.weapon.damage += 12.0
+		for preview in [{"stage": "mutation-pulse-rail", "ranks": {"damage": 2, "arc": 3, "rail": 2, "magnet": 3}, "offers": ["damage", "rail", "speed"], "first": "ARCSTORM RIFLE", "second": "SINGULARITY LANCE"}, {"stage": "mutation-halo-pulse", "ranks": {"orbit": 2, "thermal": 3, "arc": 3, "damage": 2}, "offers": ["orbit", "damage", "health"], "first": "SOLAR HALO", "second": "ARCSTORM RIFLE"}]:
+			game.progress.ranks = preview["ranks"].duplicate()
+			game.progress.level = 12
+			game.progress.pending = 1
+			game.offered.assign(preview["offers"])
+			game.state = game.State.UPGRADING
+			var before_preview: Dictionary = game.progress.ranks.duplicate(true)
+			var preview_rng: int = game.combat.rng.state
+			game._render_upgrades()
+			var preview_text := ""
+			for button in game.ui.screen.find_children("*", "Button", true, false):
+				preview_text += button.text + "\n"
+			check(preview_text.contains("MUTATES: " + preview["first"]) and preview_text.contains("MUTATES: " + preview["second"]), "choice cards show both legal mutation outcomes")
+			check(game.progress.ranks == before_preview and game.combat.rng.state == preview_rng and game.combat.mutations.is_empty(), "offer forecasts remain read-only across window sizes")
+			await inspect(game, preview["stage"], size)
+		game.combat.weapon.damage = preview_damage
 		game.progress.ranks = {"rail": 2, "magnet": 3}
 		game.player.magnet += 3 * 1.2
 		check(game.upgrade_description("magnet").contains("RANK 3 → 4"), "Tether card shows explicit mutation prerequisite rank")

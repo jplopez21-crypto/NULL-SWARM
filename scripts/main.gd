@@ -346,7 +346,12 @@ func show_upgrade() -> void:
 	_render_upgrades()
 
 func _render_upgrades() -> void:
-	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level), progress.pending)
+	var mutation_hints: Dictionary = {}
+	for id in offered:
+		var completed: Array[String] = progress.mutations_completed_by(id, combat.mutations)
+		if not completed.is_empty():
+			mutation_hints[id] = completed
+	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level), progress.pending, mutation_hints)
 
 func show_corruption() -> void:
 	if state != State.UPGRADING or progress.pending <= 0 or not combat.corruption.available(progress.level):
@@ -998,6 +1003,56 @@ func _capture_session() -> void:
 	timer_file.store_string(JSON.stringify({"fixture_seconds": 0.001,
 		"labels": timer_labels, "scope": "Synthetic display-only native capture; no timer-rule or device timing claim."}))
 	timer_file.close()
+	# Legal rank/slot fixtures for mutation-choice presentation; desktop QA only.
+	save.data["selected_kit"] = "vanguard"
+	start_run()
+	state = State.UPGRADING
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	lane_label.hide()
+	progress.ranks = {"damage": 2, "arc": 3, "rail": 2, "magnet": 3}
+	combat.weapon.damage += 12.0
+	player.magnet += 3 * 1.2
+	combat.update_build(progress.ranks)
+	progress.level = 12
+	progress.pending = 1
+	offered.assign(["damage", "rail", "speed"])
+	ui.update_hud(player, progress, combat)
+	_render_upgrades()
+	ui.upgrade_header.text = "MUTATION CHOICES // STAGED QA // SYNTHETIC RANKS"
+	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/mutation_offers.png")
+	var preview_samples: Array = []
+	var preview_texts: Array[String] = []
+	for button in ui.screen.find_children("*", "Button", true, false):
+		if button.text.begins_with("0"):
+			preview_texts.append(button.text)
+	preview_samples.append({"case": "pulse-rail", "ranks": progress.ranks.duplicate(), "texts": preview_texts})
+	progress.ranks = {"orbit": 2, "thermal": 3, "arc": 3, "damage": 2}
+	player.magnet -= 3 * 1.2
+	combat.update_build(progress.ranks)
+	offered.assign(["orbit", "damage", "health"])
+	ui.update_hud(player, progress, combat)
+	_render_upgrades()
+	ui.upgrade_header.text = "MUTATION CHOICES // STAGED QA // SYNTHETIC RANKS"
+	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/mutation_halo_offers.png")
+	preview_texts = []
+	for button in ui.screen.find_children("*", "Button", true, false):
+		if button.text.begins_with("0"):
+			preview_texts.append(button.text)
+	preview_samples.append({"case": "halo-pulse", "ranks": progress.ranks.duplicate(), "texts": preview_texts})
+	var preview_file := FileAccess.open("res://builds/qa/mutation-card-capture.json", FileAccess.WRITE)
+	if preview_file == null:
+		push_error("Unable to write staged mutation card receipt")
+		get_tree().quit(1)
+		return
+	preview_file.store_string(JSON.stringify({"samples": preview_samples, "scope": "Explicit synthetic ranks/offers in a frozen desktop presentation fixture; no earned-on-device mutation claim."}))
+	preview_file.close()
 	audio.shutdown()
 	get_tree().quit()
 
