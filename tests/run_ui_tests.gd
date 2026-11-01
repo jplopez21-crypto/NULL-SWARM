@@ -328,6 +328,60 @@ func run() -> void:
 		game._process(0.1)
 		check(not game.ui.memory_visible, "results hide guidance")
 		await inspect(game, "results", size)
+		var before_analysis: Dictionary = game.combat.damage_by_weapon.duplicate(true)
+		game.combat.damage_by_weapon = {}
+		game.open_run_analysis()
+		check(game.ui.visible_run_analysis().contains("NO DAMAGE RECORDED"), "damage-free run has an honest empty analysis")
+		await inspect(game, "analysis-empty", size)
+		# Explicit dense fixture also covers future content beyond today's four slots.
+		game.combat.damage_by_weapon = {"pulse": 50.5, "arcstorm": 25.0, "orbit": 20.0, "halo": 10.0, "drone": 8.0, "singularity": 6.0, "rail": 5.0, "thermal": 4.0, "arc": 3.0, "future_channel": 2.0}
+		game.open_run_analysis()
+		await inspect(game, "analysis-dense", size)
+		var scroll: ScrollContainer = game.ui.screen.find_child("DamageScroll", true, false)
+		check(scroll.get_v_scroll_bar().visible and scroll.get_v_scroll_bar().focus_mode == Control.FOCUS_ALL, "overflow analysis exposes a focusable controller scrollbar")
+		var previous_touch_emulation: bool = Input.emulate_touch_from_mouse
+		Input.emulate_touch_from_mouse = true # Headless has no touchscreen hint.
+		var scroll_point: Vector2 = root.get_screen_transform() * scroll.get_global_rect().get_center()
+		var touch_down := InputEventScreenTouch.new()
+		touch_down.index = 0
+		touch_down.position = scroll_point
+		touch_down.pressed = true
+		Input.parse_input_event(touch_down)
+		Input.flush_buffered_events()
+		var swipe := InputEventScreenDrag.new()
+		swipe.index = 0
+		swipe.position = scroll_point + Vector2(0, -100)
+		swipe.relative = Vector2(0, -100)
+		swipe.screen_relative = swipe.relative
+		Input.parse_input_event(swipe)
+		Input.flush_buffered_events()
+		var touch_up: InputEventScreenTouch = touch_down.duplicate()
+		touch_up.position = swipe.position
+		touch_up.pressed = false
+		Input.parse_input_event(touch_up)
+		Input.flush_buffered_events()
+		await settle()
+		check(scroll.get_v_scroll_bar().value > 0, "engine emulated-touch swipe scrolls damage rows without triggering a menu action")
+		Input.emulate_touch_from_mouse = previous_touch_emulation
+		scroll.scroll_vertical = 0
+		var saved_scroll: float = scroll.get_v_scroll_bar().value
+		scroll.get_v_scroll_bar().grab_focus()
+		var key := InputEventKey.new()
+		key.keycode = KEY_END
+		key.physical_keycode = KEY_END
+		key.pressed = true
+		root.push_input(key, true)
+		await settle()
+		check(scroll.get_v_scroll_bar().value > saved_scroll, "keyboard scrollbar reaches damage rows below the fold")
+		var bottom_key := InputEventKey.new()
+		bottom_key.keycode = KEY_TAB
+		bottom_key.physical_keycode = KEY_TAB
+		bottom_key.pressed = true
+		root.push_input(bottom_key, true)
+		await settle()
+		check(root.gui_get_focus_owner() is Button and root.gui_get_focus_owner().text == "BACK TO RESULTS", "analysis overflow navigation retains access to results back control")
+		game.combat.damage_by_weapon = before_analysis
+		game.show_results()
 		game.ui.show_lab(game.save.data, func(): game.go_menu())
 		await inspect(game, "foundry", size)
 		var saved_progression: Dictionary = game.save.data.duplicate(true)

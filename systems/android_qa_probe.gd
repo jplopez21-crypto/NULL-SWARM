@@ -57,6 +57,7 @@ func snapshot() -> void:
 	data["performance_stats_text"] = game.ui.perf_label.text
 	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}
 	data["build_text"] = game.ui.visible_build_text()
+	data["run_analysis_text"] = game.ui.visible_run_analysis()
 	data["memory_audio_plays"] = game.audio.memory_plays
 	data["touch_controls"] = {"joystick_id": game.input_router.touch_id,
 		"stick": [game.input_router.stick.x, game.input_router.stick.y],
@@ -105,7 +106,7 @@ func snapshot() -> void:
 		data.merge({"dash_readiness": game.ui.dash_gauge.value, "operative_visible": game.player.body.visible,
 			"shield_status": game.ui.defense_label.text, "position": [game.player.position.x, game.player.position.z], "hp": game.player.health.current,
 			"time": game.combat.director.elapsed, "kills": game.combat.kills, "xp": game.pickups.total_collected,
-			"level": game.progress.level, "ranks": game.progress.ranks.duplicate(), "pending": game.progress.pending, "targets": []})
+			"damage_by_weapon": game.combat.damage_by_weapon.duplicate(), "combat_rng": str(game.combat.rng.state), "level": game.progress.level, "ranks": game.progress.ranks.duplicate(), "pending": game.progress.pending, "targets": []})
 		for item in game.pickups.items:
 			if not item["attract"]:
 				data["targets"].append([item["mesh"].position.x, item["mesh"].position.z])

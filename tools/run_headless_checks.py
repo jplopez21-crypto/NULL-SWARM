@@ -24,7 +24,7 @@ suites = [
     ('attack-lanes', ['--script', 'tests/run_attack_lane_tests.gd'], r'ATTACK_LANE_RESULT checks=(\d+) failures=0'),
     ('systems', ['--script', 'tests/run_tests.gd'], r'TEST_RESULT checks=(\d+) failures=0'),
     ('corruption', ['--script', 'tests/run_corruption_tests.gd'], r'CORRUPTION_RESULT checks=(\d+) failures=0'),
-    ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=176 failures=0'),
+    ('ui-headless', ['--script', 'tests/run_ui_tests.gd'], r'UI_RESULT checks=(\d+) layouts=184 failures=0'),
     ('scene-smoke', ['--', '--smoke'], r'SCENE_SMOKE_OK'),
 ]
 results = []

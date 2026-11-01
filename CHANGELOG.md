@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-01 / Deployment analysis
+
+- Added a functional RUN ANALYSIS action to completed deployments. All damage channels show sorted effective damage and share, with loadout/corruption context and touch/controller scrolling. Mutation extras and combined Hive/sentry damage are labelled accurately; slows, shields and support are excluded explicitly. Back returns to the same results without spending or awarding anything. Verification in TEST_RESULTS.md.
+
 ## Development — 2026-11-01 / Mutation choice previews
 
 - Legal upgrade picks that complete a mutation now show its evolved name and a gold marker. Mutation colors persist through focus/hover/press while the cyan focus outline remains. Existing card spacing/index prefixes and selection/recipe/RNG rules remain unchanged. Read-only forecasts suppress capped, blocked, incomplete and already-ready/active paths.

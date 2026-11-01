@@ -7,6 +7,7 @@ signal restart
 signal return_menu
 signal pause_run
 signal build_requested
+signal run_analysis_requested
 signal dash
 signal upgrade_selected(id: String)
 signal corruption_requested
@@ -39,6 +40,7 @@ var xp_bar: ProgressBar
 var xp_label: Label
 var upgrade_header: Label
 var build_heading: Label
+var analysis_heading: Label
 var status_label: Label
 var health_label: Label
 var operative_title: String = "VANGUARD"
@@ -441,18 +443,77 @@ func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: i
 	label_at(box, "The sector holds. Your telemetry survived." if won else "Operative offline. Your telemetry survived.", 18, MUTED)
 	label_at(box, "%s   /   %d DESTROYED   /   LEVEL %d" % [clock(elapsed), kills, level], 22)
 	label_at(box, "%d memory recovered   //   +%d SALVAGE BANKED" % [total_xp, salvage], 18, CYAN)
-	var rows: Array = breakdown.keys()
-	rows.sort_custom(func(a: String, b: String): return float(breakdown[a]) > float(breakdown[b]))
+	var rows := Arsenal.damage_breakdown(breakdown)
 	var summary: Array[String] = []
-	for id in rows.slice(0, 3):
-		summary.append("%s %d" % [Arsenal.title(id), int(breakdown[id])])
+	for item in rows.slice(0, 3):
+		summary.append("%s %.0f" % [item["title"], item["damage"]])
 	label_at(box, "DAMAGE  /  " + "   /   ".join(summary), 14, MUTED)
 	for id in unlocks:
 		label_at(box, "UNLOCKED // " + Research.KITS[id]["title"], 17, Color("ffe39b"))
-	button_at(box, "FOUNDRY  /  %d SALVAGE AVAILABLE" % wallet, func(): lab_requested.emit())
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 12)
+	box.add_child(actions)
+	button_at(actions, "FOUNDRY / %d SALVAGE" % wallet, func(): lab_requested.emit()).size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button_at(actions, "RUN ANALYSIS", func(): run_analysis_requested.emit()).size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var again := button_at(box, "REDEPLOY     →", func(): restart.emit())
 	button_at(box, "COMMAND MENU", func(): return_menu.emit())
 	again.grab_focus()
+
+func show_run_analysis(damage: Dictionary, loadout: Array[String], corruption: String, back: Callable) -> void:
+	set_hud(false)
+	var box := _panel()
+	box.custom_minimum_size.x = 960
+	analysis_heading = label_at(box, "DEPLOYMENT ANALYSIS", 30, CYAN)
+	label_at(box, "RECORDED DAMAGE // Support, slows and shields are not measured here.", 16, MUTED)
+	var equipment := label_at(box, "LOADOUT // " + "  /  ".join(loadout), 15)
+	equipment.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label_at(box, corruption, 15, Color("b4a1ff")).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var scroll := ScrollContainer.new()
+	scroll.name = "DamageScroll"
+	scroll.custom_minimum_size.y = 216
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	box.add_child(scroll)
+	var table := VBoxContainer.new()
+	table.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	table.add_theme_constant_override("separation", 8)
+	scroll.add_child(table)
+	var rows := Arsenal.damage_breakdown(damage)
+	if rows.is_empty():
+		label_at(table, "NO DAMAGE RECORDED", 20, MUTED)
+	for item in rows:
+		var row := HBoxContainer.new()
+		row.custom_minimum_size.y = 36
+		row.add_theme_constant_override("separation", 16)
+		table.add_child(row)
+		var name_label := label_at(row, item["title"], 17, Arsenal.damage_color(item["id"]))
+		name_label.custom_minimum_size.x = 270
+		name_label.clip_text = true
+		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var bar := _bar(row, Arsenal.damage_color(item["id"]), 12)
+		bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		bar.value = item["share"]
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var amount := label_at(row, "%.0f  /  %.1f%%" % [item["damage"], item["share"]], 17)
+		amount.custom_minimum_size.x = 195
+		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		amount.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label_at(box, "Drone Systems combines Hive and field sentry fire. Pulse shots exclude Arcstorm chains.", 15, MUTED)
+	var back_button := button_at(box, "BACK TO RESULTS", back)
+	var scrollbar := scroll.get_v_scroll_bar()
+	scrollbar.focus_mode = Control.FOCUS_ALL
+	back_button.focus_neighbor_top = back_button.get_path_to(scrollbar)
+	scrollbar.focus_neighbor_bottom = scrollbar.get_path_to(back_button)
+	back_button.grab_focus()
+
+func visible_run_analysis() -> String:
+	if not is_instance_valid(analysis_heading) or not analysis_heading.is_visible_in_tree() or screen == null:
+		return ""
+	var lines: Array[String] = []
+	for node in screen.find_children("*", "Label", true, false):
+		if node.is_visible_in_tree():
+			lines.append(node.text)
+	return "\n".join(lines)
 
 func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1, mutation_hints: Dictionary = {}) -> void:
 	var box := _panel()

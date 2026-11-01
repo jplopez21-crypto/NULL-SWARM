@@ -13,6 +13,23 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
+	var damage_fixture := {"pulse": 50.5, "drone": 25, "arcstorm": 12.5, "halo": 12.0, "rail": 0, "thermal": -1, "bad": "30", "infinite": INF, "nan": NAN, 17: 10}
+	var frozen_damage := damage_fixture.duplicate(true)
+	var damage_rows := Arsenal.damage_breakdown(damage_fixture)
+	check(damage_rows.size() == 4, "damage analysis ignores nonnumeric invalid nonpositive and nonstring channels")
+	check(damage_rows[0]["id"] == "pulse" and damage_rows[1]["id"] == "drone" and damage_rows[2]["id"] == "arcstorm", "damage channels sort by actual effective damage")
+	check(is_equal_approx(damage_rows[0]["share"], 50.5) and is_equal_approx(damage_rows[3]["share"], 12.0), "analysis shares include every valid channel rather than only top three")
+	check(damage_fixture["pulse"] == frozen_damage["pulse"] and damage_fixture.size() == frozen_damage.size() and is_nan(damage_fixture["nan"]), "analysis query preserves source telemetry including rejected entries")
+	damage_rows[0]["damage"] = 1000.0
+	check(damage_fixture["pulse"] == 50.5, "analysis row snapshots cannot mutate combat telemetry")
+	check(Arsenal.damage_breakdown({}).is_empty() and Arsenal.damage_breakdown({"pulse": 0}).is_empty(), "empty or damage-free runs never divide by zero or invent a channel")
+	var tied := Arsenal.damage_breakdown({"thermal": 2, "rail": 2, "arc": 2})
+	check(tied[0]["id"] == "arc" and tied[1]["id"] == "rail" and tied[2]["id"] == "thermal", "equal damage has stable alphabetical channel ordering")
+	var extreme := Arsenal.damage_breakdown({"pulse": 1.7e308, "arc": 1.7e308})
+	check(extreme[0]["share"] == 50.0 and extreme[1]["share"] == 50.0, "analysis percentages remain finite when an unscaled total would overflow")
+	for pair in [["pulse", "PULSE SHOTS"], ["arcstorm", "ARCSTORM CHAINS"], ["halo", "SOLAR HALO HEAT"], ["drone", "DRONE SYSTEMS"], ["singularity", "SINGULARITY LANCE"], ["rail", "RAIL LANCE"], ["future_channel", "FUTURE CHANNEL"], ["", "UNIDENTIFIED"]]:
+		check(Arsenal.damage_title(pair[0]) == pair[1], "damage labels distinguish actual base derived combined and unknown channels")
+
 	var old_preferences := SaveStore.defaults()
 	check(not old_preferences["settings"]["performance_stats"], "performance stats default off")
 	old_preferences["settings"].erase("performance_stats")
@@ -558,6 +575,13 @@ func run() -> void:
 	game.combat._damage(insulator, 10.0, Vector3.ZERO, false, "pulse")
 	check(is_equal_approx(hp_before - insulator.hp, 10.0), "Insulator does not resist other weapon families")
 	insulator.deactivate()
+	var actual_damage: Dictionary = game.combat.damage_by_weapon.duplicate(true)
+	var actual_rows := Arsenal.damage_breakdown(game.combat.damage_by_weapon)
+	var actual_shares: float = 0.0
+	for row in actual_rows:
+		check(row["damage"] == actual_damage[row["id"]], "analysis uses actual resistance exposure and overkill-adjusted combat totals")
+		actual_shares += row["share"]
+	check(is_equal_approx(actual_shares, 100.0) and game.combat.damage_by_weapon == actual_damage, "real combat analysis accounts for all damage without rewriting telemetry")
 	for id in Arsenal.DATA:
 		game.combat.loadout = {id: 1}
 		game.combat.timers.clear()

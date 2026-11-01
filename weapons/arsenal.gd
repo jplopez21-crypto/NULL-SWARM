@@ -67,3 +67,33 @@ static func equipped_title(weapon: String, active: Array[String]) -> String:
 		if active.has(id) and MUTATIONS[id]["weapon"] == weapon:
 			return MUTATIONS[id]["title"]
 	return title(weapon)
+
+# Presentation of existing effective damage channels; never reclassifies combat.
+static func damage_title(id: String) -> String:
+	match id:
+		"pulse": return "PULSE SHOTS"
+		"arcstorm": return "ARCSTORM CHAINS"
+		"halo": return "SOLAR HALO HEAT"
+		"drone": return "DRONE SYSTEMS"
+	return title(id) if DATA.has(id) or MUTATIONS.has(id) else (id.replace("_", " ").to_upper() if not id.is_empty() else "UNIDENTIFIED")
+
+static func damage_color(id: String) -> Color:
+	return color("arc") if id == "arcstorm" else (Color("ffe39b") if id == "halo" else color(id))
+
+static func damage_breakdown(damage: Dictionary) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	var largest: float = 0.0
+	for id in damage:
+		var amount: Variant = damage[id]
+		if id is String and (amount is int or amount is float) and is_finite(float(amount)) and float(amount) > 0.0:
+			rows.append({"id": id, "title": damage_title(id), "damage": float(amount), "share": 0.0})
+			largest = maxf(largest, float(amount))
+	# Normalize before summing to keep percentages finite for extreme telemetry.
+	var scaled_total: float = 0.0
+	for row in rows:
+		scaled_total += row["damage"] / largest
+	for row in rows:
+		row["share"] = (row["damage"] / largest) / scaled_total * 100.0
+	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return a["id"] < b["id"] if a["damage"] == b["damage"] else a["damage"] > b["damage"])
+	return rows

@@ -77,6 +77,17 @@ func run() -> void:
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["performance_report_text"] == game.ui.visible_performance_report() and not data["performance_report_text"].is_empty(), "probe reads the actual report without inventing observations")
 	check(data["edit_fields"].is_empty() and data["backup_code_length"] == 0 and game.save.data == report_save, "read-only performance text is never advertised as a backup input or progression grant")
+	game.combat.damage_by_weapon = {"pulse": 8.0, "drone": 2.0}
+	game.finish_run(false)
+	game.open_run_analysis()
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(data["run_analysis_text"] == game.ui.visible_run_analysis() and data["run_analysis_text"].contains("DRONE SYSTEMS"), "probe observes actual post-run analysis labels")
+	check(data["damage_by_weapon"] == game.combat.damage_by_weapon and data["combat_rng"] == str(game.combat.rng.state), "analysis telemetry is an exact read-only observation of damage and RNG")
+	game.show_results()
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(data["run_analysis_text"].is_empty(), "probe clears retired analysis text after returning to results")
 	game.audio.shutdown()
 	# Drain queued UI tweens and audio-thread releases before destroying the scene.
 	await create_timer(0.20).timeout

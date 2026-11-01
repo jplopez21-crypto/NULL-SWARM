@@ -59,6 +59,7 @@ func _ready() -> void:
 	ui.return_menu.connect(go_menu)
 	ui.pause_run.connect(pause_run)
 	ui.build_requested.connect(open_build)
+	ui.run_analysis_requested.connect(open_run_analysis)
 	ui.dash.connect(func():
 		if state == State.PLAYING:
 			input_router.dash_requested = true)
@@ -1053,6 +1054,22 @@ func _capture_session() -> void:
 		return
 	preview_file.store_string(JSON.stringify({"samples": preview_samples, "scope": "Explicit synthetic ranks/offers in a frozen desktop presentation fixture; no earned-on-device mutation claim."}))
 	preview_file.close()
+	state = State.RESULTS
+	progress.ranks = {"damage": 3, "arc": 3, "rail": 3, "drone": 2, "magnet": 3}
+	combat.update_build(progress.ranks)
+	combat.damage_by_weapon = {"pulse": 4821.5, "arcstorm": 2310.0, "rail": 1800.0, "arc": 930.0, "drone": 420.0, "singularity": 210.0}
+	open_run_analysis()
+	ui.analysis_heading.text = "DEPLOYMENT ANALYSIS // STAGED QA"
+	await get_tree().create_timer(0.2).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/run_analysis.png")
+	var analysis_file := FileAccess.open("res://builds/qa/run-analysis-capture.json", FileAccess.WRITE)
+	if analysis_file == null:
+		push_error("Unable to write staged analysis receipt")
+		get_tree().quit(1)
+		return
+	analysis_file.store_string(JSON.stringify({"damage": combat.damage_by_weapon, "rows": Arsenal.damage_breakdown(combat.damage_by_weapon), "text": ui.visible_run_analysis(), "scope": "Explicit synthetic frozen desktop damage fixture, not earned-on-device damage."}))
+	analysis_file.close()
 	audio.shutdown()
 	get_tree().quit()
 
@@ -1077,6 +1094,15 @@ func _checkpoint_progress() -> void:
 
 func show_results() -> void:
 	ui.show_results(result_won, combat.director.elapsed, combat.kills, progress.level, pickups.total_collected, int(save.data["ledger"].get("awarded", 0)), int(save.data["salvage"]), combat.damage_by_weapon, run_unlocks)
+
+func open_run_analysis() -> void:
+	if state != State.RESULTS or not is_instance_valid(combat):
+		return
+	var loadout: Array[String] = ["%s (AMPLIFIER %d)" % [Arsenal.equipped_title("pulse", combat.mutations), int(progress.ranks.get("damage", 0))]]
+	for id in Arsenal.DATA:
+		if int(progress.ranks.get(id, 0)) > 0:
+			loadout.append("%s R%d" % [Arsenal.equipped_title(id, combat.mutations), int(progress.ranks[id])])
+	ui.show_run_analysis(combat.damage_by_weapon, loadout, combat.corruption.status(), show_results)
 
 func open_lab(message: String = "") -> void:
 	if state not in [State.MENU, State.RESULTS]:

@@ -94,7 +94,11 @@ jobs:
                   assert sample['texts'][index].startswith(f'0{index + 1}\nMUTATES: {title}\n')
               assert 'MUTATES:' not in sample['texts'][2]
           print('CI_MUTATION_CARD_REPORT ' + json.dumps(previews, separators=(',', ':')))
-          for name, prefix in [('upgrade_queue', 'CI_QUEUE'), ('performance_stats', 'CI_PERF'), ('build_overview', 'CI_BUILD'), ('engineer_sentry', 'CI_ENGINEER'), ('overclock', 'CI_OVERCLOCK'), ('attack_lanes_detail', 'CI_LANES_DETAIL'), ('attack_lanes_field', 'CI_LANES_FIELD'), ('attack_lanes_reduced', 'CI_LANES_REDUCED'), ('combat_timers', 'CI_TIMERS'), ('chain_timer', 'CI_CHAIN_TIMER'), ('mutation_offers', 'CI_MUTATION_OFFERS')]:
+          analysis = json.loads(Path('builds/qa/run-analysis-capture.json').read_text())
+          assert len(analysis['rows']) == 6 and abs(sum(row['share'] for row in analysis['rows']) - 100) < 0.00001
+          assert 'DRONE SYSTEMS' in analysis['text'] and 'ARCSTORM CHAINS' in analysis['text']
+          print('CI_RUN_ANALYSIS_REPORT ' + json.dumps(analysis, separators=(',', ':')))
+          for name, prefix in [('run_analysis', 'CI_RUN_ANALYSIS'), ('upgrade_queue', 'CI_QUEUE'), ('performance_stats', 'CI_PERF'), ('build_overview', 'CI_BUILD'), ('engineer_sentry', 'CI_ENGINEER'), ('overclock', 'CI_OVERCLOCK'), ('attack_lanes_detail', 'CI_LANES_DETAIL'), ('attack_lanes_field', 'CI_LANES_FIELD'), ('attack_lanes_reduced', 'CI_LANES_REDUCED'), ('combat_timers', 'CI_TIMERS'), ('chain_timer', 'CI_CHAIN_TIMER'), ('mutation_offers', 'CI_MUTATION_OFFERS')]:
               capture = Path('builds/screenshots/' + name + '.png').read_bytes()
               assert capture.startswith(b'\x89PNG\r\n\x1a\n')
               if len(capture) <= 262144:

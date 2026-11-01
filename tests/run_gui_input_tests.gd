@@ -234,6 +234,30 @@ func run() -> void:
 	for button in game.ui.screen.find_children("*", "Button", true, false):
 		repeated_badge = repeated_badge or button.text.contains("MUTATES:")
 	check(not repeated_badge, "active recipes do not leave a stale mutation badge on future offers")
+	var state_before_analysis: int = game.state
+	game.open_run_analysis()
+	check(game.state == state_before_analysis and game.state != game.State.RESULTS and game.ui.visible_run_analysis().is_empty(), "analysis cannot open before run results")
+	game.combat.damage_by_weapon = {"pulse": 50.5, "arcstorm": 25.0, "drone": 24.5}
+	game.finish_run(false)
+	await settle()
+	var analysis_save: Dictionary = game.save.data.duplicate(true)
+	var analysis_time: float = game.combat.director.elapsed
+	var analysis_rng: int = game.combat.rng.state
+	var analysis_ranks: Dictionary = game.progress.ranks.duplicate(true)
+	for visit in range(2):
+		old_panel = game.ui.screen
+		click(game, "RUN ANALYSIS")
+		check(retained_until_frame_end(old_panel), "analysis transition preserves the clicked results control during GUI dispatch")
+		await settle()
+		var analysis_text: String = game.ui.visible_run_analysis()
+		check(analysis_text.contains("ARCSTORM RIFLE") and analysis_text.contains("PULSE SHOTS") and analysis_text.contains("ARCSTORM CHAINS") and analysis_text.contains("DRONE SYSTEMS") and analysis_text.contains("50.5%") and analysis_text.contains("25.0%") and analysis_text.contains("24.5%"), "actual analysis control shows build context and every accurately attributed damage share")
+		check(analysis_text.contains("Hive and field sentry") and analysis_text.contains("Support, slows and shields"), "analysis explains combined sentry damage and unmeasured utility")
+		game._process(5.0)
+		game._physics_process(5.0)
+		click(game, "BACK TO RESULTS")
+		await settle()
+		check(game.ui.visible_run_analysis().is_empty() and game.state == game.State.RESULTS, "analysis back returns to the same completed run")
+		check(game.combat.director.elapsed == analysis_time and game.combat.rng.state == analysis_rng and game.save.data == analysis_save and game.progress.ranks == analysis_ranks, "repeated analysis visits advance no time RNG ranks saves or reward ledger")
 	game.go_menu()
 	await settle()
 	click(game, "PROGRESS BACKUP")
