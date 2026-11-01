@@ -18,6 +18,6 @@ The guide is read-only. It spends no rerolls, chooses no upgrades, activates no 
 
 ## Upgrade card previews
 
-A gold **MUTATES: weapon name** line means that choosing this card completes a mutation recipe. It uses the card's existing blank line, and normal cards keep their usual appearance. The preview checks current ranks and slot eligibility; already completed or active recipes receive no new badge.
+A gold **MUTATES: weapon name** line means that choosing this card completes a mutation recipe. It uses the card's existing blank line, and normal cards keep their usual appearance. Gold persists when focused or pressed; the cyan outline still marks controller focus. The preview checks current ranks and slot eligibility; already completed or active recipes receive no new badge.
 
 Previewing spends nothing and does not activate the weapon. The normal upgrade choice still applies one rank, consumes one pending choice and activates any completed mutation through the existing combat system. Rerolling and returning from corruption recompute previews without changing offered choices or consuming extra RNG. All recipes come from the same Arsenal registry used by combat. Current tests, synthetic capture scope and APK: TEST_RESULTS.md.

@@ -219,7 +219,7 @@ func run() -> void:
 	for button in game.ui.screen.find_children("*", "Button", true, false):
 		if button.text.begins_with("01\n"):
 			predicted = button
-	check(predicted != null and predicted.text.contains("MUTATES: ARCSTORM RIFLE") and predicted.get_theme_stylebox("normal").border_color == Color("ffe39b"), "real finisher card names and highlights the evolved weapon")
+	check(predicted != null and predicted.text.contains("MUTATES: ARCSTORM RIFLE") and predicted.get_theme_stylebox("normal").border_color == Color("ffe39b") and predicted.get_theme_color("font_focus_color") == Color("ffe39b"), "real finisher card names and highlights the evolved weapon while focused")
 	game._physics_process(2.0)
 	check(game.progress.ranks == preview_ranks and game.progress.pending == 1 and game.combat.mutations.is_empty() and game.combat.rng.state == preview_rng and game.combat.director.elapsed == preview_clock, "rendering mutation forecasts cannot spend choices, mutate weapons, advance combat or consume RNG")
 	click(game, "AMPLIFIED PULSE")

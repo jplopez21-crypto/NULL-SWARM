@@ -476,6 +476,9 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerol
 		button.add_theme_font_size_override("font_size", 17)
 		var card_color: Color = Color("ffe39b") if not predictions.is_empty() else Arsenal.color(id)
 		button.add_theme_color_override("font_color", card_color)
+		if not predictions.is_empty():
+			for state_color in ["font_focus_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
+				button.add_theme_color_override(state_color, card_color)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		var card_style: StyleBoxFlat = button.get_theme_stylebox("normal").duplicate()
 		card_style.border_width_left = 4

@@ -1,0 +1,9 @@
+{
+  "source": "aeb73d547f69855bf8fffd49d5a52d0bf9e5e569",
+  "native_run": 41320672451,
+  "capture_artifact": 13089416162,
+  "observation": "Names fit and card geometry remains readable, but default focused font state turns the first mutation-finishing card white. Normal unfocused finisher is gold.",
+  "correction": "Per-button focus/hover/pressed font colors retain gold only for mutation finishers. Cyan focus outline and all ordinary-card states/controls remain unchanged.",
+  "method": "Actual native mutation_offers.png inspected from independently hashed/CRC-checked artifact.",
+  "corrected_acceptance": "pending"
+}
