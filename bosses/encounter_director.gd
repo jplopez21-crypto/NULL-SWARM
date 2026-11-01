@@ -154,7 +154,7 @@ func cue(source: SwarmEnemy) -> String:
 	if source == null or not source.active:
 		return ""
 	if source.exposed_time > 0.0:
-		return "CORE EXPOSED %.1fs // +25%% DAMAGE" % source.exposed_time
+		return "CORE EXPOSED %.1fs // +25%% DAMAGE" % maxf(0.1, source.exposed_time)
 	if warning_time > 0.0:
 		return ("BARRAGE IN %.1fs // MOVE BETWEEN THE SPOKES" if attacking_radial else "IMPACT IN %.1fs // LEAVE THE MARKED CIRCLES") % maxf(0.1, warning_time)
-	return "WEAPON RECHARGE %.1fs // KEEP YOUR DISTANCE" % maxf(0.0, attack_cooldown)
+	return "WEAPON RECHARGE %.1fs // KEEP YOUR DISTANCE" % (maxf(0.1, attack_cooldown) if attack_cooldown > 0.0 else 0.0)

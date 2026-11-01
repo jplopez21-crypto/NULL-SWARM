@@ -1,0 +1,149 @@
+{
+  "before_game_source": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+  "method": "Actual Godot headless scene/UI snapshots with explicitly assigned synthetic positive/zero timer values; physics/process disabled. This is not ordinary play or timing/FPS measurement.",
+  "before": [
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 0.0s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.0s",
+        "boss_recharge": "WEAPON RECHARGE 0.0s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.0s",
+        "dash": "DASH / 0.1s",
+        "overclock": "OVERCLOCK 0.0s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 0.0s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 0.0s"
+      },
+      "remaining": 0.001,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 0.0s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.0s",
+        "boss_recharge": "WEAPON RECHARGE 0.0s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.0s",
+        "dash": "DASH / 0.1s",
+        "overclock": "OVERCLOCK 0.0s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 0.0s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 0.0s"
+      },
+      "remaining": 0.04,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 0.1s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.1s",
+        "boss_recharge": "WEAPON RECHARGE 0.1s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.1s",
+        "dash": "DASH / 0.1s",
+        "overclock": "OVERCLOCK 0.1s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 0.1s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 0.1s"
+      },
+      "remaining": 0.1,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 1.2s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 1.2s",
+        "boss_recharge": "WEAPON RECHARGE 1.2s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 1.2s",
+        "dash": "DASH / 1.2s",
+        "overclock": "OVERCLOCK 1.2s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 1.2s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 1.2s"
+      },
+      "remaining": 1.2,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "WEAPON RECHARGE 1.2s // KEEP YOUR DISTANCE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1",
+        "boss_recharge": "WEAPON RECHARGE 0.0s // KEEP YOUR DISTANCE",
+        "chain": "",
+        "dash": "DASH / READY",
+        "overclock": "",
+        "sentry": "ENGINEER // DASH TO DEPLOY A 3s SENTRY",
+        "shield": "SHIELD RECHARGING"
+      },
+      "remaining": 0.0,
+      "timers_unchanged_by_ui": true
+    }
+  ],
+  "after": [
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 0.1s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.1s",
+        "boss_recharge": "WEAPON RECHARGE 0.1s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.1s",
+        "dash": "DASH / 0.1s",
+        "overclock": "OVERCLOCK 0.1s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 0.1s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 0.1s"
+      },
+      "remaining": 0.001,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 0.1s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.1s",
+        "boss_recharge": "WEAPON RECHARGE 0.1s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.1s",
+        "dash": "DASH / 0.1s",
+        "overclock": "OVERCLOCK 0.1s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 0.1s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 0.1s"
+      },
+      "remaining": 0.04,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 0.1s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.1s",
+        "boss_recharge": "WEAPON RECHARGE 0.1s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.1s",
+        "dash": "DASH / 0.1s",
+        "overclock": "OVERCLOCK 0.1s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 0.1s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 0.1s"
+      },
+      "remaining": 0.1,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "CORE EXPOSED 1.2s // +25% DAMAGE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 1.2s",
+        "boss_recharge": "WEAPON RECHARGE 1.2s // KEEP YOUR DISTANCE",
+        "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 1.2s",
+        "dash": "DASH / 1.2s",
+        "overclock": "OVERCLOCK 1.2s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+        "sentry": "FIELD SENTRY 1.2s // NEXT DASH REPOSITIONS IT",
+        "shield": "SHIELD DOWN / RECHARGE IN 1.2s"
+      },
+      "remaining": 1.2,
+      "timers_unchanged_by_ui": true
+    },
+    {
+      "labels": {
+        "boss_cue": "WEAPON RECHARGE 1.2s // KEEP YOUR DISTANCE",
+        "boss_exposed": "THE ARCHITECT  //  PHASE 1",
+        "boss_recharge": "WEAPON RECHARGE 0.0s // KEEP YOUR DISTANCE",
+        "chain": "",
+        "dash": "DASH / READY",
+        "overclock": "",
+        "sentry": "ENGINEER // DASH TO DEPLOY A 3s SENTRY",
+        "shield": "SHIELD RECHARGING"
+      },
+      "remaining": 0.0,
+      "timers_unchanged_by_ui": true
+    }
+  ],
+  "scope": "Seven active timer labels previously rounded positive values to 0.0s. Dash already used minimum 0.1s. Zero/expired and ordinary 1.2s outputs remain exact; real timers are not mutated by UI."
+}

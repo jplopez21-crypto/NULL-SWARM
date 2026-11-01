@@ -613,17 +613,17 @@ func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWor
 		boss_cue_label.text = combat.encounters.cue(boss)
 		boss_label.text = boss.definition.title + "  //  PHASE %d" % combat.encounters.phase
 		if boss.exposed_time > 0.0:
-			boss_label.text += " // EXPOSED %.1fs" % boss.exposed_time
+			boss_label.text += " // EXPOSED %.1fs" % maxf(0.1, boss.exposed_time)
 		boss_bar.value = 100.0 * boss.hp / boss.max_hp
 	_update_overclock(combat)
 	sentry_label.visible = combat.sentry.enabled
-	sentry_label.text = (("FIELD SENTRY %.1fs // NEXT DASH REPOSITIONS IT" % combat.sentry.remaining) if combat.sentry.remaining > 0.0 else "ENGINEER // DASH TO DEPLOY A 3s SENTRY") if combat.sentry.enabled else ""
+	sentry_label.text = (("FIELD SENTRY %.1fs // NEXT DASH REPOSITIONS IT" % maxf(0.1, combat.sentry.remaining)) if combat.sentry.remaining > 0.0 else "ENGINEER // DASH TO DEPLOY A 3s SENTRY") if combat.sentry.enabled else ""
 	var dash_ready: bool = player.dash_cooldown <= 0.0
 	dash_gauge.value = 100.0 if dash_ready else clampf(100.0 * (1.0 - player.dash_cooldown / SwarmPlayer.DASH_COOLDOWN), 0.0, 99.99)
 	if player.health.shield >= player.health.max_shield:
 		defense_label.text = "SHIELD ONLINE"
 	elif player.health.recharge_delay > 0.0:
-		defense_label.text = ("SHIELD DOWN / RECHARGE IN %.1fs" if player.health.shield <= 0.0 else "RECHARGE IN %.1fs") % player.health.recharge_delay
+		defense_label.text = ("SHIELD DOWN / RECHARGE IN %.1fs" if player.health.shield <= 0.0 else "RECHARGE IN %.1fs") % maxf(0.1, player.health.recharge_delay)
 	else:
 		defense_label.text = "SHIELD RECHARGING"
 	dash_button.text = "DASH / READY" if dash_ready else "DASH / %.1fs" % maxf(0.1, player.dash_cooldown)
@@ -659,14 +659,14 @@ func _update_overclock(combat: CombatWorld) -> void:
 		return
 	var next_at: int = (combat.streak / CombatWorld.CHAIN_KILLS + 1) * CombatWorld.CHAIN_KILLS
 	if powered:
-		surge_label.text = "OVERCLOCK %.1fs // FIRE RATE +%d%%" % [combat.overclock, roundi((CombatWorld.OVERCLOCK_RATE - 1.0) * 100)]
+		surge_label.text = "OVERCLOCK %.1fs // FIRE RATE +%d%%" % [maxf(0.1, combat.overclock), roundi((CombatWorld.OVERCLOCK_RATE - 1.0) * 100)]
 		if chaining:
 			surge_label.text += " // CHAIN %d (NEXT %d)" % [combat.streak, next_at]
 		surge_gauge.value = clampf(100.0 * combat.overclock / CombatWorld.OVERCLOCK_DURATION, 0, 100)
 		surge_fill.bg_color = Color("b9f66b")
 	else:
 		var needed: int = next_at - combat.streak
-		surge_label.text = "CHAIN %d // %d %s TO OVERCLOCK // BREAKS IN %.1fs" % [combat.streak, needed, "KILL" if needed == 1 else "KILLS", combat.streak_time]
+		surge_label.text = "CHAIN %d // %d %s TO OVERCLOCK // BREAKS IN %.1fs" % [combat.streak, needed, "KILL" if needed == 1 else "KILLS", maxf(0.1, combat.streak_time)]
 		surge_gauge.value = 100.0 * (combat.streak % CombatWorld.CHAIN_KILLS) / CombatWorld.CHAIN_KILLS
 		surge_fill.bg_color = CYAN
 

@@ -956,6 +956,40 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/attack_lanes_reduced.png")
+	# Display-only QA: an explicitly synthetic last-positive-frame fixture.
+	# These assignments are confined to --capture, never ordinary gameplay.
+	player.dash_cooldown = 0.001
+	player.health.shield = 0.0
+	player.health.recharge_delay = 0.001
+	combat.sentry.enabled = true
+	combat.sentry.remaining = 0.001
+	combat.overclock = 0.001
+	combat.streak = 19
+	combat.streak_time = 0.001
+	combat.encounters.boss = combat.encounters._spawn(combat, Vector3.ZERO, true)
+	combat.encounters.boss.exposed_time = 0.001
+	lane_label.position = Vector2(26, 505)
+	lane_label.text = "COMBAT TIMERS // STAGED QA\nSYNTHETIC POSITIVE TIMER FIXTURE: 0.001s // NOT GAMEPLAY"
+	ui.update_hud(player, progress, combat)
+	var timer_labels := {"dash": ui.dash_button.text, "shield": ui.defense_label.text,
+		"sentry": ui.sentry_label.text, "overclock": ui.surge_label.text,
+		"boss_exposed": ui.boss_label.text, "boss_cue": ui.boss_cue_label.text}
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/combat_timers.png")
+	combat.overclock = 0.0
+	ui.update_hud(player, progress, combat)
+	timer_labels["chain"] = ui.surge_label.text
+	lane_label.text = "CHAIN TIMER // STAGED QA\nSYNTHETIC LAST POSITIVE FRAME: 0.001s // NOT GAMEPLAY"
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/chain_timer.png")
+	combat.encounters.boss.exposed_time = 0.0
+	combat.encounters.attack_cooldown = 0.001
+	ui.update_hud(player, progress, combat)
+	timer_labels["boss_recharge"] = ui.boss_cue_label.text
+	QAReport.write("res://builds/qa/combat-timer-capture.json", {"fixture_seconds": 0.001,
+		"labels": timer_labels, "scope": "Synthetic display-only native capture; no timer-rule or device timing claim."})
 	audio.shutdown()
 	get_tree().quit()
 

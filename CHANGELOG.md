@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-11-01 / Active timer clarity and restored verification
+
+- Active Engineer, shield, Overclock/chain and boss timers now display at least 0.1s until actual zero. Timer/state rules and expired/ordinary values remain unchanged. Five engine snapshots and all existing 15 local suites pass; hosted timer captures/Android/full QA and updated APK are pending.
+- Recovered workspace and independently verified the previous attack-lanes APK and all artifact archives, exact gameplay/XP/pacing/stress comparisons and Android state/logcat records. Closed earlier verification gaps; see TEST_RESULTS.md.
+
 ## Development — 2026-11-01 / Directional attack warnings
 
 - Charge warnings now use broad double chevrons/rails; sentries use a narrow sight line and arrowhead, supplementing existing colors. Shared opaque meshes retain one warning node and all attack rules; low/reduced-flash modes preserve essential warnings.
