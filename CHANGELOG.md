@@ -3,7 +3,7 @@
 ## Development — 2026-11-01 / Mutation choice previews
 
 - Legal upgrade picks that complete a mutation now show its evolved name and a gold marker. Mutation colors persist through focus/hover/press while the cyan focus outline remains. Existing card spacing/index prefixes and selection/recipe/RNG rules remain unchanged. Read-only forecasts suppress capped, blocked, incomplete and already-ready/active paths.
-- All 15 local suites pass, including actual GUI selection and 176-layout coverage. Native card screenshots/receipts, Android/full QA and updated APK pending in TEST_RESULTS.md.
+- All 15 local suites pass, including actual GUI selection and 176-layout coverage. Native card screenshots/receipts, isolated APK startup, all 53 Android checks and full QA passed. Independent downloads preserve gameplay/XP/pacing/stress fingerprints. Actual focus-color finding/correction and current APK: TEST_RESULTS.md.
 
 ## Development — 2026-11-01 / Active timer clarity and restored verification
 
