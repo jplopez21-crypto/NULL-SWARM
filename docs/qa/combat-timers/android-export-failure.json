@@ -1,0 +1,49 @@
+{
+  "source": "91466b620aca88813e12860aecbc8dc7e5053d72",
+  "run": 41312018624,
+  "job": 124864183949,
+  "phase": "App startup; telemetry/menu never available, zero gameplay checks ran",
+  "script_error": "Parse Error: Could not find script for class \"QAReport\" (res://scripts/main.gd:991)",
+  "cause": "The new desktop-only capture routine directly referenced QAReport, a test-only class intentionally excluded from exported APKs. The reference breaks main-script loading before capture could be invoked.",
+  "artifact": {
+    "id": 13085419210,
+    "name": "null-swarm-android-runtime",
+    "digest": "sha256:dd1824642627a2f0a3d3bbe95bf32d1d9a3942737cbab1c6ebb1733d70bdef9f",
+    "size_in_bytes": 1232513
+  },
+  "archive_hash_crc": "independently passed",
+  "disk_budget": {
+    "free_bytes": 91015180288,
+    "minimum_bytes": 8589934592,
+    "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
+  },
+  "previous_native_apks_not_accepted_for_installation": [
+    13085303198,
+    13086405306
+  ],
+  "correction": "Replace capture helper with built-in DirAccess/FileAccess; keep test exclusions. New isolated actual-APK-assets launch gate runs before native publication and before emulator boot, with no source-tree fallback. Existing runtime checks/timeouts remain strict.",
+  "export_smoke_controls": {
+    "previous_verified_apk": {
+      "apk_sha256": "ade526df1b11b4d45b3014fea582f46aa77cbb48611a8e5e8e4e8b6067d0c432",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "regression_apk": {
+      "apk_sha256": "40921c75ad93006b87c24dbc10cff2941edced4b1c0414c686f22eff4fd543c4",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": false,
+      "errors": [
+        "SCRIPT ERROR: Parse Error: Could not find script for class \"QAReport\".",
+        "ERROR: Failed to load script \"res://scripts/main.gd\" with error \"Parse error\"."
+      ],
+      "status": "failed"
+    }
+  },
+  "corrected_hosted_acceptance": "pending"
+}

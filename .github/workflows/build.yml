@@ -105,6 +105,8 @@ jobs:
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-development-debug.apk
           sha256sum builds/android/null-swarm-development-debug.apk > builds/android/SHA256SUMS
           cat builds/android/SHA256SUMS
+      - name: Launch isolated assets from exported APK
+        run: python3 tools/run_export_smoke.py builds/android/null-swarm-development-debug.apk
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: null-swarm-development-apk

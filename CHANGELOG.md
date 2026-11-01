@@ -3,6 +3,7 @@
 ## Development — 2026-11-01 / Active timer clarity and restored verification
 
 - Active Engineer, shield, Overclock/chain and boss timers now display at least 0.1s until actual zero. Timer/state rules and expired/ordinary values remain unchanged. Five engine snapshots and all existing 15 local suites pass; hosted timer captures/Android/full QA and updated APK are pending.
+- Exported APK assets now launch in an isolated headless resource pack before native publication/emulator boot. This caught and fixes a capture routine reference to excluded QAReport; builtin file access preserves test exclusions. Previous verified/regression APK controls respectively pass/fail the new gate; corrected hosted acceptance pending.
 - Android CI now reclaims unused installed downloads/staging and .NET tooling on its disposable runner, checks 8GiB free before userdata creation, and disables emulator metrics prompts. Initial disk-capacity failure is retained; corrected hosted acceptance pending.
 - Recovered workspace and independently verified the previous attack-lanes APK and all artifact archives, exact gameplay/XP/pacing/stress comparisons and Android state/logcat records. Closed earlier verification gaps; see TEST_RESULTS.md.
 

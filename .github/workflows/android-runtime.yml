@@ -74,6 +74,8 @@ jobs:
           PYVERSION
           godot --headless --export-debug Android /tmp/emulator-upgrade.apk
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify /tmp/emulator-upgrade.apk
+      - name: Launch isolated assets from exported emulator APK
+        run: python3 tools/run_export_smoke.py builds/android-runtime/emulator-debug.apk --output builds/android-runtime/export-smoke.json
       - name: Build shell-only multi-pointer touch injector
         run: |
           mkdir -p /tmp/null-swarm-touch/classes /tmp/null-swarm-touch/dex

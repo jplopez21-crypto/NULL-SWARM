@@ -988,8 +988,16 @@ func _capture_session() -> void:
 	combat.encounters.attack_cooldown = 0.001
 	ui.update_hud(player, progress, combat)
 	timer_labels["boss_recharge"] = ui.boss_cue_label.text
-	QAReport.write("res://builds/qa/combat-timer-capture.json", {"fixture_seconds": 0.001,
-		"labels": timer_labels, "scope": "Synthetic display-only native capture; no timer-rule or device timing claim."})
+	# Exported game scripts must not reference the excluded QAReport test class.
+	DirAccess.make_dir_recursive_absolute("res://builds/qa")
+	var timer_file := FileAccess.open("res://builds/qa/combat-timer-capture.json", FileAccess.WRITE)
+	if timer_file == null:
+		push_error("Unable to write staged combat timer capture receipt")
+		get_tree().quit(1)
+		return
+	timer_file.store_string(JSON.stringify({"fixture_seconds": 0.001,
+		"labels": timer_labels, "scope": "Synthetic display-only native capture; no timer-rule or device timing claim."}))
+	timer_file.close()
 	audio.shutdown()
 	get_tree().quit()
 
