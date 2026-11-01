@@ -1,0 +1,18 @@
+{
+  "source": "c6c7af59682143a9cc10ad3aa3e676f01c09414e",
+  "run": 41311255492,
+  "attempt": 1,
+  "job": 124861941063,
+  "phase": "Boot emulator; game not installed/launched and runtime checks did not run",
+  "exit_code": 124,
+  "fatal_emulator_line": "FATAL | Not enough space to create userdata partition. Available: 5443.28 MB, need 7372.80 MB.",
+  "artifact": {
+    "id": 13085044995,
+    "name": "null-swarm-android-runtime",
+    "digest": "sha256:9e2031e6594d43ac7f9df2fbba49e050766475654876dd0449190df9fc5b2895",
+    "size_in_bytes": 252271
+  },
+  "archive_sha_crc": "independently passed",
+  "correction": "CI-only cleanup of installed task downloads/staging and unused preinstalled .NET SDK on the disposable Android worker; assert 8GiB free before boot; preserve strict runtime checks/timeouts. Added no-metrics to avoid future emulator opt-in prompt. Game code/build unchanged.",
+  "hosted_correction_acceptance": "pending"
+}

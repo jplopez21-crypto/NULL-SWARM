@@ -97,6 +97,25 @@ jobs:
           echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force --name null_swarm_qa --package 'system-images;android-35;google_apis;x86_64'
           echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
           echo "$ANDROID_HOME/emulator" >> "$GITHUB_PATH"
+      - name: Reclaim Android emulator disk budget
+        run: |
+          df -h "$ANDROID_AVD_HOME"
+          # These downloads/staging files have already been installed above.
+          rm -f /tmp/godot.zip /tmp/templates.tpz
+          rm -rf /tmp/godot /tmp/export
+          # This disposable GDScript/Android job does not use the preinstalled .NET SDK.
+          sudo rm -rf /usr/share/dotnet
+          python3 - <<'PYDISK'
+          import json, os, shutil
+          from pathlib import Path
+          free = shutil.disk_usage(os.environ['ANDROID_AVD_HOME']).free
+          required = 8 * 1024**3
+          report = {'free_bytes': free, 'minimum_bytes': required,
+                    'scope': 'Disposable Android CI runner; reserve userdata and app installation headroom.'}
+          Path('builds/android-runtime/disk-budget.json').write_text(json.dumps(report, indent=2))
+          print('ANDROID_DISK_BUDGET ' + json.dumps(report), flush=True)
+          assert free >= required, 'Insufficient emulator userdata disk headroom after cleanup; inspect runner disk usage'
+          PYDISK
       - name: Boot emulator
         run: |
           emulator -version > builds/android-runtime/emulator-version.txt 2>&1
@@ -110,7 +129,7 @@ jobs:
           revisions = [n for n in root.iter() if n.tag.endswith('}revision') or n.tag == 'revision']
           assert revisions and list(revisions[0])[0].text == os.environ['EXPECTED_IMAGE_REVISION'], 'Android image revision drift'
           PYPINS
-          emulator -avd null_swarm_qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swangle -accel on -cores 2 -memory 2048 > builds/android-runtime/emulator.log 2>&1 &
+          emulator -avd null_swarm_qa -no-window -no-audio -no-metrics -no-boot-anim -no-snapshot -gpu swangle -accel on -cores 2 -memory 2048 > builds/android-runtime/emulator.log 2>&1 &
           echo $! > /tmp/null-swarm-emulator.pid
           timeout 120s adb wait-for-device
           timeout 300s bash -c 'until [ "$(adb shell getprop sys.boot_completed | tr -d "\r")" = 1 ]; do sleep 2; done'
