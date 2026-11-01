@@ -38,3 +38,9 @@ actual pooled meshes and the smoke test checks their geometry. This does not
 claim an attack happened on-screen when only an inactive pool slot was sampled.
 Physical phone readability, human playtesting, performance and audio remain
 separate acceptance items. Current results and APK identity: TEST_RESULTS.md.
+
+## Hosted acceptance
+
+Verified source 0d08ac9fbb7edd41980a1b7704a9e8a614456a73 passed native 41305109935, Android 41305109895 (53 checks) and full QA 41305109940. Local/native full warning reports and 15 strict suite summaries match. Actual bounded native PNG previews were inspected at detail/ordinary/reduced-flash settings. Android checks read actual pooled geometry and retain both touch-dash orders, moving Pause, progression and lifecycle acceptance. All 26 normal QA sessions and 24 stress scenarios passed.
+
+The execution workspace became unavailable after the local feature commit. The existing GitHub connection supplied CI execution, actual PNG preview bytes and console results. Signature verification and APK checksum are from CI; hosted artifact ZIP digests are recorded. Independent ZIP re-hashing/binary inspection and previous detailed case/fingerprint comparisons could not run. Main remains unmerged, and later CI/report commits need local synchronization when the workspace returns. Physical Mobile performance/readability and human playtesting remain open. Exact source, artifacts, checks and limitations: TEST_RESULTS.md and qa/attack-lanes/verified-ci.json.

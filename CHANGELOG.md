@@ -3,7 +3,7 @@
 ## Development — 2026-11-01 / Directional attack warnings
 
 - Charge warnings now use broad double chevrons/rails; sentries use a narrow sight line and arrowhead, supplementing existing colors. Shared opaque meshes retain one warning node and all attack rules; low/reduced-flash modes preserve essential warnings.
-- Added 67 geometry/pooling/material and exact accepted-source behavior checks, plus read-only pooled-geometry Android acceptance. All 15 local suites pass. Hosted visual/runtime/full QA and updated APK pending in TEST_RESULTS.md.
+- Added 67 geometry/pooling/material and exact accepted-source behavior checks, plus read-only pooled-geometry Android acceptance. All 15 strict suites, 53 Android checks, full gameplay QA and signed native APK export passed. Added bounded actual PNG previews and APK checksum to hosted build logs for review without a local workspace. Detailed verification and archive/hardware/signing limits: TEST_RESULTS.md.
 
 ## Development — 2026-10-31 / Mobile pause and dash readiness
 

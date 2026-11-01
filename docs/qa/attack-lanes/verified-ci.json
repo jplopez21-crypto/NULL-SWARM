@@ -1,0 +1,836 @@
+{
+  "game_source": "12de22a2bd5278adaa471922d0e16ae2b888436c",
+  "verified_source": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+  "local_feature_commit": "e85530f6c62870577aa0d19c67f2be30b80708ec",
+  "local_feature_tree": "cc59efbfda2acfa78c25f1341288d5db13fe0ae5",
+  "verified_tree": "b53b13f83ecff597aa174b104d833fbe9a14a7e7",
+  "local_native_full_report_match": true,
+  "native_headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 43,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 33,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 18,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 75,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 23,
+        "errors": []
+      },
+      {
+        "suite": "touch-dash",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 69,
+        "errors": []
+      },
+      {
+        "suite": "touch-pause",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 97,
+        "errors": []
+      },
+      {
+        "suite": "operative",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "destruction",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 59,
+        "errors": []
+      },
+      {
+        "suite": "attack-lanes",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 67,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1030,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2340,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "warning_tests": {
+    "cases": [
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "crawler",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "crawler",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "crawler",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "crawler",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 66,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "striker",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 84
+      },
+      {
+        "charging_frames": 66,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "striker",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 84
+      },
+      {
+        "charging_frames": 66,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "striker",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 84
+      },
+      {
+        "charging_frames": 66,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "striker",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 84
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "sentry",
+        "pace": 1,
+        "shot_count": 2,
+        "warning_frames": 96
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "sentry",
+        "pace": 1,
+        "shot_count": 2,
+        "warning_frames": 96
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "sentry",
+        "pace": 1.3,
+        "shot_count": 2,
+        "warning_frames": 96
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "sentry",
+        "pace": 1.3,
+        "shot_count": 2,
+        "warning_frames": 96
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "bulwark",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "bulwark",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "bulwark",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "bulwark",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "skimmer",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "skimmer",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "skimmer",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "skimmer",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "insulator",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "insulator",
+        "pace": 1,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": false,
+        "frames": 480,
+        "id": "insulator",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      },
+      {
+        "charging_frames": 0,
+        "exact_accepted_match": true,
+        "flashes": true,
+        "frames": 480,
+        "id": "insulator",
+        "pace": 1.3,
+        "shot_count": 0,
+        "warning_frames": 0
+      }
+    ],
+    "checks": 67,
+    "failures": [],
+    "geometry": [
+      {
+        "behavior": 1,
+        "length": 7,
+        "triangles": 12,
+        "width": 1.08000004291534
+      },
+      {
+        "behavior": 2,
+        "length": 7,
+        "triangles": 7,
+        "width": 0.800000011920929
+      }
+    ],
+    "reference": {
+      "fixture_sha256": "fbce1179ccc5b2ebfed622fb5e8ad67d0d0a354221b07795d260abb101b5dd0d",
+      "scope": "Frozen accepted enemy; only class_name removed for paired same-worker behavior/visibility traces.",
+      "source_remote": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+      "source_sha256": "1b9666bbf9052bfc1a9cb484e8725efd54e5539ce3f0dd88b8a9d243793d8c7e"
+    },
+    "scope": "Geometry and exact same-worker accepted-enemy behavior pairs; no device FPS or human readability claim."
+  },
+  "behavior_source_proof": {
+    "previous_remote": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+    "unchanged_enemy_functions": [
+      "_build_legacy_body",
+      "activate",
+      "deactivate",
+      "think",
+      "tick",
+      "hit"
+    ],
+    "only_configure_statement_changed": "Replace the warning box factory with directional mesh factory; other archetypes use original box.",
+    "unchanged_other_behavior_files": {
+      "scripts/player.gd": "2020ce19e044385eb838ad288a407811a3f0e797d5aeef702a540be855a20bd0",
+      "systems/input_router.gd": "2d18e067aede1283bd6040b5ff3f424be00017869ea3427cc24a8dbf2c2edd3a",
+      "systems/combat_world.gd": "db94d72738ac632f3613addc5294a1c13e97fa159adb2e4862d184a9d9b17f39",
+      "bosses/encounter_director.gd": "938eee78af923b5ddaeb868ee5a023706717a8fe74f9a8f284dc3908d8782687",
+      "systems/swarm_adaptation.gd": "9793105e5dc13622a7b9fcf34b57d539ab1d856e4a591c0dd6fe7947e215f102",
+      "systems/corruption_protocol.gd": "e8e79b67275b420f98f793edc0b3cd64b106385ce4b1fdb0d46e1f5e462d2b77",
+      "systems/save_store.gd": "461fcbb68e8e80dc035f7d87e3ba5b57429493640d0b27c41183e05861573be7",
+      "ui/game_ui.gd": "e4284b980dc6d59bf86e635acd8186bcb1d7b7e207b2808caa573d4072143901",
+      "ui/dash_button.gd": "2fe94a07fd2a369a5824174a89cf5c62895e184f27577cd0780e895beabbed7d",
+      "ui/touch_action_button.gd": "e49fa84a814540db093238eb12a3e34ef8cab932d8d077c84eacdffb3119dc5c"
+    }
+  },
+  "main_source_proof": {
+    "unchanged_functions": [
+      "_ready",
+      "_build_arena",
+      "start_run",
+      "_physics_process",
+      "_process",
+      "_sample_performance",
+      "open_performance_report",
+      "copy_performance_report",
+      "_input",
+      "_notification",
+      "pause_run",
+      "resume_run",
+      "open_build",
+      "go_menu",
+      "_record_result",
+      "finish_run",
+      "show_upgrade",
+      "_render_upgrades",
+      "show_corruption",
+      "return_upgrades",
+      "select_corruption",
+      "upgrade_description",
+      "select_upgrade",
+      "change_setting",
+      "_exit_tree",
+      "reroll_upgrades",
+      "_weapon_sound",
+      "_warden_down",
+      "_architect_down",
+      "_checkpoint_progress",
+      "show_results",
+      "open_lab",
+      "_return_from_lab",
+      "purchase_research",
+      "select_kit",
+      "open_backup",
+      "export_backup",
+      "preview_backup",
+      "restore_backup",
+      "preview_recovery"
+    ],
+    "only_changed_function": "_capture_session",
+    "scope": "Only desktop staged capture changed; ordinary main gameplay/state/physics/audio/save functions are exact accepted source."
+  },
+  "visual_review": {
+    "method": "Read actual hosted PNG bytes from bounded build-log previews; not generated mockups or physical Android screenshots.",
+    "source": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+    "job": 124843844320,
+    "images": [
+      "attack_lanes_detail.png",
+      "attack_lanes_field.png",
+      "attack_lanes_reduced.png"
+    ],
+    "observations": [
+      "Detail board shows both opaque directional shapes above the deck: broad orange double chevrons/rails and narrow violet sight line/ticks/solid head.",
+      "Ordinary-camera and low/reduced-flash boards retain warning visibility. Synthetic annotation overlaps part of the left lane; unobscured detail board supplies full shape review. Annotations are capture-only.",
+      "All captures freeze actual ordinary enemy windup ticks; no human gameplay/readability/FPS claim."
+    ]
+  },
+  "native_apk": {
+    "run": 41305109935,
+    "artifact": 13082713304,
+    "sha256": "ade526df1b11b4d45b3014fea582f46aa77cbb48611a8e5e8e4e8b6067d0c432",
+    "signature": "Hosted Godot export and apksigner verify passed; not independently rerun locally.",
+    "download": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41305109935/artifacts/13082713304",
+    "extract": "android/null-swarm-development-debug.apk",
+    "package": "com.nullswarm.game.development",
+    "variant": "ARM64 Mobile; QA probe disabled by native project/export configuration (unchanged accepted configuration).",
+    "independent_archive_verification": "Could not run: execution environment unavailable after local commit. GitHub reports hosted artifact digests; APK checksum is from completed CI logs."
+  },
+  "native_artifacts": [
+    {
+      "id": 13083272095,
+      "name": "null-swarm-headless-results",
+      "digest": "sha256:0657fec27fac6bfdadff58526a2d8ee6d1803ab05acbc940a0d233384447a381",
+      "size_bytes": 403882,
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73"
+    },
+    {
+      "id": 13082713304,
+      "name": "null-swarm-development-apk",
+      "digest": "sha256:bd5d69bee1c8bceca70a6fcacbfb42ccbfb144b0239b21f83ed125e6929867d6",
+      "size_bytes": 27893728,
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73"
+    },
+    {
+      "id": 13082693374,
+      "name": "null-swarm-presentation-captures",
+      "digest": "sha256:2d1f16963e9ee2508abb7bf887f25547fe25510de093934f29704e38b929c055",
+      "size_bytes": 4981391,
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73"
+    }
+  ],
+  "environment_limits": "15 strict local suites passed before workspace loss; local editor strict acceptance encountered sandbox TCP listen errors, additional network request canceled. Existing GitHub connector remained usable; added bounded previews and APK checksum to native CI logs without production changes. Cannot run further local commands, download/re-hash archives or synchronize later remote-only CI/report commits until workspace returns.",
+  "report_checkpoint_only": true,
+  "workflows": [
+    {
+      "id": 41305109935,
+      "name": "Validate and build Android",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41305109935"
+    },
+    {
+      "id": 41305109895,
+      "name": "Android emulator runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41305109895"
+    },
+    {
+      "id": 41305109940,
+      "name": "Repeatable gameplay QA",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41305109940"
+    }
+  ],
+  "android": {
+    "run": 41305109895,
+    "job": 124843906938,
+    "status": "passed",
+    "checks": [
+      {
+        "name": "menu capture contains rendered game instead of boot splash",
+        "passed": true
+      },
+      {
+        "name": "Android Compatibility renderer initialized",
+        "passed": true
+      },
+      {
+        "name": "real Android settings touch enables performance preference",
+        "passed": true
+      },
+      {
+        "name": "real Android touch events moved player",
+        "passed": true
+      },
+      {
+        "name": "touch dash activated",
+        "passed": true
+      },
+      {
+        "name": "dash keeps operative visible and updates readiness gauge",
+        "passed": true
+      },
+      {
+        "name": "active Android dash cooldown text agrees with unavailable readiness",
+        "passed": true
+      },
+      {
+        "name": "Android operative uses the actual shared faceted armor and rifle geometry",
+        "passed": true
+      },
+      {
+        "name": "Android pooled enemies contain original directional charge and sentry ground meshes",
+        "passed": true
+      },
+      {
+        "name": "performance diagnostics are visibly active during real Android gameplay",
+        "passed": true
+      },
+      {
+        "name": "touch pause freezes simulation",
+        "passed": true
+      },
+      {
+        "name": "Android touch opens real equipped-weapon and mutation guide",
+        "passed": true
+      },
+      {
+        "name": "build guide keeps Android combat and ranks paused",
+        "passed": true
+      },
+      {
+        "name": "Android guide back returns to pause",
+        "passed": true
+      },
+      {
+        "name": "touch resume returns to combat",
+        "passed": true
+      },
+      {
+        "name": "auto combat, XP collection and real upgrade touch passed",
+        "passed": true
+      },
+      {
+        "name": "ordinary Android XP collection requests dedicated memory audio playback",
+        "passed": true
+      },
+      {
+        "name": "normal gameplay checkpoints nonzero earned salvage before lifecycle tests",
+        "passed": true
+      },
+      {
+        "name": "actual Android kills display live chain or Overclock gauge",
+        "passed": true
+      },
+      {
+        "name": "ordinary Android enemy death displays actual pooled eight-triangle chips",
+        "passed": true
+      },
+      {
+        "name": "ordinary Android enemy death dispatches original bounded destruction cue",
+        "passed": true
+      },
+      {
+        "name": "Android background/resume preserves paused state",
+        "passed": true
+      },
+      {
+        "name": "Android report contains real positive combat observations and read-only device context",
+        "passed": true
+      },
+      {
+        "name": "Android performance report clipboard write and readback passed",
+        "passed": true
+      },
+      {
+        "name": "performance report back preserves paused combat and exact progression",
+        "passed": true
+      },
+      {
+        "name": "force-stop/relaunch retains exact nonzero banked progression and opens menu",
+        "passed": true
+      },
+      {
+        "name": "touch-changed setting survives Android force-stop/relaunch",
+        "passed": true
+      },
+      {
+        "name": "performance preference survives Android force-stop/relaunch",
+        "passed": true
+      },
+      {
+        "name": "relaunch menu is visibly rendered",
+        "passed": true
+      },
+      {
+        "name": "Android backup code survives real clipboard export and paste",
+        "passed": true
+      },
+      {
+        "name": "touch-confirmed backup restore preserves progress and creates recovery copy",
+        "passed": true
+      },
+      {
+        "name": "Android accepts higher-version same-signer APK update",
+        "passed": true
+      },
+      {
+        "name": "in-place APK update retains changed settings and banked progression",
+        "passed": true
+      },
+      {
+        "name": "saved performance diagnostics appear on deployment after APK update",
+        "passed": true
+      },
+      {
+        "name": "synthetic Architect fixture restores through GUI and real Foundry touch selects Engineer",
+        "passed": true
+      },
+      {
+        "name": "Engineer deployment has actual advertised equipment health and passive",
+        "passed": true
+      },
+      {
+        "name": "Engineer real touch dash leaves sentry at takeoff",
+        "passed": true
+      },
+      {
+        "name": "rejected Android dash cannot stack or refresh Engineer sentries",
+        "passed": true
+      },
+      {
+        "name": "Android pause freezes active Engineer sentry lifetime",
+        "passed": true
+      },
+      {
+        "name": "Engineer sentry fires during normal Android touch combat",
+        "passed": true
+      },
+      {
+        "name": "earned-kit fixture Engineer selection survives Android relaunch",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: independent held fingers activate dash and movement together",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: releasing dash preserves held movement",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: both touch controls release cleanly",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: touch releases produce exactly one dash",
+        "passed": true
+      },
+      {
+        "name": "dash-first: independent held fingers activate dash and movement together",
+        "passed": true
+      },
+      {
+        "name": "dash-first: releasing dash preserves held movement",
+        "passed": true
+      },
+      {
+        "name": "dash-first: both touch controls release cleanly",
+        "passed": true
+      },
+      {
+        "name": "dash-first: touch releases produce exactly one dash",
+        "passed": true
+      },
+      {
+        "name": "held joystick plus second-finger Pause freezes and clears both HUD actions",
+        "passed": true
+      },
+      {
+        "name": "two-finger Pause keeps actual simulation and dash frozen",
+        "passed": true
+      },
+      {
+        "name": "touch Resume restores controls without stale walking or deferred dash",
+        "passed": true
+      },
+      {
+        "name": "no script errors, game ANRs or Android fatal crashes in logcat",
+        "passed": true
+      }
+    ],
+    "check_count": 53,
+    "variant": "API 35 x86_64 Compatibility / SWANGLE software rendering; audio output disabled",
+    "artifact": [
+      {
+        "id": 13082847439,
+        "digest": "sha256:f255465b7fa3fa85d6ef71ebaed713fa1ef9f565c0a6bec5c60083727fec6f31",
+        "size_bytes": 3524363,
+        "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73"
+      }
+    ],
+    "scope": "Actual Android touchscreen/gameplay/lifecycle acceptance; new lane check reads actual pooled geometry, not an observed live attack. Runtime's fatal/script/ANR logcat guard passed. No independent archive or final-logcat review while execution environment unavailable."
+  },
+  "gameplay_qa": {
+    "run": 41305109940,
+    "job": 124843867899,
+    "passed_summaries": {
+      "GRID_BENCHMARK": 9,
+      "DIAGNOSTICS_PARITY_RESULT": 2,
+      "BOT_REPORT": 14,
+      "XP_REPORT": 6,
+      "PACING_REPORT": 4,
+      "STRESS_REPORT": 6,
+      "CORRUPTION_STRESS_REPORT": 6,
+      "GRAVITY_STRESS_REPORT": 6,
+      "ENGINEER_STRESS_REPORT": 6
+    },
+    "strict_suites": [
+      "engineer",
+      "gui-input",
+      "audio",
+      "android-probe",
+      "resources",
+      "input",
+      "touch-dash",
+      "touch-pause",
+      "operative",
+      "destruction",
+      "attack-lanes",
+      "systems",
+      "corruption",
+      "ui-headless",
+      "scene-smoke"
+    ],
+    "normal_sessions": 26,
+    "corruption_cases": [
+      "[101, \"electric\", \"redline\"] outcome=victory links=[\"redline\"]",
+      "[202, \"kinetic\", \"fracture\"] outcome=victory links=[\"fracture\"]",
+      "[101, \"kinetic\", \"hive\"] outcome=victory links=[\"hive\"]",
+      "[202, \"kinetic\", \"all\"] outcome=victory links=[\"redline\", \"fracture\", \"hive\"]"
+    ],
+    "extended_cases": [
+      "[303, \"halo\", \"vanguard\"] outcome=defeat time=114.15",
+      "[303, \"arcstorm\", \"vanguard\"] outcome=victory time=600.02",
+      "[404, \"kinetic\", \"vanguard\"] outcome=victory time=600.02",
+      "[404, \"electric\", \"vanguard\"] outcome=victory time=600.02",
+      "[505, \"electric\", \"conductor\"] outcome=victory time=637.57",
+      "[505, \"halo\", \"sentinel\"] outcome=victory time=600.02"
+    ],
+    "engineer_cases": [
+      "seed=101 outcome=victory sentry={ \"activations\": 17, \"shots\": 94 }",
+      "seed=202 outcome=victory sentry={ \"activations\": 22, \"shots\": 143 }"
+    ],
+    "rendered_ui": {
+      "checks": 2341,
+      "layouts": 168,
+      "failures": 0
+    },
+    "stress_scenarios": 24,
+    "scope": "Verified completed workflow, actual console pass summaries/case outputs and hosted artifact identity. Detailed report archives and cross-build case/fingerprint comparisons were not independently downloaded/recomputed while execution environment unavailable."
+  },
+  "qa_artifact": [
+    {
+      "id": 13082528301,
+      "digest": "sha256:459ac0bcfa9cc61721e9b9eda73b5bb626fff523d3d8aec4d5a9c202abb7d451",
+      "size_bytes": 19954260,
+      "head_sha": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73"
+    }
+  ],
+  "limitations": [
+    "Physical S23 Ultra Mobile FPS/frame times/thermals, touch latency, Android 10/cutouts, human warning readability/fun and audio mix remain unverified.",
+    "CPU benchmark results and software-emulator runtime are not phone FPS evidence; no comparative performance improvement is claimed.",
+    "Original warning shapes remain development artwork. Lane widths mark direction rather than exact collision boundaries; sentry line is not full projectile range.",
+    "Engineer Android cases use a labelled synthetic Architect backup restored through normal GUI after ordinary progression acceptance; not earned-on-device unlock proof.",
+    "Diagnostic signing rotates. Preserve progress backups. Protected stable Preview/release signing remains unconfigured; no release AAB claimed.",
+    "Independent ZIP/APK download re-hashing and previous case/pacing/stress fingerprint comparisons could not run after execution workspace became unavailable. CI checks and hosted artifact digests are identified separately. Main remains unmerged."
+  ]
+}
