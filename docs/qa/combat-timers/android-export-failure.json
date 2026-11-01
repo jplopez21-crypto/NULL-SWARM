@@ -45,5 +45,5 @@
       "status": "failed"
     }
   },
-  "corrected_hosted_acceptance": "pending"
+  "corrected_hosted_acceptance": "Passed at cb797257a911d775e9df352fbdaae1d08781da3f: final native/emulator isolated asset startup, all 53 Android checks and full QA. No checks/timeouts/export exclusions relaxed."
 }

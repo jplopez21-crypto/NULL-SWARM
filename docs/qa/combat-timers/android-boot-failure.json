@@ -14,10 +14,16 @@
   },
   "archive_sha_crc": "independently passed",
   "correction": "CI-only cleanup of installed task downloads/staging and unused preinstalled .NET SDK on the disposable Android worker; assert 8GiB free before boot; preserve strict runtime checks/timeouts. Added no-metrics to avoid future emulator opt-in prompt. Game code/build unchanged.",
-  "hosted_correction_acceptance": "Disk preflight and boot passed at 91466b6; app startup then caught a separate excluded test-class dependency. Final complete runtime acceptance pending.",
   "observed_disk_budget": {
     "free_bytes": 91015180288,
     "minimum_bytes": 8589934592,
     "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
-  }
+  },
+  "final_disk_budget": {
+    "free_bytes": 91015061504,
+    "minimum_bytes": 8589934592,
+    "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
+  },
+  "intermediate_disk_observation": "Disk preflight and boot passed at 91466b6; app startup then caught a separate excluded test-class dependency. Final complete runtime acceptance pending.",
+  "hosted_correction_acceptance": "Passed at cb797257a911d775e9df352fbdaae1d08781da3f: final native/emulator isolated asset startup, all 53 Android checks and full QA. No checks/timeouts/export exclusions relaxed."
 }

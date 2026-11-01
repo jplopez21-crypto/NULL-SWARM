@@ -1,0 +1,626 @@
+{
+  "verified_game_test_ci_source": "cb797257a911d775e9df352fbdaae1d08781da3f",
+  "report_checkpoint_only": true,
+  "previous_verified_game_source": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+  "workflows": [
+    {
+      "id": 41313141942,
+      "name": "Validate and build Android",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "cb797257a911d775e9df352fbdaae1d08781da3f",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41313141942"
+    },
+    {
+      "id": 41313141896,
+      "name": "Android emulator runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "cb797257a911d775e9df352fbdaae1d08781da3f",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41313141896"
+    },
+    {
+      "id": 41313141909,
+      "name": "Repeatable gameplay QA",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "cb797257a911d775e9df352fbdaae1d08781da3f",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41313141909"
+    }
+  ],
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 43,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 33,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 18,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 75,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 23,
+        "errors": []
+      },
+      {
+        "suite": "touch-dash",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 69,
+        "errors": []
+      },
+      {
+        "suite": "touch-pause",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 97,
+        "errors": []
+      },
+      {
+        "suite": "operative",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "destruction",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 59,
+        "errors": []
+      },
+      {
+        "suite": "attack-lanes",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 67,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1030,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2340,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "0c3fc71b5bce368b5cc76dad6bb34a729a32d4a2946d616a2ac9be8fdf3d5da6",
+    "apk_bytes": 27816036,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "unchanged_previous_compiled_modules": [
+      "assets/systems/spawn_director.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/effects/operative_model.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/components/health.gdc",
+      "assets/scripts/player.gdc",
+      "assets/ui/dash_button.gdc",
+      "assets/ui/touch_action_button.gdc",
+      "assets/systems/performance_history.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/enemies/attack_lanes.gdc",
+      "assets/weapons/weapon_rig.gdc",
+      "assets/enemies/chassis_models.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/enemies/enemy.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/systems/android_qa_probe.gdc",
+      "assets/systems/input_router.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/systems/progression.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/systems/combat_world.gdc",
+      "assets/systems/research.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/effects/debris_fragment.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/systems/pickup_system.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/effects/memory_crystals.gdc"
+    ],
+    "changed_module_sha256": {
+      "assets/scripts/main.gdc": "5bb6ffbf8ddf6aa38e6173021d26b769da254bf4ba35068e35b4d4d214fe7243",
+      "assets/ui/game_ui.gdc": "2e314b282ce211e39c0618dd253c74acf70100d47fec12c34c444f723f498dea",
+      "assets/bosses/encounter_director.gdc": "e4e8cd9f5557c644dcb0cfd6c21f6e1e50fa541ba157e6653c083fac09a765ef"
+    }
+  },
+  "android": {
+    "status": "passed",
+    "checks": 53,
+    "actual_pause_samples": {
+      "multitouch_pause": true,
+      "injection": "shell UID / real Android two-pointer MotionEvent",
+      "samples": {
+        "walking": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": 7,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              1.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.86666679382324,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.683333333333334,
+          "state": "playing"
+        },
+        "paused_while_fingers_held": {
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.86666679382324,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.683333333333334,
+          "state": "paused"
+        },
+        "resumed": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.86666679382324,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.966666666666668,
+          "state": "playing"
+        }
+      }
+    },
+    "apk_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "ordinary_checkpoint": {
+      "time": 30.1833333333329,
+      "kills": 35,
+      "level": 4,
+      "xp": 95,
+      "salvage": 1
+    },
+    "disk_budget": {
+      "free_bytes": 91015061504,
+      "minimum_bytes": 8589934592,
+      "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
+    },
+    "export_smoke": {
+      "apk_sha256": "6f62784750c9c16b1f3e89cc2c2bbc79ecc19123d30776a95d415f166fe48f26",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "both_logcat_scans": "passed",
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "median_fps": 5,
+      "simulation_seconds_per_wall_second": 0.4796426479203251,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    }
+  },
+  "isolated_export_startup": {
+    "headless": {
+      "apk_sha256": "0c3fc71b5bce368b5cc76dad6bb34a729a32d4a2946d616a2ac9be8fdf3d5da6",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "android": {
+      "apk_sha256": "6f62784750c9c16b1f3e89cc2c2bbc79ecc19123d30776a95d415f166fe48f26",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "independent_native": {
+      "apk_sha256": "0c3fc71b5bce368b5cc76dad6bb34a729a32d4a2946d616a2ac9be8fdf3d5da6",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    }
+  },
+  "capture": {
+    "fixture_seconds": 0.001,
+    "labels": {
+      "boss_cue": "CORE EXPOSED 0.1s // +25% DAMAGE",
+      "boss_exposed": "THE ARCHITECT  //  PHASE 1 // EXPOSED 0.1s",
+      "boss_recharge": "WEAPON RECHARGE 0.1s // KEEP YOUR DISTANCE",
+      "chain": "CHAIN 19 // 1 KILL TO OVERCLOCK // BREAKS IN 0.1s",
+      "dash": "DASH / 0.1s",
+      "overclock": "OVERCLOCK 0.1s // FIRE RATE +60% // CHAIN 19 (NEXT 20)",
+      "sentry": "FIELD SENTRY 0.1s // NEXT DASH REPOSITIONS IT",
+      "shield": "SHIELD DOWN / RECHARGE IN 0.1s"
+    },
+    "scope": "Synthetic display-only native capture; no timer-rule or device timing claim."
+  },
+  "visual_comparison": {
+    "combat_timers.png": {
+      "initial_sha256": "cb97e367f148653c319f967d1335c938d9ba14423ec47fb50faab44e28d0ab25",
+      "final_sha256": "cb97e367f148653c319f967d1335c938d9ba14423ec47fb50faab44e28d0ab25",
+      "identical_bytes": true
+    },
+    "chain_timer.png": {
+      "initial_sha256": "6868c20daf689c4563ebc2244c4f6182ffbb65b1860f203d99c821c11f09ec30",
+      "final_sha256": "6868c20daf689c4563ebc2244c4f6182ffbb65b1860f203d99c821c11f09ec30",
+      "identical_bytes": true
+    }
+  },
+  "gameplay_comparison": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2341,
+    "ui_layouts": 168,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_receipt_matches_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "source_preservation": {
+    "previous_remote": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+    "allowed_changes": {
+      "ui/game_ui.gd": [
+        "update_hud",
+        "_update_overclock"
+      ],
+      "bosses/encounter_director.gd": [
+        "cue"
+      ],
+      "scripts/main.gd": [
+        "_capture_session"
+      ]
+    },
+    "unchanged_functions": {
+      "ui/game_ui.gd": [
+        "_ready",
+        "label_at",
+        "button_at",
+        "_safe_area",
+        "_bar",
+        "_build_hud",
+        "_panel",
+        "show_menu",
+        "set_hud",
+        "hide_panel",
+        "show_pause",
+        "_build_card",
+        "show_build",
+        "visible_build_text",
+        "show_results",
+        "show_upgrades",
+        "show_corruption",
+        "show_settings",
+        "show_performance_report",
+        "visible_performance_report",
+        "set_performance_copy_status",
+        "set_performance_copy_pending",
+        "set_performance_stats",
+        "add_damage",
+        "_process",
+        "update_memory",
+        "_draw_memory",
+        "_draw_feedback",
+        "toast",
+        "_draw_brand",
+        "show_lab",
+        "show_backup",
+        "show_backup_confirmation"
+      ],
+      "bosses/encounter_director.gd": [
+        "tick",
+        "_spawn",
+        "_clear_warnings",
+        "allows_adaptation",
+        "radial_direction",
+        "_update_warning_visuals"
+      ],
+      "scripts/main.gd": [
+        "_ready",
+        "_build_arena",
+        "start_run",
+        "_physics_process",
+        "_process",
+        "_sample_performance",
+        "open_performance_report",
+        "copy_performance_report",
+        "_input",
+        "_notification",
+        "pause_run",
+        "resume_run",
+        "open_build",
+        "go_menu",
+        "_record_result",
+        "finish_run",
+        "show_upgrade",
+        "_render_upgrades",
+        "show_corruption",
+        "return_upgrades",
+        "select_corruption",
+        "upgrade_description",
+        "select_upgrade",
+        "change_setting",
+        "_exit_tree",
+        "reroll_upgrades",
+        "_weapon_sound",
+        "_warden_down",
+        "_architect_down",
+        "_checkpoint_progress",
+        "show_results",
+        "open_lab",
+        "_return_from_lab",
+        "purchase_research",
+        "select_kit",
+        "open_backup",
+        "export_backup",
+        "preview_backup",
+        "restore_backup",
+        "preview_recovery"
+      ]
+    },
+    "unchanged_files": {
+      "scripts/player.gd": "2020ce19e044385eb838ad288a407811a3f0e797d5aeef702a540be855a20bd0",
+      "systems/combat_world.gd": "db94d72738ac632f3613addc5294a1c13e97fa159adb2e4862d184a9d9b17f39",
+      "systems/input_router.gd": "2d18e067aede1283bd6040b5ff3f424be00017869ea3427cc24a8dbf2c2edd3a",
+      "systems/field_sentry.gd": "3c26611386a9583a33beef9f30be911485827bd6b91c58badbb57af7b762d23e",
+      "systems/save_store.gd": "461fcbb68e8e80dc035f7d87e3ba5b57429493640d0b27c41183e05861573be7",
+      "systems/progression.gd": "63dfb90a20c4ce839f679aaf3e65835b41945807a623d50a7acc77b77cb765b2",
+      "systems/corruption_protocol.gd": "e8e79b67275b420f98f793edc0b3cd64b106385ce4b1fdb0d46e1f5e462d2b77",
+      "systems/spawn_director.gd": "a222dad1529a0ae9144f04969803a78a528cc2a081a52efa19ebb52e2da43521",
+      "enemies/enemy.gd": "42055775b1b23eae92242b40e34b1c3532c8db7279f000871e965dc0c8a384d4",
+      "enemies/attack_lanes.gd": "d2982ba895dc31d979617b3f27a5e635fbe69dd052d7bc357e407f0993a1dbca",
+      "systems/audio_system.gd": "b71f77f76f02434bc11d4b78935bb0bea0a35a6dd788bb5f5f3dafb324970ec6",
+      "ui/dash_button.gd": "2fe94a07fd2a369a5824174a89cf5c62895e184f27577cd0780e895beabbed7d",
+      "ui/touch_action_button.gd": "e49fa84a814540db093238eb12a3e34ef8cab932d8d077c84eacdffb3119dc5c"
+    }
+  },
+  "manual_engine_snapshots": "local-hud-snapshots.json",
+  "initial_failures": {
+    "android-boot-failure.json": {
+      "source": "c6c7af59682143a9cc10ad3aa3e676f01c09414e",
+      "run": 41311255492,
+      "attempt": 1,
+      "job": 124861941063,
+      "phase": "Boot emulator; game not installed/launched and runtime checks did not run",
+      "exit_code": 124,
+      "fatal_emulator_line": "FATAL | Not enough space to create userdata partition. Available: 5443.28 MB, need 7372.80 MB.",
+      "artifact": {
+        "id": 13085044995,
+        "name": "null-swarm-android-runtime",
+        "digest": "sha256:9e2031e6594d43ac7f9df2fbba49e050766475654876dd0449190df9fc5b2895",
+        "size_in_bytes": 252271
+      },
+      "archive_sha_crc": "independently passed",
+      "correction": "CI-only cleanup of installed task downloads/staging and unused preinstalled .NET SDK on the disposable Android worker; assert 8GiB free before boot; preserve strict runtime checks/timeouts. Added no-metrics to avoid future emulator opt-in prompt. Game code/build unchanged.",
+      "observed_disk_budget": {
+        "free_bytes": 91015180288,
+        "minimum_bytes": 8589934592,
+        "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
+      },
+      "final_disk_budget": {
+        "free_bytes": 91015061504,
+        "minimum_bytes": 8589934592,
+        "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
+      },
+      "intermediate_disk_observation": "Disk preflight and boot passed at 91466b6; app startup then caught a separate excluded test-class dependency. Final complete runtime acceptance pending.",
+      "hosted_correction_acceptance": "Passed at cb797257a911d775e9df352fbdaae1d08781da3f: final native/emulator isolated asset startup, all 53 Android checks and full QA. No checks/timeouts/export exclusions relaxed."
+    },
+    "android-export-failure.json": {
+      "source": "91466b620aca88813e12860aecbc8dc7e5053d72",
+      "run": 41312018624,
+      "job": 124864183949,
+      "phase": "App startup; telemetry/menu never available, zero gameplay checks ran",
+      "script_error": "Parse Error: Could not find script for class \"QAReport\" (res://scripts/main.gd:991)",
+      "cause": "The new desktop-only capture routine directly referenced QAReport, a test-only class intentionally excluded from exported APKs. The reference breaks main-script loading before capture could be invoked.",
+      "artifact": {
+        "id": 13085419210,
+        "name": "null-swarm-android-runtime",
+        "digest": "sha256:dd1824642627a2f0a3d3bbe95bf32d1d9a3942737cbab1c6ebb1733d70bdef9f",
+        "size_in_bytes": 1232513
+      },
+      "archive_hash_crc": "independently passed",
+      "disk_budget": {
+        "free_bytes": 91015180288,
+        "minimum_bytes": 8589934592,
+        "scope": "Disposable Android CI runner; reserve userdata and app installation headroom."
+      },
+      "previous_native_apks_not_accepted_for_installation": [
+        13085303198,
+        13086405306
+      ],
+      "correction": "Replace capture helper with built-in DirAccess/FileAccess; keep test exclusions. New isolated actual-APK-assets launch gate runs before native publication and before emulator boot, with no source-tree fallback. Existing runtime checks/timeouts remain strict.",
+      "export_smoke_controls": {
+        "previous_verified_apk": {
+          "apk_sha256": "ade526df1b11b4d45b3014fea582f46aa77cbb48611a8e5e8e4e8b6067d0c432",
+          "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+          "asset_files": 100,
+          "exit_code": 0,
+          "scene_smoke_marker": true,
+          "errors": [],
+          "status": "passed"
+        },
+        "regression_apk": {
+          "apk_sha256": "40921c75ad93006b87c24dbc10cff2941edced4b1c0414c686f22eff4fd543c4",
+          "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+          "asset_files": 100,
+          "exit_code": 0,
+          "scene_smoke_marker": false,
+          "errors": [
+            "SCRIPT ERROR: Parse Error: Could not find script for class \"QAReport\".",
+            "ERROR: Failed to load script \"res://scripts/main.gd\" with error \"Parse error\"."
+          ],
+          "status": "failed"
+        }
+      },
+      "corrected_hosted_acceptance": "Passed at cb797257a911d775e9df352fbdaae1d08781da3f: final native/emulator isolated asset startup, all 53 Android checks and full QA. No checks/timeouts/export exclusions relaxed."
+    }
+  },
+  "artifacts": [
+    {
+      "id": 13086407363,
+      "name": "null-swarm-development-apk",
+      "digest": "sha256:d79da2051dff506fa286256b212d3bd33aaba691b9010a870a6860f762f57d74",
+      "size_in_bytes": 27895494,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13086302884,
+      "name": "null-swarm-headless-results",
+      "digest": "sha256:8c79341f6efeb42eb7b62d76d534816d210a0ccbcd6dff446d61be694682729f",
+      "size_in_bytes": 405011,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13086228078,
+      "name": "null-swarm-presentation-captures",
+      "digest": "sha256:fbed9f84c5fc4994cc1566bfef4cd364f0a3545b785945384f5a7c13d2cd4e1f",
+      "size_in_bytes": 5187188,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13085922810,
+      "name": "null-swarm-android-runtime",
+      "digest": "sha256:56579cd2370f5e0be3557035466c1cfb804df72414abb12034c318668773f4ce",
+      "size_in_bytes": 4008216,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13086232566,
+      "name": "null-swarm-gameplay-qa",
+      "digest": "sha256:8bacbd5f995b69b07612e7dc6a9a1e1d78018459876284d22607fcfb744218f8",
+      "size_in_bytes": 19993884,
+      "hash_crc": "passed"
+    }
+  ],
+  "apk_zip": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41313141942/artifacts/13086407363",
+  "visual_review": "Both final timer/chain native PNGs are byte-identical to the independently inspected staged originals. Actual final Android Engineer combat screenshot inspected; ordinary active timer shown. Synthetic 0.001s boards are not device timing or human playtesting.",
+  "limits": [
+    "Actual Android runtime uses API 35 x86_64 Compatibility/SWANGLE software rendering with audio output disabled. Headless exported-assets startup is a separate resource/scene check, not Android rendering/ABI acceptance.",
+    "Physical S23 Ultra Mobile FPS/frame times/thermals/touch latency, Android 10/cutouts, human fun/readability and audio mix remain unverified. No causal speedup claim.",
+    "Engineer Android cases follow labelled synthetic Architect-backup restoration after ordinary progression acceptance; not earned-on-device unlock proof.",
+    "CI signature verification passed; not independently rerun locally. Archive/APK hashes and package/ABI/probe-disabled/exclusion checks independently passed.",
+    "Diagnostic signing rotates; preserve backups. Protected stable Preview/release signing is unconfigured; no release AAB claimed. Main remains unmerged."
+  ]
+}

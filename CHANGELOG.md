@@ -2,9 +2,9 @@
 
 ## Development — 2026-11-01 / Active timer clarity and restored verification
 
-- Active Engineer, shield, Overclock/chain and boss timers now display at least 0.1s until actual zero. Timer/state rules and expired/ordinary values remain unchanged. Five engine snapshots and all existing 15 local suites pass; hosted timer captures/Android/full QA and updated APK are pending.
-- Exported APK assets now launch in an isolated headless resource pack before native publication/emulator boot. This caught and fixes a capture routine reference to excluded QAReport; builtin file access preserves test exclusions. Previous verified/regression APK controls respectively pass/fail the new gate; corrected hosted acceptance pending.
-- Android CI now reclaims unused installed downloads/staging and .NET tooling on its disposable runner, checks 8GiB free before userdata creation, and disables emulator metrics prompts. Initial disk-capacity failure is retained; corrected hosted acceptance pending.
+- Active Engineer, shield, Overclock/chain and boss timers now display at least 0.1s until actual zero. Timer/state rules and expired/ordinary values remain unchanged. Five engine snapshots, all 15 strict suites, 53 Android checks and full gameplay QA pass. Signed native APK, independent integrity/startup checks and exact gameplay comparisons are verified in TEST_RESULTS.md.
+- Exported APK assets now launch in an isolated headless resource pack before native publication/emulator boot. This caught and fixes a capture routine reference to excluded QAReport; builtin file access preserves test exclusions. Previous verified/regression APK controls respectively pass/fail the new gate; final native/emulator export gates and independent native startup pass.
+- Android CI now reclaims unused installed downloads/staging and .NET tooling on its disposable runner, checks 8 GiB free before userdata creation, and disables emulator metrics prompts. Initial disk-capacity and subsequent excluded-class failures are retained; corrected boot/startup and all runtime checks pass.
 - Recovered workspace and independently verified the previous attack-lanes APK and all artifact archives, exact gameplay/XP/pacing/stress comparisons and Android state/logcat records. Closed earlier verification gaps; see TEST_RESULTS.md.
 
 ## Development — 2026-11-01 / Directional attack warnings
