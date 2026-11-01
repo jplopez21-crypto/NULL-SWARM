@@ -470,7 +470,7 @@ func show_run_analysis(damage: Dictionary, loadout: Array[String], corruption: S
 	label_at(box, corruption, 15, Color("b4a1ff")).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var scroll := ScrollContainer.new()
 	scroll.name = "DamageScroll"
-	scroll.custom_minimum_size.y = 216
+	scroll.custom_minimum_size.y = 264
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	box.add_child(scroll)
 	var table := VBoxContainer.new()

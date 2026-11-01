@@ -334,9 +334,14 @@ func run() -> void:
 		check(game.ui.visible_run_analysis().contains("NO DAMAGE RECORDED"), "damage-free run has an honest empty analysis")
 		await inspect(game, "analysis-empty", size)
 		# Explicit dense fixture also covers future content beyond today's four slots.
+		var saved_analysis_ranks: Dictionary = game.progress.ranks.duplicate(true)
+		var saved_analysis_links: Array[String] = game.combat.corruption.accepted.duplicate()
+		game.progress.ranks = {"damage": 3, "arc": 3, "rail": 3, "drone": 3, "magnet": 3}
+		game.combat.corruption.accepted.assign(["redline", "fracture", "hive"])
 		game.combat.damage_by_weapon = {"pulse": 50.5, "arcstorm": 25.0, "orbit": 20.0, "halo": 10.0, "drone": 8.0, "singularity": 6.0, "rail": 5.0, "thermal": 4.0, "arc": 3.0, "future_channel": 2.0}
 		game.open_run_analysis()
 		await inspect(game, "analysis-dense", size)
+		check(game.ui.visible_run_analysis().contains("DRONE HIVE R3") and game.ui.visible_run_analysis().contains("CORRUPTION 3/3") and game.ui.visible_run_analysis().contains("PARASITIC HIVE"), "dense analysis contains all four weapons and three corruption links")
 		var scroll: ScrollContainer = game.ui.screen.find_child("DamageScroll", true, false)
 		check(scroll.get_v_scroll_bar().visible and scroll.get_v_scroll_bar().focus_mode == Control.FOCUS_ALL, "overflow analysis exposes a focusable controller scrollbar")
 		var previous_touch_emulation: bool = Input.emulate_touch_from_mouse
@@ -381,6 +386,8 @@ func run() -> void:
 		await settle()
 		check(root.gui_get_focus_owner() is Button and root.gui_get_focus_owner().text == "BACK TO RESULTS", "analysis overflow navigation retains access to results back control")
 		game.combat.damage_by_weapon = before_analysis
+		game.progress.ranks = saved_analysis_ranks
+		game.combat.corruption.accepted = saved_analysis_links
 		game.show_results()
 		game.ui.show_lab(game.save.data, func(): game.go_menu())
 		await inspect(game, "foundry", size)
