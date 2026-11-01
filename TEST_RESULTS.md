@@ -4,7 +4,8 @@
 
 - Implemented read-only damage channels and stable percentages, actual loadout/corruption context, an honest no-damage state, and a scrollable report. Systems, GUI, observer and four-window layout regressions cover incorrect telemetry, finite shares, real resistance/overkill totals, repeated visits and no duplicate rewards. Keyboard and emulated-touch scrolling passed locally.
 - Initial GUI test incorrectly expected PLAYING while its fixture was still choosing an upgrade; corrected to assert the unchanged non-results state. Initial headless touch test lacked a touchscreen hint; enabled and restored engine touch emulation within that fixture. No production scroll workaround. Initial failures retained in docs/qa/run-analysis.
-- All 15 strict local suites passed: 1,079 systems, 58 GUI, 21 observer and 2,564 UI checks across 184 layouts. New native APK/captures, full QA and existing Android runtime acceptance are pending. Native analysis capture is explicitly synthetic. Physical Mobile performance/readability and Android earned-run analysis interaction remain unverified.
+- Extra controller testing reproduced missing B/cancel and D-pad range handling. Added report-local input handling, leaving combat bindings unchanged; actual engine joypad B from Back/scrollbar, D-pad navigation and Escape now pass. Failure log: docs/qa/run-analysis/controller-before.log.
+- All 15 strict local suites passed: 1,079 systems, 58 GUI, 21 observer and 2,580 UI checks across 184 layouts. New native APK/captures, full QA and existing Android runtime acceptance are pending. Native analysis capture is explicitly synthetic. Physical Mobile performance/readability and Android earned-run analysis interaction remain unverified.
 
 ## Mutation-finishing upgrade cards — verified 2026-11-01
 

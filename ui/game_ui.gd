@@ -41,6 +41,7 @@ var xp_label: Label
 var upgrade_header: Label
 var build_heading: Label
 var analysis_heading: Label
+var analysis_back: Callable
 var status_label: Label
 var health_label: Label
 var operative_title: String = "VANGUARD"
@@ -288,6 +289,7 @@ func _build_hud() -> void:
 	dash_gauge.offset_bottom = -8
 
 func _panel() -> VBoxContainer:
+	analysis_back = Callable()
 	dash_button.input_enabled = false
 	pause_button.input_enabled = false
 	if screen != null:
@@ -499,12 +501,31 @@ func show_run_analysis(damage: Dictionary, loadout: Array[String], corruption: S
 		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		amount.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label_at(box, "Drone Systems combines Hive and field sentry fire. Pulse shots exclude Arcstorm chains.", 15, MUTED)
+	label_at(box, "Swipe / wheel / D-pad: scroll. B / Esc: back to results.", 14, MUTED)
 	var back_button := button_at(box, "BACK TO RESULTS", back)
 	var scrollbar := scroll.get_v_scroll_bar()
 	scrollbar.focus_mode = Control.FOCUS_ALL
 	back_button.focus_neighbor_top = back_button.get_path_to(scrollbar)
 	scrollbar.focus_neighbor_bottom = scrollbar.get_path_to(back_button)
+	analysis_back = back
 	back_button.grab_focus()
+
+func _input(event: InputEvent) -> void:
+	if not analysis_back.is_valid() or not is_instance_valid(analysis_heading) or not analysis_heading.is_visible_in_tree():
+		return
+	# Godot's default ui_cancel has no joypad B; keep this binding report-local.
+	var joy_cancel: bool = event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_B
+	if event.is_action_pressed("ui_cancel") or joy_cancel:
+		get_viewport().set_input_as_handled()
+		analysis_back.call()
+		return
+	# Scrollbars handle keyboard ranges but joypad arrows otherwise move focus.
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused is VScrollBar and event is InputEventJoypadButton and event.pressed:
+		var direction: float = 1.0 if event.is_action_pressed("ui_down") else (-1.0 if event.is_action_pressed("ui_up") else 0.0)
+		if direction != 0.0:
+			focused.value += direction * maxf(1.0, focused.page * 0.35)
+			get_viewport().set_input_as_handled()
 
 func visible_run_analysis() -> String:
 	if not is_instance_valid(analysis_heading) or not analysis_heading.is_visible_in_tree() or screen == null:

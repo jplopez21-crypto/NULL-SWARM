@@ -333,6 +333,13 @@ func run() -> void:
 		game.open_run_analysis()
 		check(game.ui.visible_run_analysis().contains("NO DAMAGE RECORDED"), "damage-free run has an honest empty analysis")
 		await inspect(game, "analysis-empty", size)
+		var cancel_key := InputEventKey.new()
+		cancel_key.keycode = KEY_ESCAPE
+		cancel_key.physical_keycode = KEY_ESCAPE
+		cancel_key.pressed = true
+		root.push_input(cancel_key, true)
+		await settle()
+		check(game.ui.visible_run_analysis().is_empty() and game.state == game.State.RESULTS, "Escape returns from empty analysis without leaving the completed run")
 		# Explicit dense fixture also covers future content beyond today's four slots.
 		var saved_analysis_ranks: Dictionary = game.progress.ranks.duplicate(true)
 		var saved_analysis_links: Array[String] = game.combat.corruption.accepted.duplicate()
@@ -385,6 +392,21 @@ func run() -> void:
 		root.push_input(bottom_key, true)
 		await settle()
 		check(root.gui_get_focus_owner() is Button and root.gui_get_focus_owner().text == "BACK TO RESULTS", "analysis overflow navigation retains access to results back control")
+		var controller := InputEventJoypadButton.new()
+		controller.button_index = JOY_BUTTON_DPAD_UP
+		controller.pressed = true
+		root.push_input(controller, true)
+		await settle()
+		check(root.gui_get_focus_owner() == scroll.get_v_scroll_bar(), "controller up focuses the report scrollbar from Back")
+		scroll.scroll_vertical = 0
+		controller.button_index = JOY_BUTTON_DPAD_DOWN
+		root.push_input(controller, true)
+		await settle()
+		check(scroll.get_v_scroll_bar().value > 0, "controller down scrolls recorded damage")
+		controller.button_index = JOY_BUTTON_B
+		root.push_input(controller, true)
+		await settle()
+		check(game.ui.visible_run_analysis().is_empty() and game.state == game.State.RESULTS, "controller B returns from the focused scrollbar without trapping navigation")
 		game.combat.damage_by_weapon = before_analysis
 		game.progress.ranks = saved_analysis_ranks
 		game.combat.corruption.accepted = saved_analysis_links

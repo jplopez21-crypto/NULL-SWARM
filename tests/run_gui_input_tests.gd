@@ -254,7 +254,13 @@ func run() -> void:
 		check(analysis_text.contains("Hive and field sentry") and analysis_text.contains("Support, slows and shields"), "analysis explains combined sentry damage and unmeasured utility")
 		game._process(5.0)
 		game._physics_process(5.0)
-		click(game, "BACK TO RESULTS")
+		if visit == 0:
+			var cancel := InputEventJoypadButton.new()
+			cancel.button_index = JOY_BUTTON_B
+			cancel.pressed = true
+			root.push_input(cancel, true)
+		else:
+			click(game, "BACK TO RESULTS")
 		await settle()
 		check(game.ui.visible_run_analysis().is_empty() and game.state == game.State.RESULTS, "analysis back returns to the same completed run")
 		check(game.combat.director.elapsed == analysis_time and game.combat.rng.state == analysis_rng and game.save.data == analysis_save and game.progress.ranks == analysis_ranks, "repeated analysis visits advance no time RNG ranks saves or reward ledger")
