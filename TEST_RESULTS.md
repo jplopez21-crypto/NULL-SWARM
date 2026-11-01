@@ -1,5 +1,14 @@
 # NULL//SWARM test results
 
+## Directional enemy attack lanes — local verification 2026-11-01
+
+- Replaced regular charge/sentry warning boxes with original broad double-chevron rails and narrow sight lines. Colors, seven-metre base length, floor offset, centre, scale and all timing/visibility/movement rules are retained. One node/surface per warning; cached opaque unshaded meshes/materials. Charge 12 triangles; sentry seven. No extra lights/particles or FPS improvement claim.
+- All 15 isolated strict local suites passed: 67 attack-lane checks, retained 97 touch-pause/69 dash/23 input, 18 probe, 75 resources, 41 operative, 59 destruction, 1,030 systems, 43 GUI, 33 audio, 2,340 UI checks/168 layouts, 27 Engineer, 41 corruption and scene smoke. Python compilation and strict gameplay script/engine/leak scans are clean. Local editor imported resources but strict acceptance hit four sandbox TCP listen errors; an additional network request was canceled, not granted. No project script/parse/resource load error appeared. Hosted import remains required.
+- New same-worker hash-guarded accepted-source pairs cover 24 cases × 480 steps, all six regular archetypes, ordinary/corrupted pace, hit/exposure reactions and both flash settings. Every compared position/rotation/velocity/shot/timer/HP/body pose/warning visibility/transform matches exactly. Source proof shows configure's warning factory is the only changed enemy statement; other enemy functions and gameplay systems remain unchanged.
+- Initial new harness reported eight failures: exact UP equality missed Godot's packed-normal error (~0.000015), and six inactive-child checks wrongly assumed the child flag was false, whereas accepted behavior hides its parent. Corrected assertions bound decoded normal error and verify actual tree visibility plus accepted child state. Production behavior did not change to satisfy those corrections.
+- Native labelled staged detail/ordinary-camera/reduced-flash captures and the 53-check Android target (including actual pooled warning geometry) await hosted verification. Read-only pooled geometry is not proof an attack was observed. Full gameplay/XP/pacing/replay/stress comparisons and updated APK remain pending. Previous mobile-controls APK below remains latest verified.
+- Local SDK/ADB/emulator/desktop display and physical phone unavailable. Android CI remains API 35 x86_64 Compatibility software rendering with audio output disabled, not S23 Ultra Mobile performance validation. Physical readability, touch latency, thermals/FPS and human fun remain open. Preserve backups while diagnostic signing rotates; protected stable signing remains unconfigured. Main remains unmerged. Method/evidence: docs/ATTACK_LANES.md and docs/qa/attack-lanes/.
+
 ## Mobile pause and dash readiness — verified 2026-10-31
 
 Verified game/test/CI source: `a8187ecece5b6db5937ad55e88863ad3a5582537`. Final report checkpoint changes documentation/evidence only.

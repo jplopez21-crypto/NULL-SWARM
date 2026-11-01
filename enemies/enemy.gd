@@ -2,6 +2,7 @@ class_name SwarmEnemy
 extends Node3D
 
 const CHASSIS = preload("res://enemies/chassis_models.gd")
+const ATTACK_LANES = preload("res://enemies/attack_lanes.gd")
 
 var active: bool = false
 var definition: EnemyDefinition
@@ -34,7 +35,7 @@ func configure(resource: EnemyDefinition) -> void:
 	else:
 		_build_legacy_body()
 	SwarmVisuals.box(body, Vector3(0.4, 0.15, 0.12), Vector3(0, 0.85, -0.52), definition.color.lightened(0.4), true)
-	telegraph = SwarmVisuals.box(self, Vector3(0.32, 0.04, 7.0), Vector3(0, 0.06, -3.5), definition.color, true)
+	telegraph = ATTACK_LANES.create(self, definition.behavior, definition.color)
 	deactivate()
 
 func _build_legacy_body() -> void:

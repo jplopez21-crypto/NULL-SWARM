@@ -394,6 +394,12 @@ try:
     check(s.get('operative_visuals') == {'instances': 5, 'surfaces': 6, 'triangles': 296},
           'Android operative uses the actual shared faceted armor and rifle geometry')
     report['operative_visuals'] = s['operative_visuals']
+    lanes = s.get('attack_lanes', {})
+    check(all(lanes.get(k, {}).get('triangles') == n and lanes[k].get('surfaces') == 1
+              and lanes[k].get('ground_mesh') and lanes[k].get('length') == 7
+              for k, n in [('charge', 12), ('sentry', 7)]),
+          'Android pooled enemies contain original directional charge and sentry ground meshes')
+    report['attack_lane_geometry'] = lanes
     capture('combat')
     s = wait(lambda x: x.get('performance_stats_visible', False) and 'ENEMIES' in x.get('performance_stats_text', ''))
     check(True, 'performance diagnostics are visibly active during real Android gameplay')

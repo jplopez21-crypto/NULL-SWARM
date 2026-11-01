@@ -1,5 +1,14 @@
 # Asset manifest
 
+## Directional attack lanes
+
+Charge rails/chevrons and sentry sight-line/tick/arrow markings are original
+procedural geometry in enemies/attack_lanes.gd, authored for NULL//SWARM. They
+reuse the project-authored definition tints and contain no external textures,
+models, shaders or audio. These remain development artwork pending human/phone
+readability and commercial art review. Labelled desktop boards are staged QA
+references, not captured player sessions or performance benchmarks.
+
 | Asset | Origin | Rights / status |
 | --- | --- | --- |
 | Arena, operative, enemies, projectiles, pickups | Original procedural geometry in project scripts | Created for NULL//SWARM; development artwork |

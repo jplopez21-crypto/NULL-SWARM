@@ -72,6 +72,7 @@ func snapshot() -> void:
 			var rect: Rect2 = node.get_global_rect()
 			data["buttons"].append({"text": node.text, "disabled": node.disabled, "rect": [rect.position.x, rect.position.y, rect.size.x, rect.size.y]})
 	if is_instance_valid(game.player) and is_instance_valid(game.combat):
+		data["attack_lanes"] = _lane_geometry()
 		var model := {"instances": 0, "surfaces": 0, "triangles": 0}
 		for node in game.player.body.get_children():
 			if node is MeshInstance3D:
@@ -125,3 +126,20 @@ func snapshot() -> void:
 	file.close()
 	if DirAccess.rename_absolute("user://qa-runtime.tmp", "user://qa-runtime.json") != OK:
 		push_error("ANDROID_QA telemetry rename failed")
+
+func _lane_geometry() -> Dictionary:
+	# Read actual pooled meshes, including inactive slots; not an observed attack.
+	var result: Dictionary = {}
+	for enemy in game.combat.enemies:
+		if enemy.definition.behavior not in [1, 2]:
+			continue
+		var id: String = "charge" if enemy.definition.behavior == 1 else "sentry"
+		if result.has(id):
+			continue
+		var mesh: Mesh = enemy.telegraph.mesh
+		result[id] = {"triangles": mesh.surface_get_array_len(0) / 3, "surfaces": mesh.get_surface_count(),
+			"length": mesh.get_aabb().size.z, "width": mesh.get_aabb().size.x,
+			"ground_mesh": enemy.telegraph.name == "AttackLane" and enemy.telegraph.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF}
+		if result.size() == 2:
+			break
+	return result

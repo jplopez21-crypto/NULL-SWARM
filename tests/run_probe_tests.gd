@@ -31,6 +31,8 @@ func run() -> void:
 	probe.snapshot()
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["state"] == "playing" and data["ranks"] == game.progress.ranks, "probe reports real game state")
+	check(data["attack_lanes"]["charge"]["triangles"] == 12 and data["attack_lanes"]["sentry"]["triangles"] == 7 and data["attack_lanes"]["charge"]["surfaces"] == 1 and data["attack_lanes"]["sentry"]["surfaces"] == 1, "probe reads actual pooled charge/sentry warning meshes without inventing a live attack")
+	check(data["attack_lanes"]["charge"]["ground_mesh"] and data["attack_lanes"]["sentry"]["ground_mesh"] and data["attack_lanes"]["charge"]["length"] == 7 and data["attack_lanes"]["sentry"]["length"] == 7, "probe observes shared directional ground geometry with retained base length")
 	check(data["operative_visuals"] == {"instances": 5.0, "surfaces": 6.0, "triangles": 296.0}, "probe reads actual operative geometry without replacing or posing it")
 	check(data["destruction_feedback"] == {"fragments_live": 0.0, "fragment_triangles": 8.0, "kill_cue_last_dispatch_ms": -1.0, "kill_cue_pcm_bytes": 0.0, "kill_cue_pcm_sha256": ""}, "probe reports actual empty fragments and shut-down audio without inventing dispatch")
 	game.combat.effects.destruction(Vector3.ZERO, Color.RED, false)

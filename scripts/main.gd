@@ -909,6 +909,53 @@ func _capture_session() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/dash_near_ready.png")
+	# Explicitly staged warning art review. Each real enemy executes its ordinary
+	# windup tick; no forced visibility, altered attack timing or camera in play.
+	start_run()
+	state = State.PAUSED
+	set_process(false)
+	ui.toast_time = 0
+	ui.damage_texts.clear()
+	ui.set_hud(false)
+	ui.backdrop.hide()
+	var lane_label := ui.label_at(ui.root, "ATTACK DIRECTIONS // STAGED QA ART REVIEW\nLEFT: CHARGE CHEVRONS / RIGHT: SENTRY SIGHT LINE", 20, Color("80ffdb"))
+	lane_label.position = Vector2(26, 20)
+	player.position = Vector3(0, 0, 7)
+	var lane_samples: Array[SwarmEnemy] = []
+	for kind in [1, 2]:
+		var sample := combat.spawn(kind, Vector3(-5 if kind == 1 else 5, 0, 3))
+		sample.cooldown = 0
+		sample.think(sample.position + Vector3(0, 0, -6))
+		sample.tick(1.0 / 60.0)
+		lane_samples.append(sample)
+	camera.size = 18
+	camera.position = Vector3(0, 22, 15)
+	camera.look_at(Vector3(0, 0, -1))
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/attack_lanes_detail.png")
+	ui.backdrop.show()
+	ui.set_hud(true)
+	player.position = Vector3.ZERO
+	player.dash_cooldown = 0
+	camera.size = 29
+	camera.position = Vector3(0, 32, 23)
+	camera.look_at(Vector3.ZERO)
+	lane_label.text = "ATTACK DIRECTIONS // STAGED QA // ORDINARY CAMERA\nSYNTHETIC FROZEN WINDUPS // NO GAMEPLAY OR FPS CLAIM"
+	lane_label.position.y = 355
+	ui.update_hud(player, progress, combat)
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/attack_lanes_field.png")
+	for sample in lane_samples:
+		sample.effects_enabled = false
+		sample.tick(0.02)
+	combat.effects.quality = 0
+	combat.effects.flashes = false
+	lane_label.text = "ATTACK DIRECTIONS // STAGED QA // LOW / REDUCED FLASHES\nESSENTIAL WARNINGS REMAIN STEADY AND VISIBLE"
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("res://builds/screenshots/attack_lanes_reduced.png")
 	audio.shutdown()
 	get_tree().quit()
 
