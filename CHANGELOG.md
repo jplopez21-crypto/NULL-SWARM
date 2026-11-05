@@ -1,8 +1,8 @@
 # Changelog
 
-## Development — 2026-11-01 / Deployment analysis
+## Development — 2026-11-05 / Deployment analysis
 
-- Added a functional RUN ANALYSIS action to completed deployments. All damage channels show sorted effective damage and share, with loadout/corruption context and touch/controller scrolling. Mutation extras and combined Hive/sentry damage are labelled accurately; slows, shields and support are excluded explicitly. Back returns to the same results without spending or awarding anything. Verification in TEST_RESULTS.md.
+- Added a functional RUN ANALYSIS action to completed deployments. All damage channels show sorted effective damage and share, with loadout/corruption context and touch/controller scrolling. Mutation extras and combined Hive/sentry damage are labelled accurately; slows, shields and support are excluded explicitly. Back returns to the same results without spending or awarding anything. All 15 strict suites, 184 rendered layouts, existing 53-check Android acceptance and full gameplay QA passed. Verified native APK and explicit analysis coverage limits: TEST_RESULTS.md.
 
 ## Development — 2026-11-01 / Mutation choice previews
 
