@@ -6,6 +6,7 @@ signal resume_run
 signal restart
 signal return_menu
 signal pause_run
+signal end_deployment_requested
 signal build_requested
 signal run_analysis_requested
 signal dash
@@ -41,6 +42,7 @@ var xp_label: Label
 var upgrade_header: Label
 var build_heading: Label
 var analysis_heading: Label
+var results_heading: Label
 var analysis_back: Callable
 var status_label: Label
 var health_label: Label
@@ -364,7 +366,7 @@ func show_pause(settings: Dictionary) -> void:
 	var resume_button := button_at(box, "RESUME", func(): resume_run.emit())
 	button_at(box, "BUILD // MUTATIONS", func(): build_requested.emit())
 	button_at(box, "SETTINGS", func(): show_settings(settings, func(): show_pause(settings)))
-	button_at(box, "END DEPLOYMENT", func(): return_menu.emit())
+	button_at(box, "END DEPLOYMENT", func(): end_deployment_requested.emit())
 	resume_button.grab_focus()
 
 func _build_card(parent: Node, color: Color) -> VBoxContainer:
@@ -437,12 +439,14 @@ func visible_build_text() -> String:
 			lines.append(label.text)
 	return "\n".join(lines)
 
-func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: int, salvage: int = 0, wallet: int = 0, breakdown: Dictionary = {}, unlocks: Array[String] = []) -> void:
+func show_results(won: bool, elapsed: float, kills: int, level: int, total_xp: int, salvage: int = 0, wallet: int = 0, breakdown: Dictionary = {}, unlocks: Array[String] = [], aborted: bool = false) -> void:
 	set_hud(false)
 	var box := _panel()
 	box.custom_minimum_size.x = 530
-	label_at(box, "EXTRACTION COMPLETE" if won else "SIGNAL LOST", 39, CYAN if won else Color("ff8e7b"))
-	label_at(box, "The sector holds. Your telemetry survived." if won else "Operative offline. Your telemetry survived.", 18, MUTED)
+	var title := "DEPLOYMENT ENDED" if aborted else ("EXTRACTION COMPLETE" if won else "SIGNAL LOST")
+	var subtitle := "Deployment closed. Your telemetry survived." if aborted else ("The sector holds. Your telemetry survived." if won else "Operative offline. Your telemetry survived.")
+	results_heading = label_at(box, title, 39, CYAN if won or aborted else Color("ff8e7b"))
+	label_at(box, subtitle, 18, MUTED)
 	label_at(box, "%s   /   %d DESTROYED   /   LEVEL %d" % [clock(elapsed), kills, level], 22)
 	label_at(box, "%d memory recovered   //   +%d SALVAGE BANKED" % [total_xp, salvage], 18, CYAN)
 	var rows := Arsenal.damage_breakdown(breakdown)

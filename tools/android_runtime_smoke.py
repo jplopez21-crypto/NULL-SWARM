@@ -241,8 +241,7 @@ def multitouch_dash(order):
     actions.append({'multitouch': order, 'injection': 'shell UID / real Android two-pointer MotionEvent', 'samples': samples})
     tap('PAUSE', s)
     s = wait(lambda x: x['state'] == 'paused')
-    tap('END DEPLOYMENT', s)
-    wait(lambda x: x['state'] == 'menu')
+    end_to_menu(s)
 
 
 def multitouch_pause():
@@ -287,8 +286,14 @@ def multitouch_pause():
     actions.append({'multitouch_pause': True, 'injection': 'shell UID / real Android two-pointer MotionEvent', 'samples': samples})
     tap('PAUSE', s)
     s = wait(lambda x: x['state'] == 'paused')
+    end_to_menu(s)
+
+
+def end_to_menu(s):
     tap('END DEPLOYMENT', s)
-    wait(lambda x: x['state'] == 'menu')
+    s = wait(lambda x: x['state'] == 'results')
+    tap('COMMAND MENU', s)
+    return wait(lambda x: x['state'] == 'menu')
 
 
 def dismiss_system_dialogs():
@@ -507,6 +512,43 @@ try:
     check(s['state'] == 'paused' and s['time'] == paused_clock and s['salvage'] == paused_salvage,
           'performance report back preserves paused combat and exact progression')
     tap('BACK', s)
+    s = wait(lambda x: x['state'] == 'paused' and any(b['text'] == 'END DEPLOYMENT' for b in x['buttons']))
+    tap('END DEPLOYMENT', s)
+    s = wait(lambda x: x['state'] == 'results')
+    check(s.get('results_title') == 'DEPLOYMENT ENDED' and s['kills'] > 0 and s['xp'] > 0,
+          'ending an ordinary earned Android run opens honest completed results')
+    capture('earned-results')
+    frozen = {key: s[key] for key in ['time', 'kills', 'ranks', 'combat_rng', 'damage_by_weapon', 'salvage']}
+    tap('RUN ANALYSIS', s)
+    s = wait(lambda x: bool(x.get('run_analysis_text')))
+    names = {'pulse': 'PULSE SHOTS', 'arcstorm': 'ARCSTORM CHAINS', 'halo': 'SOLAR HALO HEAT',
+             'drone': 'DRONE SYSTEMS', 'singularity': 'SINGULARITY LANCE', 'arc': 'ARC EMITTER',
+             'rail': 'RAIL LANCE', 'orbit': 'PLASMA ORBITALS', 'thermal': 'THERMAL BURST'}
+    damage = {k: float(v) for k, v in frozen['damage_by_weapon'].items() if math.isfinite(float(v)) and float(v) > 0}
+    total = sum(damage.values())
+    text = s['run_analysis_text']
+    check(total > 0 and all(names[k] in text and f'{v / total * 100:.1f}%' in text for k, v in damage.items()),
+          'earned Android analysis displays actual recorded damage channels and mathematically correct shares')
+    capture('earned-analysis')
+    time.sleep(1)
+    s = read()
+    check(all(s[key] == value for key, value in frozen.items()),
+          'viewing earned Android analysis freezes time RNG ranks damage kills and rewards')
+    report['earned_analysis'] = {'method': 'Ordinary touch combat/XP/upgrades followed by End Deployment and Run Analysis; before any synthetic Engineer progress fixture',
+                                'damage_by_weapon': damage, 'text': text, 'frozen': frozen}
+    tap('BACK TO RESULTS', s)
+    s = wait(lambda x: x.get('results_title') == 'DEPLOYMENT ENDED' and not x.get('run_analysis_text'))
+    check(s['state'] == 'results' and all(s[key] == value for key, value in frozen.items()),
+          'earned Android analysis Back returns to the same result without duplicate rewards')
+    salvage = s['salvage']
+    tap('COMMAND MENU', s)
+    s = wait(lambda x: x['state'] == 'menu')
+    check(s['salvage'] == salvage and not s.get('run_analysis_text'),
+          'completed Android deployment returns to menu retaining exact earned salvage')
+    tap('DEPLOY', s)
+    s = wait(lambda x: x['state'] == 'playing')
+    tap('PAUSE', s)
+    s = wait(lambda x: x['state'] == 'paused')
     old_process = s['process']
     adb('shell', 'am', 'force-stop', args.package)
     launch()
@@ -569,8 +611,7 @@ try:
         # play. Only now replace progress with a labelled earned-kit fixture.
         tap('PAUSE')
         s = wait(lambda x: x['state'] == 'paused')
-        tap('END DEPLOYMENT', s)
-        s = wait(lambda x: x['state'] == 'menu')
+        s = end_to_menu(s)
         tap('PROGRESS BACKUP', s)
         s = wait(lambda x: bool(x.get('edit_fields')))
         x, y, w, h = s['edit_fields'][0]

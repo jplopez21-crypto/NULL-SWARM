@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Voluntary deployment results — verification in progress 2026-11-06
+
+- End Deployment now opens results with a truthful title and the normal analysis control. Same reward calculation; repeat endings/analysis visits cannot award twice. New Android flow uses ordinary earned combat data before any Engineer progress fixture; verifies actual channels/shares, frozen simulation/RNG/rewards and exact Back/menu retention.
+- All 15 local suites pass. Final native export/captures, Android runtime and full QA pending. Existing verified APK remains below.
+
 ## Post-run Deployment Analysis — independently verified 2026-11-05
 
 - Completed deployments now expose **Run Analysis** with all effective damage channels, descending damage and shares across every valid channel, actual current loadout and corruption context. Distinct names separate pulse impacts, Arcstorm chains and Solar Halo heat; Drone Systems explicitly combines Hive and field sentry. Support/slows/shields are not measured or ranked. Read-only snapshots filter invalid values, keep shares finite and leave all original combat/upgrade/save rules unchanged. Back returns to the same result without awarding salvage again.

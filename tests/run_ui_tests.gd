@@ -436,6 +436,11 @@ func run() -> void:
 		game.run_unlocks.assign(["conductor", "sentinel", "engineer"])
 		game.finish_run(true)
 		await inspect(game, "results-unlocks", size)
+		game.start_run()
+		game.pause_run()
+		game.end_deployment()
+		check(game.ui.results_heading.text == "DEPLOYMENT ENDED", "voluntary result title is accurate at every window size")
+		await inspect(game, "results-ended", size)
 		game.go_menu()
 		game.save.data = saved_progression
 	game.audio.shutdown()

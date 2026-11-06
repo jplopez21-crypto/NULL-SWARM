@@ -33,6 +33,7 @@ var run_token: String = ""
 var checkpoint_time: float = 0.0
 var run_unlocks: Array[String] = []
 var result_won: bool = false
+var result_aborted: bool = false
 
 func _ready() -> void:
 	input_router.setup()
@@ -58,6 +59,7 @@ func _ready() -> void:
 	ui.resume_run.connect(resume_run)
 	ui.return_menu.connect(go_menu)
 	ui.pause_run.connect(pause_run)
+	ui.end_deployment_requested.connect(end_deployment)
 	ui.build_requested.connect(open_build)
 	ui.run_analysis_requested.connect(open_run_analysis)
 	ui.dash.connect(func():
@@ -108,6 +110,7 @@ func start_run() -> void:
 	input_router.reset()
 	progress = RunProgression.new()
 	result_recorded = false
+	result_aborted = false
 	run_unlocks.clear()
 	checkpoint_time = 30.0
 	run_token = save.begin_run()
@@ -328,6 +331,12 @@ func _record_result(won: bool) -> void:
 	var error := save.record_run(combat.director.elapsed, combat.kills, won, run_token, _warden_down(), _architect_down())
 	if error != OK:
 		push_error("Could not save run statistics: " + error_string(error))
+
+func end_deployment() -> void:
+	if state != State.PAUSED or not is_instance_valid(combat):
+		return
+	result_aborted = true
+	finish_run(false)
 
 func finish_run(won: bool) -> void:
 	if state == State.RESULTS:
@@ -1093,7 +1102,7 @@ func _checkpoint_progress() -> void:
 			ui.toast("STARTING KIT UNLOCKED", Research.KITS[id]["title"] + " // AVAILABLE IN THE FOUNDRY", Color("ffe39b"))
 
 func show_results() -> void:
-	ui.show_results(result_won, combat.director.elapsed, combat.kills, progress.level, pickups.total_collected, int(save.data["ledger"].get("awarded", 0)), int(save.data["salvage"]), combat.damage_by_weapon, run_unlocks)
+	ui.show_results(result_won, combat.director.elapsed, combat.kills, progress.level, pickups.total_collected, int(save.data["ledger"].get("awarded", 0)), int(save.data["salvage"]), combat.damage_by_weapon, run_unlocks, result_aborted)
 
 func open_run_analysis() -> void:
 	if state != State.RESULTS or not is_instance_valid(combat):

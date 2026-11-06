@@ -88,6 +88,7 @@ func run() -> void:
 	probe.snapshot()
 	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
 	check(data["run_analysis_text"].is_empty(), "probe clears retired analysis text after returning to results")
+	check(data["results_title"] == "SIGNAL LOST", "probe observes the visible production result heading")
 	game.audio.shutdown()
 	# Drain queued UI tweens and audio-thread releases before destroying the scene.
 	await create_timer(0.20).timeout

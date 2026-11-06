@@ -1,6 +1,8 @@
-# Development status — NULL//SWARM / 2026-11-05
+# Development status — NULL//SWARM / 2026-11-06
 
 ## Current checkpoint
+
+- In progress: End Deployment now opens honest completed results and Run Analysis. Actual GUI tests verify pause-only action, one reward ledger, frozen time/RNG/health, preserved analysis Back and reset death/victory wording. All 15 local suites pass; 188 layouts. Native/Android/full-QA builds and new ordinary-earned Android analysis acceptance pending.
 
 - Completed read-only Deployment Analysis: every effective damage channel/share plus actual build/corruption context, correct derived/combined labels and honest empty state. Current six channels fit; future overflow supports keyboard/controller and emulated touch. Repeated GUI visits change no RNG/time/ranks/save/rewards. Source a69e5119bf804fe7e846945a6699c03848edc2e8 passed native 41328001215, all 53 ordinary Android checks in 41328001185 and full QA 41328001184. All 15 strict summaries match: 1,079 systems/58 GUI/21 observer/2,580 headless UI checks across 184 layouts (2,581 rendered). Actual labelled final native capture inspected after removing an unnecessary sixth-row scroll. Analysis fixtures are synthetic; earned Android-run analysis interaction remains open.
 - Current analysis APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41328001215/artifacts/13091843698. Extract android/null-swarm-development-debug.apk. CI signature and independent integrity/package/ARM64 Mobile/probe-disabled/exclusion/exact-assets startup pass. Thirty-four compiled modules unchanged; all previous non-timing gameplay/XP/pacing and 24 stress fingerprints match. Physical Mobile performance/readability and stable signing remain open; preserve backups. Next: earned Android-run result navigation, physical Mobile profiling and human build/feedback playtesting. Main unchanged/unmerged. Evidence: docs/qa/run-analysis/verified-ci.json.
