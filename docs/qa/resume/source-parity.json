@@ -1,0 +1,7 @@
+{
+  "changed_runtime_source_files": [
+    "systems/android_qa_probe.gd"
+  ],
+  "gameplay_input_save_ui_and_content_unchanged": true,
+  "scope": "Only opt-in QA observer source changed; native APK independently confirms 37 previous compiled modules byte-identical."
+}

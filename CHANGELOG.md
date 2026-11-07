@@ -1,8 +1,8 @@
 # Changelog
 
-## Development — Android resume regression coverage
+## Development — 2026-11-07 / Android resume regression coverage
 
-- Added an independent six-cycle Android lifecycle matrix and read-only lifecycle/render generations. Fresh frames, visible game output, paused-state integrity and advancing resumed combat are required. No recovery or retry is simulated. Gameplay/save/input behavior unchanged. Verification: TEST_RESULTS.md.
+- Added an independent six-cycle Android lifecycle matrix and read-only lifecycle/render generations. Fresh frames, visible game output, paused-state integrity and advancing resumed combat are required. No recovery or retry is simulated. Gameplay/save/input behavior unchanged. All 15 strict suites, 11 Python tests, normal 58-check Android acceptance and the six-cycle/20-check lifecycle worker pass. Three failed-swap warnings recovered; no production Surface fix claimed. Verification: TEST_RESULTS.md.
 
 ## Development — 2026-11-06 / End-deployment results
 

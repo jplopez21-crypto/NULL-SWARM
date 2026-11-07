@@ -1,0 +1,6 @@
+{
+  "tests": 11,
+  "status": "passed",
+  "command": "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+  "new_lifecycle_test_methods": 4
+}
