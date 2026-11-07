@@ -21,7 +21,8 @@ parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
 parser.add_argument('--output', default='builds/android-runtime')
 parser.add_argument('--upgrade-apk', help='Install a same-signer higher-version APK after lifecycle checks')
 parser.add_argument('--engineer-backup', help='Explicit synthetic earned-kit code; restored through GUI only after ordinary persistence checks')
-parser.add_argument('--lifecycle-only', action='store_true', help='Run six strict Home/launcher recovery cycles without granting progress')
+parser.add_argument('--lifecycle-only', action='store_true', help='Run strict Home/launcher recovery cycles without granting progress')
+parser.add_argument('--lifecycle-cycles', type=int, default=6, choices=range(1, 31), help='Bounded lifecycle sample count (default 6, maximum 30)')
 args = parser.parse_args()
 out = Path(args.output)
 out.mkdir(parents=True, exist_ok=True)
@@ -370,7 +371,7 @@ report = {'checks': checks, 'actions': actions, 'visual_samples': visual_samples
                           'Victory/death are headless integration checks, not forced emulator outcomes.']}
 def lifecycle_repro():
     report['cycles'] = []
-    report['scope'] = 'Six unchanged Home/launcher transitions with 0.25/1/3 second background dwell. Real frames/screens, frozen state and advancing resumed combat required. No retries, relaunch repair, save grants or warning suppression.'
+    report['scope'] = f'{args.lifecycle_cycles} Home/launcher transitions with 0.25/1/3 second background dwell. Real frames/screens, frozen state and advancing resumed combat required. No retries, process restarts, save grants or warning suppression.'
     try:
         adb('logcat', '-c')
         launch()
@@ -381,7 +382,8 @@ def lifecycle_repro():
         check(s['renderer'] == 'gl_compatibility', 'lifecycle reproduction uses actual Compatibility renderer')
         tap('DEPLOY', s)
         s = wait(lambda x: x['state'] == 'playing' and x.get('time', 0) > 0)
-        for index, dwell in enumerate([0.25, 1.0, 3.0] * 2, 1):
+        for index in range(1, args.lifecycle_cycles + 1):
+            dwell = [0.25, 1.0, 3.0][(index - 1) % 3]
             before = read()
             row = {'index': index, 'background_seconds': dwell, 'before': before, 'status': 'in_progress'}
             report['cycles'].append(row)
@@ -405,7 +407,7 @@ def lifecycle_repro():
         (out / 'logcat.txt').write_text(log)
         report['app_egl_failures'] = app_egl_failures(log, s['process'])
         fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line)) or 'ANR in ' + args.package in line]
-        check(not fatal, 'six-cycle run has no script error app ANR or fatal crash')
+        check(not fatal, f'{args.lifecycle_cycles}-cycle run has no script error app ANR or fatal crash')
         report['status'] = 'passed'
         return 0
     except Exception as error:

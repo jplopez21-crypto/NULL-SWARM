@@ -1,5 +1,13 @@
 # NULL//SWARM test results
 
+## Surface recovery experiment — in progress 2026-11-07
+
+- **Publishing blocked:** two GitHub create-blob calls stalled and were interrupted before completion. A read after both interruptions confirms the development branch is still `39267d53213a6ec5ad4f1ea78cc49e7cf60ae30e`; the experiment is local commit `8f2260dae3c5af483e59b082e61ca590d81ea572`, tree `3e46371801c6a24d063de199d9b111b312697c66`. No new hosted workflow, Java host test, emulator test or APK build has run for this experiment. Main remains unmerged.
+
+- Local fifteen strict Godot suites pass; all fifteen Python tests pass, including four source/archive/failure-atomicity tests for the diagnostic rebuild. Local Java compiler, adb and KVM are unavailable; Java host logic and real Android execution remain pending CI.
+- Godot 4.6.3 and 4.7.2 use the identical GLSurfaceView source blob. The experiment latches destroy/create events that may coalesce while an old swap fails. It adds no UI waits, context reset, gameplay changes or production template override. Both variants rebuild only the pinned Java class family; all unrelated entries/native libraries must remain identical.
+- Hosted diagnostic matrix requires eighteen same-process return cycles with fresh frames/visible output/paused-state preservation/resumed combat, then ordinary candidate gameplay and save/update acceptance. Unchanged control stalls remain recorded failed observations; unexpected crashes/timeouts fail collection. Controlled-field Java logic tests are explicitly separate from GPU recovery. Latest verified consumer APK remains the audio build below.
+
 ## Audio click correction — verified 2026-11-07
 
 - Fixed measured discontinuities in the original music: continuous bass phase and short beat-edge fades reduce the largest adjacent sample jump **0.29016 → 0.02042**. The eight-second loop, note/tempo sequence and musical level remain (RMS 0.09928 → 0.09449). All fourteen synthesized tone cues have smooth zero-ended attack/release. Existing memory/destruction PCM is unchanged; no external audio was introduced.

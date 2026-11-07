@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-11-07 / Isolated surface recovery investigation
+
+- GitHub upload stalled twice; experiment retained in a local commit. No new Android build or recovery result claimed.
+
+- Added diagnostic-only pinned Java control/candidate builds, nonblocking lifecycle-edge latch, controlled host harness, archive preservation checks and eighteen-cycle Android regression gates. Production engine/presets unchanged. Local fifteen Godot suites and fifteen Python tests pass; hosted compilation/recovery pending.
+
 ## Development — 2026-11-07 / Audio click correction
 
 - Smoothed original music beat transitions and synthesized one-shot attack/release. Sounds now use idle voices; saturated optional cues drop without cutting active sounds, while two of twelve slots reserve urgent cues. Active memory cues cannot be restarted. Actual dispatch telemetry distinguishes accepted playback from attempted cues. All 15 suites, 59 audio checks, eleven exported-APK checks and normal Android acceptance pass. Music jumps drop 0.29016 → 0.02042. Phone listening remains unverified; known lifecycle Surface failure was retained before a passing unchanged retest. Verification: TEST_RESULTS.md.
