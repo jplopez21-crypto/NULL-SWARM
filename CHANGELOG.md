@@ -1,8 +1,8 @@
 # Changelog
 
-## Development — 2026-11-07 / Shared Android debug surface repair (in progress)
+## Development — 2026-11-07 / Shared Android debug surface repair
 
-- Normal development/preview debug exports prepare the pinned Java repair and verify the resulting DEX, untouched native engine/ABI and Apache attribution. Exact engine/AAR guards and receipt reuse protect manual/CI preparation; failed bootstrap restores application/signing presets. Ordinary recovery coverage is eighteen cycles. Twenty-two Python tests and workflow syntax pass; hosted verification pending.
+- Integrated the pinned Java repair into normal development/emulator debug and protected-preview build preparation. Exact engine/AAR/receipt guards, preset restoration and APK repair/native/ABI/license gates prevent silent unpatched publication. Fifteen Godot suites/22 Python tests, native ARM64 APK, full QA and both ordinary Android workers pass; eighteen return cycles/56 checks plus all 58 gameplay/save/update checks. Native engine/game modules/balance unchanged. Initial diagnostic post-suite emulator disconnect retained; one unchanged retest passes eighteen cycles/56 checks and all 58 gameplay/save/update checks. All four workflows ultimately pass; regular gates pass on attempt 1. APK, exact scopes and evidence: TEST_RESULTS.md.
 
 ## Development — 2026-11-07 / Isolated surface recovery investigation
 

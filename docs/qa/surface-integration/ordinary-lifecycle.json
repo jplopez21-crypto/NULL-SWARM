@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "cycles": 18,
+  "checks": 56,
+  "background_seconds": [
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0
+  ],
+  "same_process_fresh_foreground_frames": true,
+  "readable_captures": 19,
+  "frozen_fields": [
+    "time",
+    "position",
+    "hp",
+    "kills",
+    "xp",
+    "ranks",
+    "combat_rng",
+    "damage_by_weapon",
+    "salvage"
+  ],
+  "resumed_combat_advances": true,
+  "app_egl_bad_surface_warnings": 8,
+  "warning_lines": [
+    "11-07 19:28:21.243  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:28:28.152  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:28:53.385  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:15.965  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:31.936  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:38.960  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:53.559  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:59.830  3217  3298 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "scope": "Bounded ordinary development Compatibility export recovery: actual callbacks, readable returned screens, frozen gameplay and advancing resumed combat. No physical ARM64/Mobile or universal production-device clearance."
+}

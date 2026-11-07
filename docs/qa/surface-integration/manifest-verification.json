@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "matches_previous_audio_build": true,
+  "attributes": {
+    "manifest": {
+      "package": "com.nullswarm.game.development",
+      "versionCode": 7,
+      "versionName": "0.5.0"
+    },
+    "uses-sdk": {
+      "minSdkVersion": 24,
+      "targetSdkVersion": 36
+    },
+    "activity": {
+      "name": "com.godot.game.GodotApp",
+      "exported": false,
+      "screenOrientation": 0
+    }
+  },
+  "permissions": [],
+  "scope": "Actual binary manifest parsed from downloaded native APK and previous verified audio APK. Not Google Play policy certification."
+}

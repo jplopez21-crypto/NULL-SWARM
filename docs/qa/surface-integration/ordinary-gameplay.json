@@ -1,0 +1,334 @@
+{
+  "earned_analysis": {
+    "method": "Ordinary touch combat/XP/upgrades followed by End Deployment and Run Analysis; before any synthetic Engineer progress fixture",
+    "damage_by_weapon": {
+      "drone": 401.485714285714,
+      "pulse": 763.230357142857
+    },
+    "text": "DEPLOYMENT ANALYSIS\nRECORDED DAMAGE // Support, slows and shields are not measured here.\nLOADOUT // PULSE RIFLE (AMPLIFIER 0)  /  THERMAL BURST R2  /  DRONE HIVE R1\nCORRUPTION 0/3 // CLEAN SIGNAL\nPULSE SHOTS\n763  /  65.5%\nDRONE SYSTEMS\n401  /  34.5%\nDrone Systems combines Hive and field sentry fire. Pulse shots exclude Arcstorm chains.\nSwipe / wheel / D-pad: scroll. B / Esc: back to results.",
+    "frozen": {
+      "time": 31.0999999999995,
+      "kills": 36,
+      "ranks": {
+        "drone": 1,
+        "thermal": 2
+      },
+      "combat_rng": "298897606489081483",
+      "damage_by_weapon": {
+        "drone": 401.485714285714,
+        "pulse": 763.230357142857
+      },
+      "salvage": 1
+    }
+  },
+  "status": "passed",
+  "checks": 58,
+  "pause_samples": {
+    "multitouch_pause": true,
+    "injection": "shell UID / real Android two-pointer MotionEvent",
+    "samples": {
+      "walking": {
+        "touch_controls": {
+          "dash_enabled": true,
+          "dash_id": -1,
+          "joystick_id": 7,
+          "pause_enabled": true,
+          "pause_id": -1,
+          "stick": [
+            1.0,
+            0.0
+          ]
+        },
+        "position": [
+          0.933333396911621,
+          0.0
+        ],
+        "dashes": 2,
+        "dash_readiness": 100.0,
+        "time": 0.566666666666667,
+        "state": "playing"
+      },
+      "paused_while_fingers_held": {
+        "touch_controls": {
+          "dash_enabled": false,
+          "dash_id": -1,
+          "joystick_id": -1,
+          "pause_enabled": false,
+          "pause_id": -1,
+          "stick": [
+            0.0,
+            0.0
+          ]
+        },
+        "position": [
+          2.21666669845581,
+          0.0
+        ],
+        "dashes": 2,
+        "dash_readiness": 100.0,
+        "time": 0.750000000000001,
+        "state": "paused"
+      },
+      "resumed": {
+        "touch_controls": {
+          "dash_enabled": true,
+          "dash_id": -1,
+          "joystick_id": -1,
+          "pause_enabled": true,
+          "pause_id": -1,
+          "stick": [
+            0.0,
+            0.0
+          ]
+        },
+        "position": [
+          2.21666669845581,
+          0.0
+        ],
+        "dashes": 2,
+        "dash_readiness": 100.0,
+        "time": 1.15,
+        "state": "playing"
+      }
+    }
+  },
+  "apk_update": {
+    "from_version": 7,
+    "to_version": 8,
+    "settings_retained": true,
+    "salvage": 1.0
+  },
+  "ordinary_checkpoint": {
+    "architects": 0,
+    "attack_lanes": {
+      "charge": {
+        "ground_mesh": true,
+        "length": 7.0,
+        "surfaces": 1,
+        "triangles": 12,
+        "width": 1.08000004291534
+      },
+      "sentry": {
+        "ground_mesh": true,
+        "length": 7.0,
+        "surfaces": 1,
+        "triangles": 7,
+        "width": 0.800000011920929
+      }
+    },
+    "backup_code_length": 0,
+    "backup_recovery_available": false,
+    "build_text": "",
+    "buttons": [
+      {
+        "disabled": false,
+        "rect": [
+          1133.0,
+          18.0,
+          121.0,
+          75.0
+        ],
+        "text": "II  PAUSE"
+      },
+      {
+        "disabled": false,
+        "rect": [
+          1074.0,
+          607.0,
+          180.0,
+          95.0
+        ],
+        "text": "DASH / READY"
+      }
+    ],
+    "canvas": [
+      1280.0,
+      720.0
+    ],
+    "chain_feedback": {
+      "text": "CHAIN 36 // 4 KILLS TO OVERCLOCK // BREAKS IN 2.1s",
+      "value": 80.0,
+      "visible": true
+    },
+    "combat_rng": "-5933689411448203187",
+    "damage_by_weapon": {
+      "drone": 384.485714285714,
+      "pulse": 745.230357142857
+    },
+    "dash_readiness": 100.0,
+    "dashes": 1,
+    "destruction_feedback": {
+      "fragment_triangles": 8,
+      "fragments_live": 0,
+      "kill_cue_last_dispatch_ms": 103605,
+      "kill_cue_pcm_bytes": 6174,
+      "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+    },
+    "drags": 57,
+    "edit_fields": [],
+    "engine": "4.6.3-stable (official)",
+    "hp": 100.0,
+    "kills": 36,
+    "level": 4,
+    "lifecycle": {
+      "background_events": 0,
+      "foreground_generation": 0,
+      "rendered_generation": 0
+    },
+    "memory_audio_plays": 16,
+    "operative_visible": true,
+    "operative_visuals": {
+      "instances": 5,
+      "surfaces": 6,
+      "triangles": 296
+    },
+    "panel": 0,
+    "pending": 0,
+    "performance_copy_status": "",
+    "performance_report_text": "",
+    "performance_stats_text": "4 FPS / 250.0ms AVG FRAME  \u2022  ENEMIES 8  \u2022  SHOTS 2  \u2022  DRAWS 70  \u2022  ENGINE 53.2MB",
+    "performance_stats_visible": true,
+    "position": [
+      39.3743133544922,
+      -0.683987379074097
+    ],
+    "process": 3566,
+    "ranks": {
+      "drone": 1,
+      "thermal": 2
+    },
+    "rendered_frames": 298,
+    "rendered_panel": 0,
+    "rendered_state": "playing",
+    "renderer": "gl_compatibility",
+    "results_title": "",
+    "run_analysis_text": "",
+    "salvage": 1,
+    "sample_ticks": 115518,
+    "schema": 1,
+    "selected_kit": "vanguard",
+    "sentry": {
+      "activations": 0,
+      "enabled": false,
+      "position": [
+        0.0,
+        0.0
+      ],
+      "remaining": 0.0,
+      "shots": 0,
+      "status": ""
+    },
+    "settings": {
+      "flashes": true,
+      "master": 0.8,
+      "music": 0.35,
+      "performance_stats": true,
+      "quality": 1,
+      "sfx": 0.65,
+      "shake": true,
+      "ui": 0.65
+    },
+    "shield_status": "SHIELD ONLINE",
+    "state": "playing",
+    "targets": [
+      [
+        15.5085477828979,
+        17.1051959991455
+      ],
+      [
+        20.8322925567627,
+        21.5757122039795
+      ],
+      [
+        19.1370697021484,
+        -8.73915863037109
+      ],
+      [
+        17.8872623443604,
+        0.281573683023453
+      ],
+      [
+        46.0636596679688,
+        -11.5734148025513
+      ],
+      [
+        26.739990234375,
+        20.1404266357422
+      ],
+      [
+        30.0184421539307,
+        21.8335056304932
+      ],
+      [
+        30.9550037384033,
+        20.388786315918
+      ],
+      [
+        28.2743492126465,
+        22.0746154785156
+      ],
+      [
+        21.0767765045166,
+        19.6714534759521
+      ],
+      [
+        16.325366973877,
+        -4.03907680511475
+      ],
+      [
+        36.4773826599121,
+        -7.12604475021362
+      ],
+      [
+        40.049488067627,
+        9.64102363586426
+      ],
+      [
+        31.542366027832,
+        12.5543346405029
+      ],
+      [
+        41.7066497802734,
+        -8.81738185882568
+      ],
+      [
+        35.1494445800781,
+        12.4264183044434
+      ]
+    ],
+    "time": 30.6999999999995,
+    "touch_controls": {
+      "dash_enabled": true,
+      "dash_id": -1,
+      "joystick_id": -1,
+      "pause_enabled": true,
+      "pause_id": -1,
+      "stick": [
+        0.0,
+        0.0
+      ]
+    },
+    "touches": 69,
+    "xp": 100
+  },
+  "quiet_observation": {
+    "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+    "median_fps": 3.0,
+    "simulation_seconds_per_wall_second": 0.3806623524933365,
+    "limits": [
+      "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+      "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+    ]
+  },
+  "isolated_export": {
+    "apk_sha256": "33eb6cd8e469f3311dc93471ad746922c243d4244455fe39946676bb4bb936e9",
+    "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+    "asset_files": 102,
+    "exit_code": 0,
+    "scene_smoke_marker": true,
+    "errors": [],
+    "status": "passed"
+  },
+  "logcat_scans": "passed",
+  "scope": "Ordinary earned Android run: End Deployment, real damage channels/shares, frozen time/RNG/rewards and Back/menu retention verified before any Engineer progress fixture. Mobile physical performance remains unverified."
+}
