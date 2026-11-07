@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-07 / Shared Android debug surface repair (in progress)
+
+- Normal development/preview debug exports prepare the pinned Java repair and verify the resulting DEX, untouched native engine/ABI and Apache attribution. Exact engine/AAR guards and receipt reuse protect manual/CI preparation; failed bootstrap restores application/signing presets. Ordinary recovery coverage is eighteen cycles. Twenty-two Python tests and workflow syntax pass; hosted verification pending.
+
 ## Development — 2026-11-07 / Isolated surface recovery investigation
 
 - Restored GitHub publishing and fixed the diagnostic Java dependency classpath after the first hosted compile failed. Both rebuilt controls preserve unrelated classes/native code. Candidate passes eighteen actual emulator resume cycles/56 checks and all 58 gameplay/save/update checks; matching control stalls on cycle 8. Fifteen Godot suites/fifteen Python tests, native APK and full QA pass. Ordinary official-engine Android gates remain failed; production templates unchanged. Receipts, failed controls and exact artifact locations: TEST_RESULTS.md.

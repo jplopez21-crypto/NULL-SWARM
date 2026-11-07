@@ -112,8 +112,11 @@ jobs:
         run: |
           mkdir -p builds/android
           python3 tools/configure_development_export.py
+          python3 tools/android_surface/prepare_development.py --android-jar "$ANDROID_HOME/platforms/android-35/android.jar" --output builds/qa/android-surface
           godot --headless --export-debug Android builds/android/null-swarm-development-debug.apk
           test -s builds/android/null-swarm-development-debug.apk
+          python3 tools/android_surface/verify_development_apk.py builds/android/null-swarm-development-debug.apk --receipt builds/qa/android-surface/surface-build.json --abi arm64-v8a --output builds/qa/android-surface/apk-export.json
+          bash android/build/gradlew --stop
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android/null-swarm-development-debug.apk
           sha256sum builds/android/null-swarm-development-debug.apk > builds/android/SHA256SUMS
           cat builds/android/SHA256SUMS

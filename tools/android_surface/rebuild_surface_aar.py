@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recompile only the pinned Godot GLSurfaceView family for isolated diagnostics.
+"""Recompile only the pinned Godot GLSurfaceView family for controlled debug exports.
 Never modifies the distributed preset, engine native libraries, or the source AAR on failure.
 """
 import argparse
@@ -113,7 +113,7 @@ def rebuild(aar, android_jar, output_dir, variant):
         assert all(before.read(n) == after.read(n) for n in retained)
     (output_dir/'GLSurfaceView.java').write_bytes(changed)
     (output_dir/'source.diff').write_text(''.join(difflib.unified_diff(source.decode().splitlines(True), changed.decode().splitlines(True), fromfile='official-4.6.3/GLSurfaceView.java', tofile=variant+'/GLSurfaceView.java')))
-    receipt = {'variant':variant,'upstream_git_blob':UPSTREAM_BLOB,'original_source_sha256':digest(source),'compiled_source_sha256':digest(changed),'original_aar_sha256':digest(original),'modified_aar_sha256':digest(modified),'java_release':release,'compiler':compiler,'recompiled_classes':sorted(updates),'unchanged_other_classes':len(retained),'native_libraries_sha256':native,'nonclass_aar_entries_unchanged':True,'host_logic':host.stdout.strip(),'scope':'Diagnostic Java surface family only. Native engine/resources unchanged; real Android recovery is a separate test.'}
+    receipt = {'variant':variant,'upstream_git_blob':UPSTREAM_BLOB,'original_source_sha256':digest(source),'compiled_source_sha256':digest(changed),'original_aar_sha256':digest(original),'modified_aar_sha256':digest(modified),'java_release':release,'compiler':compiler,'recompiled_classes':sorted(updates),'unchanged_other_classes':len(retained),'native_libraries_sha256':native,'nonclass_aar_entries_unchanged':True,'host_logic':host.stdout.strip(),'scope':'Java surface family only. Native engine/resources unchanged; runtime recovery is a separate test.'}
     (output_dir/'surface-build.json').write_text(json.dumps(receipt, indent=2)+'\n')
     # All compilation/host/archive validation completed before replacing the disposable input.
     replacement = aar.with_suffix(aar.suffix+'.tmp'); replacement.write_bytes(modified); replacement.replace(aar)

@@ -67,6 +67,12 @@ jobs:
           python3 tools/configure_emulator_export.py
           godot --headless --editor --import --quit
           mkdir -p builds/android-runtime
+          python3 - <<'PYBOOT'
+          from configparser import ConfigParser
+          config=ConfigParser(interpolation=None);config.optionxform=str;config.read('export_presets.cfg')
+          config['preset.0.options']['gradle_build/use_gradle_build']='false'
+          with open('export_presets.cfg','w') as target:config.write(target)
+          PYBOOT
           godot --headless --install-android-build-template --export-debug Android /tmp/official-install.apk
           python3 - <<'PYAAR'
           from pathlib import Path

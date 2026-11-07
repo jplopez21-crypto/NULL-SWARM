@@ -36,3 +36,16 @@ The six current channels fit the standard report. Longer reports support touch s
 `.github/workflows/android-surface-investigation.yml` builds pinned Godot 4.6.3 Java control/latched variants on pull requests touching the experiment or runtime driver, or by manual workflow dispatch. It requires Java 21, Android 35 and official source templates. The rebuild tool compiles against android.jar **and unchanged official classes.jar**, runs controlled-field Java assertions, and refuses source drift/class-set mismatch or unrelated archive changes before replacing the disposable AAR.
 
 Both variants run eighteen real emulator Home/return cycles. A control recovery failure with Surface warnings is retained as a failed driver observation; collection success must not be read as recovery success. Unexpected control failures fail collection. Candidate recovery and all 58 ordinary gameplay/save/update checks are strict gates. Diagnostic packages are `com.nullswarm.game.surfacecontrol` and `com.nullswarm.game.surfacelatched`, x86_64 Compatibility only. Do not install these on the ARM64 S23. Standard ARM64 exports continue using official engine templates; this experiment is not yet a production integration. See TEST_RESULTS.md for verified source, failed official gates and artifact paths.
+
+
+## Development debug exports with the surface repair
+
+The Android debug preset uses Gradle. After Godot import, Java 21/Android SDK setup and signing configuration, prepare the source template before exporting:
+
+```bash
+python3 tools/android_surface/prepare_development.py --android-jar "$ANDROID_HOME/platforms/android-35/android.jar" --output builds/qa/android-surface
+godot --headless --export-debug Android builds/android/null-swarm-debug.apk
+python3 tools/android_surface/verify_development_apk.py builds/android/null-swarm-debug.apk --receipt builds/qa/android-surface/surface-build.json --abi arm64-v8a --output builds/qa/android-surface/apk-export.json
+```
+
+Use the existing development/preview package/signing configurators when building those identities; preparation preserves their values exactly. Manual editor exports also need preparation. Keep its receipt for idempotent reuse; deleting/changing the AAR or receipt requires a clean official source-template reinstall. Generated `android/` files and keystores are ignored by Git. The native engine is unchanged; only the reviewed fifteen Java surface classes are recompiled. APK verification rejects absent repair/native/ABI/attribution drift before publication. Normal CI runs eighteen real background/foreground cycles and the independent ordinary gameplay suite. Protected stable-preview signing still requires owner-provided protected secrets. Release AAB integration/signing and physical-device clearance remain separate; do not use this debug-only command as release certification.

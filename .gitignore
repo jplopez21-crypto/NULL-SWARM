@@ -12,3 +12,6 @@ export_credentials.cfg
 # Python test-tool caches
 __pycache__/
 *.pyc
+
+# Generated Godot Android source template; prepared by tools/android_surface.
+/android/

@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Development Android surface integration — in progress 2026-11-07
+
+- Normal debug and stable-preview workflows now prepare/verify the same pinned Java repair tested in the diagnostic comparison below. Committed Android debug preset uses Gradle; source-template generation is ignored by Git. Release preset remains outside this debug-only integration.
+- Fifteen local Godot suites and twenty-two Python tests pass, including seven preparation/publication regressions: exact preset/identity restoration after bootstrap failure; engine/SDK/source guards; receipt-checked idempotence/tamper rejection; latched compilation routing; and exported patch/native/ABI/license checks. All five workflow YAML/bash syntax checks pass. Actual ordinary eighteen-cycle recovery, gameplay and ARM64 exports are pending hosted CI; no new APK claimed.
+
 ## Surface recovery experiment — verified diagnostic checkpoint 2026-11-07
 
 Verified source: `3824e19a7fd530c8f947faeb7a59bd5f31bd3081`, tree `6f7064bff59615ba2d3f3882fe95693f07e29c53`. Final checkpoint changes reports/Markdown only. **The production recovery issue remains open; ordinary Android gates failed.**

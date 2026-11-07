@@ -61,8 +61,11 @@ jobs:
           ANDROID_DEV_CERT_SHA256: ${{ secrets.ANDROID_DEV_CERT_SHA256 }}
         run: |
           mkdir -p builds/android
+          python3 tools/android_surface/prepare_development.py --android-jar "$ANDROID_HOME/platforms/android-35/android.jar" --output builds/qa/android-surface
           godot --headless --export-debug Android builds/android/null-swarm-preview-debug.apk
           test -s builds/android/null-swarm-preview-debug.apk
+          python3 tools/android_surface/verify_development_apk.py builds/android/null-swarm-preview-debug.apk --receipt builds/qa/android-surface/surface-build.json --abi arm64-v8a --output builds/qa/android-surface/apk-export.json
+          bash android/build/gradlew --stop
           python3 tools/prepare_preview_signing.py --verify-apk builds/android/null-swarm-preview-debug.apk
           sha256sum builds/android/null-swarm-preview-debug.apk > builds/android/SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

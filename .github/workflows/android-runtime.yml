@@ -63,8 +63,10 @@ jobs:
           python3 tools/configure_emulator_export.py
           godot --headless --editor --import --quit
           mkdir -p builds/android-runtime
+          python3 tools/android_surface/prepare_development.py --android-jar "$ANDROID_HOME/platforms/android-35/android.jar" --output builds/android-runtime/surface
           godot --headless --export-debug Android builds/android-runtime/emulator-debug.apk
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify builds/android-runtime/emulator-debug.apk
+          python3 tools/android_surface/verify_development_apk.py builds/android-runtime/emulator-debug.apk --receipt builds/android-runtime/surface/surface-build.json --abi x86_64 --output builds/android-runtime/surface/apk-export.json
           python3 - <<'PYVERSION'
           from configparser import ConfigParser
           from pathlib import Path
@@ -78,6 +80,8 @@ jobs:
           PYVERSION
           godot --headless --export-debug Android /tmp/emulator-upgrade.apk
           "$ANDROID_HOME/build-tools/35.0.1/apksigner" verify /tmp/emulator-upgrade.apk
+          python3 tools/android_surface/verify_development_apk.py /tmp/emulator-upgrade.apk --receipt builds/android-runtime/surface/surface-build.json --abi x86_64 --output builds/android-runtime/surface/upgrade-export.json
+          bash android/build/gradlew --stop
       - name: Launch isolated assets from exported emulator APK
         run: python3 tools/run_export_smoke.py builds/android-runtime/emulator-debug.apk --output builds/android-runtime/export-smoke.json
       - name: Build shell-only multi-pointer touch injector
@@ -108,7 +112,7 @@ jobs:
           df -h "$ANDROID_AVD_HOME"
           # These downloads/staging files have already been installed above.
           rm -f /tmp/godot.zip /tmp/templates.tpz
-          rm -rf /tmp/godot /tmp/export
+          rm -rf /tmp/godot /tmp/export android/build "$HOME/.gradle/caches"
           # This disposable GDScript/Android job does not use the preinstalled .NET SDK.
           sudo rm -rf /usr/share/dotnet
           python3 - <<'PYDISK'
@@ -164,7 +168,7 @@ jobs:
         if: matrix.suite == 'lifecycle'
         run: |
           set -o pipefail
-          timeout 360s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --lifecycle-only 2>&1 | tee builds/android-runtime/smoke.log
+          timeout 600s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --lifecycle-only --lifecycle-cycles 18 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |
