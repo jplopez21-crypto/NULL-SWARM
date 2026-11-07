@@ -110,7 +110,7 @@ func snapshot() -> void:
 			kill_pcm_sha256 = digest.finish().hex_encode()
 		data["destruction_feedback"] = {"fragments_live": fragments,
 			"fragment_triangles": game.combat.effects.shard_mesh.surface_get_array_len(0) / 3,
-			"kill_cue_last_dispatch_ms": game.audio.last_played.get("kill", -1),
+			"kill_cue_last_dispatch_ms": game.audio.last_dispatched.get("kill", -1),
 			"kill_cue_pcm_bytes": cue.data.size() if cue != null else 0, "kill_cue_pcm_sha256": kill_pcm_sha256}
 		data["sentry"] = {"enabled": game.combat.sentry.enabled, "remaining": game.combat.sentry.remaining,
 			"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots,

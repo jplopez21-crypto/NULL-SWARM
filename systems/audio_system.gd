@@ -2,10 +2,13 @@ class_name SwarmAudio
 extends Node
 
 const MEMORY_INTERVAL_MS: int = 140
+const PRIORITY_VOICES: int = 2
 var voices: Array[AudioStreamPlayer] = []
 var sounds: Dictionary = {}
 var cursor: int = 0
 var last_played: Dictionary = {}
+var last_dispatched: Dictionary = {}
+var dropped_cues: int = 0
 var music: AudioStreamPlayer
 var memory_voice: AudioStreamPlayer
 var memory_plays: int = 0
@@ -52,7 +55,8 @@ func tone(hz: float, duration: float, ambient: bool = false) -> AudioStreamWAV:
 	bytes.resize(int(rate * duration) * 2)
 	for i in range(bytes.size() / 2):
 		var time := float(i) / rate
-		var envelope := 0.4 if ambient else pow(1.0 - time / duration, 2.0)
+		var fraction: float = float(i) / maxf(1.0, bytes.size() / 2 - 1)
+		var envelope: float = (0.4 if ambient else pow(1.0 - fraction, 2.0)) * minf(1.0, time / 0.004) * minf(1.0, (1.0 - fraction) * duration / 0.004)
 		var phase := TAU * hz * time * (1.0 if ambient else 1.0 - time / duration * 0.4)
 		var sample := (sin(phase) + sin(phase * 2.0) * 0.2) * envelope * 0.35
 		bytes.encode_s16(i * 2, int(sample * 32767.0))
@@ -70,13 +74,32 @@ func play(id: String, bus: String = "SFX") -> void:
 	last_played[id] = now
 	if not sounds.has(id):
 		return
-	var voice := voices[cursor % voices.size()]
-	cursor += 1
+	# Keep the existing random-draw budget even when a saturated pool drops a cue.
+	var pitch: float = randf_range(0.94, 1.06)
+	var priority: bool = bus == "UI" or id in ["damage", "shield", "level", "dash"]
+	var voice: AudioStreamPlayer = null
+	if priority:
+		for i in range(maxi(0, voices.size() - PRIORITY_VOICES), voices.size()):
+			if not voices[i].playing:
+				voice = voices[i]
+				break
+	if voice == null:
+		var available: int = maxi(0, voices.size() - PRIORITY_VOICES)
+		for offset in range(available):
+			var index: int = (cursor + offset) % available
+			if not voices[index].playing:
+				voice = voices[index]
+				cursor += offset + 1
+				break
+	if voice == null:
+		dropped_cues += 1
+		return # Never hard-cut a playing waveform or queue delayed combat sounds.
 	voice.bus = bus
 	voice.stream = sounds[id]
-	voice.pitch_scale = randf_range(0.94, 1.06)
+	voice.pitch_scale = pitch
 	voice.volume_db = -12.0
 	voice.play()
+	last_dispatched[id] = now
 
 func apply(settings: Dictionary) -> void:
 	for pair in [["Master", "master"], ["Music", "music"], ["SFX", "sfx"], ["UI", "ui"]]:
@@ -88,7 +111,7 @@ func memory_collected(amount: int, levelled: bool = false) -> bool:
 	if amount <= 0 or levelled or not is_instance_valid(memory_voice) or memory_voice.stream == null:
 		return false
 	var now: int = Time.get_ticks_msec()
-	if now < memory_next_ms:
+	if now < memory_next_ms or memory_voice.playing:
 		return false
 	memory_next_ms = now + MEMORY_INTERVAL_MS
 	memory_voice.pitch_scale = [1.0, 1.122462, 1.259921][2 if amount >= 100 else (1 if amount >= 25 else 0)]
@@ -184,11 +207,15 @@ func score_loop() -> AudioStreamWAV:
 	var bytes := PackedByteArray()
 	bytes.resize(rate * 8 * 2)
 	var notes: Array[float] = [55.0, 55.0, 65.406, 49.0, 55.0, 73.416, 65.406, 49.0]
+	var bass_phase: float = 0.0
 	for i in range(rate * 8):
 		var t := float(i) / rate
 		var step: int = int(t * 4.0)
 		var gate := fmod(t, 0.25)
-		var bass: float = sin(TAU * notes[(step / 4) % 8] * t) * exp(-gate * 13.0) * 0.30
+		# Continuous oscillator phase plus short beat-edge fades prevent step clicks.
+		var beat_envelope: float = minf(1.0, gate / 0.006) * minf(1.0, (0.25 - gate) / 0.008)
+		var bass: float = sin(bass_phase) * exp(-gate * 13.0) * beat_envelope * 0.30
+		bass_phase = fmod(bass_phase + TAU * notes[(step / 4) % 8] / rate, TAU)
 		var kick_t := fmod(t, 0.5)
 		var kick := sin(TAU * (45.0 * kick_t + 3.0 * (1.0 - exp(-kick_t * 35.0)))) * exp(-kick_t * 24.0) * 0.28
 		var pulse := sin(TAU * 440.0 * t) * exp(-gate * 70.0) * 0.04

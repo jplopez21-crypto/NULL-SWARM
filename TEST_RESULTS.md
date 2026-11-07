@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Audio click correction — verification in progress
+
+- Measured original music beat-edge jumps up to 0.29016 amplitude; corrected continuous-phase/faded score peaks at 0.02042 adjacent-sample change. Tempo, pitch sequence and eight-second duration preserved. Tone attacks/releases are smooth. Idle-only sound allocation prevents mid-waveform truncation; two of twelve slots preserve urgent damage/shield/dash/level/UI cues. Saturated optional cues drop without queueing; the original random-draw budget is retained. Memory cannot restart while active.
+- All 15 local suites pass, including 59 audio checks covering raw/resampled edges, non-silent levels, every tone, saturated routing/priority, truthful dispatch and teardown. Destruction/memory PCM unchanged. Native/Android/lifecycle/full-QA builds pending; phone listening unverified.
+
 ## Repeated Android resume verification — verified 2026-11-07
 
 - Added a separate six-cycle lifecycle job alongside normal Android gameplay, with 0.25/1/3-second background dwell repeated twice. Every return requires the same process, a later sample/frame, a newer foreground-notification generation rendered by an actual frame callback, matching paused UI, a readable screencap, frozen time/position/health/kills/XP/ranks/RNG/damage/salvage, and advancing combat after touch Resume. Standard gameplay acceptance now also requires a fresh post-foreground frame. No test retry, process restart or recovery workaround runs inside the test.

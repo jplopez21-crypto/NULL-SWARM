@@ -75,3 +75,7 @@ The chamfered torso/helmet/shoulder plates, backpack, shin/boot geometry, visor/
 ## Machine destruction
 
 Eight-triangle opaque faceted chips are original procedural geometry/grayscale weights in effects/debris_fragment.gd, tinted by the existing enemy palette. The 140 ms mechanical breakup cue is original synthesized mono PCM in SwarmAudio.destruction_crunch, using local integer noise, three transients and metal/body sine partials; no external samples or recordings. The existing FX pool/flight and SFX voices/buses/volume gates are retained. No external art, models, fonts, shaders or audio were downloaded. These remain development visuals/audio pending human listening/readability and final commercial art/mix review. Desktop breakup boards are labelled frozen QA references.
+
+## Audio click prevention
+
+The original project-authored score now uses continuous bass phase and short beat-edge fades; original generated weapon/UI tones use smooth attack/release. No external samples or music were introduced. Existing destruction and memory PCM remain unchanged. The bounded twelve-voice pool reserves two slots for urgent cues and never replaces a playing waveform; optional crowded cues are dropped rather than queued. QA WAV exports are original development audio for listening review, not final commercial audio.

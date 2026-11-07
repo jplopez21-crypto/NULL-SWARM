@@ -2,6 +2,8 @@
 
 ## Current checkpoint
 
+- In progress: audio click fix. Removed measured music beat discontinuities (0.29016 → 0.02042 largest sample step), smoothed tone attacks and prevented active-voice replacement. Same twelve-voice budget with two reserved urgent slots; no delayed queue or extra gameplay RNG. All 15 local suites pass, including 59 audio checks. Hosted builds/tests and phone listening pending.
+
 - Completed fresh-frame lifecycle regression coverage. Source 3341f35b54a5e1f8b26d91ed24f905479d32b81e passes native/full QA and both independent Android workers on attempt 1: six startup-return cycles/20 checks plus 58 ordinary gameplay checks. All 15 strict suites and 11 Python tests pass; 26 observer checks/188 rendered layouts. All prior non-timing gameplay/XP/pacing and 24 stress fingerprints match. Thirty-seven compiled modules unchanged; only opt-in QA observer changed.
 - Current QA-verified APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42319803405/artifacts/13552616924. Extract android/null-swarm-development-debug.apk. Independent integrity/package/ARM64 Mobile/probe-disabled/exclusion/startup pass. Three app-only failed-swap warnings recovered across six readable returns; prior persistent black screen was not reproduced, and no production fix is claimed. Next: heavier/longer recovery reproduction, physical Mobile profiling and human feedback. Stable signing remains open; preserve backups. Main unchanged/unmerged. Evidence: docs/qa/resume/verified-ci.json.
 

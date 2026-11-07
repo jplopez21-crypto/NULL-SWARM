@@ -3,6 +3,7 @@ extends SceneTree
 var checks: int = 0
 var failures: Array[String] = []
 var memory_receipt: Dictionary = {}
+var click_receipt: Dictionary = {}
 var watched_audio: Dictionary = {}
 
 func _initialize() -> void:
@@ -27,18 +28,36 @@ func run() -> void:
 	playback.start()
 	var remaining: int = int(AudioServer.get_mix_rate()) * 24
 	var finite_samples: bool = true
+	var mixed_max_step: float = 0.0
+	var previous_mixed: float = 0.0
 	while remaining > 0:
 		var count: int = mini(1024, remaining)
 		var mixed: PackedVector2Array = playback.mix_audio(1.0, count)
 		finite_samples = finite_samples and mixed.size() == count
 		for frame in mixed:
+			mixed_max_step = maxf(mixed_max_step, absf(frame.x - previous_mixed))
+			previous_mixed = frame.x
 			finite_samples = finite_samples and frame.is_finite() and absf(frame.x) <= 1.0 and absf(frame.y) <= 1.0
 		remaining -= count
 	check(finite_samples, "twenty-four seconds of offline looping/resampling remain finite and in range")
 	check(playback.is_playing() and playback.get_playback_position() >= 0 and playback.get_playback_position() <= music.get_length(), "playback remains valid across multiple loop boundaries")
+	var music_stats := pcm_stats(music)
+	check(music_stats["largest_sample_step"] < 0.03, "music has no beat-edge amplitude discontinuities")
+	check(music_stats["loop_seam_step"] < 0.003 and mixed_max_step < 0.03, "native and resampled music remain smooth across all loop boundaries")
+	check(music_stats["rms"] > 0.06 and music_stats["peak"] < 0.8, "click removal retains a non-silent unclipped score")
+	check(music.save_to_wav("res://builds/qa/music-click-fixed.wav") == OK, "corrected score exported for listening review")
+	click_receipt = {"music": music_stats, "resampled_largest_sample_step": mixed_max_step, "limits": "Offline PCM/voice-routing checks; human phone listening remains required."}
 	playback.stop()
 	playback = null
 	music = null
+	for spec in [["fire", 460.0, 0.07], ["hit", 170.0, 0.08], ["level", 720.0, 0.35], ["damage", 65.0, 0.25], ["shield", 880.0, 0.12], ["ui", 520.0, 0.08], ["dash", 300.0, 0.16], ["orbit", 260.0, 0.1], ["arc", 1120.0, 0.15], ["rail", 85.0, 0.3], ["singularity", 140.0, 0.32], ["thermal", 52.0, 0.32], ["drone", 680.0, 0.06], ["sentry", 760.0, 0.22]]:
+		var clip: AudioStreamWAV = builder.tone(spec[1], spec[2])
+		watch_resource(clip)
+		var edge_peak: float = 0.0
+		for i in range(4):
+			edge_peak = maxf(edge_peak, absf(clip.data.decode_s16(i * 2) / 32768.0))
+		check(clip.data.decode_s16(0) == 0 and clip.data.decode_s16(clip.data.size() - 2) == 0 and edge_peak < 0.02, "%s starts and ends smoothly without an instantaneous attack" % spec[0])
+		clip = null
 	var tone: AudioStreamWAV = builder.tone(460, 0.07)
 	watch_resource(tone)
 	check(tone.loop_mode == AudioStreamWAV.LOOP_DISABLED and not tone.stereo and tone.data.size() > 0, "one-shot effects stay non-looping mono PCM")
@@ -88,6 +107,10 @@ func run() -> void:
 	var cursor: int = started.cursor
 	check(started.memory_collected(5) and started.memory_plays == 1 and started.memory_voice.playing and started.memory_voice.pitch_scale == 1.0, "real collection starts the low-tier cue once")
 	check(started.cursor == cursor and started.voices[0].playing, "memory cue cannot steal or repoint an active weapon voice")
+	var memory_deadline: int = started.memory_next_ms
+	started.memory_next_ms = 0
+	check(not started.memory_collected(25) and started.memory_plays == 1 and started.memory_voice.pitch_scale == 1.0, "active memory playback cannot be abruptly restarted")
+	started.memory_next_ms = memory_deadline
 	var deadline: int = started.memory_next_ms
 	started.memory_next_ms = Time.get_ticks_msec() + 60000
 	var rejected := true
@@ -109,6 +132,36 @@ func run() -> void:
 	await create_timer(0.16).timeout
 	started.reset_memory_feedback()
 	check(started.memory_plays == 0 and started.memory_next_ms == 0 and not started.memory_voice.playing, "fresh deployment resets feedback counter, cooldown and playback")
+	var long_clip: AudioStreamWAV = started.tone(100.0, 1.0)
+	watch_resource(long_clip)
+	for i in range(10):
+		started.voices[i].stream = long_clip
+		started.voices[i].play()
+	started.cursor = 0
+	started.last_played["rail"] = -1000
+	var dropped_before: int = started.dropped_cues
+	started.play("rail")
+	check(started.dropped_cues == dropped_before + 1 and not started.voices[10].playing and not started.voices[11].playing, "saturated ordinary effects preserve reserved urgent voices without queueing")
+	check(not started.last_dispatched.has("rail") and started.cursor == 0, "a dropped cue cannot claim a playback dispatch")
+	started.play("damage")
+	check(started.voices[10].stream == started.sounds["damage"] and started.voices[10].playing and started.last_dispatched.has("damage"), "player damage still plays through a reserved voice during heavy effects")
+	started.play("ui", "UI")
+	check(started.voices[11].stream == started.sounds["ui"] and started.voices[11].bus == "UI" and started.voices[11].playing, "UI retains its own bus and available priority voice")
+	var active_streams := PackedInt64Array()
+	for voice in started.voices:
+		active_streams.append(voice.stream.get_instance_id())
+	seed(81273)
+	randf_range(0.94, 1.06)
+	var expected_next: float = randf()
+	seed(81273)
+	started.play("shield")
+	check(randf() == expected_next, "dropped playback preserves the original random-draw budget")
+	var untouched := true
+	for i in range(started.voices.size()):
+		untouched = untouched and started.voices[i].stream.get_instance_id() == active_streams[i] and started.voices[i].playing
+	check(untouched and started.dropped_cues == dropped_before + 2 and not started.last_dispatched.has("shield"), "a full pool never hard-cuts or replaces an active waveform")
+	check(started.voices.size() == 12, "click prevention keeps the existing bounded twelve-voice pool")
+	long_clip = null
 	watch_audio(started)
 	started.shutdown()
 	check(not started.memory_collected(5) and started.memory_voice.stream == null, "shutdown rejects collection feedback and releases its stream")
@@ -126,7 +179,7 @@ func run() -> void:
 	await _test_collection_integration()
 	var released: bool = await drain_audio()
 	check(released, "all watched audio streams/playbacks release after queued-free and bounded mixer drain")
-	QAReport.write("res://builds/qa/audio-tests.json", {"checks": checks, "failures": failures, "memory_cue": memory_receipt, "teardown_release_verified": released})
+	QAReport.write("res://builds/qa/audio-tests.json", {"checks": checks, "failures": failures, "memory_cue": memory_receipt, "click_prevention": click_receipt, "teardown_release_verified": released})
 	print("AUDIO_RESULT checks=", checks, " failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
 
@@ -197,3 +250,17 @@ func drain_audio() -> bool:
 			break
 	QAReport.write("res://builds/qa/audio-release-diagnostics.json", {"watched_instances": watched_audio.size(), "released": lingering.is_empty(), "lingering": lingering, "scope": "Per-process resource ownership after queued-free; engine IDs are not device/account identifiers."})
 	return lingering.is_empty()
+
+func pcm_stats(clip: AudioStreamWAV) -> Dictionary:
+	var peak: float = 0.0
+	var energy: float = 0.0
+	var largest_step: float = 0.0
+	var last: float = 0.0
+	var count: int = clip.data.size() / 2
+	for i in range(count):
+		var value: float = clip.data.decode_s16(i * 2) / 32768.0
+		peak = maxf(peak, absf(value))
+		energy += value * value
+		largest_step = maxf(largest_step, absf(value - last))
+		last = value
+	return {"peak": peak, "rms": sqrt(energy / count), "largest_sample_step": largest_step, "loop_seam_step": absf(last - clip.data.decode_s16(0) / 32768.0)}
