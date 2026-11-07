@@ -1,12 +1,11 @@
 name: Android Mobile renderer smoke
 on:
+  push:
+    branches: [main]
   pull_request:
-    paths:
-      - '.github/workflows/android-mobile.yml'
-      - 'tools/configure_emulator_export.py'
-      - 'tools/android_runtime_smoke.py'
-      - 'tests/test_emulator_export.py'
   workflow_dispatch:
+  schedule:
+    - cron: "23 4 * * 0"
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
