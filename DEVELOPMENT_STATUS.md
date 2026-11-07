@@ -2,6 +2,8 @@
 
 ## Current checkpoint
 
+- In progress: strict six-cycle Android Surface recovery matrix with fresh-frame generations and readable-screen/frozen-state/real-resume gates. Standard background/resume acceptance also rejects stale telemetry. All 15 local suites and four Python tests pass; 26 probe checks. No gameplay source changes or claimed Surface fix. Hosted matrix/QA pending.
+
 - Completed voluntary deployment results and ordinary-earned Android analysis acceptance. Source dbfe0e5297bddcd7ffd475aea4849cb4f2a76f90 passes native/Android/full QA, all 15 strict suites and all 58 Android checks; 188 rendered layouts. Same reward calculations, frozen health/time/RNG and single-ledger recording verified. All previous non-timing gameplay/XP/pacing cases and 24 stress fingerprints match. Actual earned Android report/captures independently inspected before any Engineer fixture.
 - Current APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42282464706/artifacts/13536226359. Extract android/null-swarm-development-debug.apk. CI signature and independent integrity/package/ARM64 Mobile/probe-disabled/exclusion/startup pass. Thirty-five compiled modules unchanged. Physical Mobile performance/human feedback/stable signing remain open; preserve backups. Known issue: initial software-emulator background/resume produced EGL_BAD_SURFACE and a black frame; identical retry passed, without a claimed production fix. Next: reproduce/resolve intermittent Surface recovery, physical Mobile profiling and human combat/build playtesting. Main unchanged/unmerged. Evidence: docs/qa/end-results/verified-ci.json.
 

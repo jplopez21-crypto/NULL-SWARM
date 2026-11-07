@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — Android resume regression coverage
+
+- Added an independent six-cycle Android lifecycle matrix and read-only lifecycle/render generations. Fresh frames, visible game output, paused-state integrity and advancing resumed combat are required. No recovery or retry is simulated. Gameplay/save/input behavior unchanged. Verification: TEST_RESULTS.md.
+
 ## Development — 2026-11-06 / End-deployment results
 
 - Ending from Pause now opens Deployment Ended results and its damage report. Defeat/victory retain their existing titles; redeploy clears the end reason. Existing reward calculations remain, with repeat-end and actual GUI regressions. All 15 strict suites, 188 rendered layouts, 58 Android checks and full gameplay QA passed. Actual ordinary-earned Android analysis verified before any Engineer fixture. APK/evidence: TEST_RESULTS.md.

@@ -13,10 +13,19 @@ var last_player: int = 0
 var rendered_state: String = ""
 var rendered_panel: int = 0
 var rendered_frames: int = 0
+var foreground_generation: int = 0
+var rendered_generation: int = 0
+var background_events: int = 0
 
 func _ready() -> void:
 	RenderingServer.frame_post_draw.connect(_frame_drawn)
 	print("ANDROID_QA_READY ", OS.get_user_data_dir())
+
+func _notification(what: int) -> void:
+	if what in [NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN]:
+		foreground_generation += 1
+	elif what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT]:
+		background_events += 1
 
 func _panel_id() -> int:
 	return game.ui.screen.get_instance_id() if is_instance_valid(game.ui.screen) else 0
@@ -27,6 +36,7 @@ func _frame_drawn() -> void:
 	rendered_state = ["menu", "playing", "upgrading", "paused", "results"][game.state]
 	rendered_panel = _panel_id()
 	rendered_frames = Engine.get_frames_drawn()
+	rendered_generation = foreground_generation
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch and event.pressed:
@@ -53,6 +63,7 @@ func snapshot() -> void:
 		"rendered_state": rendered_state, "panel": _panel_id(), "rendered_panel": rendered_panel, "rendered_frames": rendered_frames,
 		"canvas": [game.ui.root.size.x, game.ui.root.size.y], "touches": touches, "drags": drags, "dashes": dashes,
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
+	data["lifecycle"] = {"foreground_generation": foreground_generation, "rendered_generation": rendered_generation, "background_events": background_events}
 	data["performance_stats_visible"] = game.ui.perf_label.is_visible_in_tree()
 	data["performance_stats_text"] = game.ui.perf_label.text
 	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}

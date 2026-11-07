@@ -15,6 +15,10 @@ jobs:
   android-runtime:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [gameplay, lifecycle]
     env:
       GODOT_VERSION: 4.6.3
       EXPECTED_EMULATOR_VERSION: 37.2.13.0
@@ -151,10 +155,16 @@ jobs:
           python3 -m venv /tmp/null-swarm-runtime-python
           /tmp/null-swarm-runtime-python/bin/python -m pip install --disable-pip-version-check Pillow==11.3.0
       - name: Touch, gameplay, pause and lifecycle smoke
+        if: matrix.suite == 'gameplay'
         run: |
           set -o pipefail
           godot --headless --script tests/create_engineer_fixture.gd
           timeout 540s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --upgrade-apk /tmp/emulator-upgrade.apk --engineer-backup builds/qa/engineer-fixture.txt 2>&1 | tee builds/android-runtime/smoke.log
+      - name: Repeated Android surface recovery
+        if: matrix.suite == 'lifecycle'
+        run: |
+          set -o pipefail
+          timeout 360s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --lifecycle-only 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |
@@ -165,7 +175,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: ${{ always() }}
         with:
-          name: null-swarm-android-runtime
+          name: ${{ matrix.suite == 'lifecycle' && 'null-swarm-android-lifecycle' || 'null-swarm-android-runtime' }}
           path: |
             builds/android-runtime/
             !builds/android-runtime/*.apk
@@ -174,7 +184,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: ${{ always() }}
         with:
-          name: null-swarm-emulator-apk
+          name: ${{ matrix.suite == 'lifecycle' && 'null-swarm-lifecycle-emulator-apk' || 'null-swarm-emulator-apk' }}
           path: builds/android-runtime/emulator-debug.apk
           retention-days: 14
           if-no-files-found: warn

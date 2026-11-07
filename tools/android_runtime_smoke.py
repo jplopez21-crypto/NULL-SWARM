@@ -14,12 +14,14 @@ import os
 import xml.etree.ElementTree as ET
 from io import BytesIO
 from PIL import Image
+from lifecycle_observation import fresh_resumed_frame, frozen_run, app_egl_failures
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
 parser.add_argument('--output', default='builds/android-runtime')
 parser.add_argument('--upgrade-apk', help='Install a same-signer higher-version APK after lifecycle checks')
 parser.add_argument('--engineer-backup', help='Explicit synthetic earned-kit code; restored through GUI only after ordinary persistence checks')
+parser.add_argument('--lifecycle-only', action='store_true', help='Run six strict Home/launcher recovery cycles without granting progress')
 args = parser.parse_args()
 out = Path(args.output)
 out.mkdir(parents=True, exist_ok=True)
@@ -366,6 +368,66 @@ report = {'checks': checks, 'actions': actions, 'visual_samples': visual_samples
           'variant': 'x86_64 Android 35 / Compatibility / read-only opt-in probe',
           'limitations': ['Does not validate ARM64 Mobile renderer, physical touch latency, cutouts or phone performance.',
                           'Victory/death are headless integration checks, not forced emulator outcomes.']}
+def lifecycle_repro():
+    report['cycles'] = []
+    report['scope'] = 'Six unchanged Home/launcher transitions with 0.25/1/3 second background dwell. Real frames/screens, frozen state and advancing resumed combat required. No retries, relaunch repair, save grants or warning suppression.'
+    try:
+        adb('logcat', '-c')
+        launch()
+        s = wait(lambda x: x['state'] == 'menu', 60)
+        report['engine'] = s['engine']
+        report['renderer'] = s['renderer']
+        capture('lifecycle-menu')
+        check(s['renderer'] == 'gl_compatibility', 'lifecycle reproduction uses actual Compatibility renderer')
+        tap('DEPLOY', s)
+        s = wait(lambda x: x['state'] == 'playing' and x.get('time', 0) > 0)
+        for index, dwell in enumerate([0.25, 1.0, 3.0] * 2, 1):
+            before = read()
+            row = {'index': index, 'background_seconds': dwell, 'before': before, 'status': 'in_progress'}
+            report['cycles'].append(row)
+            adb('shell', 'input', 'keyevent', '3')
+            time.sleep(dwell)
+            launch()
+            s = wait(lambda x: fresh_resumed_frame(before, x))
+            row['returned'] = s
+            check(True, f'cycle {index}: same process presents a fresh frame after foreground notification')
+            capture(f'lifecycle-{index:02d}-returned')
+            time.sleep(.5)
+            frozen = read()
+            row['frozen'] = frozen
+            check(frozen_run(s, frozen), f'cycle {index}: paused gameplay rewards and RNG remain frozen')
+            tap('RESUME', frozen)
+            s = wait(lambda x: x['state'] == 'playing' and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames'])
+            check(True, f'cycle {index}: touch Resume advances real combat again')
+            row['resumed'] = s
+            row['status'] = 'passed'
+        log = adb('logcat', '-d')
+        (out / 'logcat.txt').write_text(log)
+        report['app_egl_failures'] = app_egl_failures(log, s['process'])
+        fatal = [line for line in log.splitlines() if any(token in line for token in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line)) or 'ANR in ' + args.package in line]
+        check(not fatal, 'six-cycle run has no script error app ANR or fatal crash')
+        report['status'] = 'passed'
+        return 0
+    except Exception as error:
+        report['status'] = 'failed'
+        report['error'] = str(error)
+        try:
+            capture('lifecycle-failure', wait_for_game=False)
+            log = adb('logcat', '-d')
+            (out / 'logcat.txt').write_text(log)
+            report['app_egl_failures'] = app_egl_failures(log, report['cycles'][-1]['before']['process']) if report['cycles'] else []
+        except Exception:
+            pass
+        return 1
+    finally:
+        (out / 'android-lifecycle.json').write_text(json.dumps(report, indent=2))
+        print('ANDROID_LIFECYCLE_RESULT', report['status'], 'checks=', len(checks), flush=True)
+
+
+if args.lifecycle_only:
+    raise SystemExit(lifecycle_repro())
+
+
 try:
     adb('logcat', '-c')
     launch()
@@ -480,11 +542,12 @@ try:
     report['destruction_audio_sample'] = destruction
     report['gameplay_snapshot'] = s
     capture('after-upgrade')
+    before_background = read()
     adb('shell', 'input', 'keyevent', '3')
     time.sleep(1)
     launch()
-    s = wait(lambda x: x['state'] == 'paused')
-    check(True, 'Android background/resume preserves paused state')
+    s = wait(lambda x: fresh_resumed_frame(before_background, x))
+    check(True, 'Android background/resume preserves paused state with a fresh foreground frame')
     capture('background-resumed')
     salvage = s['salvage']
     tap('SETTINGS', s)

@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Repeated Android resume verification — in progress
+
+- Added six strict Home/launcher cycles with 0.25/1/3-second background dwell, real post-foreground render generation, unchanged process, readable captures, frozen gameplay/rewards and advancing combat after touch Resume. No retries, forced restarts, grants or relaxed gates. Standard gameplay acceptance now also requires a fresh post-foreground frame.
+- Read-only opt-in QA telemetry records lifecycle/frame generations. All 15 local suites pass, including 26 probe checks; four Python predicate tests reject stale telemetry, missing process IDs and changed frozen fields. Native CI now runs all Python tests. Gameplay source/input/save behavior remains unchanged. Hosted native/full-QA/gameplay/lifecycle matrix builds pending. Existing verified APK remains below.
+
 ## Voluntary deployment results — verified 2026-11-06
 
 - Pause → End Deployment now opens **Deployment Ended** results and the actual damage report. Defeat and victory retain their own wording; redeploy resets the reason. The same reward formula applies, and repeat end/analysis visits cannot record or award again. Live health, RNG and combat time remain frozen.
