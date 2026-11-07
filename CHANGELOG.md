@@ -2,6 +2,8 @@
 
 ## Development — 2026-11-07 / Mobile-renderer coverage (in progress)
 
+- Retained initial Vulkan presentation failure at one menu frame. Added an explicit Mobile-emulator-only Swappy override for the next controlled attempt; phone defaults remain unchanged. All 27 Python tests pass.
+
 - Added a separate strict Mobile/Vulkan emulator smoke covering real touch/dash/pause/combat and one fresh background return. Fallback is rejected. Emulator renderer/package configuration is explicit and regression-tested. All 26 Python tests and six workflow syntax checks pass; actual Mobile acceptance pending. Gameplay/phone build unchanged.
 
 ## Development — 2026-11-07 / Shared Android debug surface repair

@@ -28,6 +28,17 @@ class EmulatorExportTests(unittest.TestCase):
         self.assertEqual(first.count(b'[qa]'),1);self.assertIn(b'renderer/rendering_method.mobile="mobile"',first)
         export.configure(self.root);self.assertIn(b'renderer/rendering_method="gl_compatibility"',(self.root/'project.godot').read_bytes())
 
+    def test_frame_pacing_workaround_is_explicit_mobile_only_and_idempotent(self):
+        p=self.root/'project.godot';p.write_text('[display]\n'+p.read_text())
+        export.configure(self.root,'mobile')
+        self.assertNotIn('window/frame_pacing/android/enable_frame_pacing',p.read_text())
+        export.configure(self.root,'mobile',True)
+        self.assertEqual(p.read_text().count('window/frame_pacing/android/enable_frame_pacing=false'),1)
+        first=p.read_bytes();export.configure(self.root,'mobile',True);self.assertEqual(first,p.read_bytes())
+        preset=(self.root/'export_presets.cfg').read_bytes()
+        with self.assertRaises(ValueError):export.configure(self.root,'gl_compatibility',True)
+        self.assertEqual(first,p.read_bytes());self.assertEqual(preset,(self.root/'export_presets.cfg').read_bytes())
+
     def test_unsupported_renderer_never_writes_configs(self):
         before=[(self.root/n).read_bytes() for n in ['project.godot','export_presets.cfg']]
         with self.assertRaises(ValueError):export.configure(self.root,'unsupported')

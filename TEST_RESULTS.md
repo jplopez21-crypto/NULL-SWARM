@@ -2,6 +2,8 @@
 
 ## Android Mobile-renderer smoke — in progress 2026-11-07
 
+- Initial source `87573a6c5d4e4471af20252aeb7bc9a6478b1ead`, Mobile run `42411937890`/job `128521865852`, fails before any check: actual Mobile/Vulkan 1.3 SwiftShader initializes, then QueuePresentKHR error 5 repeats and telemetry stalls at one menu frame. Evidence retained. Godot source uses enabled-by-default Swappy around queue presentation; next experiment disables frame pacing only in the disposable Mobile emulator configuration. This does not certify shipping Swappy or phone runtime; no game setting/acceptance predicate is relaxed. Twenty-seven Python tests pass, including explicit/limited/idempotent override checks.
+
 - Added an independent Android 35 x86_64 Mobile job with Vulkan enabled. It uses the same pinned debug preparation/native/DEX/license gates, a separate `com.nullswarm.game.mobileqa` package and the actual Mobile rendering method. Fallback is rejected, never counted as Mobile acceptance. Fourteen real startup/two-finger dash/pause/combat/return/freeze/resume/fatal checks are expected. This bounded smoke does not certify phone FPS, complete runs or all Mobile upgrade paths.
 - Emulator configuration is now import-safe/testable and supports explicit renderer selection with distinct packages, idempotent probe configuration, preserved unrelated settings and refusal before writing if renderer anchors are missing. Four new regressions pass; all 26 Python tests, Python syntax and six workflow YAML/bash checks pass. No GDScript/gameplay changes. Hosted GPU/runtime outcome remains pending; the verified phone build below is unchanged.
 

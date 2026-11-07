@@ -430,7 +430,7 @@ def lifecycle_repro():
 
 def mobile_smoke():
     report['variant'] = 'x86_64 Android 35 / required Mobile renderer / read-only opt-in probe'
-    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary kills/damage and one same-process foreground return. No stat grants; no fallback accepted. Not a phone FPS or full-run acceptance test.'
+    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary kills/damage and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
     try:
         adb('logcat', '-c')
         launch()
