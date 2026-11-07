@@ -1,0 +1,15 @@
+{
+  "source": "21ff41c93b73d577a2286b60d52ca49f0a6e348b",
+  "run_id": 42398675304,
+  "jobs": [
+    128481501120,
+    128481501278
+  ],
+  "status": "failed",
+  "stage": "Java compilation, before controlled host logic or Android execution",
+  "error": "cannot find symbol EGLLogWrapper in GLSurfaceView.EglHelper",
+  "cause": "Compilation initially supplied android.jar only; EGLLogWrapper is in the official Godot classes.jar.",
+  "correction": "Compile and run host logic with unchanged official classes.jar on classpath.",
+  "production_templates_changed": false,
+  "diagnostic_apk_produced": false
+}

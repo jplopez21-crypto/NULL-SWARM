@@ -2,9 +2,7 @@
 
 ## Development — 2026-11-07 / Isolated surface recovery investigation
 
-- Restored GitHub publishing through direct tree uploads. Initial diagnostic compilation caught missing EGLLogWrapper; official unchanged classes.jar is now on the classpath. No recovery result claimed.
-
-- Added diagnostic-only pinned Java control/candidate builds, nonblocking lifecycle-edge latch, controlled host harness, archive preservation checks and eighteen-cycle Android regression gates. Production engine/presets unchanged. Local fifteen Godot suites and fifteen Python tests pass; hosted compilation/recovery pending.
+- Restored GitHub publishing and fixed the diagnostic Java dependency classpath after the first hosted compile failed. Both rebuilt controls preserve unrelated classes/native code. Candidate passes eighteen actual emulator resume cycles/56 checks and all 58 gameplay/save/update checks; matching control stalls on cycle 8. Fifteen Godot suites/fifteen Python tests, native APK and full QA pass. Ordinary official-engine Android gates remain failed; production templates unchanged. Receipts, failed controls and exact artifact locations: TEST_RESULTS.md.
 
 ## Development — 2026-11-07 / Audio click correction
 
