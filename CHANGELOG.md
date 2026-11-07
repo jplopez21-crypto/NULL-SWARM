@@ -1,10 +1,8 @@
 # Changelog
 
-## Development — 2026-11-07 / Mobile-renderer coverage (in progress)
+## Development — 2026-11-07 / Mobile-renderer coverage
 
-- Retained initial Vulkan presentation failure at one menu frame. Added an explicit Mobile-emulator-only Swappy override for the next controlled attempt; phone defaults remain unchanged. All 27 Python tests pass.
-
-- Added a separate strict Mobile/Vulkan emulator smoke covering real touch/dash/pause/combat and one fresh background return. Fallback is rejected. Emulator renderer/package configuration is explicit and regression-tested. All 26 Python tests and six workflow syntax checks pass; actual Mobile acceptance pending. Gameplay/phone build unchanged.
+- Added a separate strict Mobile/Vulkan emulator smoke: all 13 real renderer/touch/dash/pause/combat/return checks pass. Initial default-Swappy presentation failure retained; emulator-only pacing override succeeds without changing phone settings. Five final-source workflows, 15 Godot suites/27 Python tests, ordinary eighteen-cycle plus 58-check gameplay acceptance and full QA pass. Phone executable/config bytes and all gameplay fingerprints remain unchanged. Shipping frame pacing/physical-device performance remain unverified; exact evidence and scopes: TEST_RESULTS.md.
 
 ## Development — 2026-11-07 / Shared Android debug surface repair
 

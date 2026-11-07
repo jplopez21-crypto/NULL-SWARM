@@ -1,0 +1,9 @@
+{
+  "apk_sha256": "dd4d7511fe6cc26d1e1ba3143240276a356c64b309a6c3665535fb74b45c2770",
+  "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+  "asset_files": 102,
+  "exit_code": 0,
+  "scene_smoke_marker": true,
+  "errors": [],
+  "status": "passed"
+}

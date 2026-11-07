@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "renderer": "mobile",
+  "checks": 13,
+  "graphics_log": [
+    "11-07 20:56:01.698  3783  3783 D Godot   : usesVulkan(): true",
+    "11-07 20:56:02.350  3783  3863 I godot   : Vulkan 1.3.0 - Forward Mobile - Using Device #0: Unknown - SwiftShader Device (Subzero)"
+  ],
+  "combat": {
+    "kills": 1,
+    "time": 4.53333333333332,
+    "damage_by_weapon": {
+      "pulse": 30.075
+    }
+  },
+  "captures": {
+    "mobile-menu": 0.9900173611111112,
+    "multitouch-joystick-first": 0.9887152777777778,
+    "multitouch-paused": 0.9856770833333334,
+    "mobile-combat": 0.9791666666666666,
+    "mobile-returned": 0.9809027777777778
+  },
+  "same_process_fresh_paused_return": true,
+  "frozen_fields": [
+    "time",
+    "position",
+    "hp",
+    "kills",
+    "xp",
+    "ranks",
+    "combat_rng",
+    "damage_by_weapon",
+    "salvage"
+  ],
+  "resumed_combat_advances": true,
+  "mobile_emulator_swappy": false,
+  "native_phone_swappy_default": true,
+  "same_38_game_modules": true,
+  "native_engine_same_as_previous_user_build": true,
+  "scope": "Android 35 x86_64 Mobile/Vulkan software emulator smoke with explicit Swappy override. Shipping frame pacing, ARM64 runtime, phone FPS/thermals and full Mobile runs are not validated."
+}
