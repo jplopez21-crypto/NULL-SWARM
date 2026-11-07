@@ -1,0 +1,12 @@
+{
+  "apk_sha256": "23c178456d180e199a2e9201c1ea48720cfb39441497848ffc09353f3599add0",
+  "scope": "Headless desktop fixture using exact APK assets, an external driver, isolated user data and actual production damage/GUI/joypad/key handling. Explicit frozen enemy/HP fixture; not an Android device, earned run, audio listening or performance acceptance.",
+  "exit_code": 0,
+  "result": {
+    "checks": 11,
+    "failures": [],
+    "music_largest_sample_step": 0.020416259765625
+  },
+  "errors": [],
+  "status": "passed"
+}
