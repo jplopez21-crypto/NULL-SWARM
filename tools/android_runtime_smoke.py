@@ -15,6 +15,7 @@ import xml.etree.ElementTree as ET
 from io import BytesIO
 from PIL import Image
 from lifecycle_observation import fresh_resumed_frame, frozen_run, app_egl_failures
+from upgrade_observation import upgrade_frozen, selected_rank
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -428,9 +429,62 @@ def lifecycle_repro():
         print('ANDROID_LIFECYCLE_RESULT', report['status'], 'checks=', len(checks), flush=True)
 
 
+def mobile_earned_upgrades(start):
+    # Targets are real unattracted memory pickups exposed by the read-only probe.
+    s = start
+    deadline = time.monotonic() + 180
+    while s['state'] != 'upgrading' and time.monotonic() < deadline:
+        if s['state'] != 'playing':
+            raise AssertionError('Mobile run ended before earning an upgrade')
+        targets = s.get('targets', [])
+        if targets:
+            x, z = s['position']
+            target = min(targets, key=lambda p: (p[0]-x)**2 + (p[1]-z)**2)
+            move(target[0]-x, target[1]-z, s, 650)
+        else:
+            time.sleep(.25)
+        s = read()
+    check(s['state'] == 'upgrading' and s['level'] >= 2 and s['xp'] > 0
+          and s['pending'] > 0 and s.get('memory_audio_plays', 0) > 0,
+          'ordinary Mobile kills and memory collection earn XP level and upgrade choices')
+    transactions = []
+    while s['state'] == 'upgrading':
+        if len(transactions) >= 8:
+            raise AssertionError('Mobile early-upgrade queue exceeded bounded smoke budget')
+        offered = wait(lambda x: x['state'] == 'upgrading' and x['pending'] > 0)
+        cards = [b for b in offered['buttons'] if re.match(r'^0[123]\n', b['text']) and not b['disabled']]
+        capture(f'mobile-upgrade-{len(transactions)+1:02d}')
+        time.sleep(.5)
+        frozen = wait(lambda x: x['state'] == 'upgrading'
+                      and x['rendered_frames'] > offered['rendered_frames']
+                      and x['sample_ticks'] > offered['sample_ticks'])
+        if len(cards) != 3 or {b['text'].split('\n', 1)[0] for b in cards} != {'01','02','03'} or not upgrade_frozen(offered, frozen):
+            raise AssertionError('Mobile upgrade offer is invalid or gameplay advanced while choosing')
+        tap('01\n', frozen)
+        selected = wait(lambda x: x.get('ranks') != frozen['ranks'])
+        changed = selected_rank(frozen, selected)
+        if changed is None:
+            raise AssertionError('Mobile upgrade touch did not apply exactly one rank/choice transaction')
+        transactions.append({'offered':offered,'frozen':frozen,'selected':selected,
+                             'chosen_text':next(b['text'] for b in cards if b['text'].startswith('01\n')),'changed_rank':changed})
+        s = wait(lambda x: x['state'] == 'upgrading' or (x['state'] == 'playing' and x['pending'] == 0
+                 and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames']))
+    check(bool(transactions), 'Mobile upgrade cards freeze real gameplay XP rewards RNG and queued choices')
+    check(all(selected_rank(t['frozen'],t['selected']) == t['changed_rank'] for t in transactions),
+          'each Mobile upgrade tap applies exactly one rank and consumes one earned choice')
+    last = transactions[-1]['frozen']
+    s = wait(lambda x: x['state'] == 'playing' and x['pending'] == 0
+             and x['time'] > last['time'] and x['rendered_frames'] > last['rendered_frames'])
+    check(s['renderer'] == 'mobile', 'Mobile selected build resumes combat with an empty upgrade queue')
+    report['earned_upgrade'] = {'transactions':transactions,'resumed':s,
+                               'method':'Ordinary kills and memory pickups, real joystick/card touches. No fixture or stat grant.'}
+    capture('mobile-upgrade-applied')
+    return s
+
+
 def mobile_smoke():
     report['variant'] = 'x86_64 Android 35 / required Mobile renderer / read-only opt-in probe'
-    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary kills/damage and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
+    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
     try:
         adb('logcat', '-c')
         launch()
@@ -447,9 +501,7 @@ def mobile_smoke():
         check(True, 'ordinary Mobile automatic combat spawns and destroys enemies with effective damage')
         report['combat_snapshot'] = s
         capture('mobile-combat')
-        if s['state'] == 'upgrading':
-            tap('01\n', s)
-            s = wait(lambda x: x['state'] == 'playing')
+        s = mobile_earned_upgrades(s)
         before = read()
         adb('shell', 'input', 'keyevent', '3'); time.sleep(1); launch()
         returned = wait(lambda x: fresh_resumed_frame(before, x), 60)

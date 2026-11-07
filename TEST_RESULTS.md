@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Earned Mobile upgrades — in progress 2026-11-07
+
+- Extended Mobile smoke to collect actual enemy-drop memory, reach a level, present three real upgrade cards, prove fresh paused offer-state integrity, apply exactly one rank per real touch, drain queued choices and resume combat before background-return checks. No fixture/stat grant; Mobile rendering and emulator-only pacing scope remain unchanged. Expected complete smoke: 17 checks; actual hosted count/result pending.
+- All 15 local Godot suites pass. Five new observation regressions cover all frozen fields/fresh rendering, stale/missing/wrong process/panel state, single/queued rank picks, newly earned levels after resume and rejection of extra ranks/lost choices/invalid data. Final 32 Python tests pass. Initial local mutation fixture reused the existing level value; corrected it to make a real perturbation. No runtime/GDScript change. Hosted Android execution pending.
+
 ## Android Mobile-renderer smoke — verified 2026-11-07
 
 Verified test/build source: `ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1`, tree `fd6560dac1cc6a1b52a122d2f463279be45db94d`. Final checkpoint changes Markdown/evidence only.

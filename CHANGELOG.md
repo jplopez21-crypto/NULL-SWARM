@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-07 / Earned Mobile upgrade coverage (in progress)
+
+- Added ordinary memory/XP collection and real upgrade-card touch transactions to Mobile smoke, including fresh frozen offers and queued-choice conservation. All 32 Python tests pass; hosted verification pending. No gameplay/phone settings change.
+
 ## Development — 2026-11-07 / Mobile-renderer coverage
 
 - Added a separate strict Mobile/Vulkan emulator smoke: all 13 real renderer/touch/dash/pause/combat/return checks pass. Initial default-Swappy presentation failure retained; emulator-only pacing override succeeds without changing phone settings. Five final-source workflows, 15 Godot suites/27 Python tests, ordinary eighteen-cycle plus 58-check gameplay acceptance and full QA pass. Phone executable/config bytes and all gameplay fingerprints remain unchanged. Shipping frame pacing/physical-device performance remain unverified; exact evidence and scopes: TEST_RESULTS.md.
