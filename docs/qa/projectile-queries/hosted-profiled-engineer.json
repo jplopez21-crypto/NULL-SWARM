@@ -1,0 +1,276 @@
+{
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "enemy_mix": "six regular archetypes including Insulator; differs from pre-0.4 fixed mix",
+  "failures": [],
+  "fixed_step": 0.0166666666666667,
+  "fixture_version": 5,
+  "godot": "4.6.3-stable (official)",
+  "kind": "synthetic combat CPU benchmark",
+  "limitations": [
+    "Headless CPU simulation; excludes rendering, GPU, frame pacing and phone thermal behavior.",
+    "Synthetic target invulnerability and huge enemy HP maintain load; these are NOT normal-rules playtests.",
+    "Fixture sustains at least 160 friendly + 160 hostile projectiles plus game-generated shots, 250 pickups and full weapon effects.",
+    "Timings include collision/AI/weapons/pickups/refill work but exclude bot decisions and render UI.",
+    "No absolute FPS/performance pass threshold on shared CI hardware."
+  ],
+  "loadout": "Singularity + Arc + Drone + Pulse/Arcstorm, Tether 3, all corruption links; Engineer dash sentry every 160 ticks, one reusable instance",
+  "logical_cpus": 4,
+  "os": "Linux",
+  "phase_profile_scope": "CombatWorld only; excludes player/pickup/refill work and rendering. Instrumentation adds small timestamp/accounting overhead. Warm-up excluded.",
+  "rendering": "headless / no GPU frame measurements",
+  "scenarios": [
+    {
+      "corruption": [
+        "redline",
+        "fracture",
+        "hive"
+      ],
+      "drone_count": 4,
+      "effect_peak": 40,
+      "enemy_peak": 100,
+      "field_sentry": {
+        "activations": 5,
+        "shots": 32
+      },
+      "gameplay_fingerprint": "1e881bfea94e6df8794263d3a675753afa5a534267a9a371ded4e8724de32b8f",
+      "gravity_activations": 10,
+      "gravity_pulses": 39,
+      "max_simulation_step_ms": 5.716,
+      "mean_simulation_step_ms": 2.41631166666667,
+      "memory_static_mb": 48.5191469192505,
+      "minimum_pickups_after_refill": 250,
+      "p50_simulation_step_ms": 2.238,
+      "p95_simulation_step_ms": 3.84,
+      "p99_simulation_step_ms": 5.027,
+      "phase_profile": {
+        "frames": 600,
+        "mean_ms": {
+          "arsenal_and_sentry": 0.0302283333333333,
+          "effects_and_spawning": 0.0559066666666667,
+          "enemy_update": 0.217138333333333,
+          "friendly_projectiles": 1.68788666666667,
+          "grid_and_gravity": 0.100795,
+          "hostile_projectiles": 0.105815,
+          "targeting_and_rifle": 0.0430416666666667
+        }
+      },
+      "projectile_peak": 331,
+      "quality": "low",
+      "requested_enemies": 100,
+      "sample_steps": 600,
+      "wall_seconds": 1.873847,
+      "warmup_steps": 120
+    },
+    {
+      "corruption": [
+        "redline",
+        "fracture",
+        "hive"
+      ],
+      "drone_count": 4,
+      "effect_peak": 150,
+      "enemy_peak": 100,
+      "field_sentry": {
+        "activations": 5,
+        "shots": 32
+      },
+      "gameplay_fingerprint": "1e881bfea94e6df8794263d3a675753afa5a534267a9a371ded4e8724de32b8f",
+      "gravity_activations": 10,
+      "gravity_pulses": 39,
+      "max_simulation_step_ms": 5.931,
+      "mean_simulation_step_ms": 2.654945,
+      "memory_static_mb": 49.1477994918823,
+      "minimum_pickups_after_refill": 250,
+      "p50_simulation_step_ms": 2.5,
+      "p95_simulation_step_ms": 4.053,
+      "p99_simulation_step_ms": 5.319,
+      "phase_profile": {
+        "frames": 600,
+        "mean_ms": {
+          "arsenal_and_sentry": 0.0338083333333333,
+          "effects_and_spawning": 0.189008333333333,
+          "enemy_update": 0.224956666666667,
+          "friendly_projectiles": 1.76947833333333,
+          "grid_and_gravity": 0.103198333333333,
+          "hostile_projectiles": 0.109803333333333,
+          "targeting_and_rifle": 0.04263
+        }
+      },
+      "projectile_peak": 331,
+      "quality": "high",
+      "requested_enemies": 100,
+      "sample_steps": 600,
+      "wall_seconds": 2.019427,
+      "warmup_steps": 120
+    },
+    {
+      "corruption": [
+        "redline",
+        "fracture",
+        "hive"
+      ],
+      "drone_count": 4,
+      "effect_peak": 40,
+      "enemy_peak": 300,
+      "field_sentry": {
+        "activations": 5,
+        "shots": 32
+      },
+      "gameplay_fingerprint": "fc991ec8f2e273ca5116166dbad85a75bffcbc2d12c713e1ba9cf269c8f842aa",
+      "gravity_activations": 10,
+      "gravity_pulses": 39,
+      "max_simulation_step_ms": 14.579,
+      "mean_simulation_step_ms": 3.56761000000001,
+      "memory_static_mb": 51.3814458847046,
+      "minimum_pickups_after_refill": 250,
+      "p50_simulation_step_ms": 2.778,
+      "p95_simulation_step_ms": 9.039,
+      "p99_simulation_step_ms": 12.746,
+      "phase_profile": {
+        "frames": 600,
+        "mean_ms": {
+          "arsenal_and_sentry": 0.038605,
+          "effects_and_spawning": 0.0617366666666667,
+          "enemy_update": 0.64546,
+          "friendly_projectiles": 2.21984666666667,
+          "grid_and_gravity": 0.21127,
+          "hostile_projectiles": 0.124263333333333,
+          "targeting_and_rifle": 0.06804
+        }
+      },
+      "projectile_peak": 348,
+      "quality": "low",
+      "requested_enemies": 300,
+      "sample_steps": 600,
+      "wall_seconds": 3.21391,
+      "warmup_steps": 120
+    },
+    {
+      "corruption": [
+        "redline",
+        "fracture",
+        "hive"
+      ],
+      "drone_count": 4,
+      "effect_peak": 150,
+      "enemy_peak": 300,
+      "field_sentry": {
+        "activations": 5,
+        "shots": 32
+      },
+      "gameplay_fingerprint": "fc991ec8f2e273ca5116166dbad85a75bffcbc2d12c713e1ba9cf269c8f842aa",
+      "gravity_activations": 10,
+      "gravity_pulses": 39,
+      "max_simulation_step_ms": 14.653,
+      "mean_simulation_step_ms": 3.81289333333333,
+      "memory_static_mb": 51.6265020370483,
+      "minimum_pickups_after_refill": 250,
+      "p50_simulation_step_ms": 2.999,
+      "p95_simulation_step_ms": 9.419,
+      "p99_simulation_step_ms": 13.298,
+      "phase_profile": {
+        "frames": 600,
+        "mean_ms": {
+          "arsenal_and_sentry": 0.04135,
+          "effects_and_spawning": 0.19927,
+          "enemy_update": 0.650695,
+          "friendly_projectiles": 2.30946166666667,
+          "grid_and_gravity": 0.217028333333333,
+          "hostile_projectiles": 0.126391666666667,
+          "targeting_and_rifle": 0.0686433333333333
+        }
+      },
+      "projectile_peak": 348,
+      "quality": "high",
+      "requested_enemies": 300,
+      "sample_steps": 600,
+      "wall_seconds": 3.390881,
+      "warmup_steps": 120
+    },
+    {
+      "corruption": [
+        "redline",
+        "fracture",
+        "hive"
+      ],
+      "drone_count": 4,
+      "effect_peak": 40,
+      "enemy_peak": 600,
+      "field_sentry": {
+        "activations": 5,
+        "shots": 32
+      },
+      "gameplay_fingerprint": "dace52b9bb2ecd9797308462115c23e2fc40cdab7b09cfa4991ea3f7d3c46b84",
+      "gravity_activations": 10,
+      "gravity_pulses": 39,
+      "max_simulation_step_ms": 25.62,
+      "mean_simulation_step_ms": 5.90385666666667,
+      "memory_static_mb": 63.3555288314819,
+      "minimum_pickups_after_refill": 250,
+      "p50_simulation_step_ms": 4.06,
+      "p95_simulation_step_ms": 20.016,
+      "p99_simulation_step_ms": 24.259,
+      "phase_profile": {
+        "frames": 600,
+        "mean_ms": {
+          "arsenal_and_sentry": 0.05089,
+          "effects_and_spawning": 0.0681266666666667,
+          "enemy_update": 1.39147166666667,
+          "friendly_projectiles": 3.47167666666667,
+          "grid_and_gravity": 0.4377,
+          "hostile_projectiles": 0.154058333333333,
+          "targeting_and_rifle": 0.109143333333333
+        }
+      },
+      "projectile_peak": 374,
+      "quality": "low",
+      "requested_enemies": 600,
+      "sample_steps": 600,
+      "wall_seconds": 5.738535,
+      "warmup_steps": 120
+    },
+    {
+      "corruption": [
+        "redline",
+        "fracture",
+        "hive"
+      ],
+      "drone_count": 4,
+      "effect_peak": 150,
+      "enemy_peak": 600,
+      "field_sentry": {
+        "activations": 5,
+        "shots": 32
+      },
+      "gameplay_fingerprint": "dace52b9bb2ecd9797308462115c23e2fc40cdab7b09cfa4991ea3f7d3c46b84",
+      "gravity_activations": 10,
+      "gravity_pulses": 39,
+      "max_simulation_step_ms": 26.144,
+      "mean_simulation_step_ms": 6.148185,
+      "memory_static_mb": 63.5979566574097,
+      "minimum_pickups_after_refill": 250,
+      "p50_simulation_step_ms": 4.311,
+      "p95_simulation_step_ms": 20.349,
+      "p99_simulation_step_ms": 24.108,
+      "phase_profile": {
+        "frames": 600,
+        "mean_ms": {
+          "arsenal_and_sentry": 0.05361,
+          "effects_and_spawning": 0.21632,
+          "enemy_update": 1.39739833333333,
+          "friendly_projectiles": 3.549855,
+          "grid_and_gravity": 0.44729,
+          "hostile_projectiles": 0.15417,
+          "targeting_and_rifle": 0.108306666666667
+        }
+      },
+      "projectile_peak": 374,
+      "quality": "high",
+      "requested_enemies": 600,
+      "sample_steps": 600,
+      "wall_seconds": 5.918794,
+      "warmup_steps": 120
+    }
+  ],
+  "schema": 1
+}

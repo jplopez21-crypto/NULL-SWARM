@@ -10,7 +10,7 @@ static func defaults() -> Dictionary:
 	return {"version": VERSION, "runs": 0, "kills": 0, "best_time": 0.0, "wins": 0,
 		"salvage": 0, "salvaged_kills": 0, "wardens": 0, "architects": 0,
 		"research": {}, "selected_kit": "vanguard", "ledger": {},
-		"settings": {"master": 0.8, "music": 0.35, "sfx": 0.65, "ui": 0.65, "shake": true, "flashes": true, "quality": 1}}
+		"settings": {"master": 0.8, "music": 0.35, "sfx": 0.65, "ui": 0.65, "shake": true, "flashes": true, "performance_stats": false, "quality": 1}}
 
 static func _number(value: Variant) -> bool:
 	return (value is float or value is int) and is_finite(float(value)) and float(value) >= 0.0
@@ -21,9 +21,12 @@ func _read(file_path: String) -> Dictionary:
 	var parser := JSON.new()
 	if parser.parse(FileAccess.get_file_as_string(file_path)) != OK:
 		return {}
-	var parsed: Variant = parser.data
-	if not parsed is Dictionary:
+	return validated(parser.data)
+
+static func validated(source: Variant) -> Dictionary:
+	if not source is Dictionary:
 		return {}
+	var parsed: Dictionary = source.duplicate(true)
 	var version: Variant = parsed.get("version", 0)
 	if not _number(version) or float(version) != int(version) or int(version) not in [1, VERSION]:
 		return {}
@@ -64,7 +67,7 @@ func _read(file_path: String) -> Dictionary:
 	var settings: Dictionary = defaults()["settings"]
 	for key in settings:
 		var value: Variant = parsed["settings"].get(key, settings[key])
-		if key in ["shake", "flashes"]:
+		if key in ["shake", "flashes", "performance_stats"]:
 			if value is bool:
 				settings[key] = value
 		elif _number(value):
@@ -72,7 +75,68 @@ func _read(file_path: String) -> Dictionary:
 	parsed["settings"] = settings
 	if not Research.unlocked(parsed).has(str(parsed.get("selected_kit", "vanguard"))):
 		parsed["selected_kit"] = "vanguard"
-	return parsed
+	var clean: Dictionary = defaults()
+	for key in clean:
+		clean[key] = parsed.get(key, clean[key])
+	return clean
+
+# Portable offline progression only; codes are checksummed, not entitlements.
+func backup_code() -> String:
+	var clean := validated(data)
+	if clean.is_empty():
+		return ""
+	clean["ledger"] = {}
+	var text := JSON.stringify(clean)
+	return "NS1." + Marshalls.raw_to_base64(text.to_utf8_buffer()) + "." + text.sha256_text()
+
+static func inspect_backup(code: String) -> Dictionary:
+	code = code.strip_edges()
+	if code.length() > 16384:
+		return {}
+	var parts := code.split(".")
+	if parts.size() != 3 or parts[0] != "NS1" or parts[1].length() % 4 != 0:
+		return {}
+	var pattern := RegEx.new()
+	pattern.compile("^[A-Za-z0-9+/]+={0,2}$")
+	if pattern.search(parts[1]) == null:
+		return {}
+	var bytes := Marshalls.base64_to_raw(parts[1])
+	for byte in bytes:
+		if byte < 32 or byte > 126:
+			return {}
+	var text := bytes.get_string_from_ascii()
+	if text.sha256_text() != parts[2]:
+		return {}
+	var parser := JSON.new()
+	if parser.parse(text) != OK:
+		return {}
+	var clean := validated(parser.data)
+	if not clean.is_empty():
+		for key in ["runs", "kills", "wins", "salvage", "salvaged_kills", "wardens", "architects"]:
+			if float(clean[key]) > 2000000000.0 or float(clean[key]) != floorf(float(clean[key])):
+				return {}
+		clean["ledger"] = {}
+	return clean
+
+func restore_backup(code: String) -> Error:
+	var imported := inspect_backup(code)
+	if imported.is_empty():
+		return ERR_INVALID_DATA
+	# Preserve the existing progress before replacing anything, including on failure.
+	var recovery := FileAccess.open(path + ".pre-import", FileAccess.WRITE)
+	if recovery == null:
+		return FileAccess.get_open_error()
+	recovery.store_string(JSON.stringify(data))
+	recovery.flush()
+	recovery.close()
+	if _read(path + ".pre-import").is_empty():
+		return ERR_FILE_CORRUPT
+	var previous := data.duplicate(true)
+	data = imported
+	var error := persist()
+	if error != OK:
+		data = previous
+	return error
 
 func load_data() -> void:
 	data = _read(path)

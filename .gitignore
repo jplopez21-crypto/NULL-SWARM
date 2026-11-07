@@ -8,3 +8,7 @@ export_credentials.cfg
 *.apk
 *.aab
 *.zip
+
+# Python test-tool caches
+__pycache__/
+*.pyc

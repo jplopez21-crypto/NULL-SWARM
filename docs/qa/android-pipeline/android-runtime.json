@@ -1,0 +1,687 @@
+{
+  "checks": [
+    {
+      "name": "menu capture contains rendered game instead of boot splash",
+      "passed": true
+    },
+    {
+      "name": "Android Compatibility renderer initialized",
+      "passed": true
+    },
+    {
+      "name": "real Android touch events moved player",
+      "passed": true
+    },
+    {
+      "name": "touch dash activated",
+      "passed": true
+    },
+    {
+      "name": "touch pause freezes simulation",
+      "passed": true
+    },
+    {
+      "name": "touch resume returns to combat",
+      "passed": true
+    },
+    {
+      "name": "auto combat, XP collection and real upgrade touch passed",
+      "passed": true
+    },
+    {
+      "name": "Android background/resume preserves paused state",
+      "passed": true
+    },
+    {
+      "name": "force-stop/relaunch retains banked progression and opens menu",
+      "passed": true
+    },
+    {
+      "name": "touch-changed setting survives Android force-stop/relaunch",
+      "passed": true
+    },
+    {
+      "name": "relaunch menu is visibly rendered",
+      "passed": true
+    },
+    {
+      "name": "no script errors, game ANRs or Android fatal crashes in logcat",
+      "passed": true
+    }
+  ],
+  "actions": [
+    {
+      "tap": "DEPLOY",
+      "screen": [
+        640,
+        418
+      ],
+      "from": "menu"
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        190,
+        610,
+        1200
+      ]
+    },
+    {
+      "tap": "DASH",
+      "screen": [
+        1164,
+        654
+      ],
+      "from": "playing"
+    },
+    {
+      "tap": "PAUSE",
+      "screen": [
+        1194,
+        46
+      ],
+      "from": "playing"
+    },
+    {
+      "tap": "RESUME",
+      "screen": [
+        640,
+        344
+      ],
+      "from": "paused"
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        135,
+        542,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        135,
+        542,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        135,
+        542,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        135,
+        542,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        187,
+        590,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        187,
+        590,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        187,
+        590,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        187,
+        632,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        76,
+        664,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        76,
+        664,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        105,
+        678,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        181,
+        644,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        95,
+        676,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        95,
+        676,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        51,
+        619,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        113,
+        680,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        125,
+        680,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        91,
+        674,
+        650
+      ]
+    },
+    {
+      "swipe": [
+        120,
+        610,
+        91,
+        674,
+        650
+      ]
+    },
+    {
+      "tap": "01\n",
+      "screen": [
+        334,
+        372
+      ],
+      "from": "upgrading"
+    },
+    {
+      "tap": "SETTINGS",
+      "screen": [
+        640,
+        412
+      ],
+      "from": "paused"
+    },
+    {
+      "tap": "Camera shake",
+      "screen": [
+        640,
+        380
+      ],
+      "from": "paused"
+    },
+    {
+      "tap": "BACK",
+      "screen": [
+        640,
+        586
+      ],
+      "from": "paused"
+    }
+  ],
+  "visual_samples": [
+    {
+      "capture": "menu",
+      "game_palette_fraction": 0.9891
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9891
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9935
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9935
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9944
+    },
+    {
+      "capture": "combat",
+      "game_palette_fraction": 0.9944
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9944
+    },
+    {
+      "capture": "paused",
+      "game_palette_fraction": 0.9852
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9852
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9939
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9909
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9861
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9852
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9852
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9839
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9835
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9852
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9844
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9835
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9831
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9844
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9826
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9839
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9809
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9813
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9831
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9809
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9774
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9783
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9796
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9813
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9774
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.98
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9792
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9787
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9779
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9787
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9813
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9813
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9805
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9813
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9679
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9718
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9705
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9696
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9718
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9774
+    },
+    {
+      "capture": "upgrade",
+      "game_palette_fraction": 0.987
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9852
+    },
+    {
+      "capture": "after-upgrade",
+      "game_palette_fraction": 0.9796
+    },
+    {
+      "capture": "background-resumed",
+      "game_palette_fraction": 0.9805
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9805
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9844
+    },
+    {
+      "capture": "settings-changed",
+      "game_palette_fraction": 0.9844
+    },
+    {
+      "capture": "latest",
+      "game_palette_fraction": 0.9844
+    },
+    {
+      "capture": "relaunched",
+      "game_palette_fraction": 0.9891
+    }
+  ],
+  "package": "com.nullswarm.game.emulatorqa",
+  "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+  "limitations": [
+    "Does not validate ARM64 Mobile renderer, physical touch latency, cutouts or phone performance.",
+    "Victory/death are headless integration checks, not forced emulator outcomes."
+  ],
+  "engine": "4.6.3-stable (official)",
+  "renderer": "gl_compatibility",
+  "gameplay_snapshot": {
+    "buttons": [
+      {
+        "disabled": false,
+        "rect": [
+          1133.0,
+          18.0,
+          121.0,
+          57.0
+        ],
+        "text": "II  PAUSE"
+      },
+      {
+        "disabled": false,
+        "rect": [
+          1074.0,
+          607.0,
+          180.0,
+          95.0
+        ],
+        "text": "DASH / READY"
+      }
+    ],
+    "canvas": [
+      1280.0,
+      720.0
+    ],
+    "dashes": 1,
+    "drags": 50,
+    "engine": "4.6.3-stable (official)",
+    "hp": 100.0,
+    "kills": 27,
+    "level": 2,
+    "panel": 0,
+    "pending": 0,
+    "position": [
+      7.97995567321777,
+      4.07243299484253
+    ],
+    "process": 3544,
+    "ranks": {
+      "thermal": 1
+    },
+    "rendered_frames": 239,
+    "rendered_panel": 0,
+    "rendered_state": "playing",
+    "renderer": "gl_compatibility",
+    "salvage": 0,
+    "sample_ticks": 90955,
+    "schema": 1,
+    "settings": {
+      "flashes": true,
+      "master": 0.8,
+      "music": 0.35,
+      "quality": 1,
+      "sfx": 0.65,
+      "shake": true,
+      "ui": 0.65
+    },
+    "state": "playing",
+    "targets": [
+      [
+        11.219841003418,
+        -18.6389427185059
+      ],
+      [
+        10.7390508651733,
+        -18.9952964782715
+      ],
+      [
+        25.6786575317383,
+        -5.19994926452637
+      ],
+      [
+        23.1635932922363,
+        -7.5482759475708
+      ],
+      [
+        -7.64910459518433,
+        -0.240832030773163
+      ],
+      [
+        -6.4719557762146,
+        -0.673065543174744
+      ],
+      [
+        21.1607608795166,
+        0.465554803609848
+      ],
+      [
+        -1.05287647247314,
+        -11.0536365509033
+      ],
+      [
+        3.10464191436768,
+        5.51861000061035
+      ],
+      [
+        15.0312557220459,
+        6.83566951751709
+      ],
+      [
+        15.3440732955933,
+        6.86182498931885
+      ],
+      [
+        16.0663070678711,
+        1.78398406505585
+      ],
+      [
+        14.9187936782837,
+        4.87584257125854
+      ],
+      [
+        4.23894739151001,
+        0.690074622631073
+      ],
+      [
+        3.04466867446899,
+        3.44146728515625
+      ],
+      [
+        5.17824983596802,
+        -5.30078363418579
+      ],
+      [
+        13.3049926757812,
+        2.60071277618408
+      ],
+      [
+        1.34976959228516,
+        -0.851209938526154
+      ],
+      [
+        11.3719692230225,
+        -9.73376369476318
+      ],
+      [
+        14.7855644226074,
+        10.8609580993652
+      ],
+      [
+        9.15366649627686,
+        11.9971561431885
+      ],
+      [
+        4.23857879638672,
+        -3.31918144226074
+      ]
+    ],
+    "time": 25.8666666666665,
+    "touches": 25,
+    "xp": 25
+  },
+  "status": "passed"
+}

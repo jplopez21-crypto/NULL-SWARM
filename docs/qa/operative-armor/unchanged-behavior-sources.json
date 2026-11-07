@@ -1,0 +1,65 @@
+{
+  "accepted_code": "f1d3de77181d7b27d4c12e845f08b6a7954f48c9",
+  "local_parent_tree": "b4bf267a4b86fc95cbb5f79a09c15fcc21481b49",
+  "proof": {
+    "scripts/player.gd": {
+      "changed_function_bodies": [
+        "_ready"
+      ],
+      "unchanged_function_sha256": {
+        "tick": "54febfe8869585d3841eaf43051aa15b4c4e8b3ca69199090daeed8108e3e254",
+        "effective_speed": "5b99e04363c2b7d8cd0b046e98cafd978dd0287ce9cf25ecdeb96d07d9ff9b0f",
+        "aim": "fb4435ebb738b2415c4036c5a2706e22886cacd277a4d19ce5cf0ddc3a90f8fc",
+        "_exit_tree": "a476a0a5f2a1aa9364c273e0949ce5b184cc50337beafdba047f305069b41be5",
+        "_damage_feedback": "aaad2987d369004e3572a5f3f97899de509de23964b360fdf4a69417ea097250"
+      }
+    },
+    "scripts/main.gd": {
+      "changed_function_bodies": [
+        "_capture_session"
+      ],
+      "unchanged_function_sha256": {
+        "_ready": "6eae57ba486cafc208655cd63f13862e7f3b81beab3472889236727043037760",
+        "_build_arena": "3efc43d8437716acc87e3b5e3e68e31f7a86abfc8286b30825a71704bc7d047d",
+        "start_run": "61a2aff47902845be7170134d4dbfcba8748391b2e4d7239c87dd9fc280a1f0f",
+        "_physics_process": "43a59a0137d5382702e57ee905499f5aae62b65ce3e02630651396b3a083ab20",
+        "_process": "2c6977f76c5327e9ec8c5daaaee0acb7907723874194975e67d38403482ee7b1",
+        "_sample_performance": "6bfe3ebe5435ac2ec4a1ccb5d0975cf506c861e1e454fa438faeeb4ae8c820ea",
+        "open_performance_report": "c2401635a1801093ab0d3808016859106889a5b07f8ba3a2e94f09d9123a0cfc",
+        "copy_performance_report": "bbf436c03ef535eaa12db77f30f09795d043f0ea6a8f67d0cb324aa198559bc2",
+        "_input": "5c7efe4bcc8bdc5efe1ec07534894ea02b68bc3a6dfb4a577772a915a7b12ba3",
+        "_notification": "be8b5c34280387d2b67e559aab244bf675fb28bfbc955e49b867439957caeef1",
+        "pause_run": "0956b2ba0e17fbde960f13a7ecb42716e1edde4961b346486f57dff18df9cc4b",
+        "resume_run": "bf19f28bbacf20f55fe7adeb39731531c9531b2ba19bcc9617c8db303f83b6cc",
+        "open_build": "068cea761e9e5c812b8079384f713c404679ea52418f532cd115b954c37da169",
+        "go_menu": "7b1e844dd6d8bed09ec1a19596bdfb079b02ba7a64c58faea5481ad94b3f8a58",
+        "_record_result": "8e89e1d546caff9fe93f560d2cffd114490f3a8f365a77a2834858d6cfeef1c6",
+        "finish_run": "10fd1d3cbb2984aa4a448f7caa25eabc11fc8883c7c6ba4f171c9e689f54bd7e",
+        "show_upgrade": "49df49b41b77061d4396584f44086d274e412ef99703e56d92e067cf12716a92",
+        "_render_upgrades": "e05306a0931f3a4a98246651466f207acf605cb426f99cf23be2d1f3f75a3f64",
+        "show_corruption": "12663c5ad1647426302d7cd0ba99250b2b54e9a889e7322e5d326dc779b82d29",
+        "return_upgrades": "ced4e9f3581be1660619efa800e7725924964fe4114b4c821539ed7588c134f4",
+        "select_corruption": "6610eb2e31d4baeb7a1ce5820cf896dc35b6ebd3c2521a63d1fee76bf72a1f59",
+        "upgrade_description": "7d259c2cabbb66f9116d9a4b941abd1ffb0d4e80d5216f3e35f7043940dab0fe",
+        "select_upgrade": "33d94677aed1b926c70849f7b0e4ac8a5c1ce115fadc942834bb83721f3a7f67",
+        "change_setting": "cfa2cc61509de1d0f59e6d455c71a8b80ca5d1e95ae7477ba9ed646627128509",
+        "_exit_tree": "88d9ded6f70e42efb09cc9c6fc24b37dadfa4b213f208873716ae8433178bc88",
+        "reroll_upgrades": "d4197562798439d8a766e9fb303ef77862454725c040d6675a511c8d80a0d0f2",
+        "_weapon_sound": "7305523100f4de69d2b06ecfe58d39892083dba6261282722de57dbce05adea8",
+        "_warden_down": "bd8928ab08e4624e4beeee6c69eb8e21fc7ae755e4ae486c20465f719c9e235c",
+        "_architect_down": "9f9b523b904a2751c46da52c6f63e5e936c0471ef6fce3777a489a085ed1a324",
+        "_checkpoint_progress": "22a1994370db77260043f98f940b0e08a1c8768d9b76c55fbbc3cbf3d33fb1a6",
+        "show_results": "17434ef844345cec62d522e629d07d8918d0d231666d3098b63e27100f8dd3ed",
+        "open_lab": "a7f6714bdf6c62d20dbf3d8ad6a59be74476339de9333459219abd7de888db14",
+        "_return_from_lab": "643d0d4bc8b21fb96e58cd8b5633b7950f6fa3fb0d64bf4f13c1c317ba66751b",
+        "purchase_research": "e5d475d32661dfce3b3b471619a46bd01681bb027e78230df4fca13d03775657",
+        "select_kit": "86aac61d8ef33be51e15b1eb1144136c1bc753bef09a913181235e50a06a4104",
+        "open_backup": "ad57f0dd3b361da7c256b85738fde3d98b84f8e768c04ebb095631a8b23d5556",
+        "export_backup": "dd38402381e72feaca0ce880be5aaf230e5d1677c539dca79b04cbd71fb08eec",
+        "preview_backup": "af4797703b60fc9f75265848689e02804c94ffb6c50f146a641978833e9ac284",
+        "restore_backup": "ef5881fd82cd63d0e64baa3e9a4cd54ef30bf6f52396a916965eac1096c702fe",
+        "preview_recovery": "d7249c0796e3c17184805e87b49bd390e9ca92410f04edcfca5f2e212d847e55"
+      }
+    }
+  }
+}

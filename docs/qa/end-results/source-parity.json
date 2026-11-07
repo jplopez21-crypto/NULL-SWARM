@@ -1,0 +1,20 @@
+{
+  "changed_existing_main_functions": [
+    "_ready",
+    "start_run",
+    "show_results"
+  ],
+  "new_main_functions": [
+    "end_deployment"
+  ],
+  "unchanged_main_functions": 39,
+  "unchanged_modules": [
+    "systems/combat_world.gd",
+    "systems/save_store.gd",
+    "systems/progression.gd",
+    "systems/spawn_director.gd",
+    "weapons/arsenal.gd",
+    "systems/corruption_protocol.gd"
+  ],
+  "finish_run_and_reward_calculation_unchanged": true
+}

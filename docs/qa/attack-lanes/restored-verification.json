@@ -1,0 +1,248 @@
+{
+  "native": {
+    "apk_sha256": "ade526df1b11b4d45b3014fea582f46aa77cbb48611a8e5e8e4e8b6067d0c432",
+    "apk_bytes": 27816036,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "unchanged_previous_compiled_modules": [
+      "assets/bosses/encounter_director.gdc",
+      "assets/components/health.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/systems/spawn_director.gdc",
+      "assets/ui/game_ui.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/systems/progression.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/systems/pickup_system.gdc",
+      "assets/ui/dash_button.gdc",
+      "assets/ui/touch_action_button.gdc",
+      "assets/effects/operative_model.gdc",
+      "assets/systems/research.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/systems/combat_world.gdc",
+      "assets/systems/performance_history.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/enemies/chassis_models.gdc",
+      "assets/effects/memory_crystals.gdc",
+      "assets/systems/input_router.gdc",
+      "assets/weapons/weapon_rig.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/effects/debris_fragment.gdc",
+      "assets/scripts/player.gdc"
+    ],
+    "changed_module_sha256": {
+      "assets/scripts/main.gdc": "94d266133b12cce23d4da48f658f9e147d3d67d7d342dda74ca12b7c061aa9f7",
+      "assets/enemies/enemy.gdc": "91e3269005bdfca59a5ca59f311cd3abcd30f9ba5045dae734caa42c387e72a1",
+      "assets/systems/android_qa_probe.gdc": "00a657416f1eac94f965c00270a9259a6f46cd6b85d7b0b9800c44f90ff62973"
+    }
+  },
+  "comparison": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2341,
+    "ui_layouts": 168,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_receipt_matches_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "android": {
+    "status": "passed",
+    "checks": 53,
+    "attack_lane_geometry": {
+      "charge": {
+        "ground_mesh": true,
+        "length": 7.0,
+        "surfaces": 1,
+        "triangles": 12,
+        "width": 1.08000004291534
+      },
+      "sentry": {
+        "ground_mesh": true,
+        "length": 7.0,
+        "surfaces": 1,
+        "triangles": 7,
+        "width": 0.800000011920929
+      }
+    },
+    "pause_samples": {
+      "multitouch_pause": true,
+      "injection": "shell UID / real Android two-pointer MotionEvent",
+      "samples": {
+        "walking": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": 7,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              1.0,
+              0.0
+            ]
+          },
+          "position": [
+            0.933333396911621,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.616666666666667,
+          "state": "playing"
+        },
+        "paused_while_fingers_held": {
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.16666674613953,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.65,
+          "state": "paused"
+        },
+        "resumed": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.16666674613953,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.933333333333335,
+          "state": "playing"
+        }
+      }
+    },
+    "apk_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "gameplay_checkpoint": {
+      "time": 30.3666666666662,
+      "kills": 34,
+      "xp": 65,
+      "level": 3,
+      "salvage": 1
+    },
+    "quiet_profile": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.4406877618841179,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "headless_local_native_qa_match": true,
+    "audio_release_native_qa_passed": true,
+    "both_logcat_scans": "passed"
+  },
+  "artifact_downloads": [
+    {
+      "artifact": {
+        "id": 13083272095,
+        "name": "null-swarm-headless-results",
+        "digest": "sha256:0657fec27fac6bfdadff58526a2d8ee6d1803ab05acbc940a0d233384447a381",
+        "size_in_bytes": 403882
+      },
+      "zip_sha256": "0657fec27fac6bfdadff58526a2d8ee6d1803ab05acbc940a0d233384447a381",
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13082713304,
+        "name": "null-swarm-development-apk",
+        "digest": "sha256:bd5d69bee1c8bceca70a6fcacbfb42ccbfb144b0239b21f83ed125e6929867d6",
+        "size_in_bytes": 27893728
+      },
+      "zip_sha256": "bd5d69bee1c8bceca70a6fcacbfb42ccbfb144b0239b21f83ed125e6929867d6",
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13082693374,
+        "name": "null-swarm-presentation-captures",
+        "digest": "sha256:2d1f16963e9ee2508abb7bf887f25547fe25510de093934f29704e38b929c055",
+        "size_in_bytes": 4981391
+      },
+      "zip_sha256": "2d1f16963e9ee2508abb7bf887f25547fe25510de093934f29704e38b929c055",
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13082847439,
+        "name": "null-swarm-android-runtime",
+        "digest": "sha256:f255465b7fa3fa85d6ef71ebaed713fa1ef9f565c0a6bec5c60083727fec6f31",
+        "size_in_bytes": 3524363
+      },
+      "zip_sha256": "f255465b7fa3fa85d6ef71ebaed713fa1ef9f565c0a6bec5c60083727fec6f31",
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13082528301,
+        "name": "null-swarm-gameplay-qa",
+        "digest": "sha256:459ac0bcfa9cc61721e9b9eda73b5bb626fff523d3d8aec4d5a9c202abb7d451",
+        "size_in_bytes": 19954260
+      },
+      "zip_sha256": "459ac0bcfa9cc61721e9b9eda73b5bb626fff523d3d8aec4d5a9c202abb7d451",
+      "hash_crc": "passed"
+    }
+  ],
+  "verified_source": "0d08ac9fbb7edd41980a1b7704a9e8a614456a73",
+  "report_head_synchronized": "066fedfe7675656bde6cabeeaba2c1fff0ecbbc0",
+  "synchronized_local_tree": "f98906f008678e6b6b2100bd4257b3f5017cfa40",
+  "scope": "Independent post-workspace-restoration checks of the exact previously built artifacts. No new build/device execution claim. CI signature verification retained; not independently rerun locally.",
+  "visual_review": "Actual archive Android Engineer combat and paused images inspected after restoration; warning detail/field/reduced native images are inspected separately. Does not establish human phone readability/FPS."
+}

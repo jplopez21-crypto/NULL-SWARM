@@ -1,0 +1,19 @@
+{
+  "apk_sha256": "ab8c3ab4138841aada8c05817b74e3f815753d762eea47f22c9e0abf424a4679",
+  "scope": "Headless desktop fixture using exact APK assets, an external driver, isolated user data and actual production damage/GUI/joypad/key handling. Explicit frozen enemy/HP fixture; not an Android device, earned run, audio listening or performance acceptance.",
+  "exit_code": 1,
+  "result": {
+    "checks": 10,
+    "failures": [
+      "exported B/Escape returns to the same completed run",
+      "missing actual exported control: RUN ANALYSIS",
+      "exported B/Escape returns to the same completed run"
+    ]
+  },
+  "errors": [
+    "ERROR: exported B/Escape returns to the same completed run",
+    "ERROR: missing actual exported control: RUN ANALYSIS",
+    "ERROR: exported B/Escape returns to the same completed run"
+  ],
+  "status": "failed"
+}

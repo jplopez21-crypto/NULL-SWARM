@@ -1,0 +1,27 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: native touch swipe scrolls damage rows without triggering a menu action
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/run_ui_tests.gd:15)
+       [1] run (res://tests/run_ui_tests.gd:362)
+       [2] settle (res://tests/run_ui_tests.gd:19)
+ERROR: native touch swipe scrolls damage rows without triggering a menu action
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/run_ui_tests.gd:15)
+       [1] run (res://tests/run_ui_tests.gd:362)
+       [2] settle (res://tests/run_ui_tests.gd:19)
+ERROR: native touch swipe scrolls damage rows without triggering a menu action
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/run_ui_tests.gd:15)
+       [1] run (res://tests/run_ui_tests.gd:362)
+       [2] settle (res://tests/run_ui_tests.gd:19)
+ERROR: native touch swipe scrolls damage rows without triggering a menu action
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/run_ui_tests.gd:15)
+       [1] run (res://tests/run_ui_tests.gd:362)
+       [2] settle (res://tests/run_ui_tests.gd:19)
+UI_RESULT checks=2560 layouts=184 failures=4

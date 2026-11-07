@@ -1,0 +1,1867 @@
+{
+  "kind": "local collection investigation",
+  "godot": "4.6.3-stable (official)",
+  "baseline_code": "25ff0b895507b1efb97eecc3fc33e45cac2f23cb",
+  "all_four_pre_presentation_replays_match_except_timings": true,
+  "two_cautious_sessions_match_published_baseline_except_timings": true,
+  "cases": [
+    {
+      "seed": 101,
+      "profile": "singularity",
+      "kit": "vanguard",
+      "bot_policy": "cautious",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 53,
+      "xp_collected": 14289,
+      "uncollected_xp": 2038,
+      "longest_upgrade_gap_seconds": 220.7,
+      "mutations": {
+        "arcstorm": 192.03,
+        "singularity": 190.87
+      },
+      "gravity_fields": {
+        "activations": 384,
+        "pull_distance": 380.004371433003,
+        "pulses": 1335
+      },
+      "selected_trace_samples": [
+        {
+          "attracted_xp": 0,
+          "cold_xp": 0,
+          "cold_xp_within_16m": 0,
+          "collected": 0,
+          "dropped": 0,
+          "kills": 0,
+          "level": 1,
+          "magnet": 2.6,
+          "nearest_cold_m": -1.0,
+          "pending": 0,
+          "position": [
+            0.12,
+            0.0
+          ],
+          "speed": 7.0,
+          "threshold": 18,
+          "time": 0.02,
+          "xp": 0
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 94,
+          "cold_xp_within_16m": 10,
+          "collected": 90,
+          "dropped": 184,
+          "kills": 35,
+          "level": 4,
+          "magnet": 2.6,
+          "nearest_cold_m": 3.93,
+          "pending": 0,
+          "position": [
+            27.5,
+            -21.46
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 30.02,
+          "xp": 6
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 368,
+          "cold_xp_within_16m": 166,
+          "collected": 90,
+          "dropped": 458,
+          "kills": 79,
+          "level": 4,
+          "magnet": 2.6,
+          "nearest_cold_m": 3.96,
+          "pending": 0,
+          "position": [
+            27.17,
+            -21.79
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 60.02,
+          "xp": 6
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 711,
+          "cold_xp_within_16m": 252,
+          "collected": 90,
+          "dropped": 801,
+          "kills": 125,
+          "level": 4,
+          "magnet": 2.6,
+          "nearest_cold_m": 3.93,
+          "pending": 0,
+          "position": [
+            27.5,
+            -21.46
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 90.02,
+          "xp": 6
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1060,
+          "cold_xp_within_16m": 392,
+          "collected": 90,
+          "dropped": 1150,
+          "kills": 170,
+          "level": 4,
+          "magnet": 2.6,
+          "nearest_cold_m": 3.96,
+          "pending": 0,
+          "position": [
+            27.17,
+            -21.79
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 120.02,
+          "xp": 6
+        },
+        {
+          "attracted_xp": 35,
+          "cold_xp": 1339,
+          "cold_xp_within_16m": 448,
+          "collected": 139,
+          "dropped": 1513,
+          "kills": 207,
+          "level": 5,
+          "magnet": 2.6,
+          "nearest_cold_m": 2.82,
+          "pending": 0,
+          "position": [
+            20.63,
+            -10.07
+          ],
+          "speed": 7.0,
+          "threshold": 58,
+          "time": 150.0,
+          "xp": 7
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1601,
+          "cold_xp_within_16m": 674,
+          "collected": 672,
+          "dropped": 2273,
+          "kills": 271,
+          "level": 11,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.59,
+          "pending": 0,
+          "position": [
+            34.16,
+            -7.75
+          ],
+          "speed": 7.0,
+          "threshold": 118,
+          "time": 180.0,
+          "xp": 42
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 87,
+          "cold_xp_within_16m": 12,
+          "collected": 2799,
+          "dropped": 2886,
+          "kills": 320,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 7.61,
+          "pending": 0,
+          "position": [
+            18.86,
+            -22.2
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 210.0,
+          "xp": 93
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 587,
+          "cold_xp_within_16m": 18,
+          "collected": 2821,
+          "dropped": 3408,
+          "kills": 384,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.61,
+          "pending": 0,
+          "position": [
+            31.25,
+            -15.58
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 240.0,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1203,
+          "cold_xp_within_16m": 26,
+          "collected": 2821,
+          "dropped": 4024,
+          "kills": 448,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.57,
+          "pending": 0,
+          "position": [
+            30.98,
+            -16.23
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 270.0,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1936,
+          "cold_xp_within_16m": 26,
+          "collected": 2821,
+          "dropped": 4757,
+          "kills": 516,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.61,
+          "pending": 0,
+          "position": [
+            31.25,
+            -15.58
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 300.0,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 2667,
+          "cold_xp_within_16m": 44,
+          "collected": 2821,
+          "dropped": 5488,
+          "kills": 590,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.57,
+          "pending": 0,
+          "position": [
+            30.98,
+            -16.23
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 330.0,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 3384,
+          "cold_xp_within_16m": 44,
+          "collected": 2821,
+          "dropped": 6205,
+          "kills": 665,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.61,
+          "pending": 0,
+          "position": [
+            31.25,
+            -15.58
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 360.0,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 4233,
+          "cold_xp_within_16m": 84,
+          "collected": 2821,
+          "dropped": 7054,
+          "kills": 749,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.57,
+          "pending": 0,
+          "position": [
+            31.03,
+            -16.12
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 390.02,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 5252,
+          "cold_xp_within_16m": 230,
+          "collected": 2821,
+          "dropped": 8073,
+          "kills": 839,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.62,
+          "pending": 0,
+          "position": [
+            31.15,
+            -15.76
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 420.02,
+          "xp": 115
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 3959,
+          "cold_xp_within_16m": 648,
+          "collected": 5086,
+          "dropped": 9045,
+          "kills": 944,
+          "level": 31,
+          "magnet": 7.4,
+          "nearest_cold_m": 7.84,
+          "pending": 0,
+          "position": [
+            21.17,
+            -27.93
+          ],
+          "speed": 7.0,
+          "threshold": 318,
+          "time": 450.02,
+          "xp": 196
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 4112,
+          "cold_xp_within_16m": 848,
+          "collected": 6215,
+          "dropped": 10327,
+          "kills": 1063,
+          "level": 34,
+          "magnet": 7.4,
+          "nearest_cold_m": 7.84,
+          "pending": 0,
+          "position": [
+            24.8,
+            -24.72
+          ],
+          "speed": 7.0,
+          "threshold": 348,
+          "time": 480.02,
+          "xp": 341
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 5396,
+          "cold_xp_within_16m": 1428,
+          "collected": 6215,
+          "dropped": 11611,
+          "kills": 1197,
+          "level": 34,
+          "magnet": 7.4,
+          "nearest_cold_m": 7.81,
+          "pending": 0,
+          "position": [
+            24.3,
+            -25.21
+          ],
+          "speed": 7.0,
+          "threshold": 348,
+          "time": 510.02,
+          "xp": 341
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 3816,
+          "cold_xp_within_16m": 498,
+          "collected": 9247,
+          "dropped": 13063,
+          "kills": 1333,
+          "level": 42,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.99,
+          "pending": 0,
+          "position": [
+            33.71,
+            -0.89
+          ],
+          "speed": 10.25,
+          "threshold": 428,
+          "time": 540.02,
+          "xp": 309
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 453,
+          "cold_xp_within_16m": 116,
+          "collected": 14289,
+          "dropped": 14742,
+          "kills": 1504,
+          "level": 53,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.54,
+          "pending": 0,
+          "position": [
+            33.71,
+            -9.57
+          ],
+          "speed": 10.25,
+          "threshold": 538,
+          "time": 570.02,
+          "xp": 93
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 2038,
+          "cold_xp_within_16m": 941,
+          "collected": 14289,
+          "dropped": 16327,
+          "kills": 1665,
+          "level": 53,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.72,
+          "pending": 0,
+          "position": [
+            33.5,
+            -9.6
+          ],
+          "speed": 10.25,
+          "threshold": 538,
+          "time": 600.02,
+          "xp": 93
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 2038,
+          "cold_xp_within_16m": 941,
+          "collected": 14289,
+          "dropped": 16327,
+          "kills": 1665,
+          "level": 53,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.72,
+          "pending": 0,
+          "position": [
+            33.5,
+            -9.6
+          ],
+          "speed": 10.25,
+          "threshold": 538,
+          "time": 600.02,
+          "xp": 93
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "profile": "singularity",
+      "kit": "vanguard",
+      "bot_policy": "value_aware",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16305,
+      "uncollected_xp": 253,
+      "longest_upgrade_gap_seconds": 22.3,
+      "mutations": {
+        "arcstorm": 245.1,
+        "singularity": 66.37
+      },
+      "gravity_fields": {
+        "activations": 458,
+        "pull_distance": 370.452079116221,
+        "pulses": 1688
+      },
+      "selected_trace_samples": [
+        {
+          "attracted_xp": 0,
+          "cold_xp": 0,
+          "cold_xp_within_16m": 0,
+          "collected": 0,
+          "dropped": 0,
+          "kills": 0,
+          "level": 1,
+          "magnet": 2.6,
+          "nearest_cold_m": -1.0,
+          "pending": 0,
+          "position": [
+            0.12,
+            0.0
+          ],
+          "speed": 7.0,
+          "threshold": 18,
+          "time": 0.02,
+          "xp": 0
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 53,
+          "cold_xp_within_16m": 18,
+          "collected": 100,
+          "dropped": 153,
+          "kills": 30,
+          "level": 4,
+          "magnet": 2.6,
+          "nearest_cold_m": 7.58,
+          "pending": 0,
+          "position": [
+            3.13,
+            10.82
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 30.02,
+          "xp": 16
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 120,
+          "cold_xp_within_16m": 34,
+          "collected": 353,
+          "dropped": 473,
+          "kills": 79,
+          "level": 8,
+          "magnet": 5.0,
+          "nearest_cold_m": 5.01,
+          "pending": 0,
+          "position": [
+            -2.33,
+            -14.49
+          ],
+          "speed": 7.0,
+          "threshold": 88,
+          "time": 60.02,
+          "xp": 17
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 125,
+          "cold_xp_within_16m": 17,
+          "collected": 694,
+          "dropped": 819,
+          "kills": 124,
+          "level": 11,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.22,
+          "pending": 0,
+          "position": [
+            35.09,
+            19.19
+          ],
+          "speed": 7.0,
+          "threshold": 118,
+          "time": 90.02,
+          "xp": 64
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 85,
+          "cold_xp_within_16m": 20,
+          "collected": 1077,
+          "dropped": 1162,
+          "kills": 167,
+          "level": 14,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.82,
+          "pending": 0,
+          "position": [
+            16.16,
+            23.13
+          ],
+          "speed": 7.0,
+          "threshold": 148,
+          "time": 120.02,
+          "xp": 63
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 195,
+          "cold_xp_within_16m": 44,
+          "collected": 1461,
+          "dropped": 1656,
+          "kills": 219,
+          "level": 16,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.28,
+          "pending": 0,
+          "position": [
+            -16.38,
+            19.22
+          ],
+          "speed": 7.0,
+          "threshold": 168,
+          "time": 150.0,
+          "xp": 141
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 205,
+          "cold_xp_within_16m": 20,
+          "collected": 1955,
+          "dropped": 2160,
+          "kills": 262,
+          "level": 19,
+          "magnet": 6.2,
+          "nearest_cold_m": 9.93,
+          "pending": 0,
+          "position": [
+            5.57,
+            -21.69
+          ],
+          "speed": 7.0,
+          "threshold": 198,
+          "time": 180.0,
+          "xp": 101
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 79,
+          "cold_xp_within_16m": 61,
+          "collected": 2820,
+          "dropped": 2899,
+          "kills": 324,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.16,
+          "pending": 0,
+          "position": [
+            -4.71,
+            -5.24
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 210.0,
+          "xp": 114
+        },
+        {
+          "attracted_xp": 24,
+          "cold_xp": 170,
+          "cold_xp_within_16m": 65,
+          "collected": 3349,
+          "dropped": 3543,
+          "kills": 387,
+          "level": 25,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.54,
+          "pending": 0,
+          "position": [
+            14.19,
+            6.91
+          ],
+          "speed": 7.0,
+          "threshold": 258,
+          "time": 240.0,
+          "xp": 157
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 204,
+          "cold_xp_within_16m": 0,
+          "collected": 3925,
+          "dropped": 4129,
+          "kills": 448,
+          "level": 27,
+          "magnet": 7.4,
+          "nearest_cold_m": 16.53,
+          "pending": 0,
+          "position": [
+            -13.36,
+            11.58
+          ],
+          "speed": 7.0,
+          "threshold": 278,
+          "time": 270.0,
+          "xp": 207
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 193,
+          "cold_xp_within_16m": 5,
+          "collected": 4530,
+          "dropped": 4723,
+          "kills": 503,
+          "level": 29,
+          "magnet": 7.4,
+          "nearest_cold_m": 7.44,
+          "pending": 0,
+          "position": [
+            27.98,
+            39.97
+          ],
+          "speed": 7.0,
+          "threshold": 298,
+          "time": 300.0,
+          "xp": 246
+        },
+        {
+          "attracted_xp": 18,
+          "cold_xp": 360,
+          "cold_xp_within_16m": 31,
+          "collected": 5039,
+          "dropped": 5417,
+          "kills": 574,
+          "level": 31,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.0,
+          "pending": 0,
+          "position": [
+            30.53,
+            9.23
+          ],
+          "speed": 7.0,
+          "threshold": 318,
+          "time": 330.0,
+          "xp": 149
+        },
+        {
+          "attracted_xp": 18,
+          "cold_xp": 234,
+          "cold_xp_within_16m": 22,
+          "collected": 6115,
+          "dropped": 6367,
+          "kills": 665,
+          "level": 34,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.05,
+          "pending": 0,
+          "position": [
+            21.62,
+            -6.35
+          ],
+          "speed": 7.0,
+          "threshold": 348,
+          "time": 360.0,
+          "xp": 241
+        },
+        {
+          "attracted_xp": 8,
+          "cold_xp": 458,
+          "cold_xp_within_16m": 74,
+          "collected": 6643,
+          "dropped": 7109,
+          "kills": 747,
+          "level": 36,
+          "magnet": 8.6,
+          "nearest_cold_m": 8.69,
+          "pending": 0,
+          "position": [
+            26.84,
+            -41.43
+          ],
+          "speed": 7.0,
+          "threshold": 368,
+          "time": 390.02,
+          "xp": 63
+        },
+        {
+          "attracted_xp": 18,
+          "cold_xp": 314,
+          "cold_xp_within_16m": 18,
+          "collected": 7813,
+          "dropped": 8145,
+          "kills": 839,
+          "level": 39,
+          "magnet": 8.6,
+          "nearest_cold_m": 11.06,
+          "pending": 0,
+          "position": [
+            10.17,
+            -37.46
+          ],
+          "speed": 8.3,
+          "threshold": 398,
+          "time": 420.02,
+          "xp": 99
+        },
+        {
+          "attracted_xp": 18,
+          "cold_xp": 294,
+          "cold_xp_within_16m": 16,
+          "collected": 8763,
+          "dropped": 9075,
+          "kills": 935,
+          "level": 41,
+          "magnet": 8.6,
+          "nearest_cold_m": 12.32,
+          "pending": 0,
+          "position": [
+            24.67,
+            18.94
+          ],
+          "speed": 9.6,
+          "threshold": 418,
+          "time": 450.02,
+          "xp": 243
+        },
+        {
+          "attracted_xp": 41,
+          "cold_xp": 340,
+          "cold_xp_within_16m": 107,
+          "collected": 10065,
+          "dropped": 10446,
+          "kills": 1059,
+          "level": 44,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.22,
+          "pending": 0,
+          "position": [
+            3.05,
+            -1.01
+          ],
+          "speed": 10.25,
+          "threshold": 448,
+          "time": 480.02,
+          "xp": 261
+        },
+        {
+          "attracted_xp": 28,
+          "cold_xp": 255,
+          "cold_xp_within_16m": 0,
+          "collected": 11353,
+          "dropped": 11636,
+          "kills": 1182,
+          "level": 47,
+          "magnet": 8.6,
+          "nearest_cold_m": 17.23,
+          "pending": 0,
+          "position": [
+            38.53,
+            33.16
+          ],
+          "speed": 10.25,
+          "threshold": 478,
+          "time": 510.02,
+          "xp": 175
+        },
+        {
+          "attracted_xp": 36,
+          "cold_xp": 283,
+          "cold_xp_within_16m": 23,
+          "collected": 13046,
+          "dropped": 13365,
+          "kills": 1341,
+          "level": 50,
+          "magnet": 8.6,
+          "nearest_cold_m": 8.71,
+          "pending": 0,
+          "position": [
+            11.09,
+            16.7
+          ],
+          "speed": 10.25,
+          "threshold": 508,
+          "time": 540.02,
+          "xp": 404
+        },
+        {
+          "attracted_xp": 231,
+          "cold_xp": 47,
+          "cold_xp_within_16m": 27,
+          "collected": 14886,
+          "dropped": 15164,
+          "kills": 1502,
+          "level": 54,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.53,
+          "pending": 0,
+          "position": [
+            1.7,
+            -7.0
+          ],
+          "speed": 10.25,
+          "threshold": 548,
+          "time": 570.02,
+          "xp": 152
+        },
+        {
+          "attracted_xp": 46,
+          "cold_xp": 207,
+          "cold_xp_within_16m": 34,
+          "collected": 16305,
+          "dropped": 16558,
+          "kills": 1657,
+          "level": 56,
+          "magnet": 8.6,
+          "nearest_cold_m": 8.71,
+          "pending": 0,
+          "position": [
+            -22.6,
+            11.93
+          ],
+          "speed": 10.25,
+          "threshold": 568,
+          "time": 600.02,
+          "xp": 465
+        },
+        {
+          "attracted_xp": 46,
+          "cold_xp": 207,
+          "cold_xp_within_16m": 34,
+          "collected": 16305,
+          "dropped": 16558,
+          "kills": 1657,
+          "level": 56,
+          "magnet": 8.6,
+          "nearest_cold_m": 8.71,
+          "pending": 0,
+          "position": [
+            -22.6,
+            11.93
+          ],
+          "speed": 10.25,
+          "threshold": 568,
+          "time": 600.02,
+          "xp": 465
+        }
+      ]
+    },
+    {
+      "seed": 202,
+      "profile": "singularity",
+      "kit": "vanguard",
+      "bot_policy": "cautious",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16012,
+      "uncollected_xp": 478,
+      "longest_upgrade_gap_seconds": 250.4,
+      "mutations": {
+        "arcstorm": 453.25,
+        "singularity": 187.17
+      },
+      "gravity_fields": {
+        "activations": 388,
+        "pull_distance": 465.480918876142,
+        "pulses": 1352
+      },
+      "selected_trace_samples": [
+        {
+          "attracted_xp": 0,
+          "cold_xp": 0,
+          "cold_xp_within_16m": 0,
+          "collected": 0,
+          "dropped": 0,
+          "kills": 0,
+          "level": 1,
+          "magnet": 2.6,
+          "nearest_cold_m": -1.0,
+          "pending": 0,
+          "position": [
+            0.12,
+            0.0
+          ],
+          "speed": 7.0,
+          "threshold": 18,
+          "time": 0.02,
+          "xp": 0
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 40,
+          "cold_xp_within_16m": 5,
+          "collected": 120,
+          "dropped": 160,
+          "kills": 32,
+          "level": 4,
+          "magnet": 3.8,
+          "nearest_cold_m": 13.12,
+          "pending": 0,
+          "position": [
+            1.23,
+            27.19
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 30.02,
+          "xp": 36
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 243,
+          "cold_xp_within_16m": 84,
+          "collected": 244,
+          "dropped": 487,
+          "kills": 80,
+          "level": 6,
+          "magnet": 3.8,
+          "nearest_cold_m": 7.66,
+          "pending": 0,
+          "position": [
+            0.15,
+            35.11
+          ],
+          "speed": 7.0,
+          "threshold": 68,
+          "time": 60.02,
+          "xp": 54
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 588,
+          "cold_xp_within_16m": 292,
+          "collected": 244,
+          "dropped": 832,
+          "kills": 119,
+          "level": 6,
+          "magnet": 3.8,
+          "nearest_cold_m": 7.73,
+          "pending": 0,
+          "position": [
+            0.2,
+            35.05
+          ],
+          "speed": 7.0,
+          "threshold": 68,
+          "time": 90.02,
+          "xp": 54
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 583,
+          "cold_xp_within_16m": 161,
+          "collected": 689,
+          "dropped": 1272,
+          "kills": 171,
+          "level": 11,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.87,
+          "pending": 0,
+          "position": [
+            -5.7,
+            34.58
+          ],
+          "speed": 7.0,
+          "threshold": 118,
+          "time": 120.02,
+          "xp": 59
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1087,
+          "cold_xp_within_16m": 158,
+          "collected": 689,
+          "dropped": 1776,
+          "kills": 219,
+          "level": 11,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.96,
+          "pending": 0,
+          "position": [
+            -5.11,
+            34.58
+          ],
+          "speed": 7.0,
+          "threshold": 118,
+          "time": 150.0,
+          "xp": 59
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1722,
+          "cold_xp_within_16m": 244,
+          "collected": 689,
+          "dropped": 2411,
+          "kills": 272,
+          "level": 11,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.88,
+          "pending": 0,
+          "position": [
+            -5.58,
+            34.58
+          ],
+          "speed": 7.0,
+          "threshold": 118,
+          "time": 180.0,
+          "xp": 59
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 177,
+          "cold_xp_within_16m": 58,
+          "collected": 2834,
+          "dropped": 3011,
+          "kills": 321,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 7.31,
+          "pending": 0,
+          "position": [
+            6.87,
+            27.39
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 210.0,
+          "xp": 128
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 682,
+          "cold_xp_within_16m": 56,
+          "collected": 2875,
+          "dropped": 3557,
+          "kills": 384,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.67,
+          "pending": 0,
+          "position": [
+            6.1,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 240.0,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1353,
+          "cold_xp_within_16m": 53,
+          "collected": 2875,
+          "dropped": 4228,
+          "kills": 448,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.51,
+          "pending": 0,
+          "position": [
+            6.87,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 270.0,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 2138,
+          "cold_xp_within_16m": 194,
+          "collected": 2875,
+          "dropped": 5013,
+          "kills": 515,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.67,
+          "pending": 0,
+          "position": [
+            6.1,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 300.0,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 2867,
+          "cold_xp_within_16m": 289,
+          "collected": 2875,
+          "dropped": 5742,
+          "kills": 588,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.51,
+          "pending": 0,
+          "position": [
+            6.87,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 330.0,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 3697,
+          "cold_xp_within_16m": 457,
+          "collected": 2875,
+          "dropped": 6572,
+          "kills": 665,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.67,
+          "pending": 0,
+          "position": [
+            6.1,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 360.0,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 4498,
+          "cold_xp_within_16m": 598,
+          "collected": 2875,
+          "dropped": 7373,
+          "kills": 744,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.53,
+          "pending": 0,
+          "position": [
+            6.74,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 390.02,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 5591,
+          "cold_xp_within_16m": 1169,
+          "collected": 2875,
+          "dropped": 8466,
+          "kills": 842,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.64,
+          "pending": 0,
+          "position": [
+            6.23,
+            34.34
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 420.02,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 6478,
+          "cold_xp_within_16m": 1378,
+          "collected": 2875,
+          "dropped": 9353,
+          "kills": 939,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 8.49,
+          "pending": 0,
+          "position": [
+            6.86,
+            34.36
+          ],
+          "speed": 7.65,
+          "threshold": 238,
+          "time": 450.02,
+          "xp": 169
+        },
+        {
+          "attracted_xp": 17,
+          "cold_xp": 3047,
+          "cold_xp_within_16m": 238,
+          "collected": 7506,
+          "dropped": 10570,
+          "kills": 1056,
+          "level": 38,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.33,
+          "pending": 0,
+          "position": [
+            24.54,
+            22.07
+          ],
+          "speed": 7.65,
+          "threshold": 388,
+          "time": 480.02,
+          "xp": 180
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 3563,
+          "cold_xp_within_16m": 28,
+          "collected": 8091,
+          "dropped": 11654,
+          "kills": 1174,
+          "level": 39,
+          "magnet": 8.6,
+          "nearest_cold_m": 8.68,
+          "pending": 0,
+          "position": [
+            -20.85,
+            -28.12
+          ],
+          "speed": 8.3,
+          "threshold": 398,
+          "time": 510.02,
+          "xp": 377
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 5517,
+          "cold_xp_within_16m": 1375,
+          "collected": 8091,
+          "dropped": 13608,
+          "kills": 1352,
+          "level": 39,
+          "magnet": 8.6,
+          "nearest_cold_m": 8.67,
+          "pending": 0,
+          "position": [
+            -20.78,
+            -28.2
+          ],
+          "speed": 8.3,
+          "threshold": 398,
+          "time": 540.02,
+          "xp": 377
+        },
+        {
+          "attracted_xp": 16,
+          "cold_xp": 231,
+          "cold_xp_within_16m": 48,
+          "collected": 15081,
+          "dropped": 15328,
+          "kills": 1502,
+          "level": 54,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.76,
+          "pending": 0,
+          "position": [
+            -18.05,
+            -15.18
+          ],
+          "speed": 10.25,
+          "threshold": 548,
+          "time": 570.02,
+          "xp": 347
+        },
+        {
+          "attracted_xp": 8,
+          "cold_xp": 470,
+          "cold_xp_within_16m": 0,
+          "collected": 16012,
+          "dropped": 16490,
+          "kills": 1642,
+          "level": 56,
+          "magnet": 8.6,
+          "nearest_cold_m": 17.08,
+          "pending": 0,
+          "position": [
+            -15.99,
+            29.03
+          ],
+          "speed": 10.25,
+          "threshold": 568,
+          "time": 600.02,
+          "xp": 172
+        },
+        {
+          "attracted_xp": 8,
+          "cold_xp": 470,
+          "cold_xp_within_16m": 0,
+          "collected": 16012,
+          "dropped": 16490,
+          "kills": 1642,
+          "level": 56,
+          "magnet": 8.6,
+          "nearest_cold_m": 17.08,
+          "pending": 0,
+          "position": [
+            -15.99,
+            29.03
+          ],
+          "speed": 10.25,
+          "threshold": 568,
+          "time": 600.02,
+          "xp": 172
+        }
+      ]
+    },
+    {
+      "seed": 202,
+      "profile": "singularity",
+      "kit": "vanguard",
+      "bot_policy": "value_aware",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16208,
+      "uncollected_xp": 236,
+      "longest_upgrade_gap_seconds": 129.45,
+      "mutations": {
+        "arcstorm": 276.32,
+        "singularity": 177.45
+      },
+      "gravity_fields": {
+        "activations": 377,
+        "pull_distance": 311.146997736799,
+        "pulses": 1349
+      },
+      "selected_trace_samples": [
+        {
+          "attracted_xp": 0,
+          "cold_xp": 0,
+          "cold_xp_within_16m": 0,
+          "collected": 0,
+          "dropped": 0,
+          "kills": 0,
+          "level": 1,
+          "magnet": 2.6,
+          "nearest_cold_m": -1.0,
+          "pending": 0,
+          "position": [
+            0.12,
+            0.0
+          ],
+          "speed": 7.0,
+          "threshold": 18,
+          "time": 0.02,
+          "xp": 0
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 45,
+          "cold_xp_within_16m": 5,
+          "collected": 120,
+          "dropped": 165,
+          "kills": 33,
+          "level": 4,
+          "magnet": 2.6,
+          "nearest_cold_m": 8.23,
+          "pending": 0,
+          "position": [
+            1.14,
+            26.08
+          ],
+          "speed": 7.0,
+          "threshold": 48,
+          "time": 30.02,
+          "xp": 36
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 195,
+          "cold_xp_within_16m": 50,
+          "collected": 292,
+          "dropped": 487,
+          "kills": 80,
+          "level": 7,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.32,
+          "pending": 0,
+          "position": [
+            13.28,
+            43.68
+          ],
+          "speed": 7.0,
+          "threshold": 78,
+          "time": 60.02,
+          "xp": 34
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 561,
+          "cold_xp_within_16m": 113,
+          "collected": 292,
+          "dropped": 853,
+          "kills": 126,
+          "level": 7,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.33,
+          "pending": 0,
+          "position": [
+            13.52,
+            43.68
+          ],
+          "speed": 7.0,
+          "threshold": 78,
+          "time": 90.02,
+          "xp": 34
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 926,
+          "cold_xp_within_16m": 194,
+          "collected": 292,
+          "dropped": 1218,
+          "kills": 169,
+          "level": 7,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.32,
+          "pending": 0,
+          "position": [
+            13.28,
+            43.68
+          ],
+          "speed": 7.0,
+          "threshold": 78,
+          "time": 120.02,
+          "xp": 34
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 1406,
+          "cold_xp_within_16m": 539,
+          "collected": 292,
+          "dropped": 1698,
+          "kills": 217,
+          "level": 7,
+          "magnet": 3.8,
+          "nearest_cold_m": 4.14,
+          "pending": 0,
+          "position": [
+            13.04,
+            43.87
+          ],
+          "speed": 7.0,
+          "threshold": 78,
+          "time": 150.0,
+          "xp": 34
+        },
+        {
+          "attracted_xp": 42,
+          "cold_xp": 1377,
+          "cold_xp_within_16m": 366,
+          "collected": 794,
+          "dropped": 2213,
+          "kills": 265,
+          "level": 12,
+          "magnet": 6.2,
+          "nearest_cold_m": 6.22,
+          "pending": 0,
+          "position": [
+            0.46,
+            38.15
+          ],
+          "speed": 7.0,
+          "threshold": 128,
+          "time": 180.0,
+          "xp": 46
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 73,
+          "cold_xp_within_16m": 17,
+          "collected": 2818,
+          "dropped": 2891,
+          "kills": 324,
+          "level": 23,
+          "magnet": 6.2,
+          "nearest_cold_m": 10.23,
+          "pending": 0,
+          "position": [
+            13.19,
+            19.95
+          ],
+          "speed": 7.0,
+          "threshold": 238,
+          "time": 210.0,
+          "xp": 112
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 121,
+          "cold_xp_within_16m": 18,
+          "collected": 3328,
+          "dropped": 3449,
+          "kills": 380,
+          "level": 25,
+          "magnet": 6.2,
+          "nearest_cold_m": 9.81,
+          "pending": 0,
+          "position": [
+            -7.77,
+            -2.38
+          ],
+          "speed": 7.0,
+          "threshold": 258,
+          "time": 240.0,
+          "xp": 136
+        },
+        {
+          "attracted_xp": 10,
+          "cold_xp": 231,
+          "cold_xp_within_16m": 52,
+          "collected": 3782,
+          "dropped": 4023,
+          "kills": 441,
+          "level": 27,
+          "magnet": 7.4,
+          "nearest_cold_m": 8.36,
+          "pending": 0,
+          "position": [
+            -6.79,
+            3.01
+          ],
+          "speed": 7.0,
+          "threshold": 278,
+          "time": 270.0,
+          "xp": 64
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 270,
+          "cold_xp_within_16m": 17,
+          "collected": 4500,
+          "dropped": 4770,
+          "kills": 513,
+          "level": 29,
+          "magnet": 7.4,
+          "nearest_cold_m": 13.9,
+          "pending": 0,
+          "position": [
+            -12.72,
+            34.2
+          ],
+          "speed": 7.0,
+          "threshold": 298,
+          "time": 300.0,
+          "xp": 216
+        },
+        {
+          "attracted_xp": 8,
+          "cold_xp": 293,
+          "cold_xp_within_16m": 0,
+          "collected": 5174,
+          "dropped": 5475,
+          "kills": 579,
+          "level": 31,
+          "magnet": 7.4,
+          "nearest_cold_m": 16.35,
+          "pending": 0,
+          "position": [
+            -34.89,
+            12.16
+          ],
+          "speed": 7.0,
+          "threshold": 318,
+          "time": 330.0,
+          "xp": 284
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 485,
+          "cold_xp_within_16m": 89,
+          "collected": 5861,
+          "dropped": 6346,
+          "kills": 660,
+          "level": 33,
+          "magnet": 7.4,
+          "nearest_cold_m": 8.66,
+          "pending": 0,
+          "position": [
+            -31.28,
+            -5.72
+          ],
+          "speed": 7.0,
+          "threshold": 338,
+          "time": 360.0,
+          "xp": 325
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 506,
+          "cold_xp_within_16m": 48,
+          "collected": 6644,
+          "dropped": 7150,
+          "kills": 744,
+          "level": 36,
+          "magnet": 7.4,
+          "nearest_cold_m": 8.14,
+          "pending": 0,
+          "position": [
+            -16.01,
+            6.41
+          ],
+          "speed": 7.0,
+          "threshold": 368,
+          "time": 390.02,
+          "xp": 64
+        },
+        {
+          "attracted_xp": 23,
+          "cold_xp": 528,
+          "cold_xp_within_16m": 8,
+          "collected": 7629,
+          "dropped": 8180,
+          "kills": 840,
+          "level": 38,
+          "magnet": 8.6,
+          "nearest_cold_m": 12.57,
+          "pending": 0,
+          "position": [
+            -7.25,
+            6.93
+          ],
+          "speed": 7.65,
+          "threshold": 388,
+          "time": 420.02,
+          "xp": 303
+        },
+        {
+          "attracted_xp": 0,
+          "cold_xp": 501,
+          "cold_xp_within_16m": 43,
+          "collected": 8539,
+          "dropped": 9040,
+          "kills": 930,
+          "level": 41,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.31,
+          "pending": 0,
+          "position": [
+            -17.33,
+            -28.9
+          ],
+          "speed": 9.6,
+          "threshold": 418,
+          "time": 450.02,
+          "xp": 19
+        },
+        {
+          "attracted_xp": 5,
+          "cold_xp": 413,
+          "cold_xp_within_16m": 5,
+          "collected": 9902,
+          "dropped": 10320,
+          "kills": 1058,
+          "level": 44,
+          "magnet": 8.6,
+          "nearest_cold_m": 14.28,
+          "pending": 0,
+          "position": [
+            12.05,
+            -27.3
+          ],
+          "speed": 10.25,
+          "threshold": 448,
+          "time": 480.02,
+          "xp": 98
+        },
+        {
+          "attracted_xp": 46,
+          "cold_xp": 477,
+          "cold_xp_within_16m": 44,
+          "collected": 11134,
+          "dropped": 11657,
+          "kills": 1187,
+          "level": 46,
+          "magnet": 8.6,
+          "nearest_cold_m": 12.87,
+          "pending": 0,
+          "position": [
+            25.81,
+            -9.43
+          ],
+          "speed": 10.25,
+          "threshold": 468,
+          "time": 510.02,
+          "xp": 424
+        },
+        {
+          "attracted_xp": 35,
+          "cold_xp": 268,
+          "cold_xp_within_16m": 20,
+          "collected": 12632,
+          "dropped": 12935,
+          "kills": 1312,
+          "level": 49,
+          "magnet": 8.6,
+          "nearest_cold_m": 9.93,
+          "pending": 0,
+          "position": [
+            -36.9,
+            16.43
+          ],
+          "speed": 10.25,
+          "threshold": 498,
+          "time": 540.02,
+          "xp": 488
+        },
+        {
+          "attracted_xp": 81,
+          "cold_xp": 38,
+          "cold_xp_within_16m": 0,
+          "collected": 15035,
+          "dropped": 15154,
+          "kills": 1501,
+          "level": 54,
+          "magnet": 8.6,
+          "nearest_cold_m": 24.51,
+          "pending": 0,
+          "position": [
+            -19.67,
+            5.63
+          ],
+          "speed": 10.25,
+          "threshold": 548,
+          "time": 570.02,
+          "xp": 301
+        },
+        {
+          "attracted_xp": 23,
+          "cold_xp": 213,
+          "cold_xp_within_16m": 38,
+          "collected": 16208,
+          "dropped": 16444,
+          "kills": 1638,
+          "level": 56,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.45,
+          "pending": 0,
+          "position": [
+            -1.92,
+            -24.36
+          ],
+          "speed": 10.25,
+          "threshold": 568,
+          "time": 600.02,
+          "xp": 368
+        },
+        {
+          "attracted_xp": 23,
+          "cold_xp": 213,
+          "cold_xp_within_16m": 38,
+          "collected": 16208,
+          "dropped": 16444,
+          "kills": 1638,
+          "level": 56,
+          "magnet": 8.6,
+          "nearest_cold_m": 10.45,
+          "pending": 0,
+          "position": [
+            -1.92,
+            -24.36
+          ],
+          "speed": 10.25,
+          "threshold": 568,
+          "time": 600.02,
+          "xp": 368
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "limitations": [
+    "Same normal combat and upgrade policy; only collection navigation differs.",
+    "Five-second samples explain availability, not exact human visibility, safety or balance.",
+    "No injected XP, forced kills, altered spawn rules or granted upgrades."
+  ]
+}

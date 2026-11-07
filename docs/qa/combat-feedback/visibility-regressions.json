@@ -1,0 +1,7 @@
+{
+  "suite": "systems",
+  "checks": 382,
+  "failures": 0,
+  "strict_log_scan": "clean",
+  "scope": "Post-render correction adds two impact visibility/material-cache regressions."
+}

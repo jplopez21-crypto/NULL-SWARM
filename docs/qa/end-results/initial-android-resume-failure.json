@@ -1,0 +1,18 @@
+{
+  "source": "dbfe0e5297bddcd7ffd475aea4849cb4f2a76f90",
+  "run": 42282464550,
+  "attempt": 1,
+  "artifact": 13535094900,
+  "failure": "Background/resume frame remained black; failed before new End Deployment/earned-analysis flow.",
+  "evidence": [
+    "11-06 19:50:21.372  3803  3803 E Surface : freeAllBuffers: 1 buffers were freed while being dequeued!",
+    "11-06 19:50:21.699  3803  3803 V Godot   : OnResume: GodotFragment{303085a} (2e986b22-ef3a-4154-82e2-9f371e102c69 id=0x7f070033)",
+    "11-06 19:50:21.764  3803  3847 E Surface : getSlotFromBufferLocked: unknown buffer: 0x3f8000003e58d8d9",
+    "11-06 19:50:21.764  3803  3847 E BufferQueueProducer: [SurfaceView[com.nullswarm.game.emulatorqa/com.godot.game.GodotAppLauncher]#1(BLAST Consumer)1](id:edb00000001,api:0,p:-1,c:3803) dequeueBuffer: BufferQueue has been abandoned",
+    "11-06 19:50:21.764  3803  3847 E EGL_emulation: tid 3847: swapBuffers(789): error 0x300d (EGL_BAD_SURFACE)",
+    "11-06 19:50:21.765  3803  3847 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "action": "Retry identical failed Android job; no code, thresholds, lifecycle sequence or checks changed. Software-emulator Surface lifecycle issue remains open pending further reproduction/physical testing.",
+  "failed_capture_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6",
+  "script_error_or_fatal_observed": false
+}

@@ -1,16 +1,20 @@
 name: Repeatable gameplay QA
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
   schedule:
     - cron: "23 3 * * *"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
   gameplay-qa:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 30
     env:
       GODOT_VERSION: 4.6.3
     steps:
@@ -26,9 +30,19 @@ jobs:
           mkdir -p builds/qa
           godot --headless --editor --import --quit 2>&1 | tee builds/qa/import.log
           if grep -E 'SCRIPT ERROR|Parse Error|Failed to load' builds/qa/import.log; then exit 1; fi
-          godot --headless --script tests/run_tests.gd 2>&1 | tee builds/qa/unit.log
-          timeout 120s godot --headless --script tests/run_corruption_tests.gd 2>&1 | tee builds/qa/corruption.log
-          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/corruption.log; then exit 1; fi
+          python3 tools/run_headless_checks.py
+      - name: Paired spatial-query kernels
+        run: |
+          set -o pipefail
+          timeout 120s godot --headless --script tests/run_grid_benchmark.gd 2>&1 | tee builds/qa/grid-benchmark.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/grid-benchmark.log; then exit 1; fi
+          test -s builds/qa/grid-benchmark.json
+      - name: Diagnostic observation gameplay parity
+        run: |
+          set -o pipefail
+          timeout 180s godot --headless --script tests/run_playtests.gd -- --diagnostics-parity 2>&1 | tee builds/qa/diagnostics-parity.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/diagnostics-parity.log; then exit 1; fi
+          test -s builds/qa/diagnostics-parity.json
       - name: Normal-rules bot playtests
         run: |
           set -o pipefail
@@ -47,6 +61,12 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd -- --extended-seeds 2>&1 | tee builds/qa/extended.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/extended.log; then exit 1; fi
           test -s builds/qa/extended-seeds.json
+      - name: Normal-rules earned Engineer sessions
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --engineer-probe 2>&1 | tee builds/qa/engineer-probe.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-probe.log; then exit 1; fi
+          test -s builds/qa/engineer-probe.json
       - name: UI lifecycle and window-size captures
         run: |
           set -o pipefail
@@ -63,6 +83,12 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd -- --xp-comparison 2>&1 | tee builds/qa/xp-comparison.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/xp-comparison.log; then exit 1; fi
           test -s builds/qa/xp-comparison.json
+      - name: Upgrade pacing and collector comparison
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --pacing-probe 2>&1 | tee builds/qa/pacing-probe.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/pacing-probe.log; then exit 1; fi
+          test -s builds/qa/pacing-probe.json
       - name: Synthetic combat CPU benchmark
         if: ${{ !cancelled() }}
         run: |
@@ -77,10 +103,24 @@ jobs:
           timeout 600s godot --headless --script tests/run_benchmark.gd -- --corruption-stress 2>&1 | tee builds/qa/corruption-stress.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/corruption-stress.log; then exit 1; fi
           test -s builds/qa/corruption-stress-report.json
+      - name: Singularity-field CPU benchmark
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          timeout 600s godot --headless --script tests/run_benchmark.gd -- --gravity-stress 2>&1 | tee builds/qa/gravity-stress.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/gravity-stress.log; then exit 1; fi
+          test -s builds/qa/gravity-stress-report.json
+      - name: Engineer sentry CPU benchmark
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          timeout 600s godot --headless --script tests/run_benchmark.gd -- --engineer-stress --phase-profile 2>&1 | tee builds/qa/engineer-stress.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-stress.log; then exit 1; fi
+          test -s builds/qa/engineer-stress-report.json
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/CORRUPTION_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

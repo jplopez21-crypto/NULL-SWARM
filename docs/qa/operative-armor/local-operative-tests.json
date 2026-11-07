@@ -1,0 +1,17 @@
+{
+  "body_instances": 5,
+  "body_surface_instances": 6,
+  "body_triangles": 296,
+  "checks": 41,
+  "failures": [],
+  "previous_body_instances": 7,
+  "previous_body_triangles": 84,
+  "scope": "Headless structural and simulation parity, not rendered FPS or human art acceptance.",
+  "trace": {
+    "accepted_damage_events": 14,
+    "accepted_dashes": 13,
+    "fingerprint": "3d80f9759422f3aac28f99d8e12fff51e628fb5f871bc8d2267ebc41f8258c74",
+    "fixed_step": 0.0166666666666667,
+    "frames": 2400
+  }
+}
