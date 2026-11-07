@@ -1,0 +1,42 @@
+{
+  "source": "2d9bade78d7e71e0907827afd661a45f8345917c",
+  "run": 42418219746,
+  "job": 128540808185,
+  "collection_status": "passed",
+  "recovery_driver_status": "failed",
+  "completed_cycles": 3,
+  "failed_cycle": 4,
+  "passed_checks_before_timeout": 10,
+  "app_egl_warnings": [
+    "11-07 22:01:45.664  3502  3556 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 22:01:54.673  3502  3556 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 22:02:04.954  3502  3556 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "last_state": {
+    "state": "playing",
+    "rendered_frames": 94,
+    "sample_ticks": 38225,
+    "lifecycle": {
+      "background_events": 6,
+      "foreground_generation": 6,
+      "rendered_generation": 6
+    },
+    "process": 3502
+  },
+  "failure_image_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6",
+  "failure_image_extrema": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "scope": "Unmodified negative control failed recovery; successful collection is not passing recovery."
+}

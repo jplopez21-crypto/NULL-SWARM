@@ -1,8 +1,8 @@
 # Changelog
 
-## Development — 2026-11-07 / Earned Mobile upgrade coverage (in progress)
+## Development — 2026-11-07 / Earned Mobile upgrade coverage
 
-- Added ordinary memory/XP collection and real upgrade-card touch transactions to Mobile smoke, including fresh frozen offers and queued-choice conservation. All 32 Python tests pass; hosted verification pending. No gameplay/phone settings change.
+- Extended Mobile smoke through ordinary XP collection and touch upgrade selection/freeze/resume; all 17 checks pass. Actual run earns level 2/20 XP and selects Arc Emitter, consuming one choice for one rank. Fresh/frozen fields and queue conservation have five new regressions; 32 Python tests/15 Godot suites and all five workflows pass. Game/phone executable settings and gameplay fingerprints unchanged; one observed Mobile selection, wider/physical coverage still open. Evidence/artifact scopes: TEST_RESULTS.md.
 
 ## Development — 2026-11-07 / Mobile-renderer coverage
 
