@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-07 / Isolated surface recovery investigation
 
-- GitHub upload stalled twice; experiment retained in a local commit. No new Android build or recovery result claimed.
+- Restored GitHub publishing through direct tree uploads. Initial diagnostic compilation caught missing EGLLogWrapper; official unchanged classes.jar is now on the classpath. No recovery result claimed.
 
 - Added diagnostic-only pinned Java control/candidate builds, nonblocking lifecycle-edge latch, controlled host harness, archive preservation checks and eighteen-cycle Android regression gates. Production engine/presets unchanged. Local fifteen Godot suites and fifteen Python tests pass; hosted compilation/recovery pending.
 

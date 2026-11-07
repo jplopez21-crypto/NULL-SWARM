@@ -91,12 +91,18 @@ def rebuild(aar, android_jar, output_dir, variant):
             raise ValueError(f'Unreviewed Java bytecode version: {major}')
     with tempfile.TemporaryDirectory(prefix='null-swarm-surface-') as tmp:
         work = Path(tmp); java = work/'GLSurfaceView.java'; java.write_bytes(changed)
+        dependencies = work/'official-classes.jar'; dependencies.write_bytes(jar)
+        # EGLLogWrapper lives beside GLSurfaceView in the official Godot AAR.
+        classpath = str(android_jar) + ':' + str(dependencies)
         classes = work/'classes'; classes.mkdir()
         compiler = subprocess.check_output(['javac', '-version'], text=True, stderr=subprocess.STDOUT).strip()
-        subprocess.run(['javac', '--release', str(release), '-cp', str(android_jar), '-d', str(classes), str(java)], check=True, timeout=120)
-        subprocess.run(['javac', '--release', str(release), '-cp', str(classes) + ':' + str(android_jar), '-d', str(classes), str(HARNESS)], check=True, timeout=120)
-        host = subprocess.run(['java', '-cp', str(classes) + ':' + str(android_jar), 'org.godotengine.godot.gl.SurfaceLatchHarness', variant], check=True, capture_output=True, text=True, timeout=15)
+        subprocess.run(['javac', '--release', str(release), '-cp', classpath, '-d', str(classes), str(java)], check=True, timeout=120)
+        subprocess.run(['javac', '--release', str(release), '-cp', str(classes) + ':' + classpath, '-d', str(classes), str(HARNESS)], check=True, timeout=120)
+        host = subprocess.run(['java', '-cp', str(classes) + ':' + classpath, 'org.godotengine.godot.gl.SurfaceLatchHarness', variant], capture_output=True, text=True, timeout=15)
         print(host.stdout, end='')
+        if host.returncode:
+            print(host.stderr, end='')
+        host.check_returncode()
         updates = {p.relative_to(classes).as_posix(): p.read_bytes() for p in classes.rglob('*.class') if class_family(p.relative_to(classes).as_posix())}
         new_jar = replace_entries(jar, updates, class_family)
         modified = replace_entries(original, {'classes.jar': new_jar}, lambda n: n == 'classes.jar')

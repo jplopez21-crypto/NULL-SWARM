@@ -2,7 +2,7 @@
 
 ## Current checkpoint
 
-- Publishing blocker: GitHub reads succeed, but two create-blob attempts stalled and were interrupted. Remote development remains `39267d53213a6ec5ad4f1ea78cc49e7cf60ae30e`. Surface experiment is committed locally as `8f2260d`; Android/Java hosted verification has not run. Next: restore publishing, run the isolated matrix, inspect control/candidate evidence and only then consider any production change. Existing audio APK remains the latest verified installable build.
+- Publishing restored through GitHub tree-content uploads after the blob endpoint stalled. Experiment source `21ff41c93b73d577a2286b60d52ca49f0a6e348b` reached CI. Both initial diagnostic Java compilations failed for missing same-package EGLLogWrapper; corrected the classpath to include the unchanged official classes.jar. Android execution remains pending; ordinary production templates stay unchanged.
 
 - In progress: isolated Android surface-recovery control/candidate experiment. Pinned Godot Java source rebuild preserves native libraries, unrelated classes and production presets. A nonblocking lifecycle-edge latch is tested against the unchanged implementation; eighteen actual emulator return cycles and ordinary gameplay are strict candidate gates. No production recovery fix claimed. Local fifteen strict Godot suites and fifteen Python tests pass; Java compilation/emulator execution pending hosted CI.
 

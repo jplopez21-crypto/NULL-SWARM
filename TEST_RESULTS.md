@@ -2,7 +2,7 @@
 
 ## Surface recovery experiment — in progress 2026-11-07
 
-- **Publishing blocked:** two GitHub create-blob calls stalled and were interrupted before completion. A read after both interruptions confirms the development branch is still `39267d53213a6ec5ad4f1ea78cc49e7cf60ae30e`; the experiment is local commit `8f2260dae3c5af483e59b082e61ca590d81ea572`, tree `3e46371801c6a24d063de199d9b111b312697c66`. No new hosted workflow, Java host test, emulator test or APK build has run for this experiment. Main remains unmerged.
+- Publishing restored through the tree-content endpoint at source `21ff41c93b73d577a2286b60d52ca49f0a6e348b`. Initial investigation run `42398675304`, jobs `128481501120`/`128481501278`, failed compilation for unresolved EGLLogWrapper. Neither reached host/emulator acceptance or produced a diagnostic APK. Added the official unchanged classes.jar to the compiler/host classpath; recovery verification remains pending. Earlier two interrupted blob calls are retained as a resolved publishing incident.
 
 - Local fifteen strict Godot suites pass; all fifteen Python tests pass, including four source/archive/failure-atomicity tests for the diagnostic rebuild. Local Java compiler, adb and KVM are unavailable; Java host logic and real Android execution remain pending CI.
 - Godot 4.6.3 and 4.7.2 use the identical GLSurfaceView source blob. The experiment latches destroy/create events that may coalesce while an old swap fails. It adds no UI waits, context reset, gameplay changes or production template override. Both variants rebuild only the pinned Java class family; all unrelated entries/native libraries must remain identical.
