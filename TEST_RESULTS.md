@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Android Mobile-renderer smoke — in progress 2026-11-07
+
+- Added an independent Android 35 x86_64 Mobile job with Vulkan enabled. It uses the same pinned debug preparation/native/DEX/license gates, a separate `com.nullswarm.game.mobileqa` package and the actual Mobile rendering method. Fallback is rejected, never counted as Mobile acceptance. Fourteen real startup/two-finger dash/pause/combat/return/freeze/resume/fatal checks are expected. This bounded smoke does not certify phone FPS, complete runs or all Mobile upgrade paths.
+- Emulator configuration is now import-safe/testable and supports explicit renderer selection with distinct packages, idempotent probe configuration, preserved unrelated settings and refusal before writing if renderer anchors are missing. Four new regressions pass; all 26 Python tests, Python syntax and six workflow YAML/bash checks pass. No GDScript/gameplay changes. Hosted GPU/runtime outcome remains pending; the verified phone build below is unchanged.
+
 ## Development Android surface integration — verified 2026-11-07
 
 Verified code/build source: `f905ac3c369aaafa21f429cd6d36564aed808485`, tree `76491d5d713a0528036529ff7cbaa57a10bc7f2d`. Final checkpoint changes reports/Markdown only.

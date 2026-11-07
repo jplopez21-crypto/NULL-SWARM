@@ -21,7 +21,9 @@ parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
 parser.add_argument('--output', default='builds/android-runtime')
 parser.add_argument('--upgrade-apk', help='Install a same-signer higher-version APK after lifecycle checks')
 parser.add_argument('--engineer-backup', help='Explicit synthetic earned-kit code; restored through GUI only after ordinary persistence checks')
-parser.add_argument('--lifecycle-only', action='store_true', help='Run strict Home/launcher recovery cycles without granting progress')
+mode = parser.add_mutually_exclusive_group()
+mode.add_argument('--mobile-smoke', action='store_true', help='Require actual Mobile renderer; exercise genuine touch/combat and one return without stat grants')
+mode.add_argument('--lifecycle-only', action='store_true', help='Run strict Home/launcher recovery cycles without granting progress')
 parser.add_argument('--lifecycle-cycles', type=int, default=6, choices=range(1, 31), help='Bounded lifecycle sample count (default 6, maximum 30)')
 args = parser.parse_args()
 out = Path(args.output)
@@ -424,6 +426,61 @@ def lifecycle_repro():
     finally:
         (out / 'android-lifecycle.json').write_text(json.dumps(report, indent=2))
         print('ANDROID_LIFECYCLE_RESULT', report['status'], 'checks=', len(checks), flush=True)
+
+
+def mobile_smoke():
+    report['variant'] = 'x86_64 Android 35 / required Mobile renderer / read-only opt-in probe'
+    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary kills/damage and one same-process foreground return. No stat grants; no fallback accepted. Not a phone FPS or full-run acceptance test.'
+    try:
+        adb('logcat', '-c')
+        launch()
+        s = wait(lambda x: x['state'] == 'menu', 120)
+        report['engine'] = s['engine']; report['renderer'] = s['renderer']
+        check(s['renderer'] == 'mobile', 'actual Mobile renderer is active; Compatibility fallback is rejected')
+        capture('mobile-menu')
+        multitouch_dash('joystick-first')
+        multitouch_pause()
+        s = wait(lambda x: x['state'] == 'menu')
+        tap('DEPLOY', s)
+        s = wait(lambda x: x['state'] == 'playing')
+        s = wait(lambda x: x.get('kills', 0) > 0 and sum(x.get('damage_by_weapon', {}).values()) > 0, 120)
+        check(True, 'ordinary Mobile automatic combat spawns and destroys enemies with effective damage')
+        report['combat_snapshot'] = s
+        capture('mobile-combat')
+        if s['state'] == 'upgrading':
+            tap('01\n', s)
+            s = wait(lambda x: x['state'] == 'playing')
+        before = read()
+        adb('shell', 'input', 'keyevent', '3'); time.sleep(1); launch()
+        returned = wait(lambda x: fresh_resumed_frame(before, x), 60)
+        check(returned['renderer'] == 'mobile', 'Mobile returns in the same process with a fresh paused foreground frame')
+        capture('mobile-returned')
+        time.sleep(.5); frozen = read()
+        check(frozen_run(returned, frozen), 'Mobile paused gameplay rewards and RNG remain frozen')
+        tap('RESUME', frozen)
+        resumed = wait(lambda x: x['state'] == 'playing' and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames'], 60)
+        check(resumed['renderer'] == 'mobile', 'Mobile touch Resume advances combat and rendering')
+        report['lifecycle'] = {'before': before, 'returned': returned, 'frozen': frozen, 'resumed': resumed}
+        log = adb('logcat', '-d'); (out/'logcat.txt').write_text(log)
+        report['graphics_log'] = [line for line in log.splitlines() if str(resumed['process']) in line.split() and ('Vulkan' in line or 'Mobile' in line)]
+        fatal = [line for line in log.splitlines() if any(t in line for t in ['SCRIPT ERROR', 'FATAL EXCEPTION', 'Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line)) or 'ANR in ' + args.package in line]
+        check(not fatal, 'Mobile smoke has no script error app ANR or fatal crash')
+        report['status'] = 'passed'; return 0
+    except Exception as error:
+        report['status'] = 'failed'; report['error'] = str(error)
+        try:
+            capture('mobile-failure', wait_for_game=False)
+            (out/'logcat.txt').write_text(adb('logcat', '-d'))
+        except Exception:
+            pass
+        return 1
+    finally:
+        (out/'android-mobile.json').write_text(json.dumps(report, indent=2))
+        print('ANDROID_MOBILE_RESULT', report['status'], 'checks=', len(checks), flush=True)
+
+
+if args.mobile_smoke:
+    raise SystemExit(mobile_smoke())
 
 
 if args.lifecycle_only:

@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-07 / Mobile-renderer coverage (in progress)
+
+- Added a separate strict Mobile/Vulkan emulator smoke covering real touch/dash/pause/combat and one fresh background return. Fallback is rejected. Emulator renderer/package configuration is explicit and regression-tested. All 26 Python tests and six workflow syntax checks pass; actual Mobile acceptance pending. Gameplay/phone build unchanged.
+
 ## Development — 2026-11-07 / Shared Android debug surface repair
 
 - Integrated the pinned Java repair into normal development/emulator debug and protected-preview build preparation. Exact engine/AAR/receipt guards, preset restoration and APK repair/native/ABI/license gates prevent silent unpatched publication. Fifteen Godot suites/22 Python tests, native ARM64 APK, full QA and both ordinary Android workers pass; eighteen return cycles/56 checks plus all 58 gameplay/save/update checks. Native engine/game modules/balance unchanged. Initial diagnostic post-suite emulator disconnect retained; one unchanged retest passes eighteen cycles/56 checks and all 58 gameplay/save/update checks. All four workflows ultimately pass; regular gates pass on attempt 1. APK, exact scopes and evidence: TEST_RESULTS.md.
