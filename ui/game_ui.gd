@@ -292,6 +292,9 @@ func _build_hud() -> void:
 
 func _panel() -> VBoxContainer:
 	analysis_back = Callable()
+	# Keep combat readouts and touch controls out of modal content, including
+	# during its fade-in. Preserve their state for the eventual return to play.
+	column.hide()
 	dash_button.input_enabled = false
 	pause_button.input_enabled = false
 	if screen != null:
@@ -346,7 +349,7 @@ func set_hud(value: bool) -> void:
 	memory_packet = null
 	memory_visible = false
 	memory_refresh = 0.0
-	column.visible = value
+	column.visible = value and screen == null
 	joystick_canvas.queue_redraw()
 
 func hide_panel() -> void:
@@ -357,6 +360,7 @@ func hide_panel() -> void:
 		screen.hide()
 		screen.queue_free()
 		screen = null
+	column.visible = hud_visible
 
 func show_pause(settings: Dictionary) -> void:
 	var box := _panel()

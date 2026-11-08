@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Modal HUD readability — local verification 2026-11-07
+
+- All 15 Godot suites and 32 Python tests pass. Eight new real-GUI assertions cover visible active chain/hints, immediate pause suppression, nested build/settings, refresh during a modal, Resume, queued upgrade transitions and final-choice restoration. Existing input/pause/dash, simulation, save, audio and layout suites pass. Receipt: docs/qa/modal-hud/local-headless-results.json.
+- Hosted Android build, Mobile/Vulkan, Compatibility touch/lifecycle and rendered capture verification are pending for this source; no new APK is claimed yet.
+
 ## Earned Mobile upgrades — verified 2026-11-07
 
 Verified test/build source: `2d9bade78d7e71e0907827afd661a45f8345917c`, tree `b753ed252f6c7a7da7e488931cfe0c16803c4c55`. Final checkpoint changes reports/Markdown only.

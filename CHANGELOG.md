@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-07 / Modal readability
+
+- Hide combat readouts/touch controls behind pause, build, settings and upgrade panels, including fade-in; restore the current HUD on return. Eight real-GUI regressions and all local suites pass. Android/rendered verification pending.
+
 ## Development — 2026-11-07 / Earned Mobile upgrade coverage
 
 - Extended Mobile smoke through ordinary XP collection and touch upgrade selection/freeze/resume; all 17 checks pass. Actual run earns level 2/20 XP and selects Arc Emitter, consuming one choice for one rank. Fresh/frozen fields and queue conservation have five new regressions; 32 Python tests/15 Godot suites and all five workflows pass. Game/phone executable settings and gameplay fingerprints unchanged; one observed Mobile selection, wider/physical coverage still open. Evidence/artifact scopes: TEST_RESULTS.md.
