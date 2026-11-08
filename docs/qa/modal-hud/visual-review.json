@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "captures/upgrade_queue.png",
+      "sha256": "645e1b96b65595b23d03df9c87270e70b1b35293efbde27120d2dffa1c7e9837"
+    },
+    {
+      "path": "captures/build_overview.png",
+      "sha256": "a82911e324e19b8d5fec837981ae05383cdc885a31248088998ac6a7cca6a7f1"
+    },
+    {
+      "path": "mobile/mobile-upgrade-01.png",
+      "sha256": "60b8329add4daf47528d7fbf4f1bd3a192aeac055f06e502e28f750a3360cc9d"
+    },
+    {
+      "path": "mobile/mobile-returned.png",
+      "sha256": "e11078c04e6c1611864a8c81a2005b9075a31cc00a7ca8c5a730c684b163ca00"
+    },
+    {
+      "path": "mobile/mobile-upgrade-applied.png",
+      "sha256": "b332fd137dd2a2a867042e31afb57071671a3a2ed4822762e688bf256122be81"
+    },
+    {
+      "path": "lifecycle/lifecycle-18-returned.png",
+      "sha256": "ea8526b3bb8f64d71eb5c93f4b4b0d6c06594b818abe205709f5c6dcae4b9c1e"
+    }
+  ],
+  "observation": "Upgrade/build/pause panels are readable without background HUD text or gameplay controls; actual Mobile earned upgrade and post-return pause plus ordinary Compatibility cycle-18 pause reviewed. Applied-upgrade screen restores HUD. Native staged captures are fixtures; Android Mobile upgrade is genuinely earned."
+}

@@ -1,8 +1,8 @@
 # Changelog
 
-## Development — 2026-11-07 / Modal readability
+## Development — 2026-11-08 / Modal readability
 
-- Hide combat readouts/touch controls behind pause, build, settings and upgrade panels, including fade-in; restore the current HUD on return. Eight real-GUI regressions and all local suites pass. Android/rendered verification pending.
+- Hide combat readouts/touch controls behind pause, build, settings and upgrade panels, including fade-in; restore the current HUD on return. All five CI workflows, 15 Godot suites/32 Python tests, 17 Mobile and 58 ordinary Android checks plus eighteen return cycles pass. Actual captures reviewed; gameplay fingerprints preserved. Verified ARM64 APK and exact scopes: TEST_RESULTS.md.
 
 ## Development — 2026-11-07 / Earned Mobile upgrade coverage
 

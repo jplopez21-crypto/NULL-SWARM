@@ -1,129 +1,17 @@
-# Development status — NULL//SWARM / 2026-11-07
+# Development status — NULL//SWARM / 2026-11-08
 
 ## Current checkpoint
 
-- Modal readability polish implemented: pause, build, settings, upgrade and other panels hide combat HUD/touch controls immediately; returning to play restores the current HUD without resetting readouts or changing combat rules.
-- Local verification: all 15 Godot suites pass, including 76 GUI checks (eight new modal transition assertions), all 32 Python tests pass. Headless UI still covers 188 layouts; visible-control checks now reflect the intentionally hidden background HUD. Hosted Android exports/emulator/rendered QA pending for this source.
-- Latest prior verified APK and full receipts remain recorded under the earned Mobile checkpoint in TEST_RESULTS.md. Physical ARM64 performance/audio, protected signing and release AAB remain unverified. Main unchanged/unmerged.
-- Next: verify native export, actual Mobile/Compatibility captures and touch/lifecycle behavior; retain gameplay fingerprints and publish a verified debug APK.
-
-## Active priorities and blockers
-
-1. Continue player-facing combat readability and build polish with bounded effects and reduced-intensity settings. The targeted CPU investigation is recorded; further performance decisions need representative hardware and stronger measurements. Preserve the cautious-bot/pacing baseline before global balance changes.
-2. Measure actual ARM64 Mobile rendering, active gravity-field performance, touch comfort, cutouts and phone thermals. Local SDK/emulator/KVM and a connected physical phone are unavailable; CI supplies x86_64 Compatibility runtime coverage.
-3. Provision persistent Preview signing through the documented protected owner secrets. Current diagnostic keys rotate, so in-place updates across builds are not guaranteed. Preserve existing phone installations/saves. No owner key was provisioned; no release AAB is claimed.
-4. Continue commercial content, character differentiation, accessibility and human balance work after verified milestones. Final artwork/audio and Google Play preparation remain unfinished.
-
-TEST_RESULTS.md records local checks and retained hosted evidence; PR #1 links the newest workflow artifacts. The following sections preserve earlier milestone history and their then-current counts/packages.
-
-## Historical milestone notes
-
-## Completed features
-
-- Ten-minute offline run, six weapons/four slots, ranked upgrades, two mutations, Warden/Architect, gated extraction/results, touch/controller/keyboard input.
-- Foundry research, three starting kits, checkpointed salvage and versioned local save/backup recovery.
-- Local XP packet merging with 3m relocation limit, visible value tiers and steady player-relative memory locator.
-- Adaptive Swarm: first analysis 02:00, eight-second warnings, 45-second formations, capped 20% composition bias, boss quiet windows and reset. Amber Insulators resist electricity by 20%.
-- Corruption: optional level-up alternative from level 5; exact ordinary-card/RNG preservation on decline, consumes one pending upgrade on acceptance, five-level spacing, three one-time links, all costs reset per deployment.
-- Redline: +30% all weapon cycle rate / -20 max HP. Fracture: extra Pulse/Arcstorm round / +15% regular walking/charge pace. Hive: extra actual drone / -12% walking, requires Drone Hive. Dash/boss/warning clocks unchanged; charge lanes reflect travel distance.
-- Projected power/cost panels, prerequisite/duplicate guards, purple HUD meter/names, bounded modifiers and clean-run reset.
-- Pooled combat, staggered AI, quality settings, performance overlay and original procedural art/audio; development assets remain unfinished commercial art.
-
-## Tests and latest build
-
-- Gameplay commit 4ee60487877978c58a5f8dc48d670a5eb399a89e.
-- Android workflow 40504064445 and QA workflow 40504064446 succeeded. 165 established + 41 corruption checks (206 total), scene smoke, signed export, 504 UI checks/44 captures, 20 normal-policy sessions, deterministic replay, six pickup comparisons and six clean stress scenarios passed invariants.
-- Clean case fields match 0.4.1 excluding timings/new corruption telemetry. Four legal-link probes won; combined 20-case matrix retains 16 wins/4 losses. Not a human balance verdict.
-- New local all-links stress fixture 3: six scenarios passed, four-drone/three-link/250-pickup floor and low/high gameplay parity asserted. Added command to daily QA; its first CI execution is pending.
-- APK ZIP: https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40504064445/artifacts/12734700412
-- Extract android/null-swarm-corruption-0.5-debug.apk. CI signature verification and independently downloaded hashes/archive checks passed; package/runtime/compiled module contents checked. Preview/entry/HUD/small-window renders inspected.
-- App NULL SWARM Corruption / com.nullswarm.game.corruption, version 0.5.0/code 7. Earlier installs/private saves remain separate while stable protected signing is unconfigured.
-- Canonical CI and labelled local reports: docs/qa/0.5/RESULTS.md. Daily QA remains scheduled at 03:23 UTC, 14-day QA artifact retention; GitHub can delay starts.
-
-## Known limitations / unfinished work
-
-- All-links synthetic 600-enemy local p95 CPU time ~36.6–38.4ms, excluding rendering/UI/thermals. This needs investigation; Android 30/60 FPS targets are not verified. Normal corruption bot cases peaked at 36–59 enemies, so they do not cover that extreme.
-- Phone readability, real touch/safe areas, process-death handling, performance and human tradeoff balance remain unmeasured for this version.
-- Corruption is run-local and not restored after process death, like current run equipment; permanent progression is checkpointed. No save schema or entitlement changes.
-- Bot navigation is cautious/geometry-based; collection gaps and close-range build bias persist. Existing Insulators keep inherent resistance after formation expiry.
-- Full roster/content, final art/audio, accessibility/balance polish, persistent release signing/AAB and Play release preparation remain unfinished.
-
-## Next priorities
-
-1. Profile/optimize targeting and chain-query CPU work under all-links stress without changing gameplay quantities or outcomes.
-2. Inspect collection-rate/distance gaps and validate guidance/corruption readability in real play.
-3. Broaden build/seed coverage and character differentiation after performance and balance evidence.
-
-## Android pipeline development branch
-
-- Work isolated on development/android-validation; main preserved pending merge.
-- Added strict isolated headless runner, 12 movement/input checks, central TEST_RESULTS.md and an Android 35 emulator workflow with actual ADB touch, screenshots, gameplay and lifecycle checks.
-- Emulator-only x86_64 Compatibility export opts into read-only debug telemetry; native ARM64 Mobile export remains separate. All three development CI gates passed at 9fcd304bc232c6014ab9533bb45960bb70a992d0.
-
-## Android validation verified
-
-- PR #1 / development/android-validation: strict nine-suite headless checks, 49 resources, 504 UI checks, 20 normal-policy sessions, replay, pickup comparisons, 12 stress scenarios and signed ARM64 debug export passed.
-- Real Android emulator passed 12 touch/render/lifecycle/persistence checks. Inspected actual rendered menus/combat/upgrades/settings; logs contain no game errors or crashes.
-- Fixed unsafe music loop endpoint and synchronous UI panel detachment discovered through Android testing. Added audio multi-loop and GUI-dispatch regressions.
-- Native development package installs separately; read-only telemetry is off in it. Full results, failures/fixes and hardware limits: TEST_RESULTS.md.
-- Main remains untouched pending merge. Physical ARM64/Mobile performance and stable signing remain open acceptance items.
-
-## Owner installation confirmation
-
-- Owner reports the development APK works. Installation/run is confirmed by owner feedback; quantitative device performance remains unmeasured.
-- Mobile opening HUD now explains dragging the left side and tapping Dash. Desktop keyboard/controller instructions remain available.
-
-## Targeting and teardown follow-up
-
-- Removed nearest-target candidate arrays and shared exclusion-aware cell scanning with chains. Added 205 targeting parity/boundary checks.
-- Six all-links stress scenarios retain exact gameplay fingerprints; local timings are mixed, so heavy-combat performance remains an open priority. Evidence under docs/qa/targeting.
-- Fixed immediate startup/shutdown audio playback leak reproduced by strict CI; 40 repeated isolated probes passed after cancellable first-tick music startup.
-
-## Combat feedback pass
-
-- Implemented shared impact star mesh, smooth visual hit recoil, elongated wreckage, eased expanding rings and rising upgrade feedback.
-- Applied upgrades receive named confirmation; mutation announcements override ordinary confirmations.
-- Existing 40/85/150 effect limits and 160-mesh pool are unchanged. Reduced flashes suppress impact stars, debris and hit recoil; ordinary rings remain visible.
-- Added staged feedback screenshot and automated cosmetic-only/pool/accessibility/notice coverage. Current branch verification is linked in PR #1.
-
-## Stable preview signing
-
-- Prepared secret-only manual Preview build, separate install identity, certificate pinning before/after export, increasing versions and cleanup.
-- Seven local signing regressions passed using disposable test credentials. Existing installs/private saves remain separate.
-- Blocker: connected GitHub tools cannot write environment secrets; CLI permission attempt did not complete. No real persistent key was provisioned. Setup: docs/android/STABLE_PREVIEW_SIGNING.md. Stable APK and actual update/save-retention test remain pending.
-
-## APK update acceptance coverage
-
-- Added actual in-place emulator update and changed-settings/salvage retention checks (two additional runtime checks). Python compilation and workflow YAML/shell syntax validated locally; Android execution is through CI.
-- Uses one disposable test signer for two successive APK versions in the same run. Persistent cross-run Preview signing still requires owner environment secrets.
-
-## Portable progress backups
-
-- Implemented offline progression/settings codes, checksum/size/schema validation, main-menu-only preview/confirmation and one-level pre-import recovery. No current-run equipment or ledger transfer.
-- Added 12 backup system checks, four GUI-dispatch checks and eight UI layouts (52 total / 584 checks). Android driver adds clipboard and restore checks before its update test.
-- Documentation: docs/android/PROGRESS_BACKUPS.md. Older installed APKs without this feature cannot export through it; owner key provisioning remains blocked.
-
-## Boss warning readability
-
-- Implemented moving-source radial warning lanes, fixed-target area circles and explicit HUD attack/recharge/exposed cues. Removed rapid vertical warning oscillation; danger radii stay fixed.
-- Local nine-suite validation passed: 405 system checks and 656 UI checks across 64 layouts, plus established GUI/input/audio/save/corruption/smoke coverage. Snapshot: docs/qa/boss-readability/headless-results.json.
-- Added staged barrage/impact/exposed captures. CI/build verification is linked in PR #1; physical-device readability and frame time still require testing. No attack-stat or pattern scheduling changes.
-
-## Dash and defensive feedback
-
-- Operative silhouette stays visible throughout invulnerability. Shield and hull feedback use one shared-material ring per operative; dash trails use existing bounded pooled beam geometry.
-- Dash readiness gauge stays non-blocking; shield HUD shows online, waiting and recharging states. Shield-only hits have a distinct generated SFX.
-- Local checks cover dash timing/protection, actual shield/hull metadata, feedback expiration/accessibility, trail reclamation and gauge/status values. Expanded UI capture matrix: 72 layouts.
-- Android test now verifies visible operative and actual readiness after touch dash. Device results and comparative QA are linked in PR #1 after execution; physical phone frame rate/comfort remain unmeasured.
-
-## Singularity Lance / build diversity
-
-- Implemented Rail 3 + Tether 3 mutation with one 4.5m/1.5s field, delayed 0.3s pulses, 3m/s small-enemy pull, anchored bosses/committed lanes and preserved refresh cadence.
-- Upgrades, HUD, damage accounting, warning-preserving movement, synthesized firing cue, Swarm style tracking and fresh-run reset integrated. Only changed spatial cells are reindexed.
-- Added Singularity profile to normal bot coverage (22 combined sessions total), new fixture 4 stress and three evolution UI states at four sizes (84 layouts total). Local two-seed mutation and six synthetic workload reports are in docs/qa/singularity.
-- Mechanics/limits: docs/SINGULARITY_LANCE.md. Physical-device active-field rendering/performance and human tradeoff balance still need testing; persistent signing remains blocked on owner environment secrets.
+- Modal readability polish verified at source `0d5b3fdb6b245ecf1e3ceba4ba2fe2fb02f892ab`: pause/build/settings/upgrade panels hide combat readouts/touch controls immediately; returning to play restores the HUD. Actual Android Mobile/Compatibility screenshots reviewed. No gameplay, balance, input, audio or save rules changed.
+- All five workflows pass on attempt 1. Fifteen Godot suites match locally/native/full QA; 76 GUI checks/32 Python tests, 188 layouts (2,348 headless/2,349 rendered checks), Mobile 17 checks, ordinary Android 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 checks. All non-timing gameplay/XP/pacing/stress fingerprints preserved. Seventy-six complete modal snapshots hide background HUD; 79 playing snapshots restore actions. Failed unpatched control retained as a negative observation.
+- New verified ARM64 debug APK: TEST_RESULTS.md links the ZIP and exact digest. Forty-three of 44 selected executable/config entries match the prior phone build; only the HUD module changes. Export progress backup before replacing rotating-key debug installs. Physical ARM64/S23 FPS/thermals/input/audio, protected signing and release AAB remain unverified; emulator-only Swappy workaround remains. Main unchanged/unmerged.
+- Next: broader earned build/mutation choices on Mobile, player-facing feedback polish and representative hardware profiling; provision protected stable preview signing when owner secrets are available.
 
 ## Prior verified checkpoints
+
+- Extended actual Mobile XP/upgrade coverage at source `2d9bade78d7e71e0907827afd661a45f8345917c`: all 17 checks pass. Ordinary play collected 20 XP, earned level 2 and selected Arc Emitter through touch; pending 1→0, rank 0→1, offer time/RNG/stats frozen and resumed combat/rendering advance. Actual offer/applied screenshots reviewed. One real selection observed; multiple queued choices/new-XP accounting are Python predicate cases, not claimed as observed Mobile multi-pick outcomes. No stat grants/fixtures.
+- All five workflows pass on attempt 1: 15 Godot suites/32 Python tests, six workflow syntax checks, ordinary Compatibility eighteen-cycle/56 checks plus 58 gameplay checks, diagnostic patched eighteen-cycle plus 58 checks, native ARM64 export and full QA. All gameplay/XP/pacing/stress results remain unchanged. Forty-four selected phone executable/project-settings entries match the prior verified user build; no new installation needed. Emulator-only frame-pacing override remains; physical shipping Swappy/FPS/thermals/input/audio remain unverified. Exact artifacts/ten verified archives: TEST_RESULTS.md and docs/qa/mobile-upgrades/verified-ci.json.
+- Next: modal HUD/readability polish, wider Mobile upgrade/build coverage, physical ARM64 profiling and protected stable signing/release preparation. Main unchanged/unmerged; no AAB or physical-device clearance claimed.
 
 - Added and verified separate Mobile/Vulkan Android smoke at source `ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1`: all 13 actual renderer/two-pointer dash/pause/combat/foreground-return checks pass. Initial shipping-default Swappy attempt stalls at one frame with QueuePresentKHR error 5; failure retained. Mobile emulator alone now disables frame pacing explicitly; successful APK config verifies the override and actual Vulkan logs/captures. This does not certify shipping Swappy or phone performance.
 - All five final-source workflows pass on attempt 1: 15 Godot suites/27 Python tests, six workflow syntax checks, ARM64 export, ordinary Compatibility eighteen-cycle/56-check plus 58-check gameplay workers, diagnostic patched eighteen-cycle plus 58 checks, and full QA. All gameplay/XP/pacing/stress results remain unchanged. Forty-four phone executable/project-settings entries match the prior verified user APK, including default-enabled phone frame pacing; no new installation needed for this testing-only change. Latest native artifact and all eleven verified archives are recorded in TEST_RESULTS.md and docs/qa/mobile-renderer/verified-ci.json.
