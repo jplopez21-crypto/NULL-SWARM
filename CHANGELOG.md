@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-08 / Earned Mobile build navigation
 
-- Extend Mobile acceptance through real build-guide navigation after earned XP/upgrade selection, freeze progression/RNG/dash/settings and require fresh panels plus resumed combat/HUD. All local suites pass; hosted verification pending. Game code unchanged.
+- Verify real Mobile build-guide navigation after earned XP/Arc Emitter selection: all 21 Mobile checks, 15 Godot suites/35 Python tests and five CI workflows pass. Actual guide/resume captures inspected; gameplay fingerprints and all 44 selected phone executable/settings entries match. No reinstall needed. Evidence and limits: TEST_RESULTS.md.
 
 ## Development — 2026-11-08 / Modal readability
 

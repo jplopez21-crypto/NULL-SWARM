@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 44,
+  "changed_entries": [],
+  "scope": "All selected Java/native/game/settings bytes match prior verified modal-readability phone APK. This checkpoint changes QA tools/tests/docs only; debug signing/container may differ."
+}

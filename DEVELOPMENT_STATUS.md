@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Extending Mobile/Vulkan smoke through Build // Mutations after an ordinary earned upgrade: actual pause/build/back/Resume touches, fresh rendered panels, frozen run/XP/ranks/rewards/RNG/dash/settings and restored combat/HUD actions. No gameplay or phone executable/configuration changes.
-- Local checks: all 15 Godot suites and 35 Python tests pass; three new observer regressions cover fresh navigation plus every changed/missing frozen field and stale/wrong-process/unrendered panels. Hosted Android, exports and full QA pending for this source. Latest verified phone APK remains the modal-readability build linked in TEST_RESULTS.md.
-- Next: inspect actual Mobile earned-guide/resume captures, verify hosted results and executable parity, retain test receipts. Physical ARM64 profiling, stable signing and release AAB remain unverified. Main unchanged/unmerged; PR-description mutation was unavailable at the prior checkpoint.
+- Earned Mobile build navigation verified at source `39df52b374995035466ac19ea036ab5e5f4883c2`: all 21 checks pass. Real XP/Arc Emitter selection appears at rank 1 in the guide and recipe progress; actual pause/build/back/Resume preserve fifteen frozen fields with fresh rendered panels, then restore combat/HUD. Guide/resumed screenshots inspected. One early earned build; earned mutations/full Mobile sessions remain open.
+- All five workflows pass on attempt 1: 15 Godot suites/35 Python tests, 76 GUI checks/188 layouts, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks, native export and full QA. Gameplay/XP/pacing/stress/replay baselines remain unchanged. Failed unpatched control retained. Ten archive integrity checks pass; exact receipts and counts in TEST_RESULTS.md.
+- All 44 selected phone executable/config entries match the prior modal-readability build, so no reinstall is needed. Android Mobile emulator alone disables Swappy; phone defaults unchanged. Physical ARM64 profiling/audio, protected signing/release AAB remain unverified. Main unchanged/unmerged; current review description prepared in docs/DEVELOPMENT_PR.md because the prior PR-description API update was unavailable.
+- Next: wider earned upgrade/mutation coverage on Mobile, bounded combat-feedback polish and representative hardware profiling. Owner secrets are still required for protected stable signing.
 
 ## Prior verified checkpoints
 

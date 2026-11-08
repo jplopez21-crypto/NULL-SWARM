@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "completed_cycles": 6,
+  "cycles_recorded": 7,
+  "checks_recorded": 19,
+  "checks_passed": 19,
+  "scope": "Unpatched diagnostic control collection is not a recovery pass. Raw failure/log/screenshots retained; development APK uses the shared pinned repair."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "command": "python3 -m unittest discover -s tests -p 'test_*.py'",
+  "tests": 35,
+  "log_sha256": "fb31ae6b586a26295b2466d8ef41c5554ec7a5d223ab2e456bf7ce4b475392c4",
+  "ci_tests_observed": {
+    "status": "passed",
+    "job": 128746414073,
+    "tests": 35,
+    "marker": "Ran 35 tests in 2.559s",
+    "observed": true
+  }
+}
