@@ -1,5 +1,7 @@
 # Repeatable gameplay QA
 
+The separate Mobile/Vulkan Android smoke also navigates Build // Mutations after ordinary kills, memory collection and a real upgrade touch. Pause → build → back → Resume must preserve the earned ranks, XP/queue, rewards, RNG, dash and settings while paused, with fresh matching rendered panel IDs; resumed combat and both HUD actions must return. The transcript stores every stage and captures the earned guide/resumed screen. Python acceptance regressions reject stale, missing, changed or unrendered observations. This is early earned-build navigation coverage, not an earned mutation/full-run test. The software emulator's explicit Swappy override does not change shipping ARM64 settings.
+
 The `Repeatable gameplay QA` GitHub Actions workflow runs on pushes, pull requests and manual dispatch. It installs Godot 4.6.3, imports resources, runs the existing system suite, then runs normal-rules bot cases and a separate synthetic CPU benchmark. JSON, Markdown and diagnostic logs are uploaded as `null-swarm-gameplay-qa`; tables also appear in the workflow summary. There is no unattended calendar schedule or claim of continuous work outside these workflow runs.
 
 ## Run locally

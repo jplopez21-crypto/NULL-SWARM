@@ -16,6 +16,7 @@ from io import BytesIO
 from PIL import Image
 from lifecycle_observation import fresh_resumed_frame, frozen_run, app_egl_failures
 from upgrade_observation import upgrade_frozen, selected_rank
+from build_observation import frozen_navigation
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -482,9 +483,45 @@ def mobile_earned_upgrades(start):
     return s
 
 
+def mobile_earned_build(start):
+    tap('PAUSE', start)
+    paused = wait(lambda x: x['state'] == x.get('rendered_state') == 'paused'
+                  and x.get('panel') == x.get('rendered_panel') and bool(x['ranks']))
+    tap('BUILD // MUTATIONS', paused)
+    guide = wait(lambda x: 'DEPLOYMENT BUILD' in x.get('build_text', '')
+                 and x.get('panel') == x.get('rendered_panel'))
+    check(frozen_navigation(paused, guide)
+          and all(name in guide['build_text'] for name in ['PULSE RIFLE', 'ARCSTORM RIFLE', 'SOLAR HALO', 'SINGULARITY LANCE'])
+          and not guide['chain_feedback']['visible'],
+          'Mobile touch opens mutation guide with the genuinely earned build and no combat HUD bleed')
+    capture('mobile-build-earned')
+    time.sleep(.5)
+    frozen = wait(lambda x: x['rendered_frames'] > guide['rendered_frames'] and x['sample_ticks'] > guide['sample_ticks'])
+    check(frozen_navigation(guide, frozen) and frozen['panel'] == guide['panel']
+          and frozen['build_text'] == guide['build_text'],
+          'Mobile build guide freezes gameplay XP ranks rewards RNG dash and settings while rendering')
+    tap('BACK TO PAUSE', frozen)
+    back = wait(lambda x: not x.get('build_text', '') and x.get('panel') == x.get('rendered_panel')
+                and any(b['text'] == 'RESUME' for b in x['buttons']))
+    check(frozen_navigation(frozen, back) and back['panel'] != frozen['panel'],
+          'Mobile build back restores a fresh pause panel without resuming or changing the earned build')
+    tap('RESUME', back)
+    resumed = wait(lambda x: x['state'] == x.get('rendered_state') == 'playing'
+                   and x['time'] > back['time'] and x['rendered_frames'] > back['rendered_frames'])
+    check(resumed['process'] == back['process'] and resumed['renderer'] == 'mobile'
+          and resumed['ranks'] == back['ranks'] and not resumed.get('build_text', '')
+          and any(b['text'] == 'II  PAUSE' for b in resumed['buttons'])
+          and any(b['text'].startswith('DASH') for b in resumed['buttons']),
+          'Mobile build Resume restores combat and both HUD actions with earned ranks intact')
+    report['earned_build'] = {'paused':paused,'guide':guide,'frozen':frozen,'back':back,'resumed':resumed,
+                              'method':'Actual touch navigation after ordinary earned XP/upgrade selection; no fixture or stat grant.'}
+    capture('mobile-build-resumed')
+    return resumed
+
+
 def mobile_smoke():
     report['variant'] = 'x86_64 Android 35 / required Mobile renderer / read-only opt-in probe'
-    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
+    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices, earned-build guide navigation and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
     try:
         adb('logcat', '-c')
         launch()
@@ -502,6 +539,7 @@ def mobile_smoke():
         report['combat_snapshot'] = s
         capture('mobile-combat')
         s = mobile_earned_upgrades(s)
+        s = mobile_earned_build(s)
         before = read()
         adb('shell', 'input', 'keyevent', '3'); time.sleep(1); launch()
         returned = wait(lambda x: fresh_resumed_frame(before, x), 60)

@@ -2,10 +2,9 @@
 
 ## Current checkpoint
 
-- Modal readability polish verified at source `0d5b3fdb6b245ecf1e3ceba4ba2fe2fb02f892ab`: pause/build/settings/upgrade panels hide combat readouts/touch controls immediately; returning to play restores the HUD. Actual Android Mobile/Compatibility screenshots reviewed. No gameplay, balance, input, audio or save rules changed.
-- All five workflows pass on attempt 1. Fifteen Godot suites match locally/native/full QA; 76 GUI checks/32 Python tests, 188 layouts (2,348 headless/2,349 rendered checks), Mobile 17 checks, ordinary Android 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 checks. All non-timing gameplay/XP/pacing/stress fingerprints preserved. Seventy-six complete modal snapshots hide background HUD; 79 playing snapshots restore actions. Failed unpatched control retained as a negative observation.
-- New verified ARM64 debug APK: TEST_RESULTS.md links the ZIP and exact digest. Forty-three of 44 selected executable/config entries match the prior phone build; only the HUD module changes. Export progress backup before replacing rotating-key debug installs. Physical ARM64/S23 FPS/thermals/input/audio, protected signing and release AAB remain unverified; emulator-only Swappy workaround remains. Main unchanged/unmerged.
-- Next: broader earned build/mutation choices on Mobile, player-facing feedback polish and representative hardware profiling; provision protected stable preview signing when owner secrets are available.
+- Extending Mobile/Vulkan smoke through Build // Mutations after an ordinary earned upgrade: actual pause/build/back/Resume touches, fresh rendered panels, frozen run/XP/ranks/rewards/RNG/dash/settings and restored combat/HUD actions. No gameplay or phone executable/configuration changes.
+- Local checks: all 15 Godot suites and 35 Python tests pass; three new observer regressions cover fresh navigation plus every changed/missing frozen field and stale/wrong-process/unrendered panels. Hosted Android, exports and full QA pending for this source. Latest verified phone APK remains the modal-readability build linked in TEST_RESULTS.md.
+- Next: inspect actual Mobile earned-guide/resume captures, verify hosted results and executable parity, retain test receipts. Physical ARM64 profiling, stable signing and release AAB remain unverified. Main unchanged/unmerged; PR-description mutation was unavailable at the prior checkpoint.
 
 ## Prior verified checkpoints
 

@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Earned Mobile build navigation — local verification 2026-11-08
+
+- Extends the ordinary earned-upgrade Mobile path through actual pause/build/back/Resume touches. Fifteen frozen fields plus same process/fresh rendered panels prevent stale screenshots or changed progression/settings from passing. No stat grants or game changes.
+- All 15 local Godot suites and 35 Python tests pass. Three new observer cases reject changed/missing fields, stale/wrong-process/unrendered/absent panels and validate actual navigation versus waiting on the same panel. Hosted Android/build/rendered QA pending; no new APK is claimed. Receipt: docs/qa/mobile-build/local-headless-results.json.
+
 ## Modal HUD readability — verified 2026-11-08
 
 Verified code/build source: `0d5b3fdb6b245ecf1e3ceba4ba2fe2fb02f892ab`, tree `5a48e91473afe2516ac489a51dc47fd8d2f3cc44`. Final report checkpoint changes Markdown/JSON receipts only.

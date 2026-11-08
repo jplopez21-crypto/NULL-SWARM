@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-08 / Earned Mobile build navigation
+
+- Extend Mobile acceptance through real build-guide navigation after earned XP/upgrade selection, freeze progression/RNG/dash/settings and require fresh panels plus resumed combat/HUD. All local suites pass; hosted verification pending. Game code unchanged.
+
 ## Development — 2026-11-08 / Modal readability
 
 - Hide combat readouts/touch controls behind pause, build, settings and upgrade panels, including fade-in; restore the current HUD on return. All five CI workflows, 15 Godot suites/32 Python tests, 17 Mobile and 58 ordinary Android checks plus eighteen return cycles pass. Actual captures reviewed; gameplay fingerprints preserved. Verified ARM64 APK and exact scopes: TEST_RESULTS.md.
