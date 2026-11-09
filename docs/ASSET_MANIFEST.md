@@ -15,6 +15,7 @@ references, not captured player sessions or performance benchmarks.
 | Icon SVG | Original vector paths authored for this project | Created for NULL//SWARM; development icon |
 | SFX and ambient drone | Original synthesized PCM in SwarmAudio | Created for NULL//SWARM; development audio |
 | UI font | Godot built-in fallback font | Engine-supplied font; retain Godot distribution notices |
+| Announcement banner | Original procedural StyleBoxFlat and standard Godot controls in ui/game_ui.gd | Created for NULL//SWARM; development interface, no external textures |
 
 No third-party downloaded artwork, music or proprietary game content is included. Final commercial art/audio and a complete distribution license audit remain later milestones. No blanket open-source license is granted by this manifest.
 

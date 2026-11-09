@@ -79,6 +79,7 @@ var surge_fill: StyleBoxFlat
 var sentry_label: Label
 var toast_title: Label
 var toast_detail: Label
+var toast_frame: PanelContainer
 var toast_time: float = 0.0
 var memory_backing := StyleBoxFlat.new()
 var memory_packet: MeshInstance3D
@@ -254,17 +255,41 @@ func _build_hud() -> void:
 	sentry_label = label_at(hud, "", 14, Arsenal.color("drone"))
 	sentry_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	sentry_label.visible = false
-	toast_title = label_at(hud, "", 30, CYAN)
-	toast_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	toast_detail = label_at(hud, "", 16, MUTED)
-	toast_detail.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	for notice in [toast_title, toast_detail, boss_label, boss_cue_label, surge_label]:
+	for notice in [boss_label, boss_cue_label, surge_label]:
 		notice.add_theme_color_override("font_outline_color", Color("081722"))
 		notice.add_theme_constant_override("outline_size", 4)
 	var spacer := Control.new()
 	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(spacer)
+	# Announcements sit above the touch row, away from the operative and aim area.
+	var announcements := CenterContainer.new()
+	announcements.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(announcements)
+	toast_frame = PanelContainer.new()
+	toast_frame.custom_minimum_size.x = 700
+	toast_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	toast_frame.visible = false
+	var toast_style := StyleBoxFlat.new()
+	toast_style.bg_color = Color(0.025, 0.06, 0.085, 0.92)
+	toast_style.border_color = Color("355966")
+	toast_style.set_border_width_all(1)
+	toast_style.set_corner_radius_all(5)
+	toast_style.content_margin_left = 14
+	toast_style.content_margin_right = 14
+	toast_style.content_margin_top = 8
+	toast_style.content_margin_bottom = 8
+	toast_frame.add_theme_stylebox_override("panel", toast_style)
+	announcements.add_child(toast_frame)
+	var toast_box := VBoxContainer.new()
+	toast_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	toast_frame.add_child(toast_box)
+	toast_title = label_at(toast_box, "", 26, CYAN)
+	toast_detail = label_at(toast_box, "", 16, MUTED)
+	for notice in [toast_title, toast_detail]:
+		notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		notice.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var bottom := HBoxContainer.new()
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_child(bottom)
@@ -784,7 +809,11 @@ func add_damage(at: Vector3, amount: float, critical: bool, enabled: bool) -> vo
 	damage_texts.append({"at": at, "text": str(int(amount)), "life": 0.6, "critical": critical})
 
 func _process(delta: float) -> void:
-	toast_time = maxf(0.0, toast_time - delta)
+	# The combat HUD is hidden behind in-run menus; keep its read time intact.
+	if screen == null or not hud_visible:
+		toast_time = maxf(0.0, toast_time - delta)
+	toast_frame.visible = toast_time > 0.0
+	toast_frame.modulate.a = clampf(toast_time / 0.25, 0.0, 1.0)
 	toast_title.visible = toast_time > 0.0
 	toast_detail.visible = toast_time > 0.0
 	backdrop.queue_redraw()
@@ -856,6 +885,10 @@ func toast(title: String, detail: String, color: Color = CYAN) -> void:
 	toast_title.add_theme_color_override("font_color", color)
 	toast_detail.text = detail
 	toast_time = 3.0
+	toast_frame.modulate.a = 1.0
+	toast_frame.show()
+	toast_title.show()
+	toast_detail.show()
 
 func _draw_brand() -> void:
 	if hud_visible:

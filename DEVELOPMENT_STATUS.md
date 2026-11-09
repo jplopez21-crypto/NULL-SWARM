@@ -2,10 +2,9 @@
 
 ## Current checkpoint
 
-- Earned Mobile passive verified at source `cb35af7b36c981bfcb867ff079a9481cafd6353e`: actual 20-XP/level-two offer, card 03/Amplified Pulse, rank 1/7 in the dedicated summary, unchanged frozen guide fields, restored combat/HUD and retained rank through background return. Actual offer/guide/resumed captures inspected. One real passive selection; fallback-offer paths/all other passive effects/full Mobile runs remain open.
-- All five workflows pass on attempt 1: 23 Mobile checks, 15 matching Godot suites/41 Python tests, 77 GUI checks/188 layouts, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks, native export and full QA. Gameplay/XP/pacing/stress/replay baselines unchanged; failed unpatched control retained. Ten archive integrity checks pass; exact evidence in TEST_RESULTS.md.
-- All 44 selected phone executable/config entries match the prior passive-guide APK: no reinstall needed. Phone defaults unchanged; only Mobile software emulator disables Swappy. Physical ARM64 profiling/audio, protected signing/release AAB remain unverified. Main unchanged/unmerged; current PR review notes in docs/DEVELOPMENT_PR.md.
-- Next: wider passive/offer variation and actual mutations on Mobile, bounded combat feedback polish and representative ARM64 profiling. Stable protected signing still requires owner secrets.
+- Moved combat announcements into a compact, wrapped banner above touch controls, away from the operative/central combat area. Original procedural panel, input-transparent controls, brief end fade. Remaining read time is preserved while in-run menus hide the HUD; leaving the run still lets old messages expire. Existing latest-notice behavior remains.
+- All 15 local Godot suites/41 Python tests pass: 83 real-GUI checks and 188 layouts/2,396 headless checks. Tests cover geometry/touch pass-through, hidden read time during nested pause/upgrade menus, resumed confirmations, fade and expiry. Gameplay/combat/progression/input/audio/save logic unchanged. Asset manifest updated; rendered/Android/export/full QA pending for this source.
+- Next: inspect actual native/Mobile banner positions, ensure central combat/touch areas stay clear, verify lifecycle and gameplay parity, then publish a verified ARM64 APK. Latest prior APK/results remain in TEST_RESULTS.md. Physical profiling/audio, protected signing/release AAB remain open; main unchanged/unmerged.
 
 ## Prior verified checkpoints
 

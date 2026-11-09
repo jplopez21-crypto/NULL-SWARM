@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Combat announcements
+
+- Move upgrade/mutation/combat announcements into a compact banner above touch controls, preserve remaining read time behind in-run menus, and soften expiry with a brief fade. Geometry/touch/lifetime tests and all local suites pass; hosted verification pending. Gameplay rules unchanged.
+
 ## Development — 2026-11-09 / Earned Mobile passive coverage
 
 - Verify real Mobile passive acquisition: card 03/Amplified Pulse appears as 1/7 in the dedicated guide row and survives navigation/background return. All 23 Mobile checks, 15 Godot suites/41 Python tests and five workflows pass; gameplay fingerprints and all 44 selected phone entries match. No reinstall needed. Scope/evidence: TEST_RESULTS.md.

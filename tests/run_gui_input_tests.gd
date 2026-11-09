@@ -60,11 +60,16 @@ func run() -> void:
 	game.combat.streak_time = 2.0
 	game.ui.update_hud(game.player, game.progress, game.combat)
 	check(game.ui.surge_gauge.is_visible_in_tree() and game.ui.hint_label.is_visible_in_tree(), "active combat exposes a real chain gauge and onboarding hint")
+	game.ui.toast("UPGRADE LINKED", "AMPLIFIED PULSE // RANK 1 // ACTIVE")
+	game.ui._process(0)
 	game.open_build()
 	check(game.state == game.State.PLAYING and game.ui.screen == null, "build view cannot open during active combat")
 	click(game, "PAUSE")
 	check(game.state == game.State.PAUSED, "real GUI pause click pauses gameplay")
 	check(not game.ui.surge_label.is_visible_in_tree() and not game.ui.hint_label.is_visible_in_tree() and not game.ui.dash_button.is_visible_in_tree(), "pause immediately removes combat readouts and touch controls behind the fading panel")
+	var paused_notice: float = game.ui.toast_time
+	game.ui._process(5)
+	check(game.ui.toast_time == paused_notice and not game.ui.toast_frame.is_visible_in_tree(), "paused announcement preserves read time while hidden")
 	await settle()
 	var frozen_build_clock: float = game.combat.director.elapsed
 	var frozen_build_rng: int = game.combat.rng.state
@@ -164,12 +169,16 @@ func run() -> void:
 	game._process(0)
 	check(game.ui.perf_label.is_visible_in_tree() and game.ui.perf_label.text.contains("ENEMIES") and game.ui.perf_label.text.contains("FPS"), "saved diagnostics are visible with real HUD data on resume")
 	check(game.ui.surge_gauge.is_visible_in_tree() and game.ui.hint_label.is_visible_in_tree() and game.ui.dash_button.is_visible_in_tree(), "resume restores unchanged combat feedback and touch controls")
+	check(game.ui.toast_frame.is_visible_in_tree() and game.ui.toast_time > 0 and game.ui.toast_title.text == "UPGRADE LINKED", "Resume restores the pending announcement after nested menus")
 	# A real XP overflow must display and consume every pending choice once.
 	game.progress.add_xp(100)
 	game.show_upgrade()
 	await settle()
 	check(game.progress.pending == 3 and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "XP overflow shows all three pending choices")
 	check(not game.ui.column.is_visible_in_tree(), "earned upgrade offers hide combat HUD without hiding the cards")
+	var upgrade_notice: float = game.ui.toast_time
+	game.ui._process(5)
+	check(game.ui.toast_time == upgrade_notice and not game.ui.toast_frame.is_visible_in_tree(), "queued upgrade panel cannot consume hidden announcement read time")
 	var frozen_clock: float = game.combat.director.elapsed
 	game._physics_process(5.0)
 	check(game.combat.director.elapsed == frozen_clock, "queued selection keeps combat paused")
@@ -194,6 +203,12 @@ func run() -> void:
 	await settle()
 	check(game.state == game.State.PLAYING and game.progress.pending == 0, "last queued GUI choice resumes combat")
 	check(game.ui.column.is_visible_in_tree() and game.ui.dash_button.is_visible_in_tree(), "final upgrade selection restores playable HUD")
+	check(game.ui.toast_frame.is_visible_in_tree() and game.ui.toast_title.text == "UPGRADE LINKED" and game.ui.toast_time > 0, "final earned upgrade resumes with a visible confirmation")
+	game.ui.toast("SIGNAL LINKED", "Read-time and fade fixture")
+	game.ui._process(2.9)
+	check(game.ui.toast_frame.visible and game.ui.toast_frame.modulate.a > 0 and game.ui.toast_frame.modulate.a < 1, "announcement fades only near the end of active read time")
+	game.ui._process(1)
+	check(game.ui.toast_time == 0 and not game.ui.toast_frame.visible, "expired announcement releases its visible panel")
 	ranks_before = game.progress.ranks.duplicate()
 	game.select_upgrade(last_choice)
 	check(game.progress.pending == 0 and game.progress.ranks == ranks_before, "repeated final selection cannot apply an extra upgrade")

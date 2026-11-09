@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Combat announcements — local verification 2026-11-09
+
+- Compact announcement banner now sits above touch controls and away from central combat. Remaining read time pauses behind in-run menus and fades near expiry; panel/labels pass pointer input through. Original procedural UI; no external assets or gameplay/stat changes.
+- All 15 Godot suites/41 Python tests pass: 83 GUI checks, 188 layouts/2,396 headless checks. New assertions cover geometry/control clearance, nested pause/upgrade lifetime preservation, Resume, fade and expiry. Hosted rendered/Android/export/full-QA verification pending; no new APK claimed yet. Receipt: docs/qa/announcements/local-headless-results.json.
+
 ## Earned Mobile passive — verified 2026-11-09
 
 Verified test/build source: `cb35af7b36c981bfcb867ff079a9481cafd6353e`, tree `9ca9e55ac3ed6da58b3970a7ad0d2cba4a3ff2cd`. Final checkpoint updates Markdown/JSON evidence only. Phone/game executable and settings bytes are unchanged.
