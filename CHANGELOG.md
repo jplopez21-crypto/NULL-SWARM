@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Combat announcements
 
-- Move upgrade/mutation/combat announcements into a compact banner above touch controls, preserve remaining read time behind in-run menus, and soften expiry with a brief fade. Geometry/touch/lifetime tests and all local suites pass; hosted verification pending. Gameplay rules unchanged.
+- Move combat announcements below the operative and above touch controls, preserve remaining read time behind in-run menus, and add a brief end fade. All five workflows, 15 Godot suites/41 Python tests, 83 GUI checks and 23 Mobile checks pass. Actual Mobile and labelled long-text captures inspected; gameplay fingerprints preserved. Verified ARM64 APK and exact scopes: TEST_RESULTS.md.
 
 ## Development — 2026-11-09 / Earned Mobile passive coverage
 

@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Moved combat announcements into a compact, wrapped banner above touch controls, away from the operative/central combat area. Original procedural panel, input-transparent controls, brief end fade. Remaining read time is preserved while in-run menus hide the HUD; leaving the run still lets old messages expire. Existing latest-notice behavior remains.
-- All 15 local Godot suites/41 Python tests pass: 83 real-GUI checks and 188 layouts/2,396 headless checks. Tests cover geometry/touch pass-through, hidden read time during nested pause/upgrade menus, resumed confirmations, fade and expiry. Gameplay/combat/progression/input/audio/save logic unchanged. Asset manifest updated; rendered/Android/export/full QA pending for this source.
-- Next: inspect actual native/Mobile banner positions, ensure central combat/touch areas stay clear, verify lifecycle and gameplay parity, then publish a verified ARM64 APK. Latest prior APK/results remain in TEST_RESULTS.md. Physical profiling/audio, protected signing/release AAB remain open; main unchanged/unmerged.
+- Combat announcements verified at source `3c0c371c7a645d2991ecc78fdac1642cebcdbb0b`: compact wrapped/input-transparent banner above touch controls, away from central combat. Remaining active read time survives hidden in-run menus, with a brief end fade. Actual Mobile Memory Tether upgrade and labelled native/long-title fixtures inspected. Timing/fade quantified by GUI tests; exact Android notification timing not separately measured.
+- All five workflows pass on attempt 1: 15 matching Godot suites/41 Python tests, 83 GUI checks/188 layouts (2,396 headless/2,397 rendered), Mobile 23 checks, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks. Gameplay/XP/pacing/stress/replay baselines preserved; failed unpatched control retained. Ten artifact integrity checks pass; exact evidence in TEST_RESULTS.md.
+- New verified ARM64 debug APK linked in TEST_RESULTS.md. Only HUD module changes among 44 compared executable/config entries; engine, other game modules and shipping settings match. Export progress backup before replacing rotating-key debug installs. Phone performance/audio, protected signing and release AAB remain unverified; emulator-only Swappy override unchanged. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
+- Next: wider notification/boss readability and earned build variation on Mobile, plus representative ARM64 profiling. Stable protected preview signing still requires owner secrets.
 
 ## Prior verified checkpoints
 

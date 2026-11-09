@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 43,
+  "changed_entries": [
+    "assets/ui/game_ui.gdc"
+  ],
+  "scope": "Only compiled HUD presentation changes. Java/native engine, other 37 compiled game modules and shipping project settings match previous verified phone APK."
+}

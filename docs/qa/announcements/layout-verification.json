@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "layouts": 188,
+  "previous_checks": 2385,
+  "checks": 2397,
+  "additional_checks": 12,
+  "same_viewport_canvas_stage_and_button_metadata": true,
+  "scope": "Three additional announcement geometry/touch assertions per viewport, same 188 requested layouts. Synthetic mutation message tests long text; not an earned mutation."
+}
