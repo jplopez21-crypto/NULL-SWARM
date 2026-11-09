@@ -15,9 +15,10 @@ import xml.etree.ElementTree as ET
 from io import BytesIO
 from PIL import Image
 from lifecycle_observation import fresh_resumed_frame, frozen_run, app_egl_failures
-from upgrade_observation import upgrade_frozen, selected_rank
+from upgrade_observation import UPGRADE_FROZEN_FIELDS, upgrade_frozen, selected_rank
 from build_observation import frozen_navigation
 from passive_observation import PASSIVE_LABELS, passive_card, passive_summary_matches
+from corruption_observation import corruption_offer_frozen, redline_selected, redline_terms
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -435,16 +436,41 @@ def mobile_collect_offer(s, deadline):
     # Targets are real unattracted memory pickups exposed by the read-only probe.
     while s['state'] != 'upgrading':
         if s['state'] != 'playing' or time.monotonic() >= deadline:
-            raise AssertionError('Mobile run could not earn a passive within its normal-play budget')
+            raise AssertionError('Mobile run could not earn an offer within its normal-play budget')
         targets = s.get('targets', [])
         if targets:
             x, z = s['position']
             target = min(targets, key=lambda p: (p[0]-x)**2 + (p[1]-z)**2)
             move(target[0]-x, target[1]-z, s, 650)
         else:
-            time.sleep(.25)
+            # Keep moving during quiet gaps, as a player would; this grants no state.
+            heading = s['time'] * .45
+            move(math.cos(heading), math.sin(heading), s, 500)
         s = read()
     return s
+
+
+def mobile_pick_upgrade(capture_name, prefer_passive=False):
+    offered = wait(lambda x: x['state'] == 'upgrading' and x['pending'] > 0)
+    cards = [b for b in offered['buttons'] if re.match(r'^0[123]\n', b['text']) and not b['disabled']]
+    capture(capture_name)
+    time.sleep(.5)
+    frozen = wait(lambda x: x['state'] == 'upgrading'
+                  and x['rendered_frames'] > offered['rendered_frames']
+                  and x['sample_ticks'] > offered['sample_ticks'])
+    if len(cards) != 3 or {b['text'].split('\n', 1)[0] for b in cards} != {'01','02','03'} or not upgrade_frozen(offered, frozen):
+        raise AssertionError('Mobile upgrade offer is invalid or gameplay advanced while choosing')
+    chosen = (passive_card(cards) if prefer_passive else None) or next(b for b in cards if b['text'].startswith('01\n'))
+    chosen_index = chosen['text'].split('\n', 1)[0]
+    tap(chosen_index+'\n', frozen)
+    selected = wait(lambda x: x.get('ranks') != frozen['ranks'])
+    changed = selected_rank(frozen, selected)
+    if changed is None:
+        raise AssertionError('Mobile upgrade touch did not apply exactly one rank/choice transaction')
+    transaction = {'offered':offered,'frozen':frozen,'selected':selected,'chosen_text':chosen['text'],'chosen_index':chosen_index,'changed_rank':changed}
+    s = wait(lambda x: x['state'] == 'upgrading' or (x['state'] == 'playing' and x['pending'] == 0
+             and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames']))
+    return transaction, s
 
 
 def mobile_earned_upgrades(start):
@@ -458,26 +484,8 @@ def mobile_earned_upgrades(start):
         if len(transactions) >= 8:
             raise AssertionError('Mobile early-upgrade queue exceeded bounded smoke budget')
         s = mobile_collect_offer(s, deadline)
-        offered = wait(lambda x: x['state'] == 'upgrading' and x['pending'] > 0)
-        cards = [b for b in offered['buttons'] if re.match(r'^0[123]\n', b['text']) and not b['disabled']]
-        capture(f'mobile-upgrade-{len(transactions)+1:02d}')
-        time.sleep(.5)
-        frozen = wait(lambda x: x['state'] == 'upgrading'
-                      and x['rendered_frames'] > offered['rendered_frames']
-                      and x['sample_ticks'] > offered['sample_ticks'])
-        if len(cards) != 3 or {b['text'].split('\n', 1)[0] for b in cards} != {'01','02','03'} or not upgrade_frozen(offered, frozen):
-            raise AssertionError('Mobile upgrade offer is invalid or gameplay advanced while choosing')
-        chosen = passive_card(cards) or next(b for b in cards if b['text'].startswith('01\n'))
-        chosen_index = chosen['text'].split('\n', 1)[0]
-        tap(chosen_index+'\n', frozen)
-        selected = wait(lambda x: x.get('ranks') != frozen['ranks'])
-        changed = selected_rank(frozen, selected)
-        if changed is None:
-            raise AssertionError('Mobile upgrade touch did not apply exactly one rank/choice transaction')
-        transactions.append({'offered':offered,'frozen':frozen,'selected':selected,
-                             'chosen_text':chosen['text'],'chosen_index':chosen_index,'changed_rank':changed})
-        s = wait(lambda x: x['state'] == 'upgrading' or (x['state'] == 'playing' and x['pending'] == 0
-                 and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames']))
+        transaction, s = mobile_pick_upgrade(f'mobile-upgrade-{len(transactions)+1:02d}', prefer_passive=True)
+        transactions.append(transaction)
     check(bool(transactions), 'Mobile upgrade cards freeze real gameplay XP rewards RNG and queued choices')
     check(all(selected_rank(t['frozen'],t['selected']) == t['changed_rank'] for t in transactions),
           'each Mobile upgrade tap applies exactly one rank and consumes one earned choice')
@@ -494,7 +502,9 @@ def mobile_earned_upgrades(start):
     return s
 
 
-def mobile_earned_build(start):
+def mobile_earned_build(start, prefix="mobile", record_key="earned_build", review_required=None, review_forbidden=None):
+    review_required = review_required if review_required is not None else ['CLEAN SIGNAL', '0/3 UNSTABLE LINKS', 'NEXT OPTIONAL LINK //']
+    review_forbidden = review_forbidden if review_forbidden is not None else ['GAIN //']
     tap('PAUSE', start)
     paused = wait(lambda x: x['state'] == x.get('rendered_state') == 'paused'
                   and x.get('panel') == x.get('rendered_panel') and bool(x['ranks']))
@@ -502,12 +512,12 @@ def mobile_earned_build(start):
     guide = wait(lambda x: 'DEPLOYMENT BUILD' in x.get('build_text', '')
                  and x.get('panel') == x.get('rendered_panel'))
     check(frozen_navigation(paused, guide)
-          and all(name in guide['build_text'] for name in ['PULSE RIFLE', 'ARCSTORM RIFLE', 'SOLAR HALO', 'SINGULARITY LANCE'])
+          and all(name in guide['build_text'] for name in ['WEAPONS', 'ARCSTORM RIFLE', 'SOLAR HALO', 'SINGULARITY LANCE'])
           and not guide['chain_feedback']['visible'],
           'Mobile touch opens mutation guide with the genuinely earned build and no combat HUD bleed')
     check(passive_summary_matches(guide['build_text'], guide['ranks']),
           'Mobile dedicated passive summary matches the actual earned ranks and displays valid caps')
-    capture('mobile-build-earned')
+    capture(prefix+'-build-earned')
     time.sleep(.5)
     frozen = wait(lambda x: x['rendered_frames'] > guide['rendered_frames'] and x['sample_ticks'] > guide['sample_ticks'])
     check(frozen_navigation(guide, frozen) and frozen['panel'] == guide['panel']
@@ -515,10 +525,10 @@ def mobile_earned_build(start):
           'Mobile build guide freezes gameplay XP ranks rewards RNG dash and settings while rendering')
     tap('CORRUPTION //', frozen)
     review = wait(lambda x: 'ACTIVE CORRUPTION' in x.get('build_text', '') and x.get('panel') == x.get('rendered_panel'))
-    check(frozen_navigation(frozen, review) and 'CLEAN SIGNAL' in review['build_text']
-          and 'NEXT OPTIONAL LINK //' in review['build_text'] and 'GAIN //' not in review['build_text'],
-          'Mobile actual build opens honest clean corruption review without altering earned progression')
-    capture('mobile-corruption-review')
+    check(frozen_navigation(frozen, review) and all(text in review['build_text'] for text in review_required)
+          and all(text not in review['build_text'] for text in review_forbidden),
+          'Mobile actual build opens corruption review matching observed links without changing progression')
+    capture(prefix+'-corruption-review')
     time.sleep(.5)
     review_frozen = wait(lambda x: x['rendered_frames'] > review['rendered_frames'] and x['sample_ticks'] > review['sample_ticks'])
     check(frozen_navigation(review, review_frozen) and review_frozen['panel'] == review['panel']
@@ -541,16 +551,75 @@ def mobile_earned_build(start):
           and any(b['text'] == 'II  PAUSE' for b in resumed['buttons'])
           and any(b['text'].startswith('DASH') for b in resumed['buttons']),
           'Mobile build Resume restores combat and both HUD actions with earned ranks intact')
-    report['earned_build'] = {'paused':paused,'guide':guide,'frozen':frozen,'back':back,'resumed':resumed,
+    report[record_key] = {'paused':paused,'guide':guide,'frozen':frozen,'back':back,'resumed':resumed,
                               'corruption_review':{'opened':review,'frozen':review_frozen,'returned':restored},
                               'method':'Actual touch navigation after ordinary earned XP/upgrade selection; no fixture or stat grant.'}
-    capture('mobile-build-resumed')
+    capture(prefix+'-build-resumed')
+    return resumed
+
+
+def mobile_earned_corruption(start):
+    deadline = time.monotonic() + 360
+    s = start
+    progression = []
+    if s['corruption']['accepted']:
+        raise AssertionError('Earned corruption acceptance requires an initially clean deployment')
+    while True:
+        s = mobile_collect_offer(s, deadline)
+        if s['level'] >= 5 and any('UNSTABLE LINK' in b['text'] and not b['disabled'] for b in s['buttons']):
+            break
+        if len(progression) >= 8:
+            raise AssertionError('Mobile corruption unlock exceeded its bounded ordinary-choice budget')
+        transaction, s = mobile_pick_upgrade(f'mobile-link-progression-{len(progression)+1:02d}')
+        progression.append(transaction)
+    check(s['level'] >= 5 and s['xp'] > start['xp'] and s['pending'] > 0 and s['memory_audio_plays'] > 0,
+          'ordinary Mobile kills pickups and choices reach a real corruption offer')
+    ordinary = s
+    capture('mobile-corruption-trigger')
+    tap('UNSTABLE LINK', ordinary)
+    proposal = wait(lambda x: x['state'] == x.get('rendered_state') == 'upgrading'
+                    and any('REDLINE SYNC' in b['text'] and not b['disabled'] for b in x['buttons'])
+                    and x.get('panel') == x.get('rendered_panel') and x['panel'] != ordinary['panel'])
+    check(proposal['process'] == ordinary['process']
+          and all(proposal[k] == ordinary[k] for k in (*UPGRADE_FROZEN_FIELDS, 'health', 'corruption')),
+          'opening the earned corruption picker preserves gameplay choices health and protocol')
+    card = next(b['text'] for b in proposal['buttons'] if 'REDLINE SYNC' in b['text'] and not b['disabled'])
+    terms = redline_terms(card)
+    if terms is None:
+        raise AssertionError('Actual Redline card does not disclose a valid health cost and cycle gain')
+    capture('mobile-redline-offer')
+    time.sleep(.5)
+    frozen = wait(lambda x: x['rendered_frames'] > proposal['rendered_frames'] and x['sample_ticks'] > proposal['sample_ticks'])
+    check(corruption_offer_frozen(proposal, frozen), 'actual corruption choice freezes full health and protocol in fresh frames')
+    tap('REDLINE SYNC', frozen)
+    selected = wait(lambda x: 'redline' in x.get('corruption', {}).get('accepted', []))
+    check(redline_selected(frozen, selected, card), 'earned Redline consumes one choice and applies exactly the disclosed cost and gain')
+    queued = []
+    s = selected
+    while s['state'] == 'upgrading' or s['pending'] > 0:
+        if len(queued) >= 8:
+            raise AssertionError('Mobile post-corruption queue exceeded bounded smoke budget')
+        transaction, s = mobile_pick_upgrade(f'mobile-link-queued-{len(queued)+1:02d}')
+        queued.append(transaction)
+    s = wait(lambda x: x['state'] == 'playing' and x['pending'] == 0)
+    report['earned_corruption'] = {'progression':progression,'ordinary':ordinary,'proposal':proposal,'frozen':frozen,
+                                  'selected':selected,'card_text':card,'terms':terms,'queued':queued,
+                                  'method':'Ordinary kills/XP/choices through the real optional link picker. No fixture, stat grant or reroll.'}
+    cost = terms['before_max'] - terms['after_max']
+    required = ['REDLINE SYNC', '1/3 UNSTABLE LINKS', f"GAIN // Weapon cycles +{terms['cycle_gain']}%", f'COST // Maximum HP -{cost}']
+    resumed = mobile_earned_build(s, prefix='mobile-linked', record_key='earned_corruption_build',
+                                  review_required=required, review_forbidden=['FRACTURED CHAMBER', 'PARASITIC HIVE'])
+    review = report['earned_corruption_build']['corruption_review']
+    check(review['opened']['health']['maximum'] == selected['health']['maximum']
+          and resumed['health']['maximum'] == selected['health']['maximum']
+          and resumed['corruption'] == selected['corruption'],
+          'actual active-link inspection and Resume cannot reapply the health cost or alter the protocol')
     return resumed
 
 
 def mobile_smoke():
     report['variant'] = 'x86_64 Android 35 / required Mobile renderer / read-only opt-in probe'
-    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices, earned-build and clean corruption-review navigation, and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
+    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices, clean and actually earned active-corruption review/cost checks, and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
     try:
         adb('logcat', '-c')
         launch()
@@ -569,6 +638,7 @@ def mobile_smoke():
         capture('mobile-combat')
         s = mobile_earned_upgrades(s)
         s = mobile_earned_build(s)
+        s = mobile_earned_corruption(s)
         before = read()
         adb('shell', 'input', 'keyevent', '3'); time.sleep(1); launch()
         returned = wait(lambda x: fresh_resumed_frame(before, x), 60)

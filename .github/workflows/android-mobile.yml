@@ -143,7 +143,7 @@ jobs:
       - name: Require Mobile renderer and real touch/combat recovery
         run: |
           set -o pipefail
-          timeout 600s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --mobile-smoke --package com.nullswarm.game.mobileqa 2>&1 | tee builds/android-runtime/smoke.log
+          timeout 900s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --mobile-smoke --package com.nullswarm.game.mobileqa 2>&1 | tee builds/android-runtime/smoke.log
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |

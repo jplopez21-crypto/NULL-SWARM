@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Earned Mobile corruption coverage
+
+- Extend Mobile QA through normal progression to Redline, card-to-applied health/cycle terms and active review with no repeated cost. Add read-only health/protocol observations, seventeen-field pause checks and cost/queue regressions. All local suites pass; hosted verification pending. Normal gameplay rules unchanged.
+
 ## Development — 2026-11-09 / Corruption build review
 
 - Add functioning corruption review from the build guide: active benefits/costs, clean/next-link/cap information and Back without repeated charges. All five workflows, 15 Godot suites/41 Python tests, 91 GUI/47 corruption checks and 26 Mobile checks pass. Actual clean Mobile and full-link UI fixture captures inspected; gameplay fingerprints preserved. Verified APK/scope: TEST_RESULTS.md.

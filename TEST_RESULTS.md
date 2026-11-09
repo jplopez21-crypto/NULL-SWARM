@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Earned Mobile corruption — local verification 2026-11-09
+
+- Mobile path now pursues a real optional link through ordinary XP/offers/touches, compares Redline card terms against applied maximum HP/cycle gain and conserved choices/ranks, then inspects the active link without repeated costs. No stat grants, rerolls or progress fixtures. Command deadline expanded to 900 seconds within the existing 30-minute job.
+- Opt-in read-only probe adds actual health limits and protocol state; normal export telemetry remains disabled. Build navigation compares seventeen fields. All 15 local Godot suites/47 Python tests pass: 29 probe checks, 91 GUI/47 corruption checks and 200 layouts/2,600 headless checks. Six new Python cases cover observable cost/gain/queue and invalid/stale data; three probe cases validate real selection telemetry and read-only behavior. Probe selection tests are engine fixtures, not earned Android results.
+- Actual earned-link Android/rendered/export/full QA is pending for this source; no new device result is claimed. Receipt: docs/qa/earned-corruption/local-headless-results.json.
+
 ## Corruption build review — verified 2026-11-09
 
 Verified code/build source: `8c8083230c701f088e257507408f26a4bc95b0c3`, tree `20176024214d57f17c74ac7ad49cdf4321287b44`. Final checkpoint changes Markdown/JSON evidence only.

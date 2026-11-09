@@ -2,10 +2,9 @@
 
 ## Current checkpoint
 
-- Corruption build review verified at source `8c8083230c701f088e257507408f26a4bc95b0c3`: functioning build action, active gain/cost cards derived from protocol accessors, clean/next-link/cap information and Back to Build. No reselection or stat mutation. Actual Mobile clean screen, native action row and synthetic full-link board inspected. Active-link/no-double-cost checks are engine/GUI fixtures; earned Android corruption remains open.
-- All five workflows pass on attempt 1: 15 matching Godot suites/41 Python tests, 91 GUI checks, 47 corruption checks, 200 layouts (2,600 headless/2,601 rendered), Mobile 26 checks, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks. Gameplay/XP/pacing/stress/replay baselines preserved; failed unpatched control retained. Ten archive integrity checks pass; exact evidence in TEST_RESULTS.md.
-- New verified ARM64 debug APK linked in TEST_RESULTS.md. Only build caller/UI/read-only formatter modules change among 44 compared executable/config entries; engine, other gameplay modules and shipping settings match. Export progress backup before replacing rotating-key debug installs. Phone profiling/audio, protected signing/release AAB unverified; emulator-only Swappy override unchanged. Main unchanged/unmerged; current PR notes in docs/DEVELOPMENT_PR.md.
-- Next: earned corruption and wider build variation on Mobile, bounded combat/boss readability polish and representative ARM64 profiling. Stable protected preview signing still requires owner secrets.
+- Extending Mobile acceptance through ordinary progression to Redline, its disclosed/applied HP and cycle terms, actual active review and cost retention through Resume/background return. Shared real-touch offer driver and bounded movement continue normal play; no grants, fixtures or rerolls. Read-only opt-in probe adds health/protocol data; normal export probe remains disabled. Build navigation now freezes seventeen observed fields.
+- All 15 local Godot suites/47 Python tests pass, including 29 probe checks, 91 GUI/47 corruption checks and 200 layouts. New observer cases reject wrong/duplicate costs, healing, extra ranks/links, invalid counters and stale offers; probe fixtures observe the real production selection and prove repeated reads cannot charge again. Hosted earned gameplay/Android/export/full-QA verification pending.
+- Next: verify the actual earned-link offer/applied/review/resumed transcript and screenshots, plus all existing gates. Latest prior verified phone APK/results remain in TEST_RESULTS.md. Physical profiling/audio, protected signing/release AAB remain open; main unchanged/unmerged.
 
 ## Prior verified checkpoints
 

@@ -119,6 +119,11 @@ func snapshot() -> void:
 			"shield_status": game.ui.defense_label.text, "position": [game.player.position.x, game.player.position.z], "hp": game.player.health.current,
 			"time": game.combat.director.elapsed, "kills": game.combat.kills, "xp": game.pickups.total_collected,
 			"damage_by_weapon": game.combat.damage_by_weapon.duplicate(), "combat_rng": str(game.combat.rng.state), "level": game.progress.level, "ranks": game.progress.ranks.duplicate(), "pending": game.progress.pending, "targets": []})
+		data["health"] = {"current": game.player.health.current, "maximum": game.player.health.maximum,
+			"shield": game.player.health.shield, "max_shield": game.player.health.max_shield}
+		data["corruption"] = {"accepted": game.combat.corruption.accepted.duplicate(), "next_level": game.combat.corruption.next_level,
+			"cycle_rate": game.combat.corruption.cycle_rate(), "enemy_pace": game.combat.corruption.enemy_pace(),
+			"walk_rate": game.combat.corruption.walk_rate(), "extra_rounds": game.combat.corruption.extra_rounds(), "extra_drones": game.combat.corruption.extra_drones()}
 		for item in game.pickups.items:
 			if not item["attract"]:
 				data["targets"].append([item["mesh"].position.x, item["mesh"].position.z])

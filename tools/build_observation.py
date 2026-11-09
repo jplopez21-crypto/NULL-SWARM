@@ -1,7 +1,7 @@
 """Read-only acceptance for navigating a paused, genuinely earned build."""
 from upgrade_observation import UPGRADE_FROZEN_FIELDS
 
-BUILD_FROZEN_FIELDS = (*UPGRADE_FROZEN_FIELDS, 'settings', 'selected_kit', 'dash_readiness', 'dashes')
+BUILD_FROZEN_FIELDS = (*UPGRADE_FROZEN_FIELDS, 'settings', 'selected_kit', 'dash_readiness', 'dashes', 'health', 'corruption')
 
 
 def frozen_navigation(before, current):
