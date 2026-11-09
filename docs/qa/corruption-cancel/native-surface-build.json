@@ -1,0 +1,41 @@
+{
+  "variant": "latched",
+  "upstream_git_blob": "8b25fdfeceb6dcc273646005137a92f161755558",
+  "original_source_sha256": "15d56bda1cf68e72bb3b48f8e2b0cd6a57dfab9832a674a6f2b4ce82b2f44dbb",
+  "compiled_source_sha256": "3e23680b86ee1899862c255203d7b5bdd3463b68a82ac03253d899d76e603a6d",
+  "original_aar_sha256": "a0d9c91163a2749531009099279525abc26f988d2f6b66f2840c60fa4f41e9c1",
+  "modified_aar_sha256": "caa360b7fb4a3b812748eb604293e89e7ccaac51656636aa33641c23ac98f235",
+  "java_release": 17,
+  "compiler": "javac 21.0.13",
+  "recompiled_classes": [
+    "org/godotengine/godot/gl/GLSurfaceView$BaseConfigChooser.class",
+    "org/godotengine/godot/gl/GLSurfaceView$ComponentSizeChooser.class",
+    "org/godotengine/godot/gl/GLSurfaceView$DefaultContextFactory.class",
+    "org/godotengine/godot/gl/GLSurfaceView$DefaultWindowSurfaceFactory.class",
+    "org/godotengine/godot/gl/GLSurfaceView$EGLConfigChooser.class",
+    "org/godotengine/godot/gl/GLSurfaceView$EGLContextFactory.class",
+    "org/godotengine/godot/gl/GLSurfaceView$EGLWindowSurfaceFactory.class",
+    "org/godotengine/godot/gl/GLSurfaceView$EglHelper.class",
+    "org/godotengine/godot/gl/GLSurfaceView$GLThread.class",
+    "org/godotengine/godot/gl/GLSurfaceView$GLThreadManager.class",
+    "org/godotengine/godot/gl/GLSurfaceView$GLWrapper.class",
+    "org/godotengine/godot/gl/GLSurfaceView$LogWriter.class",
+    "org/godotengine/godot/gl/GLSurfaceView$Renderer.class",
+    "org/godotengine/godot/gl/GLSurfaceView$SimpleEGLConfigChooser.class",
+    "org/godotengine/godot/gl/GLSurfaceView.class"
+  ],
+  "unchanged_other_classes": 220,
+  "native_libraries_sha256": {
+    "jni/arm64-v8a/libc++_shared.so": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b",
+    "jni/arm64-v8a/libgodot_android.so": "63bd0563274e0d373aac91ee3e46691fa33bdca9a491eb2994e3d4c29f38f5de",
+    "jni/armeabi-v7a/libc++_shared.so": "af383654daf4cf0829615460419a180f84edd9d8bf51aa0f81ed0db811bf8491",
+    "jni/armeabi-v7a/libgodot_android.so": "9635795328af8aeb687cf4d747893ced1d81cdbd8c9b82c33747cad064fb231c",
+    "jni/x86/libc++_shared.so": "1b9fba4282c5a043994aa023c0a274b580534c5d72916cae7b42bec4e1a27d70",
+    "jni/x86/libgodot_android.so": "831dd312a8539b2f19aea682ec2397e1f17570d21a6db65a6f6ff3389d6e5fe7",
+    "jni/x86_64/libc++_shared.so": "683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef",
+    "jni/x86_64/libgodot_android.so": "1920f23fee342ab1418a17658033d06cb58f8e87a55400215ea566913fbf3841"
+  },
+  "nonclass_aar_entries_unchanged": true,
+  "host_logic": "SURFACE_HOST_RESULT variant=latched passed=true lost_edge=recovered scope=controlled-fields-no-GPU",
+  "scope": "Java surface family only. Native engine/resources unchanged; runtime recovery is a separate test."
+}

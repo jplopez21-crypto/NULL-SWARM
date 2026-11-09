@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "mobile/mobile-corruption-declined.png",
+      "sha256": "dcb451e860e4c28975c7f0ed9f117f470a6e30dfc0fcc9451f3a7796a35731c2"
+    },
+    {
+      "path": "mobile/mobile-redline-offer.png",
+      "sha256": "19c21c429a81f200ccebf942ac24b8b2e220f5753813ef6abffe7e1b85909c11"
+    },
+    {
+      "path": "mobile/mobile-linked-corruption-review.png",
+      "sha256": "7ffe32d092a3aabc59f3c1dd873750d3c7fb82e028f35f0d1b783b0551945180"
+    },
+    {
+      "path": "mobile/mobile-linked-build-resumed.png",
+      "sha256": "e2e7231c4daa19eacae79c305cdaeed535efd92a3ca14bd3c99792435b40abb2"
+    },
+    {
+      "path": "failed-android-attempt1/failure.png",
+      "sha256": "d96170c552aa98bf6b8e66862ecd1d1eef9a535f90770f78effef545715d3d14"
+    }
+  ],
+  "observation": "Actual declined offer fits three original cards, REROLL / 2 and enabled optional link. Reopened picker shows HP 100 to 80/+30% cycles and honestly disabled Hive prerequisite. Active view shows Redline 1/3, -20 HP, +30% cycles and next level 10; resumed HUD shows 80 HP/42 shield with touch actions. Separate ordinary Android failure capture remains at the pause menu; Settings transition did not occur. The cause of that timeout is unconfirmed."
+}

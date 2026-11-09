@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Adding actual earned Mobile corruption decline/reopen acceptance: preserve the original upgrade cards, reroll count and seventeen observed fields through fresh rendered panels before accepting Redline. This changes test tooling only; no shipping game/probe/balance changes.
-- All 51 local Python tests pass. All 15 strict Godot suites also pass; hosted Android/export/full-QA verification is pending. Latest verified phone APK/results remain in TEST_RESULTS.md; no reinstall is needed for test-only work.
-- Next: verify the actual cancellation transcript/captures and existing gates; then broaden earned mutation/other-link coverage. Physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+- Verified actual Mobile corruption decline/reopen at source `cc0b21e65049356ec385d7a5be8df69e490664f5`: level 5/135 XP, exact original cards/rerolls/availability restored, unchanged seventeen fields and fresh picker/offer panels. Redline applies disclosed HP 100→80/+30% cycles once and retains the cost through review/Resume/background return. Actual screenshots inspected.
+- All five workflows ultimately pass: 42 Mobile checks, 15 Godot suites/51 Python tests, unchanged 200 UI layouts and gameplay fingerprints. Ordinary Android first attempt times out opening Settings after background return after 22 passing checks; unchanged single-job retest passes all 58. Original failure retained, cause unconfirmed. This intermittent emulator input/return issue remains open; no fix claimed. Other four workflows pass attempt 1.
+- Test tooling only; all 44 selected shipping executable/settings entries match the prior APK. No reinstall needed. Exact results/optional artifact: TEST_RESULTS.md; machine receipts: docs/qa/corruption-cancel/verified-ci.json.
+- Next: investigate/instrument the intermittent Settings-return timeout if it recurs, broaden earned mutation/other-link coverage and continue human combat/build playtesting. Physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Emulator-only Swappy override unchanged. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
 
 ## Previous verified checkpoint
 

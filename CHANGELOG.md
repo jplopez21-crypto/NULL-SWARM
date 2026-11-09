@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Earned corruption cancellation coverage
 
-- Add real Mobile decline/reopen checks for exact upgrade cards/rerolls, fresh panels and preserved health/choices/RNG/settings. Four new Python regressions pass; hosted verification pending. Test-only change; shipping gameplay unchanged.
+- Add real Mobile decline/reopen checks for exact upgrade cards/rerolls, fresh panels and preserved health/choices/RNG/settings. All 51 Python tests/15 Godot suites and 42 Mobile checks pass. Five workflows ultimately pass; one ordinary Android Settings-return timeout is retained and the unchanged job retest passes 58 checks. Intermittent cause remains open. All 44 compared shipping entries match; no reinstall needed. Exact scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-09 / Earned Mobile corruption coverage
 
