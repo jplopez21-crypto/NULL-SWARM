@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Earned Mobile passive coverage
 
-- Extend Mobile acceptance through actual passive acquisition and its dedicated build-summary rank, using only normal XP/offers/touches. Six new Python regressions and all local suites pass; hosted verification pending. Game/phone source unchanged.
+- Verify real Mobile passive acquisition: card 03/Amplified Pulse appears as 1/7 in the dedicated guide row and survives navigation/background return. All 23 Mobile checks, 15 Godot suites/41 Python tests and five workflows pass; gameplay fingerprints and all 44 selected phone entries match. No reinstall needed. Scope/evidence: TEST_RESULTS.md.
 
 ## Development — 2026-11-09 / Passive build guide
 

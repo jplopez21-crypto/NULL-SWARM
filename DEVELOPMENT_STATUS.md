@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Extending actual Mobile acceptance to acquire a passive through ordinary XP/offers/touches and verify its dedicated build-summary rank. Chooses a visible passive when offered; otherwise earns another offer, with eight-choice/300-second collection bounds. No rerolls or stat grants. Phone/game source and settings unchanged.
-- All 15 local Godot suites and 41 Python tests pass. Six new Python cases cover spaced/enabled passive-card selection, missing/duplicate/extra/stale summary ranks, recipe-only false positives and invalid/empty observations. Existing 77 GUI checks/188 layouts remain. Android/export/full-QA verification pending for this source.
-- Latest verified phone APK remains the passive-guide build linked in TEST_RESULTS.md. Next: inspect actual earned-passive offer/guide/resume captures and complete all hosted gates. Physical ARM64 profiling/audio, protected signing/release AAB remain open; main unchanged/unmerged. PR review notes remain in docs/DEVELOPMENT_PR.md.
+- Earned Mobile passive verified at source `cb35af7b36c981bfcb867ff079a9481cafd6353e`: actual 20-XP/level-two offer, card 03/Amplified Pulse, rank 1/7 in the dedicated summary, unchanged frozen guide fields, restored combat/HUD and retained rank through background return. Actual offer/guide/resumed captures inspected. One real passive selection; fallback-offer paths/all other passive effects/full Mobile runs remain open.
+- All five workflows pass on attempt 1: 23 Mobile checks, 15 matching Godot suites/41 Python tests, 77 GUI checks/188 layouts, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks, native export and full QA. Gameplay/XP/pacing/stress/replay baselines unchanged; failed unpatched control retained. Ten archive integrity checks pass; exact evidence in TEST_RESULTS.md.
+- All 44 selected phone executable/config entries match the prior passive-guide APK: no reinstall needed. Phone defaults unchanged; only Mobile software emulator disables Swappy. Physical ARM64 profiling/audio, protected signing/release AAB remain unverified. Main unchanged/unmerged; current PR review notes in docs/DEVELOPMENT_PR.md.
+- Next: wider passive/offer variation and actual mutations on Mobile, bounded combat feedback polish and representative ARM64 profiling. Stable protected signing still requires owner secrets.
 
 ## Prior verified checkpoints
 
@@ -113,7 +114,7 @@
 ## Active priorities and blockers
 
 1. Continue player-facing combat readability and build polish with bounded effects and reduced-intensity settings. The targeted CPU investigation is recorded; further performance decisions need representative hardware and stronger measurements. Preserve the cautious-bot/pacing baseline before global balance changes.
-2. Measure actual ARM64 Mobile rendering, active gravity-field performance, touch comfort, cutouts and phone thermals. Local SDK/emulator/KVM and a connected physical phone are unavailable; CI supplies x86_64 Compatibility runtime coverage.
+2. Measure actual ARM64 Mobile rendering, active gravity-field performance, touch comfort, cutouts and phone thermals. Local SDK/emulator/KVM and a connected physical phone are unavailable; CI supplies x86_64 Compatibility and Mobile/Vulkan smoke coverage; Mobile software emulator alone disables Swappy.
 3. Provision persistent Preview signing through the documented protected owner secrets. Current diagnostic keys rotate, so in-place updates across builds are not guaranteed. Preserve existing phone installations/saves. No owner key was provisioned; no release AAB is claimed.
 4. Continue commercial content, character differentiation, accessibility and human balance work after verified milestones. Final artwork/audio and Google Play preparation remain unfinished.
 
