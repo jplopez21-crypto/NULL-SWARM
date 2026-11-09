@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 43,
+  "changed_entries": [
+    "assets/systems/android_qa_probe.gdc"
+  ],
+  "scope": "Only opt-in read-only QA probe bytecode changes. Other 37 game modules, three DEX files, two native libraries and shipping project settings match the previous verified phone APK. QA probe remains disabled by default; no gameplay update installation needed."
+}

@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Extending Mobile acceptance through ordinary progression to Redline, its disclosed/applied HP and cycle terms, actual active review and cost retention through Resume/background return. Shared real-touch offer driver and bounded movement continue normal play; no grants, fixtures or rerolls. Read-only opt-in probe adds health/protocol data; normal export probe remains disabled. Build navigation now freezes seventeen observed fields.
-- All 15 local Godot suites/47 Python tests pass, including 29 probe checks, 91 GUI/47 corruption checks and 200 layouts. New observer cases reject wrong/duplicate costs, healing, extra ranks/links, invalid counters and stale offers; probe fixtures observe the real production selection and prove repeated reads cannot charge again. Hosted earned gameplay/Android/export/full-QA verification pending.
-- Next: verify the actual earned-link offer/applied/review/resumed transcript and screenshots, plus all existing gates. Latest prior verified phone APK/results remain in TEST_RESULTS.md. Physical profiling/audio, protected signing/release AAB remain open; main unchanged/unmerged.
+- Verified actual earned Mobile Redline at source `d9f02f4ea42cee7cd5432ae7998b9809ced68f8e`: level 5/133 XP/38 kills, disclosed/applied HP 120→100 and +30% cycles, one choice consumed, ranks retained. Active review, seventeen-field frozen navigation, Resume and background return preserve the paid cost/protocol. Actual offer/review/resumed captures inspected; no grants/fixtures/rerolls in this path.
+- All five workflows pass on attempt 1: 39 Mobile checks, 15 Godot suites/47 Python tests, 29 probe/91 GUI/47 corruption checks, 200 layouts and existing Android gameplay/lifecycle/full-QA gates. Gameplay/XP/pacing/stress fingerprints and layout metadata preserved. Detailed results, artifact integrity and APK: TEST_RESULTS.md; receipts: docs/qa/earned-corruption/verified-ci.json.
+- Only opt-in read-only QA probe bytecode differs among 44 selected phone entries; it stays disabled in normal exports. Other 37 game modules/Java/native engine/settings match: no gameplay reinstall needed. Command budget expanded to 900 seconds within existing 30-minute Mobile job. No balance changes or new known gameplay bug found in this bounded coverage.
+- Next: broaden earned Mobile mutation/other-link coverage and human combat/build playtesting. Physical ARM64/S23 performance/audio and protected stable signing/release AAB remain open. Software Mobile emulator alone disables Swappy; phone default unchanged. Main unchanged/unmerged; current PR review notes prepared in docs/DEVELOPMENT_PR.md.
 
 ## Prior verified checkpoints
 
