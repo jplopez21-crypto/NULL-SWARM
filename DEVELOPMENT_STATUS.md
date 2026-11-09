@@ -2,6 +2,12 @@
 
 ## Current checkpoint
 
+- Instrumenting the intermittent background-return Settings timeout: read-only eight-event touch history/focus in the opt-in probe, one existing ADB tap, bounded transition observations and failure-only Android focus lines. The diagnostic records delivery separately from menu success; it neither retries input nor claims a fix.
+- All 59 local Python tests pass; all 15 strict Godot suites also pass, including 33 probe checks. Hosted Android/export/full-QA verification pending. Normal exports disable the probe; gameplay/input routing/balance remain unchanged.
+- Next: inspect actual Settings transition delivery and all existing gates. Prior intermittent cause, physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+
+## Previous verified cancellation checkpoint
+
 - Verified actual Mobile corruption decline/reopen at source `cc0b21e65049356ec385d7a5be8df69e490664f5`: level 5/135 XP, exact original cards/rerolls/availability restored, unchanged seventeen fields and fresh picker/offer panels. Redline applies disclosed HP 100→80/+30% cycles once and retains the cost through review/Resume/background return. Actual screenshots inspected.
 - All five workflows ultimately pass: 42 Mobile checks, 15 Godot suites/51 Python tests, unchanged 200 UI layouts and gameplay fingerprints. Ordinary Android first attempt times out opening Settings after background return after 22 passing checks; unchanged single-job retest passes all 58. Original failure retained, cause unconfirmed. This intermittent emulator input/return issue remains open; no fix claimed. Other four workflows pass attempt 1.
 - Test tooling only; all 44 selected shipping executable/settings entries match the prior APK. No reinstall needed. Exact results/optional artifact: TEST_RESULTS.md; machine receipts: docs/qa/corruption-cancel/verified-ci.json.

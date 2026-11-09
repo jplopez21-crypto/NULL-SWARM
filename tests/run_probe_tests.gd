@@ -33,6 +33,7 @@ func run() -> void:
 	check(data["state"] == "playing" and data["ranks"] == game.progress.ranks, "probe reports real game state")
 	check(data["health"]["maximum"] == game.player.health.maximum and data["health"]["max_shield"] == game.player.health.max_shield and data["corruption"]["accepted"].is_empty() and data["corruption"]["next_level"] == 5, "probe observes real health limits and clean protocol without enabling them")
 	check(data["lifecycle"] == {"foreground_generation": 0.0, "rendered_generation": 0.0, "background_events": 0.0}, "unobserved lifecycle starts with honest zero counters")
+	check(data["input_delivery"]["presses"] == 0 and data["input_delivery"]["releases"] == 0 and data["input_delivery"]["recent"].is_empty() and data["input_delivery"]["window_focused"] == game.get_window().has_focus(), "probe starts with no invented touch delivery and observes actual window focus")
 	probe._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	probe._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
 	probe.snapshot()
@@ -117,6 +118,24 @@ func run() -> void:
 	var observed_save: Dictionary = game.save.data.duplicate(true)
 	probe.snapshot()
 	check(game.player.health.maximum == observed_max and game.combat.corruption.accepted == ["redline"] and game.combat.corruption.next_level == 10 and game.combat.rng.state == observed_rng and game.save.data == observed_save, "repeated health/protocol observations cannot reapply a cost or change the run")
+	# Direct probe-event fixtures validate recording only; no game input is injected.
+	var sequence_before: int = probe.touches + probe.touch_releases
+	for i in range(10):
+		var event := InputEventScreenTouch.new()
+		event.index = 7
+		event.position = Vector2(640, 446)
+		event.pressed = i % 2 == 0
+		event.canceled = i == 9
+		probe._input(event)
+	probe.snapshot()
+	data = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	var delivery: Dictionary = data["input_delivery"]
+	check(delivery["presses"] == probe.touches and delivery["releases"] == probe.touch_releases and delivery["recent"].size() == 8 and delivery["recent"][0]["sequence"] == sequence_before + 3 and delivery["recent"][7]["sequence"] == sequence_before + 10, "probe records both edges in a bounded ordered eight-event history")
+	var last_event: Dictionary = delivery["recent"][7]
+	check(last_event["index"] == 7 and not last_event["pressed"] and last_event["canceled"] and last_event["position"] == [640.0, 446.0] and last_event["ticks"] >= 0, "probe records actual pointer coordinates cancellation and event time")
+	probe.snapshot()
+	var repeated: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("user://qa-runtime.json"))
+	check(repeated["input_delivery"] == delivery and probe.touches + probe.touch_releases == sequence_before + 10 and game.player.health.maximum == observed_max and game.combat.rng.state == observed_rng and game.save.data == observed_save, "repeated input observations do not invent events advance RNG or mutate progression")
 	game.audio.shutdown()
 	# Drain queued UI tweens and audio-thread releases before destroying the scene.
 	await create_timer(0.20).timeout

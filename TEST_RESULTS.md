@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Settings-return input diagnostics — local verification in progress 2026-11-09
+
+- Add opt-in bounded read-only touch history/focus telemetry and observe the single Settings tap after background return. Record button/canvas/screen coordinates, event timeline and classification; collect Android focus lines only after failure. No retries, new pre-tap waits or gameplay/input-routing changes. Prior timeout remains open; diagnostics do not establish a fix.
+- All 59 local Python tests pass, including eight new classifier cases. All 15 strict Godot suites also pass, including 33 probe checks; hosted runtime/export/full-QA verification is pending for this source. No new Android result is claimed yet.
+
 ## Earned corruption cancellation — verified with retained retest 2026-11-09
 
 Verified code/build source: `cc0b21e65049356ec385d7a5be8df69e490664f5`, tree `71846c607e7193fba820303b8c8292f8fcf50267`. Final checkpoint changes Markdown/JSON evidence only.

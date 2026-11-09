@@ -19,6 +19,7 @@ from upgrade_observation import UPGRADE_FROZEN_FIELDS, upgrade_frozen, selected_
 from build_observation import frozen_navigation
 from passive_observation import PASSIVE_LABELS, passive_card, passive_summary_matches
 from corruption_observation import corruption_offer_frozen, corruption_navigation_preserved, redline_selected, redline_terms, same_offer_actions
+from input_delivery import describe_delivery
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -124,7 +125,43 @@ def tap(label, state=None):
     x, y, w, h = button['rect']
     px, py = screen_point(x + w / 2, y + h / 2, state)
     adb('shell', 'input', 'tap', str(px), str(py))
-    actions.append({'tap': label, 'screen': [px, py], 'from': state['state']})
+    action = {'tap': label, 'screen': [px, py], 'from': state['state']}
+    actions.append(action)
+    return action
+
+
+def observed_menu_tap(label, before, predicate, record_key):
+    """Exactly one existing ADB tap; bounded read-only evidence, even on timeout."""
+    button = next(b for b in before['buttons'] if label in b['text'] and not b['disabled'])
+    x, y, w, h = button['rect']
+    target = [x + w / 2, y + h / 2]
+    row = {'before': before, 'target_canvas': target, 'action_index': len(actions), 'observations': [], 'status': 'in_progress'}
+    report[record_key] = row
+
+    def observe(current):
+        row['after'] = current
+        row['delivery'] = describe_delivery(before, current, target)
+        if not row['observations'] or current['sample_ticks'] != row['observations'][-1]['sample_ticks']:
+            row['observations'].append({k: current.get(k) for k in
+                                        ('sample_ticks', 'state', 'panel', 'rendered_state', 'rendered_panel', 'rendered_frames', 'input_delivery')})
+            row['observations'] = row['observations'][-128:]
+        return predicate(current)
+
+    try:
+        row['injection'] = tap(label, before)
+        current = wait(observe)
+        row['status'] = 'transition_observed'
+        return current
+    except Exception as error:
+        row['status'] = 'failed'
+        row['error'] = str(error)
+        try:
+            windows = adb('shell', 'dumpsys', 'window', 'windows')
+            row['android_focus_after_failure'] = [line.strip() for line in windows.splitlines()
+                                                   if 'mCurrentFocus=' in line or 'mFocusedApp=' in line][:8]
+        except subprocess.SubprocessError as diagnostics_error:
+            row['focus_collection_error'] = str(diagnostics_error)
+        raise
 
 
 def move(dx, dz, state, duration=800):
@@ -817,8 +854,9 @@ try:
     check(True, 'Android background/resume preserves paused state with a fresh foreground frame')
     capture('background-resumed')
     salvage = s['salvage']
-    tap('SETTINGS', s)
-    s = wait(lambda x: any('Camera shake' in b['text'] for b in x['buttons']))
+    s = observed_menu_tap('SETTINGS', s, lambda x: any('Camera shake' in b['text'] for b in x['buttons']), 'settings_return_input')
+    check(report['settings_return_input']['delivery']['status'] == 'delivered_at_target',
+          'single Settings tap after background return delivers both touch edges at the actual button')
     old_shake = s['settings']['shake']
     tap('Camera shake', s)
     s = wait(lambda x: x['settings']['shake'] != old_shake)

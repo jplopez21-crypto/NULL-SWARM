@@ -6,6 +6,8 @@ var remaining: float = 0.0
 var kill_stream_id: int = 0
 var kill_pcm_sha256: String = ""
 var touches: int = 0
+var touch_releases: int = 0
+var recent_touches: Array[Dictionary] = []
 var drags: int = 0
 var dashes: int = 0
 var last_dash: float = 0.0
@@ -39,8 +41,16 @@ func _frame_drawn() -> void:
 	rendered_generation = foreground_generation
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch and event.pressed:
-		touches += 1
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			touches += 1
+		else:
+			touch_releases += 1
+		recent_touches.append({"sequence": touches + touch_releases, "index": event.index,
+			"pressed": event.pressed, "canceled": event.canceled,
+			"position": [event.position.x, event.position.y], "ticks": Time.get_ticks_msec()})
+		if recent_touches.size() > 8:
+			recent_touches.pop_front()
 	if event is InputEventScreenDrag:
 		drags += 1
 
@@ -64,6 +74,8 @@ func snapshot() -> void:
 		"canvas": [game.ui.root.size.x, game.ui.root.size.y], "touches": touches, "drags": drags, "dashes": dashes,
 		"engine": Engine.get_version_info()["string"], "renderer": RenderingServer.get_current_rendering_method(), "buttons": []}
 	data["lifecycle"] = {"foreground_generation": foreground_generation, "rendered_generation": rendered_generation, "background_events": background_events}
+	data["input_delivery"] = {"presses": touches, "releases": touch_releases,
+		"recent": recent_touches.duplicate(true), "window_focused": get_window().has_focus()}
 	data["performance_stats_visible"] = game.ui.perf_label.is_visible_in_tree()
 	data["performance_stats_text"] = game.ui.perf_label.text
 	data["chain_feedback"] = {"visible": game.ui.surge_gauge.is_visible_in_tree(), "text": game.ui.surge_label.text, "value": game.ui.surge_gauge.value}
