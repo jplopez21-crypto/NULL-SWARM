@@ -2,6 +2,12 @@
 
 ## Current checkpoint
 
+- Add reproducible normal-play balance summaries and matched-seed comparisons: survival/upgrade pacing/XP/mutation reach, with full test conditions kept separate. No human-fun/win-rate/performance inference and no automatic difficulty changes. Quality CI produces/publishes the report after four normal-play suites.
+- All 70 local Python tests pass, including eleven new report/CLI cases. Actual archive-to-archive comparison validates 26 runs/19 cohorts with zero changed selected observations. All 15 strict Godot suites pass; fresh hosted output verification pending. No shipping gameplay/source changes.
+- Next: verify new hosted summaries against raw cases and prior evidence, then use matched observations to guide combat/build playtesting. Earned nonzero recipe/mutation coverage, earlier intermittent Settings-return cause, physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+
+## Previous verified recipe-card checkpoint
+
 - Verified mutation recipe progress cards at source `252254a16ea712241f3d28265e9358b6134f462c`: both prerequisite cards read actual ranks/requirements from the registry, saturate fulfilled counts and preserve gold completion forecasts/active field stats. No offers, costs, balance, RNG/save/input changes. Native staged recipe and actual Mobile card captures inspected.
 - All five workflows pass attempt 1: 15 Godot suites/59 Python tests, 1,087 systems/101 GUI checks, 42 Mobile/59 ordinary Android checks and existing 200 layouts. Eight model/ten GUI checks added; gameplay/XP/pacing/stress fingerprints and layout metadata preserved. Exact APK/results: TEST_RESULTS.md; receipts: docs/qa/recipe-progress/verified-ci.json.
 - Actual fresh Mobile audit covers seven zero-progress recipe cards across all three recipes in a Drone/passive run. Nonzero/saturated counters and all six prerequisite cards are engine/GUI/render fixtures; no earned nonzero Android counter/mutation acceptance claimed. Other transcripts have no complete fresh numbered offers for the extra audit. Only description caller/registry formatter change among 44 compared phone entries.

@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Normal-play balance reporting
+
+- Add readable/JSON normal-play summaries and matched-seed comparisons, preserving test conditions and unobserved events. Eleven new Python cases and prior-archive comparison pass; quality CI generation/publication configured. Hosted verification pending; shipping gameplay unchanged.
+
 ## Development — 2026-11-09 / Mutation recipe progress
 
 - Show current prerequisite ranks on mutation-related upgrade cards, preserving gold completion previews and existing field statistics. All five workflows pass attempt 1: 15 Godot suites/59 Python tests, 101 GUI checks, 42 Mobile/59 ordinary Android checks. Native staged and actual Mobile cards inspected; seven zero-progress Mobile cards match the observed build. Gameplay fingerprints preserved; new verified APK/scope in TEST_RESULTS.md. Offers and combat balance unchanged.

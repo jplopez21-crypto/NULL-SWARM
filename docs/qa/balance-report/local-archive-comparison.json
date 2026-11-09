@@ -1,0 +1,1804 @@
+{
+  "schema": 1,
+  "status": "observed",
+  "sources": {
+    "bot-report.json": {
+      "sha256": "253fc1c2ccf36be248cc54206357a8830a335ae61e8a82762a29893f04079ab6",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules bot playtests"
+    },
+    "extended-seeds.json": {
+      "sha256": "1c34b55642efc0d1f7032e72cb2a07afe7e03e1dba48a870c6cb8eb5fb917d43",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "additional fixed-seed normal-rules sessions"
+    },
+    "corruption-probe.json": {
+      "sha256": "5358ce016bf50d15e7f685a5044ab074410de059d61ee2edeb5fa881279405ff",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules corruption choices"
+    },
+    "engineer-probe.json": {
+      "sha256": "955c1eb67beb11d6c9401b1c7c3c295b8d01f5aa6295a1173c86a34bdd860687",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules earned Engineer sessions"
+    }
+  },
+  "runs": 26,
+  "outcomes": {
+    "victory": 22,
+    "defeat": 4
+  },
+  "cohorts": [
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "earned kit / no research",
+        "kit": "conductor",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "electric",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 1,
+      "seeds": [
+        101
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1652,
+          "minimum": 1652,
+          "maximum": 1652
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 54,
+          "minimum": 54,
+          "maximum": 54
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 15039,
+          "minimum": 15039,
+          "maximum": 15039
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 172,
+          "minimum": 172,
+          "maximum": 172
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 11.6,
+          "minimum": 11.6,
+          "maximum": 11.6
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 21.12,
+          "minimum": 21.12,
+          "maximum": 21.12
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 40.7,
+          "minimum": 40.7,
+          "maximum": 40.7
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 204.27,
+          "minimum": 204.27,
+          "maximum": 204.27
+        },
+        "halo": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 157.45,
+          "minimum": 157.45,
+          "maximum": 157.45
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "earned kit / no research",
+        "kit": "conductor",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "electric",
+        "research": {},
+        "suite": "extended-seeds.json"
+      },
+      "runs": 1,
+      "seeds": [
+        505
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 637.57,
+          "minimum": 637.57,
+          "maximum": 637.57
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1687,
+          "minimum": 1687,
+          "maximum": 1687
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 53,
+          "minimum": 53,
+          "maximum": 53
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 14730,
+          "minimum": 14730,
+          "maximum": 14730
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 986,
+          "minimum": 986,
+          "maximum": 986
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 10.98,
+          "minimum": 10.98,
+          "maximum": 10.98
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16.08,
+          "minimum": 16.08,
+          "maximum": 16.08
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 37.85,
+          "minimum": 37.85,
+          "maximum": 37.85
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 196.22,
+          "minimum": 196.22,
+          "maximum": 196.22
+        },
+        "halo": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 95.6,
+          "minimum": 95.6,
+          "maximum": 95.6
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "earned kit / no research",
+        "kit": "engineer",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "engineer",
+        "research": {},
+        "suite": "engineer-probe.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "victory": 2
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1652.5,
+          "minimum": 1650,
+          "maximum": 1655
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 55.5,
+          "minimum": 55,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 15848.0,
+          "minimum": 15685,
+          "maximum": 16011
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 643.5,
+          "minimum": 602,
+          "maximum": 685
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.475,
+          "minimum": 11.33,
+          "maximum": 11.62
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.475,
+          "minimum": 11.33,
+          "maximum": 11.62
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 301.94,
+          "minimum": 266.83,
+          "maximum": 337.05
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 322.815,
+          "minimum": 191.33,
+          "maximum": 454.3
+        },
+        "singularity": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 364.455,
+          "minimum": 186.78,
+          "maximum": 542.13
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "earned kit / no research",
+        "kit": "sentinel",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "halo",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 1,
+      "seeds": [
+        101
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1641,
+          "minimum": 1641,
+          "maximum": 1641
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 57,
+          "minimum": 57,
+          "maximum": 57
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16423,
+          "minimum": 16423,
+          "maximum": 16423
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 71,
+          "minimum": 71,
+          "maximum": 71
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 11.77,
+          "minimum": 11.77,
+          "maximum": 11.77
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 17.82,
+          "minimum": 17.82,
+          "maximum": 17.82
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 20.29,
+          "minimum": 20.29,
+          "maximum": 20.29
+        }
+      },
+      "mutations": {
+        "halo": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 49.15,
+          "minimum": 49.15,
+          "maximum": 49.15
+        },
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 304.48,
+          "minimum": 304.48,
+          "maximum": 304.48
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "earned kit / no research",
+        "kit": "sentinel",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "halo",
+        "research": {},
+        "suite": "extended-seeds.json"
+      },
+      "runs": 1,
+      "seeds": [
+        505
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1641,
+          "minimum": 1641,
+          "maximum": 1641
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 56,
+          "minimum": 56,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16242,
+          "minimum": 16242,
+          "maximum": 16242
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 80,
+          "minimum": 80,
+          "maximum": 80
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 13.83,
+          "minimum": 13.83,
+          "maximum": 13.83
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 36.72,
+          "minimum": 36.72,
+          "maximum": 36.72
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 27.12,
+          "minimum": 27.12,
+          "maximum": 27.12
+        }
+      },
+      "mutations": {
+        "halo": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 55.85,
+          "minimum": 55.85,
+          "maximum": 55.85
+        },
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 277.22,
+          "minimum": 277.22,
+          "maximum": 277.22
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "all",
+        "pickup_mode": "local",
+        "profile": "kinetic",
+        "research": {},
+        "suite": "corruption-probe.json"
+      },
+      "runs": 1,
+      "seeds": [
+        202
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1656,
+          "minimum": 1656,
+          "maximum": 1656
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 56,
+          "minimum": 56,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16361,
+          "minimum": 16361,
+          "maximum": 16361
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 503,
+          "minimum": 503,
+          "maximum": 503
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 11.3,
+          "minimum": 11.3,
+          "maximum": 11.3
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 11.3,
+          "minimum": 11.3,
+          "maximum": 11.3
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 270.96,
+          "minimum": 270.96,
+          "maximum": 270.96
+        }
+      },
+      "mutations": {
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 547.22,
+          "minimum": 547.22,
+          "maximum": 547.22
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "arcstorm",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "defeat": 2
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 530.89,
+          "minimum": 527.63,
+          "maximum": 534.15
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1297.5,
+          "minimum": 1281,
+          "maximum": 1314
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 23.5,
+          "minimum": 23,
+          "maximum": 24
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 2895.5,
+          "minimum": 2837,
+          "maximum": 2954
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 9948.0,
+          "minimum": 9916,
+          "maximum": 9980
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 318.625,
+          "minimum": 317.8,
+          "maximum": 319.45
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 198.28,
+          "minimum": 196.38,
+          "maximum": 200.18
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "arcstorm",
+        "research": {},
+        "suite": "extended-seeds.json"
+      },
+      "runs": 1,
+      "seeds": [
+        303
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1653,
+          "minimum": 1653,
+          "maximum": 1653
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 56,
+          "minimum": 56,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16223,
+          "minimum": 16223,
+          "maximum": 16223
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 204,
+          "minimum": 204,
+          "maximum": 204
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.98,
+          "minimum": 12.98,
+          "maximum": 12.98
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.98,
+          "minimum": 12.98,
+          "maximum": 12.98
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 290.75,
+          "minimum": 290.75,
+          "maximum": 290.75
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 478.42,
+          "minimum": 478.42,
+          "maximum": 478.42
+        },
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 481.87,
+          "minimum": 481.87,
+          "maximum": 481.87
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "electric",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "victory": 2
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1649.0,
+          "minimum": 1648,
+          "maximum": 1650
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 54.5,
+          "minimum": 54,
+          "maximum": 55
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 15260.0,
+          "minimum": 15196,
+          "maximum": 15324
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 106.0,
+          "minimum": 74,
+          "maximum": 138
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 69.24,
+          "minimum": 49.41,
+          "maximum": 89.07
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 200.635,
+          "minimum": 199.4,
+          "maximum": 201.87
+        },
+        "halo": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 147.375,
+          "minimum": 103.08,
+          "maximum": 191.67
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "electric",
+        "research": {},
+        "suite": "extended-seeds.json"
+      },
+      "runs": 1,
+      "seeds": [
+        404
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1645,
+          "minimum": 1645,
+          "maximum": 1645
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 54,
+          "minimum": 54,
+          "maximum": 54
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 14974,
+          "minimum": 14974,
+          "maximum": 14974
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 259,
+          "minimum": 259,
+          "maximum": 259
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 13.25,
+          "minimum": 13.25,
+          "maximum": 13.25
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 13.25,
+          "minimum": 13.25,
+          "maximum": 13.25
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 50.02,
+          "minimum": 50.02,
+          "maximum": 50.02
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 207.97,
+          "minimum": 207.97,
+          "maximum": 207.97
+        },
+        "halo": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 156.15,
+          "minimum": 156.15,
+          "maximum": 156.15
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "engineer",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "victory": 2
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1657.5,
+          "minimum": 1653,
+          "maximum": 1662
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 55.0,
+          "minimum": 54,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 15751.5,
+          "minimum": 15133,
+          "maximum": 16370
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 636.5,
+          "minimum": 297,
+          "maximum": 976
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 267.33000000000004,
+          "minimum": 257.98,
+          "maximum": 276.68
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 348.475,
+          "minimum": 238.08,
+          "maximum": 458.87
+        },
+        "singularity": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 512.1800000000001,
+          "minimum": 473.88,
+          "maximum": 550.48
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "halo",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "victory": 1,
+        "defeat": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 359.71,
+          "minimum": 119.4,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 906.5,
+          "minimum": 160,
+          "maximum": 1653
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 33.5,
+          "minimum": 10,
+          "maximum": 57
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 8525.5,
+          "minimum": 547,
+          "maximum": 16504
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 356.0,
+          "minimum": 141,
+          "maximum": 571
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 36.47,
+          "minimum": 32.77,
+          "maximum": 40.17
+        }
+      },
+      "mutations": {
+        "halo": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 60.01,
+          "minimum": 57.3,
+          "maximum": 62.72
+        },
+        "singularity": {
+          "observed": 1,
+          "unobserved": 1,
+          "median": 344.17,
+          "minimum": 344.17,
+          "maximum": 344.17
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "halo",
+        "research": {},
+        "suite": "extended-seeds.json"
+      },
+      "runs": 1,
+      "seeds": [
+        303
+      ],
+      "outcomes": {
+        "defeat": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 114.15,
+          "minimum": 114.15,
+          "maximum": 114.15
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 155,
+          "minimum": 155,
+          "maximum": 155
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 10,
+          "minimum": 10,
+          "maximum": 10
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 564,
+          "minimum": 564,
+          "maximum": 564
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 514,
+          "minimum": 514,
+          "maximum": 514
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.98,
+          "minimum": 12.98,
+          "maximum": 12.98
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.98,
+          "minimum": 12.98,
+          "maximum": 12.98
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 22.33,
+          "minimum": 22.33,
+          "maximum": 22.33
+        }
+      },
+      "mutations": {}
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "kinetic",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "victory": 2
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1645.0,
+          "minimum": 1643,
+          "maximum": 1647
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 56.0,
+          "minimum": 56,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 16249.0,
+          "minimum": 16144,
+          "maximum": 16354
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 206.0,
+          "minimum": 144,
+          "maximum": 268
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 209.79500000000002,
+          "minimum": 204.16,
+          "maximum": 215.43
+        }
+      },
+      "mutations": {
+        "singularity": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 510.19000000000005,
+          "minimum": 491.55,
+          "maximum": 528.83
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "kinetic",
+        "research": {},
+        "suite": "extended-seeds.json"
+      },
+      "runs": 1,
+      "seeds": [
+        404
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1649,
+          "minimum": 1649,
+          "maximum": 1649
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 55,
+          "minimum": 55,
+          "maximum": 55
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 15800,
+          "minimum": 15800,
+          "maximum": 15800
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 446,
+          "minimum": 446,
+          "maximum": 446
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 13.25,
+          "minimum": 13.25,
+          "maximum": 13.25
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 13.25,
+          "minimum": 13.25,
+          "maximum": 13.25
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 201.79,
+          "minimum": 201.79,
+          "maximum": 201.79
+        }
+      },
+      "mutations": {
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 398.45,
+          "minimum": 398.45,
+          "maximum": 398.45
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "clean",
+        "pickup_mode": "local",
+        "profile": "singularity",
+        "research": {},
+        "suite": "bot-report.json"
+      },
+      "runs": 2,
+      "seeds": [
+        101,
+        202
+      ],
+      "outcomes": {
+        "victory": 2
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1653.5,
+          "minimum": 1642,
+          "maximum": 1665
+        },
+        "level": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 54.5,
+          "minimum": 53,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 15150.5,
+          "minimum": 14289,
+          "maximum": 16012
+        },
+        "uncollected_xp": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 1258.0,
+          "minimum": 478,
+          "maximum": 2038
+        },
+        "first_level_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 11.89,
+          "minimum": 11.3,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 235.55,
+          "minimum": 220.7,
+          "maximum": 250.4
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 322.64,
+          "minimum": 192.03,
+          "maximum": 453.25
+        },
+        "singularity": {
+          "observed": 2,
+          "unobserved": 0,
+          "median": 189.01999999999998,
+          "minimum": 187.17,
+          "maximum": 190.87
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "fracture",
+        "pickup_mode": "local",
+        "profile": "kinetic",
+        "research": {},
+        "suite": "corruption-probe.json"
+      },
+      "runs": 1,
+      "seeds": [
+        202
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1661,
+          "minimum": 1661,
+          "maximum": 1661
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 57,
+          "minimum": 57,
+          "maximum": 57
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16594,
+          "minimum": 16594,
+          "maximum": 16594
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 250,
+          "minimum": 250,
+          "maximum": 250
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 11.3,
+          "minimum": 11.3,
+          "maximum": 11.3
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 11.3,
+          "minimum": 11.3,
+          "maximum": 11.3
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 175.85,
+          "minimum": 175.85,
+          "maximum": 175.85
+        }
+      },
+      "mutations": {
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 409.4,
+          "minimum": 409.4,
+          "maximum": 409.4
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "hive",
+        "pickup_mode": "local",
+        "profile": "kinetic",
+        "research": {},
+        "suite": "corruption-probe.json"
+      },
+      "runs": 1,
+      "seeds": [
+        101
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1654,
+          "minimum": 1654,
+          "maximum": 1654
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 56,
+          "minimum": 56,
+          "maximum": 56
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 16014,
+          "minimum": 16014,
+          "maximum": 16014
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 336,
+          "minimum": 336,
+          "maximum": 336
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.48,
+          "minimum": 12.48,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.48,
+          "minimum": 12.48,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 271.11,
+          "minimum": 271.11,
+          "maximum": 271.11
+        }
+      },
+      "mutations": {
+        "singularity": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 499.83,
+          "minimum": 499.83,
+          "maximum": 499.83
+        }
+      }
+    },
+    {
+      "conditions": {
+        "bot_policy": "cautious",
+        "fixture": "new player",
+        "kit": "vanguard",
+        "link_policy": "redline",
+        "pickup_mode": "local",
+        "profile": "electric",
+        "research": {},
+        "suite": "corruption-probe.json"
+      },
+      "runs": 1,
+      "seeds": [
+        101
+      ],
+      "outcomes": {
+        "victory": 1
+      },
+      "metrics": {
+        "survived_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 600.02,
+          "minimum": 600.02,
+          "maximum": 600.02
+        },
+        "kills": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 1650,
+          "minimum": 1650,
+          "maximum": 1650
+        },
+        "level": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 54,
+          "minimum": 54,
+          "maximum": 54
+        },
+        "xp_collected": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 15276,
+          "minimum": 15276,
+          "maximum": 15276
+        },
+        "uncollected_xp": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 190,
+          "minimum": 190,
+          "maximum": 190
+        },
+        "first_level_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.48,
+          "minimum": 12.48,
+          "maximum": 12.48
+        },
+        "first_new_weapon_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 12.48,
+          "minimum": 12.48,
+          "maximum": 12.48
+        },
+        "longest_upgrade_gap_seconds": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 79.47,
+          "minimum": 79.47,
+          "maximum": 79.47
+        }
+      },
+      "mutations": {
+        "arcstorm": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 194.62,
+          "minimum": 194.62,
+          "maximum": 194.62
+        },
+        "halo": {
+          "observed": 1,
+          "unobserved": 0,
+          "median": 193.42,
+          "minimum": 193.42,
+          "maximum": 193.42
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Fixed-seed bot observations, not human enjoyment, retention or population win-rate estimates.",
+    "Suites, kits, fixtures, policies and research remain separate; medians describe only the recorded seeds.",
+    "Missing first-level/weapon events are unobserved, not zero seconds. Mutation times include reached runs only.",
+    "Comparison covers selected balance observations. Full gameplay determinism is checked separately.",
+    "Host CPU timings are excluded. No Android rendering, phone FPS, touch-latency or thermal claim.",
+    "Victories, defeats and time limits are observations; valid balance changes do not fail this tool."
+  ],
+  "baseline_sources": {
+    "bot-report.json": {
+      "sha256": "7909c02208ef122dffdccae118b111efb0d7f5f0878b28b2038e2a58c345dbf7",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules bot playtests"
+    },
+    "extended-seeds.json": {
+      "sha256": "0c454db2f3875950ae50021f5304e40cb6c946f7dde5b7b49435ebed9dfcfc8a",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "additional fixed-seed normal-rules sessions"
+    },
+    "corruption-probe.json": {
+      "sha256": "f3ff275aa08939b328949ce5e70be23a971688ed8a9e62ec19cbc54a9012832e",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules corruption choices"
+    },
+    "engineer-probe.json": {
+      "sha256": "3b42ab2889a32a5bd94cab73a01585a8205c8699b2718edab03888d91ea77005",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules earned Engineer sessions"
+    }
+  },
+  "comparison": {
+    "matched": 26,
+    "changed_observations": 0,
+    "changes": [],
+    "added": [],
+    "removed": []
+  }
+}

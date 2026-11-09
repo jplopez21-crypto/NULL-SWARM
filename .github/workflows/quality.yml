@@ -67,6 +67,8 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd -- --engineer-probe 2>&1 | tee builds/qa/engineer-probe.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-probe.log; then exit 1; fi
           test -s builds/qa/engineer-probe.json
+      - name: Normal-play balance observations
+        run: python3 tools/report_playtest_balance.py --candidate builds/qa --output builds/qa
       - name: UI lifecycle and window-size captures
         run: |
           set -o pipefail
@@ -120,7 +122,7 @@ jobs:
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/BALANCE_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

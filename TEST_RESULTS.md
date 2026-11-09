@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Normal-play balance reporting — local verification in progress 2026-11-09
+
+- Add readable/JSON balance observations for all four normal-play suites and optional matched-seed baseline comparison. Cohorts retain suite/kit/profile/fixture/policies/research; first events and mutation reach preserve unobserved cases. Invalid inputs fail; valid defeats/time limits/metric changes remain observations. Quality CI generation and summary publication configured. No shipping gameplay changes.
+- All 70 local Python tests pass, including eleven new aggregation/comparison/CLI cases. Executed comparison of two prior verified archives: 26 matched runs, 19 cohorts, 22 victories/four defeats and zero changed selected observations. These are archived runs, not newly executed local sessions. All 15 strict Godot suites also pass; fresh hosted pipeline/report generation remains pending.
+
 ## Mutation recipe progress — verified 2026-11-09
 
 Verified code/build source: `252254a16ea712241f3d28265e9358b6134f462c`, tree `7d9442fb1cac7574db77c8743ee5cbd718160ca0`. Final checkpoint changes Markdown/JSON evidence only.
