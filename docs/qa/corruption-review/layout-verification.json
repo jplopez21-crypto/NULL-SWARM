@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "previous_layouts": 188,
+  "layouts": 200,
+  "added_layouts": 12,
+  "build_layouts_with_one_added_review_action": 20,
+  "previous_checks": 2397,
+  "checks": 2601,
+  "additional_checks": 204,
+  "remaining_viewport_canvas_stage_and_button_metadata_preserved": true,
+  "scope": "Synthetic clean, partial and full protocol fixtures across four viewports. No earned Android corruption claimed."
+}

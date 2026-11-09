@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Added functioning Corruption review from the build guide: active links, actual gains/costs derived from protocol accessors, clean-state explanation, next optional-link threshold and full-cap state. Separate Back to Build action preserves the paused run; no purchases, reselection or stat changes. Shared read-only guide text supports QA without expanding the probe schema.
-- All 15 local Godot suites/41 Python tests pass: 91 real-GUI checks, 47 corruption checks, 200 layouts/2,600 headless checks. Tests cover detached review data, clean/partial/full geometry, actual GUI Redline selection/review without reapplying health cost, identical build return and protocol/RNG/rank/save integrity. Mobile path now includes clean review navigation; hosted verification pending for this source.
-- Next: inspect actual native/Mobile and full-link captures, verify lifecycle/gameplay parity, then publish a verified ARM64 debug APK. Active corruption tests use engine/UI fixtures; earned Android links remain open. Physical profiling/audio, protected signing/release AAB remain unverified. Main unchanged/unmerged; latest prior APK/results in TEST_RESULTS.md.
+- Corruption build review verified at source `8c8083230c701f088e257507408f26a4bc95b0c3`: functioning build action, active gain/cost cards derived from protocol accessors, clean/next-link/cap information and Back to Build. No reselection or stat mutation. Actual Mobile clean screen, native action row and synthetic full-link board inspected. Active-link/no-double-cost checks are engine/GUI fixtures; earned Android corruption remains open.
+- All five workflows pass on attempt 1: 15 matching Godot suites/41 Python tests, 91 GUI checks, 47 corruption checks, 200 layouts (2,600 headless/2,601 rendered), Mobile 26 checks, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks. Gameplay/XP/pacing/stress/replay baselines preserved; failed unpatched control retained. Ten archive integrity checks pass; exact evidence in TEST_RESULTS.md.
+- New verified ARM64 debug APK linked in TEST_RESULTS.md. Only build caller/UI/read-only formatter modules change among 44 compared executable/config entries; engine, other gameplay modules and shipping settings match. Export progress backup before replacing rotating-key debug installs. Phone profiling/audio, protected signing/release AAB unverified; emulator-only Swappy override unchanged. Main unchanged/unmerged; current PR notes in docs/DEVELOPMENT_PR.md.
+- Next: earned corruption and wider build variation on Mobile, bounded combat/boss readability polish and representative ARM64 profiling. Stable protected preview signing still requires owner secrets.
 
 ## Prior verified checkpoints
 
