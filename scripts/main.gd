@@ -403,24 +403,24 @@ func upgrade_description(id: String) -> String:
 		var line := "NEW WEAPON // %s" % definition["role"] if rank == 0 else "RANK %d → %d // DMG %d → %d" % [rank, rank + 1, int(definition["damage"] * (1.0 + (rank - 1) * 0.28)), int(definition["damage"] * (1.0 + rank * 0.28))]
 		var synergy := ""
 		if id in ["orbit", "thermal"]:
-			synergy = "\nMUTATION: Orbitals 3 + Thermal 3"
+			synergy = "\nHALO: " + Arsenal.recipe_progress("halo", progress.ranks)
 		elif id == "rail":
-			synergy = "\nEVOLVE: Singularity Lance\nRail 3 + Tether 3\nPull field; bosses stay anchored."
+			synergy = "\nEVOLVE: Singularity Lance\n%s\nPull field; bosses stay anchored." % Arsenal.recipe_progress("singularity", progress.ranks)
 			if combat.mutations.has("singularity"):
 				var current_field: float = definition["damage"] * (1.0 + (rank - 1) * 0.28) * GravityField.PULSE_DAMAGE_FRACTION
 				var next_field: float = definition["damage"] * (1.0 + rank * 0.28) * GravityField.PULSE_DAMAGE_FRACTION
 				synergy = "\nFIELD %.1f → %.1f / PULSE\n5 PULSES / 1.5s\nBosses/charge lanes anchored." % [current_field, next_field]
 		elif id == "arc":
-			synergy = "\nMUTATION: Arc 3 + Amplified Pulse 3"
+			synergy = "\nARCSTORM: " + Arsenal.recipe_progress("arcstorm", progress.ranks)
 		return "%s\n%s\n\n%s%s" % [Arsenal.equipped_title(id, combat.mutations), line, definition["description"], synergy]
 	match id:
-		"damage": return "AMPLIFIED PULSE\nDamage %d → %d\nSynergy: Pulse 3 + Arc 3" % [int(combat.weapon.damage), int(combat.weapon.damage + 6)]
+		"damage": return "AMPLIFIED PULSE\nDamage %d → %d\nARCSTORM: %s" % [int(combat.weapon.damage), int(combat.weapon.damage + 6), Arsenal.recipe_progress("arcstorm", progress.ranks)]
 		"rate": return "RAPID CYCLER\nCooldown %.2fs → %.2fs\nFaster automatic fire." % [combat.weapon.interval / combat.corruption.cycle_rate(), maxf(0.12, combat.weapon.interval * 0.87) / combat.corruption.cycle_rate()]
 		"pierce": return "PHASE ROUNDS\nPierce %d → %d\nPunch through another unit." % [combat.weapon.piercing, combat.weapon.piercing + 1]
 		"speed": return "SERVO OVERDRIVE\nSpeed %.1f → %.1f\nOutrun the machine tide." % [player.effective_speed(), (player.speed + 0.65) * player.walk_multiplier]
 		"health": return "REINFORCED CHASSIS\nMax HP %d → %d\nAlso restores 25 health." % [int(player.health.maximum), int(player.health.maximum + 20)]
 		"shield": return "AEGIS CAPACITOR\nShield %d → %d\nRecharges after 5s unharmed." % [int(player.health.max_shield), int(player.health.max_shield + 12)]
-		"magnet": return "MEMORY TETHER\nRANK %d → %d\nAttraction %.1fm → %.1fm\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3" % [int(progress.ranks.get("magnet", 0)), int(progress.ranks.get("magnet", 0)) + 1, player.magnet, player.magnet + 1.2]
+		"magnet": return "MEMORY TETHER\nRANK %d → %d\nAttraction %.1fm → %.1fm\nCollect tech from farther away.\nEVOLVE: %s" % [int(progress.ranks.get("magnet", 0)), int(progress.ranks.get("magnet", 0)) + 1, player.magnet, player.magnet + 1.2, Arsenal.recipe_progress("singularity", progress.ranks)]
 	return "FIELD REPAIR\nRestore 35 HP\nAll systems fully upgraded."
 
 func select_upgrade(id: String) -> void:

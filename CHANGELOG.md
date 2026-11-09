@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Mutation recipe progress
+
+- Show current prerequisite ranks on mutation-related upgrade cards, preserving gold completion previews and existing field statistics. All local suites pass with eight new model/ten GUI assertions; hosted verification pending. Offers and combat balance unchanged.
+
 ## Development — 2026-11-09 / Settings-return input diagnostics
 
 - Record bounded opt-in touch delivery/focus around one post-background Settings tap, with no retries or input-routing changes. All five workflows pass attempt 1: 59 Python tests/15 Godot suites, 59 ordinary Android and 42 Mobile checks. Two actual workers verify one target press/release and fresh Settings transition. Gameplay fingerprints unchanged; prior intermittent timeout remains open and no repair is claimed. No gameplay reinstall needed. Exact scope: TEST_RESULTS.md.

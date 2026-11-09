@@ -268,6 +268,28 @@ func run() -> void:
 	click(game, "RESUME")
 	await settle()
 	check(game.state == game.State.PLAYING and game.player.health.maximum == linked_hp and game.combat.corruption.accepted == ["redline"], "active corruption review navigation returns to combat with the same paid cost")
+	# Mid-build fixtures verify both prerequisite cards without promising completion.
+	for recipe in [{"ranks": {"damage": 2, "arc": 1}, "offers": ["damage", "arc", "speed"], "text": "Pulse 2/3 + Arc 1/3"}, {"ranks": {"orbit": 1, "thermal": 2}, "offers": ["orbit", "thermal", "speed"], "text": "Orbitals 1/3 + Thermal 2/3"}, {"ranks": {"rail": 2, "magnet": 1}, "offers": ["rail", "magnet", "speed"], "text": "Rail 2/3 + Tether 1/3"}]:
+		game.start_run()
+		game.progress.ranks = recipe["ranks"].duplicate()
+		game.progress.level = 5
+		game.progress.pending = 1
+		game.offered.assign(recipe["offers"])
+		game.state = game.State.UPGRADING
+		var recipe_rng: int = game.combat.rng.state
+		var recipe_save: Dictionary = game.save.data.duplicate(true)
+		game._render_upgrades()
+		await settle()
+		var matching_cards: int = 0
+		var false_finisher: bool = false
+		for button in game.ui.screen.find_children("*", "Button", true, false):
+			if button.text.contains(recipe["text"]):
+				matching_cards += 1
+			false_finisher = false_finisher or button.text.contains("MUTATES:")
+		check(matching_cards == 2, "both prerequisite cards show the same current recipe progress")
+		check(not false_finisher and game.combat.mutations.is_empty(), "partial recipe counters cannot promise or activate a mutation")
+		game._physics_process(2.0)
+		check(game.progress.ranks == recipe["ranks"] and game.progress.pending == 1 and game.progress.rerolls == 2 and game.combat.rng.state == recipe_rng and game.save.data == recipe_save and game.combat.director.elapsed == 0, "rendering recipe counters changes no offers ranks choices RNG time or save")
 	# A synthetic legal near-mutation build exercises actual card GUI dispatch.
 	game.start_run()
 	game.progress.ranks = {"damage": 2, "arc": 3}
@@ -287,6 +309,7 @@ func run() -> void:
 		if button.text.begins_with("01\n"):
 			predicted = button
 	check(predicted != null and predicted.text.contains("MUTATES: ARCSTORM RIFLE") and predicted.get_theme_stylebox("normal").border_color == Color("ffe39b") and predicted.get_theme_color("font_focus_color") == Color("ffe39b"), "real finisher card names and highlights the evolved weapon while focused")
+	check(predicted.text.contains("Pulse 2/3 + Arc 3/3"), "finisher shows current counters alongside the forecasted mutation badge")
 	game._physics_process(2.0)
 	check(game.progress.ranks == preview_ranks and game.progress.pending == 1 and game.combat.mutations.is_empty() and game.combat.rng.state == preview_rng and game.combat.director.elapsed == preview_clock, "rendering mutation forecasts cannot spend choices, mutate weapons, advance combat or consume RNG")
 	click(game, "AMPLIFIED PULSE")

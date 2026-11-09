@@ -160,6 +160,17 @@ func run() -> void:
 	check(Arsenal.mutation({"damage": 3, "arc": 3}).has("arcstorm"), "Arcstorm prerequisites")
 	check(not Arsenal.mutation({"damage": 2, "arc": 3}).has("arcstorm"), "mutation requires both prerequisites")
 	check(Arsenal.mutation({"orbit": 3, "thermal": 3}).has("halo"), "Solar Halo prerequisites")
+	check(Arsenal.recipe_progress("arcstorm", {}) == "Pulse 0/3 + Arc 0/3", "empty card recipe shows honest zero progress")
+	check(Arsenal.recipe_progress("arcstorm", {"damage": 2, "arc": 1}) == "Pulse 2/3 + Arc 1/3", "Arcstorm card uses actual current prerequisite ranks")
+	check(Arsenal.recipe_progress("halo", {"orbit": 1, "thermal": 2}) == "Orbitals 1/3 + Thermal 2/3", "Halo card reports both independent prerequisite ranks")
+	check(Arsenal.recipe_progress("singularity", {"rail": 2, "magnet": 3}) == "Rail 2/3 + Tether 3/3", "Singularity card reports actual passive prerequisite progress")
+	check(Arsenal.recipe_progress("arcstorm", {"damage": 7, "arc": 5}) == "Pulse 3/3 + Arc 3/3", "recipe progress saturates when requirements are fulfilled")
+	check(Arsenal.recipe_progress("halo", {"orbit": -1, "unknown": 99}) == "Orbitals 0/3 + Thermal 0/3", "recipe display ignores unrelated counters and clamps negative fixtures")
+	check(Arsenal.recipe_progress("invalid", {}).is_empty(), "unknown recipe cannot invent card guidance")
+	var recipe_ranks: Dictionary = {"damage": 2, "arc": 1, "unknown": 99}
+	var recipe_before: Dictionary = recipe_ranks.duplicate(true)
+	Arsenal.recipe_progress("arcstorm", recipe_ranks)
+	check(recipe_ranks == recipe_before, "recipe formatting cannot mutate ranks")
 	var forecast := RunProgression.new()
 	for fixture in [["damage", "arc", "arcstorm"], ["arc", "damage", "arcstorm"], ["orbit", "thermal", "halo"], ["thermal", "orbit", "halo"], ["rail", "magnet", "singularity"], ["magnet", "rail", "singularity"]]:
 		forecast.ranks = {fixture[0]: 2, fixture[1]: 3}

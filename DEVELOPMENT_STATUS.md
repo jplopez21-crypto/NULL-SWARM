@@ -2,6 +2,12 @@
 
 ## Current checkpoint
 
+- Added current mutation recipe progress to both prerequisite upgrade cards for all three existing mutations. Registry-based compact counters saturate when complete; gold finisher forecasts and active Singularity field stats remain intact. Offers/balance/RNG/save/input rules unchanged.
+- All 15 local Godot suites/59 Python tests pass, including 1,087 systems/101 GUI checks and existing 200 UI layouts. Hosted Android/export/rendered/full-QA checks pending; prior verified APK remains in TEST_RESULTS.md.
+- Next: inspect actual rendered/Android card progress and all existing gates, then broaden earned mutation/other-link coverage. Earlier intermittent Settings-return cause remains open, with delivery diagnostics available. Physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+
+## Previous verified input diagnostic checkpoint
+
 - Verified Settings-return input diagnostics at source `993d7606ae5a4cb94755dc82fb6e1a94942cdd60`: opt-in eight-edge touch history/focus, one unchanged ADB tap and bounded transition samples. Actual ordinary and patched-diagnostic workers each record exactly one uncanceled target press/release and a fresh Settings panel with seventeen fields frozen. Actual pause/Settings screenshots and independent event/offer/action-index checks pass. No retries, new readiness waits or gameplay/input-routing changes.
 - All five workflows pass attempt 1: 59 ordinary Android checks, 42 Mobile checks, 15 Godot suites/59 Python tests, 33 probe/91 GUI/47 corruption checks, unchanged 200 UI layouts and gameplay fingerprints. Exact APK/results: TEST_RESULTS.md; compact receipts/index: docs/qa/input-delivery/verified-ci.json.
 - Prior intermittent Settings-return timeout remains open; original failure evidence and unchanged successful retest are preserved. Current success verifies diagnostics, not root cause or repair. Only the disabled-by-default QA probe differs among 44 compared shipping entries; no gameplay reinstall needed.

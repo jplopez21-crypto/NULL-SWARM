@@ -20,6 +20,18 @@ const PASSIVE_TITLES: Dictionary = {
  "speed": "SERVO OVERDRIVE", "health": "REINFORCED CHASSIS", "shield": "AEGIS CAPACITOR",
  "magnet": "MEMORY TETHER"
 }
+const RECIPE_LABELS: Dictionary = {"damage": "Pulse", "arc": "Arc", "orbit": "Orbitals", "thermal": "Thermal", "rail": "Rail", "magnet": "Tether"}
+
+static func recipe_progress(id: String, ranks: Dictionary) -> String:
+	# Compact card copy uses the same requirements as actual weapon mutation.
+	if not MUTATIONS.has(id):
+		return ""
+	var parts: Array[String] = []
+	for prerequisite in MUTATIONS[id]["requires"]:
+		var needed: int = int(MUTATIONS[id]["requires"][prerequisite])
+		var owned: int = clampi(int(ranks.get(prerequisite, 0)), 0, needed)
+		parts.append("%s %d/%d" % [RECIPE_LABELS.get(prerequisite, title(prerequisite)), owned, needed])
+	return " + ".join(parts)
 
 static func mutation_progress(ranks: Dictionary, active: Array[String], slots_used: int) -> Array[Dictionary]:
 	# Read-only presentation query. Multiple missing weapons must all fit the run.

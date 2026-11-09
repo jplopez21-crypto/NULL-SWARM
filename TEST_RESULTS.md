@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Mutation recipe progress — local verification 2026-11-09
+
+- Upgrade cards for both prerequisites of Arcstorm, Halo and Singularity now display actual current recipe progress instead of static requirements. Compact labels use the production recipe registry; fulfilled counts saturate at the threshold, and gold finishing-choice previews remain intact. Active Singularity field statistics retain their existing detail. No offers, costs, balance, RNG, save or input-routing changes.
+- All 15 local Godot suites/59 Python tests pass: 1,087 systems checks, 101 GUI checks and existing 200 layouts/2,600 headless UI checks. Eight new model and ten GUI assertions cover honest partial/complete counters, read-only display and preserved finisher predictions. Hosted Android/export/rendered/full-QA verification is pending; no new device result claimed yet.
+
 ## Settings-return input diagnostics — verified 2026-11-09
 
 Verified code/build source: `993d7606ae5a4cb94755dc82fb6e1a94942cdd60`, tree `5a387bd442e5543a176f2b4487fd5f6cf77c485c`. Final checkpoint changes Markdown/JSON evidence only.
