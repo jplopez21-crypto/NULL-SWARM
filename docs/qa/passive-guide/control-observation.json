@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "completed_cycles": 4,
+  "cycles_recorded": 5,
+  "checks_recorded": 13,
+  "checks_passed": 13,
+  "scope": "Unpatched diagnostic control; collection job success is not recovery acceptance. Raw transcript/log/screenshots retained in the control artifact."
+}

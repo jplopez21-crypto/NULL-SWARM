@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Passive build guide
 
-- Show all owned passive upgrade ranks and caps in the build guide, with wrapped text and an honest empty state. Repair/unknown counters stay out of the build summary. Local GUI/layout/state tests pass; Android/rendered/export verification pending. Combat and progression rules unchanged.
+- Show all owned passive ranks/caps in the build guide, with wrapped text and an honest empty state. Repair/unknown counters excluded. All five workflows, 15 Godot suites/35 Python tests, 21 Mobile and 58 ordinary Android checks plus eighteen return cycles pass. Maximum-rank and actual Mobile captures inspected; gameplay fingerprints preserved. New ARM64 APK and scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-08 / Earned Mobile build navigation
 
