@@ -2,6 +2,33 @@
 import math
 import re
 from upgrade_observation import upgrade_frozen
+from build_observation import BUILD_FROZEN_FIELDS
+
+
+def corruption_navigation_preserved(before, current):
+    """Observe a fresh picker/offer panel without spending or rerolling anything."""
+    return (before.get('process') is not None and current.get('process') == before['process']
+            and all(s.get('state') == s.get('rendered_state') == 'upgrading'
+                    and type(s.get('panel')) is int and s['panel'] > 0
+                    and s['panel'] == s.get('rendered_panel') for s in (before, current))
+            and current['panel'] != before['panel']
+            and current.get('rendered_frames', -1) > before.get('rendered_frames', -1)
+            and current.get('sample_ticks', -1) > before.get('sample_ticks', -1)
+            and all(key in before and key in current and before[key] == current[key] for key in BUILD_FROZEN_FIELDS))
+
+
+def same_offer_actions(before, current):
+    """Compare the complete visible choices/costs/enabled states, excluding layout IDs."""
+    def actions(sample):
+        buttons = sample.get('buttons')
+        if not isinstance(buttons, list) or not buttons:
+            return None
+        if any(not isinstance(b, dict) or not isinstance(b.get('text'), str)
+               or not b['text'] or type(b.get('disabled')) is not bool for b in buttons):
+            return None
+        return [(b['text'], b['disabled']) for b in buttons]
+    previous, restored = actions(before), actions(current)
+    return previous is not None and previous == restored
 
 
 def redline_terms(text):

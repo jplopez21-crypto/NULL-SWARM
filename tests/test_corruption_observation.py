@@ -4,7 +4,8 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).parents[1] / 'tools'))
-from corruption_observation import corruption_offer_frozen, redline_selected, redline_terms
+from corruption_observation import corruption_offer_frozen, corruption_navigation_preserved, redline_selected, redline_terms, same_offer_actions
+from build_observation import BUILD_FROZEN_FIELDS
 from upgrade_observation import UPGRADE_FROZEN_FIELDS
 
 
@@ -25,6 +26,48 @@ class CorruptionObservationTests(unittest.TestCase):
         self.assertEqual(redline_terms(self.text), {'before_max': 100, 'after_max': 80, 'cycle_gain': 30})
         for text in [None, 'PARASITIC HIVE', self.text.replace('100 -> 80', '80 -> 100'), self.text.replace('100 -> 80', '20 -> 0')]:
             self.assertIsNone(redline_terms(text))
+
+    def navigation_samples(self):
+        before = {key: 1 for key in BUILD_FROZEN_FIELDS}
+        before.update(copy.deepcopy(self.before))
+        before['buttons'] = [{'text': '01\nARC EMITTER', 'disabled': False},
+                             {'text': 'REROLL / 2', 'disabled': False}]
+        current = copy.deepcopy(before)
+        current.update(panel=10, rendered_panel=10, rendered_frames=22, sample_ticks=200)
+        return before, current
+
+    def test_picker_navigation_requires_fresh_rendered_panels_and_unchanged_state(self):
+        before, current = self.navigation_samples()
+        self.assertTrue(corruption_navigation_preserved(before, current))
+        for changes in [{'panel': 9, 'rendered_panel': 9}, {'rendered_panel': 9}, {'rendered_frames': 20},
+                        {'sample_ticks': 100}, {'process': 43}, {'state': 'playing'}, {'rendered_state': 'playing'}]:
+            changed = copy.deepcopy(current); changed.update(changes)
+            self.assertFalse(corruption_navigation_preserved(before, changed), changes)
+
+    def test_declining_cannot_spend_any_observed_gameplay_or_setting_field(self):
+        before, current = self.navigation_samples()
+        for key in BUILD_FROZEN_FIELDS:
+            changed = copy.deepcopy(current); changed[key] = 'changed'
+            self.assertFalse(corruption_navigation_preserved(before, changed), key)
+            del changed[key]
+            self.assertFalse(corruption_navigation_preserved(before, changed), key)
+
+    def test_restored_actions_preserve_rerolls_costs_order_and_enabled_state(self):
+        before, current = self.navigation_samples()
+        current['buttons'][0]['rect'] = [10, 20, 300, 50]
+        self.assertTrue(same_offer_actions(before, current))
+        for buttons in [[{'text': '01\nRAIL LANCE', 'disabled': False}, current['buttons'][1]],
+                        [current['buttons'][0], {'text': 'REROLL / 1', 'disabled': False}],
+                        [dict(current['buttons'][0], disabled=True), current['buttons'][1]],
+                        list(reversed(current['buttons'])), current['buttons'][:1]]:
+            self.assertFalse(same_offer_actions(before, {'buttons': buttons}))
+
+    def test_missing_or_malformed_offer_actions_cannot_pass(self):
+        before, _ = self.navigation_samples()
+        for buttons in [None, [], ['button'], [{'text': '', 'disabled': False}],
+                        [{'text': '01', 'disabled': 0}], [{'disabled': False}]]:
+            self.assertFalse(same_offer_actions(before, {'buttons': buttons}))
+        self.assertFalse(same_offer_actions({}, {}))
 
     def test_frozen_offer_requires_fresh_frames_and_both_new_stat_fields(self):
         current = copy.deepcopy(self.before); current.update(rendered_frames=22, sample_ticks=200)

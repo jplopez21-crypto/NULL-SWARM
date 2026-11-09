@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Earned corruption cancellation — local checks in progress 2026-11-09
+
+- Extend the existing real Mobile level-five path with decline → exact upgrade offer → reopen before Redline selection. Verify fresh rendered panels, seventeen unchanged fields, identical visible card terms/order/enabled states and unchanged reroll count. No gameplay rules, probe or shipping assets changed.
+- All 51 local Python tests pass, including four new navigation/action-integrity regressions. All 15 strict Godot suites also pass; hosted Android/build/full-QA checks are pending for this source. No new Android result is claimed yet.
+
 ## Earned Mobile corruption — verified 2026-11-09
 
 Verified code/build source: `d9f02f4ea42cee7cd5432ae7998b9809ced68f8e`, tree `222cd5525c58b7985ab386c4e3f7d011f70d9cba`. Final checkpoint changes Markdown/JSON evidence only.

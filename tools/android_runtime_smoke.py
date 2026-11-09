@@ -18,7 +18,7 @@ from lifecycle_observation import fresh_resumed_frame, frozen_run, app_egl_failu
 from upgrade_observation import UPGRADE_FROZEN_FIELDS, upgrade_frozen, selected_rank
 from build_observation import frozen_navigation
 from passive_observation import PASSIVE_LABELS, passive_card, passive_summary_matches
-from corruption_observation import corruption_offer_frozen, redline_selected, redline_terms
+from corruption_observation import corruption_offer_frozen, corruption_navigation_preserved, redline_selected, redline_terms, same_offer_actions
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -583,6 +583,25 @@ def mobile_earned_corruption(start):
     check(proposal['process'] == ordinary['process']
           and all(proposal[k] == ordinary[k] for k in (*UPGRADE_FROZEN_FIELDS, 'health', 'corruption')),
           'opening the earned corruption picker preserves gameplay choices health and protocol')
+    report['corruption_cancel'] = {'ordinary':ordinary, 'opened':proposal}
+    tap('KEEP MY UPGRADE CHOICES', proposal)
+    restored = wait(lambda x: x['state'] == x.get('rendered_state') == 'upgrading'
+                    and x.get('panel') == x.get('rendered_panel') and x['panel'] != proposal['panel']
+                    and any(re.match(r'^01\n', b['text']) for b in x['buttons']))
+    report['corruption_cancel']['restored'] = restored
+    check(corruption_navigation_preserved(proposal, restored),
+          'declining earned corruption restores fresh upgrade panel without spending health choices or RNG')
+    check(same_offer_actions(ordinary, restored),
+          'declining earned corruption restores identical cards reroll count and optional-link availability')
+    capture('mobile-corruption-declined')
+    tap('UNSTABLE LINK', restored)
+    reopened = wait(lambda x: x['state'] == x.get('rendered_state') == 'upgrading'
+                    and x.get('panel') == x.get('rendered_panel') and x['panel'] != restored['panel']
+                    and any('REDLINE SYNC' in b['text'] and not b['disabled'] for b in x['buttons']))
+    report['corruption_cancel']['reopened'] = reopened
+    check(corruption_navigation_preserved(restored, reopened) and same_offer_actions(proposal, reopened),
+          'reopening declined corruption preserves the exact advertised terms and unspent deployment')
+    proposal = reopened
     card = next(b['text'] for b in proposal['buttons'] if 'REDLINE SYNC' in b['text'] and not b['disabled'])
     terms = redline_terms(card)
     if terms is None:

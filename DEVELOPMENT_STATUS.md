@@ -2,6 +2,12 @@
 
 ## Current checkpoint
 
+- Adding actual earned Mobile corruption decline/reopen acceptance: preserve the original upgrade cards, reroll count and seventeen observed fields through fresh rendered panels before accepting Redline. This changes test tooling only; no shipping game/probe/balance changes.
+- All 51 local Python tests pass. All 15 strict Godot suites also pass; hosted Android/export/full-QA verification is pending. Latest verified phone APK/results remain in TEST_RESULTS.md; no reinstall is needed for test-only work.
+- Next: verify the actual cancellation transcript/captures and existing gates; then broaden earned mutation/other-link coverage. Physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+
+## Previous verified checkpoint
+
 - Verified actual earned Mobile Redline at source `d9f02f4ea42cee7cd5432ae7998b9809ced68f8e`: level 5/133 XP/38 kills, disclosed/applied HP 120→100 and +30% cycles, one choice consumed, ranks retained. Active review, seventeen-field frozen navigation, Resume and background return preserve the paid cost/protocol. Actual offer/review/resumed captures inspected; no grants/fixtures/rerolls in this path.
 - All five workflows pass on attempt 1: 39 Mobile checks, 15 Godot suites/47 Python tests, 29 probe/91 GUI/47 corruption checks, 200 layouts and existing Android gameplay/lifecycle/full-QA gates. Gameplay/XP/pacing/stress fingerprints and layout metadata preserved. Detailed results, artifact integrity and APK: TEST_RESULTS.md; receipts: docs/qa/earned-corruption/verified-ci.json.
 - Only opt-in read-only QA probe bytecode differs among 44 selected phone entries; it stays disabled in normal exports. Other 37 game modules/Java/native engine/settings match: no gameplay reinstall needed. Command budget expanded to 900 seconds within existing 30-minute Mobile job. No balance changes or new known gameplay bug found in this bounded coverage.

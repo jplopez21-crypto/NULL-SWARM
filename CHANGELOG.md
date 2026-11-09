@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Earned corruption cancellation coverage
+
+- Add real Mobile decline/reopen checks for exact upgrade cards/rerolls, fresh panels and preserved health/choices/RNG/settings. Four new Python regressions pass; hosted verification pending. Test-only change; shipping gameplay unchanged.
+
 ## Development — 2026-11-09 / Earned Mobile corruption coverage
 
 - Extend Mobile QA through normal progression to Redline, card-to-applied health/cycle terms and active review with no repeated cost. Add read-only health/protocol observations, seventeen-field pause checks and cost/queue regressions. All five workflows, 15 Godot suites/47 Python tests and 39 Mobile checks pass. Actual level-five Redline applies disclosed HP 120→100/+30% cycles and survives review/Resume/background without a repeated charge. Gameplay fingerprints preserved; no gameplay reinstall needed. Exact evidence/scope: TEST_RESULTS.md.
