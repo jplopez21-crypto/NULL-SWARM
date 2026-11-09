@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Passive build guide — local verification 2026-11-09
+
+- Build guide now reports owned passive ranks/caps, wraps the row and shows an honest empty state; repair/unknown counters are excluded. All 15 local Godot suites/35 Python tests pass: 77 GUI checks and 188 layouts/2,384 headless checks. Maximum-rank Vanguard/Engineer presentation fixtures cover all seven passives and full slots/blocked recipe; these are synthetic UI fixtures, not claimed earned Android outcomes. Final UI-only rerun passes with all seven names/caps asserted.
+- Hosted Android/rendered QA and APK export pending for this source. No new APK is claimed. Receipt: docs/qa/passive-guide/local-headless-results.json.
+
 ## Earned Mobile build navigation — verified 2026-11-08
 
 Verified test/build source: `39df52b374995035466ac19ea036ab5e5f4883c2`, tree `5d67fbe52e07457c8a3697d7185765bd697f99d8`. Final checkpoint changes reports/Markdown/JSON only. Game/phone executable and settings bytes are unchanged.

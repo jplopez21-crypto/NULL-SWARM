@@ -15,7 +15,11 @@ const MUTATIONS: Dictionary = {
  "singularity": {"weapon": "rail", "title": "SINGULARITY LANCE", "requires": {"rail": 3, "magnet": 3}, "effect": "RAIL IMPACTS LEAVE GRAVITY FIELDS"}
 }
 const MAX_SLOTS: int = 4
-const PASSIVE_TITLES: Dictionary = {"damage": "AMPLIFIED PULSE", "magnet": "MEMORY TETHER"}
+const PASSIVE_TITLES: Dictionary = {
+ "damage": "AMPLIFIED PULSE", "rate": "RAPID CYCLER", "pierce": "PHASE ROUNDS",
+ "speed": "SERVO OVERDRIVE", "health": "REINFORCED CHASSIS", "shield": "AEGIS CAPACITOR",
+ "magnet": "MEMORY TETHER"
+}
 
 static func mutation_progress(ranks: Dictionary, active: Array[String], slots_used: int) -> Array[Dictionary]:
 	# Read-only presentation query. Multiple missing weapons must all fit the run.

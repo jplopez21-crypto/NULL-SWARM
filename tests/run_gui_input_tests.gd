@@ -70,17 +70,22 @@ func run() -> void:
 	var frozen_build_rng: int = game.combat.rng.state
 	var frozen_build_save: Dictionary = game.save.data.duplicate(true)
 	var frozen_build_ranks: Dictionary = game.progress.ranks.duplicate(true)
+	# Presentation fixture: ranked passives plus non-passive/unknown counters.
+	game.progress.ranks = {"rate": 2, "shield": 1, "repair": 4, "unknown": 99}
+	frozen_build_ranks = game.progress.ranks.duplicate(true)
 	old_panel = game.ui.screen
 	click(game, "BUILD // MUTATIONS")
 	check(retained_until_frame_end(old_panel), "build transition safely retires pause panel during dispatch")
 	await settle()
 	var build_text: String = game.ui.visible_build_text()
+	check(build_text.contains("PASSIVE UPLINKS // RAPID CYCLER 2/7   •   AEGIS CAPACITOR 1/5") and not build_text.contains("UNKNOWN") and not build_text.contains("REPAIR"), "GUI build guide reports current passive ranks/caps while ignoring repair and unknown counters")
 	check(build_text.contains("WEAPONS 1/4") and build_text.contains("AMPLIFIED PULSE 0/3") and build_text.contains("ARCSTORM RIFLE") and build_text.contains("SOLAR HALO") and build_text.contains("SINGULARITY LANCE"), "actual GUI opens complete current-loadout and mutation guide")
 	game._physics_process(10)
 	check(game.state == game.State.PAUSED and game.combat.director.elapsed == frozen_build_clock and game.combat.rng.state == frozen_build_rng and game.save.data == frozen_build_save and game.progress.ranks == frozen_build_ranks, "opening guide advances no combat RNG progression or save state")
 	game.ui.set_hud(true)
 	game.ui.update_hud(game.player, game.progress, game.combat)
 	check(not game.ui.surge_gauge.is_visible_in_tree() and not game.ui.hint_label.is_visible_in_tree(), "HUD refresh cannot expose combat readouts through a nested build modal")
+	game.progress.ranks.clear()
 	old_panel = game.ui.screen
 	click(game, "BACK TO PAUSE")
 	check(game.state == game.State.PAUSED and retained_until_frame_end(old_panel), "build back returns to pause without resuming")

@@ -176,15 +176,17 @@ func run() -> void:
 		var saved_mutations: Array[String] = game.combat.mutations.duplicate()
 		game.open_build()
 		check(game.ui.visible_build_text().contains("WEAPONS 1/4"), "initial guide shows starting weapon and empty slots")
+		check(game.ui.visible_build_text().contains("PASSIVE UPLINKS // NONE YET"), "fresh guide honestly reports no passive uplinks")
 		await inspect(game, "build-empty", size)
 		game.progress.ranks = {"damage": 2, "arc": 3, "rail": 2, "magnet": 2}
 		game.open_build()
 		check(game.ui.visible_build_text().contains("AMPLIFIED PULSE 2/3") and game.ui.visible_build_text().contains("2 weapon slots needed / 1 free"), "guide shows partial ranks and insufficient two-weapon slot path")
 		await inspect(game, "build-progress", size)
-		game.progress.ranks = {"damage": 3, "arc": 3, "rail": 3, "magnet": 3, "drone": 1}
+		game.progress.ranks = {"damage": 7, "rate": 7, "pierce": 3, "speed": 5, "health": 5, "shield": 5, "magnet": 5, "arc": 3, "rail": 3, "drone": 1}
 		game.combat.mutations.assign(["arcstorm", "singularity"])
 		game.open_build()
 		check(game.ui.visible_build_text().contains("WEAPONS 4/4") and game.ui.visible_build_text().contains("SINGULARITY LANCE // ACTIVE") and game.ui.visible_build_text().contains("SOLAR HALO // SLOTS BLOCKED"), "full guide shows active mutations and blocked alternate recipe")
+		check(game.ui.visible_build_text().contains("AMPLIFIED PULSE 7/7") and game.ui.visible_build_text().contains("RAPID CYCLER 7/7") and game.ui.visible_build_text().contains("PHASE ROUNDS 3/3") and game.ui.visible_build_text().contains("SERVO OVERDRIVE 5/5") and game.ui.visible_build_text().contains("REINFORCED CHASSIS 5/5") and game.ui.visible_build_text().contains("AEGIS CAPACITOR 5/5") and game.ui.visible_build_text().contains("MEMORY TETHER 5/5"), "all passive ranks and real caps fit a fully upgraded guide")
 		await inspect(game, "build-active-full", size)
 		game.progress.ranks = {"orbit": 3, "thermal": 3, "rail": 1}
 		game.combat.mutations.assign(["halo"])
@@ -432,7 +434,17 @@ func run() -> void:
 		game.pause_run()
 		game.open_build()
 		check(game.ui.visible_build_text().contains("ENGINEER // DASH UPLINK") and game.ui.visible_build_text().contains("WEAPONS 2/4"), "Engineer build guide shows passive and actual starting equipment")
+		# Worst-height presentation fixture: Engineer caption, full weapon slots,
+		# blocked Halo recipe and every passive at its real rank cap.
+		var engineer_ranks: Dictionary = game.progress.ranks.duplicate(true)
+		var engineer_mutations: Array[String] = game.combat.mutations.duplicate()
+		game.progress.ranks = {"damage": 7, "rate": 7, "pierce": 3, "speed": 5, "health": 5, "shield": 5, "magnet": 5, "arc": 5, "rail": 5, "drone": 5}
+		game.combat.mutations.assign(["arcstorm", "singularity"])
+		game.open_build()
+		check(game.ui.visible_build_text().contains("WEAPONS 4/4") and game.ui.visible_build_text().contains("RAPID CYCLER 7/7") and game.ui.visible_build_text().contains("SOLAR HALO // SLOTS BLOCKED"), "worst-height Engineer build includes capped passives and blocked mutation path")
 		await inspect(game, "engineer-build", size)
+		game.progress.ranks = engineer_ranks
+		game.combat.mutations = engineer_mutations
 		game.run_unlocks.assign(["conductor", "sentinel", "engineer"])
 		game.finish_run(true)
 		await inspect(game, "results-unlocks", size)

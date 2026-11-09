@@ -1,11 +1,10 @@
-# Development status — NULL//SWARM / 2026-11-08
+# Development status — NULL//SWARM / 2026-11-09
 
 ## Current checkpoint
 
-- Earned Mobile build navigation verified at source `39df52b374995035466ac19ea036ab5e5f4883c2`: all 21 checks pass. Real XP/Arc Emitter selection appears at rank 1 in the guide and recipe progress; actual pause/build/back/Resume preserve fifteen frozen fields with fresh rendered panels, then restore combat/HUD. Guide/resumed screenshots inspected. One early earned build; earned mutations/full Mobile sessions remain open.
-- All five workflows pass on attempt 1: 15 Godot suites/35 Python tests, 76 GUI checks/188 layouts, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks, native export and full QA. Gameplay/XP/pacing/stress/replay baselines remain unchanged. Failed unpatched control retained. Ten archive integrity checks pass; exact receipts and counts in TEST_RESULTS.md.
-- All 44 selected phone executable/config entries match the prior modal-readability build, so no reinstall is needed. Android Mobile emulator alone disables Swappy; phone defaults unchanged. Physical ARM64 profiling/audio, protected signing/release AAB remain unverified. Main unchanged/unmerged; current review description prepared in docs/DEVELOPMENT_PR.md because the prior PR-description API update was unavailable.
-- Next: wider earned upgrade/mutation coverage on Mobile, bounded combat-feedback polish and representative hardware profiling. Owner secrets are still required for protected stable signing.
+- Added a read-only PASSIVE UPLINKS summary to the build guide: all seven owned passive upgrade ranks and real caps, stable upgrade order, wrapped text and an honest empty state. Repair/unknown counters are excluded. Expanded the passive-title registry without changing combat, progression, mutation recipes, save or input behavior.
+- Local verification: all 15 Godot suites/35 Python tests pass, including 77 real-GUI checks and 188 layouts/2,384 headless checks. Synthetic maximum-rank Vanguard/Engineer layouts cover all seven passives, full slots and a blocked mutation path; read-only guide navigation preserves existing state. Final UI-only rerun also passes after explicitly checking all seven names/caps. Hosted rendered/Android/build verification pending for this source.
+- Next: review native and maximum-height captures, actual Mobile/Compatibility guide navigation and gameplay parity; publish a verified ARM64 APK. Latest prior APK/results remain in TEST_RESULTS.md. Physical device profiling, protected signing and release AAB remain open. Main unchanged/unmerged; PR-description service remains unavailable and review notes live in docs/DEVELOPMENT_PR.md.
 
 ## Prior verified checkpoints
 

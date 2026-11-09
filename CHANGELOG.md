@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Passive build guide
+
+- Show all owned passive upgrade ranks and caps in the build guide, with wrapped text and an honest empty state. Repair/unknown counters stay out of the build summary. Local GUI/layout/state tests pass; Android/rendered/export verification pending. Combat and progression rules unchanged.
+
 ## Development — 2026-11-08 / Earned Mobile build navigation
 
 - Verify real Mobile build-guide navigation after earned XP/Arc Emitter selection: all 21 Mobile checks, 15 Godot suites/35 Python tests and five CI workflows pass. Actual guide/resume captures inspected; gameplay fingerprints and all 44 selected phone executable/settings entries match. No reinstall needed. Evidence and limits: TEST_RESULTS.md.

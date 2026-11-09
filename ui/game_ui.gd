@@ -430,6 +430,12 @@ func show_build(progress: RunProgression, active: Array[String], back: Callable,
 		label_at(card, recipe["effect"], 14, MUTED)
 		if recipe["status"] == "SLOTS BLOCKED":
 			label_at(card, "%d weapon slots needed / %d free. Slots cannot be replaced this run." % [recipe["missing_weapons"], recipe["free_slots"]], 13, Color("ffcf85"))
+	var passives: Array[String] = []
+	for id in RunProgression.IDS:
+		if Arsenal.PASSIVE_TITLES.has(id) and int(progress.ranks.get(id, 0)) > 0:
+			passives.append("%s %d/%d" % [Arsenal.PASSIVE_TITLES[id], int(progress.ranks[id]), int(RunProgression.CAPS[id])])
+	var passive_summary := label_at(box, "PASSIVE UPLINKS // " + ("   •   ".join(passives) if not passives.is_empty() else "NONE YET // COLLECT MEMORY TO UPGRADE"), 14, CYAN)
+	passive_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label_at(box, "Weapon mutations keep their slot. Run upgrades reset on redeployment.", 15, MUTED)
 	var back_button := button_at(box, "BACK TO PAUSE", back)
 	back_button.grab_focus()
