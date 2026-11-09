@@ -17,6 +17,7 @@ from PIL import Image
 from lifecycle_observation import fresh_resumed_frame, frozen_run, app_egl_failures
 from upgrade_observation import upgrade_frozen, selected_rank
 from build_observation import frozen_navigation
+from passive_observation import PASSIVE_LABELS, passive_card, passive_summary_matches
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -430,13 +431,11 @@ def lifecycle_repro():
         print('ANDROID_LIFECYCLE_RESULT', report['status'], 'checks=', len(checks), flush=True)
 
 
-def mobile_earned_upgrades(start):
+def mobile_collect_offer(s, deadline):
     # Targets are real unattracted memory pickups exposed by the read-only probe.
-    s = start
-    deadline = time.monotonic() + 180
-    while s['state'] != 'upgrading' and time.monotonic() < deadline:
-        if s['state'] != 'playing':
-            raise AssertionError('Mobile run ended before earning an upgrade')
+    while s['state'] != 'upgrading':
+        if s['state'] != 'playing' or time.monotonic() >= deadline:
+            raise AssertionError('Mobile run could not earn a passive within its normal-play budget')
         targets = s.get('targets', [])
         if targets:
             x, z = s['position']
@@ -445,13 +444,20 @@ def mobile_earned_upgrades(start):
         else:
             time.sleep(.25)
         s = read()
+    return s
+
+
+def mobile_earned_upgrades(start):
+    deadline = time.monotonic() + 300
+    s = mobile_collect_offer(start, deadline)
+    transactions = []
     check(s['state'] == 'upgrading' and s['level'] >= 2 and s['xp'] > 0
           and s['pending'] > 0 and s.get('memory_audio_plays', 0) > 0,
           'ordinary Mobile kills and memory collection earn XP level and upgrade choices')
-    transactions = []
-    while s['state'] == 'upgrading':
+    while s['state'] == 'upgrading' or not any(s['ranks'].get(key, 0) > 0 for key in PASSIVE_LABELS):
         if len(transactions) >= 8:
             raise AssertionError('Mobile early-upgrade queue exceeded bounded smoke budget')
+        s = mobile_collect_offer(s, deadline)
         offered = wait(lambda x: x['state'] == 'upgrading' and x['pending'] > 0)
         cards = [b for b in offered['buttons'] if re.match(r'^0[123]\n', b['text']) and not b['disabled']]
         capture(f'mobile-upgrade-{len(transactions)+1:02d}')
@@ -461,13 +467,15 @@ def mobile_earned_upgrades(start):
                       and x['sample_ticks'] > offered['sample_ticks'])
         if len(cards) != 3 or {b['text'].split('\n', 1)[0] for b in cards} != {'01','02','03'} or not upgrade_frozen(offered, frozen):
             raise AssertionError('Mobile upgrade offer is invalid or gameplay advanced while choosing')
-        tap('01\n', frozen)
+        chosen = passive_card(cards) or next(b for b in cards if b['text'].startswith('01\n'))
+        chosen_index = chosen['text'].split('\n', 1)[0]
+        tap(chosen_index+'\n', frozen)
         selected = wait(lambda x: x.get('ranks') != frozen['ranks'])
         changed = selected_rank(frozen, selected)
         if changed is None:
             raise AssertionError('Mobile upgrade touch did not apply exactly one rank/choice transaction')
         transactions.append({'offered':offered,'frozen':frozen,'selected':selected,
-                             'chosen_text':next(b['text'] for b in cards if b['text'].startswith('01\n')),'changed_rank':changed})
+                             'chosen_text':chosen['text'],'chosen_index':chosen_index,'changed_rank':changed})
         s = wait(lambda x: x['state'] == 'upgrading' or (x['state'] == 'playing' and x['pending'] == 0
                  and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames']))
     check(bool(transactions), 'Mobile upgrade cards freeze real gameplay XP rewards RNG and queued choices')
@@ -477,8 +485,11 @@ def mobile_earned_upgrades(start):
     s = wait(lambda x: x['state'] == 'playing' and x['pending'] == 0
              and x['time'] > last['time'] and x['rendered_frames'] > last['rendered_frames'])
     check(s['renderer'] == 'mobile', 'Mobile selected build resumes combat with an empty upgrade queue')
+    check(any(s['ranks'].get(key, 0) > 0 for key in PASSIVE_LABELS),
+          'ordinary Mobile offers and touches acquire an actual passive rank without grants or rerolls')
     report['earned_upgrade'] = {'transactions':transactions,'resumed':s,
-                               'method':'Ordinary kills and memory pickups, real joystick/card touches. No fixture or stat grant.'}
+                               'method':'Ordinary kills and memory pickups, real joystick/card touches. No fixture or stat grant.',
+                               'selection_strategy':'Prefer a visible passive; otherwise choose first and earn another offer. At most eight choices and a 300-second collection deadline; no rerolls.'}
     capture('mobile-upgrade-applied')
     return s
 
@@ -494,6 +505,8 @@ def mobile_earned_build(start):
           and all(name in guide['build_text'] for name in ['PULSE RIFLE', 'ARCSTORM RIFLE', 'SOLAR HALO', 'SINGULARITY LANCE'])
           and not guide['chain_feedback']['visible'],
           'Mobile touch opens mutation guide with the genuinely earned build and no combat HUD bleed')
+    check(passive_summary_matches(guide['build_text'], guide['ranks']),
+          'Mobile dedicated passive summary matches the actual earned ranks and displays valid caps')
     capture('mobile-build-earned')
     time.sleep(.5)
     frozen = wait(lambda x: x['rendered_frames'] > guide['rendered_frames'] and x['sample_ticks'] > guide['sample_ticks'])

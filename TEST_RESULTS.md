@@ -1,5 +1,10 @@
 # NULL//SWARM test results
 
+## Earned Mobile passive — local verification 2026-11-09
+
+- Updated Mobile driver to prefer an actual offered passive, collect more ordinary XP if necessary, and compare its dedicated summary to earned ranks. Eight-choice bound/300-second collection deadline; no rerolls, state grants or progress fixtures. Recipes cannot substitute for summary evidence.
+- All 15 local Godot suites/41 Python tests pass; six new selection/summary regressions cover disabled/malformed cards and missing, repeated, extra or stale entries. Existing GUI/layout checks pass unchanged. Hosted Android/build/rendered QA pending; phone executable/settings source unchanged. Receipt: docs/qa/earned-passive/local-headless-results.json.
+
 ## Passive build guide — verified 2026-11-09
 
 Verified code/build source: `8059cd1d7db21449c9b62a27d72786f167fcb622`, tree `ac6ce6e4bfa8e68e3435d4c7bd1828b1211d02b1`. Final checkpoint changes Markdown/JSON reports only.

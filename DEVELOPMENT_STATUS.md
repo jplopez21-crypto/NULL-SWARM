@@ -2,10 +2,9 @@
 
 ## Current checkpoint
 
-- Passive build guide verified at source `8059cd1d7db21449c9b62a27d72786f167fcb622`: all seven owned passive ranks/caps, stable upgrade order, wrapped summary and honest empty state; repair/unknown counters excluded. Actual native and maximum-rank Vanguard/Engineer fixtures plus Mobile empty-state/resume captures inspected. Ranked passive coverage is synthetic engine/UI; earned positive passive acquisition on Android remains open.
-- All five workflows pass on attempt 1: 15 matching Godot suites, 35 Python tests, 77 GUI checks/188 layouts (2,384 headless/2,385 rendered), Mobile 21 checks, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks. Gameplay/XP/pacing/stress/replay baselines unchanged; failed unpatched control retained. Ten archive integrity checks pass; exact receipts in TEST_RESULTS.md.
-- New verified ARM64 debug APK linked in TEST_RESULTS.md. Only HUD and passive display-name registry modules change among 44 compared executable/config entries; engine, combat modules and shipping settings match. Back up progress before replacing rotating-key debug installs. Physical phone profiling/audio, protected signing and release AAB remain unverified; emulator-only Swappy workaround unchanged. Main unchanged/unmerged; current PR notes in docs/DEVELOPMENT_PR.md.
-- Next: actual earned passive/upgrade variation on Mobile, bounded combat feedback polish and representative ARM64 profiling. Stable protected preview signing still requires owner secrets.
+- Extending actual Mobile acceptance to acquire a passive through ordinary XP/offers/touches and verify its dedicated build-summary rank. Chooses a visible passive when offered; otherwise earns another offer, with eight-choice/300-second collection bounds. No rerolls or stat grants. Phone/game source and settings unchanged.
+- All 15 local Godot suites and 41 Python tests pass. Six new Python cases cover spaced/enabled passive-card selection, missing/duplicate/extra/stale summary ranks, recipe-only false positives and invalid/empty observations. Existing 77 GUI checks/188 layouts remain. Android/export/full-QA verification pending for this source.
+- Latest verified phone APK remains the passive-guide build linked in TEST_RESULTS.md. Next: inspect actual earned-passive offer/guide/resume captures and complete all hosted gates. Physical ARM64 profiling/audio, protected signing/release AAB remain open; main unchanged/unmerged. PR review notes remain in docs/DEVELOPMENT_PR.md.
 
 ## Prior verified checkpoints
 

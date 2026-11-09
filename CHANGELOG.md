@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Earned Mobile passive coverage
+
+- Extend Mobile acceptance through actual passive acquisition and its dedicated build-summary rank, using only normal XP/offers/touches. Six new Python regressions and all local suites pass; hosted verification pending. Game/phone source unchanged.
+
 ## Development — 2026-11-09 / Passive build guide
 
 - Show all owned passive ranks/caps in the build guide, with wrapped text and an honest empty state. Repair/unknown counters excluded. All five workflows, 15 Godot suites/35 Python tests, 21 Mobile and 58 ordinary Android checks plus eighteen return cycles pass. Maximum-rank and actual Mobile captures inspected; gameplay fingerprints preserved. New ARM64 APK and scope: TEST_RESULTS.md.
