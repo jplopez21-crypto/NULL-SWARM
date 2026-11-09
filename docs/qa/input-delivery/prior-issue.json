@@ -1,0 +1,10 @@
+{
+  "status": "open",
+  "receipt": "../corruption-cancel/failed-attempt1.json",
+  "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+  "run_id": 42650385080,
+  "job_id": 129274837597,
+  "artifact_id": 13690291769,
+  "observation": "Earlier Compatibility Settings transition timed out after background return; unchanged retest passed. Earlier press counter remained 65 between combat checkpoint and timeout, but had no detailed delivery history.",
+  "scope": "New successful traces verify instrumentation and two single-tap transitions; intermittent failure cause is unconfirmed and no repair is claimed."
+}

@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Settings-return input diagnostics
 
-- Record bounded opt-in touch delivery/focus around one post-background Settings tap, with no retries or input-routing changes. Eight new Python classifier cases pass; hosted verification pending. Prior intermittent timeout remains open; no fix claimed.
+- Record bounded opt-in touch delivery/focus around one post-background Settings tap, with no retries or input-routing changes. All five workflows pass attempt 1: 59 Python tests/15 Godot suites, 59 ordinary Android and 42 Mobile checks. Two actual workers verify one target press/release and fresh Settings transition. Gameplay fingerprints unchanged; prior intermittent timeout remains open and no repair is claimed. No gameplay reinstall needed. Exact scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-09 / Earned corruption cancellation coverage
 

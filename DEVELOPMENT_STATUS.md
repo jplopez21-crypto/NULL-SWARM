@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Instrumenting the intermittent background-return Settings timeout: read-only eight-event touch history/focus in the opt-in probe, one existing ADB tap, bounded transition observations and failure-only Android focus lines. The diagnostic records delivery separately from menu success; it neither retries input nor claims a fix.
-- All 59 local Python tests pass; all 15 strict Godot suites also pass, including 33 probe checks. Hosted Android/export/full-QA verification pending. Normal exports disable the probe; gameplay/input routing/balance remain unchanged.
-- Next: inspect actual Settings transition delivery and all existing gates. Prior intermittent cause, physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+- Verified Settings-return input diagnostics at source `993d7606ae5a4cb94755dc82fb6e1a94942cdd60`: opt-in eight-edge touch history/focus, one unchanged ADB tap and bounded transition samples. Actual ordinary and patched-diagnostic workers each record exactly one uncanceled target press/release and a fresh Settings panel with seventeen fields frozen. Actual pause/Settings screenshots and independent event/offer/action-index checks pass. No retries, new readiness waits or gameplay/input-routing changes.
+- All five workflows pass attempt 1: 59 ordinary Android checks, 42 Mobile checks, 15 Godot suites/59 Python tests, 33 probe/91 GUI/47 corruption checks, unchanged 200 UI layouts and gameplay fingerprints. Exact APK/results: TEST_RESULTS.md; compact receipts/index: docs/qa/input-delivery/verified-ci.json.
+- Prior intermittent Settings-return timeout remains open; original failure evidence and unchanged successful retest are preserved. Current success verifies diagnostics, not root cause or repair. Only the disabled-by-default QA probe differs among 44 compared shipping entries; no gameplay reinstall needed.
+- Next: use the new delivery evidence if the timeout recurs, broaden earned mutation/other-link coverage and continue combat/build playtesting. Physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Emulator-only Swappy override unchanged. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
 
 ## Previous verified cancellation checkpoint
 
