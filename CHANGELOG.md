@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-09 / Corruption build review
+
+- Add read-only corruption review from the build guide, showing active power/cost pairs and next-link/cap information with a real Back action. Protocol text derives from existing modifiers; gameplay rules unchanged. All local suites and clean/partial/full UI/state tests pass; hosted verification pending.
+
 ## Development — 2026-11-09 / Combat announcements
 
 - Move combat announcements below the operative and above touch controls, preserve remaining read time behind in-run menus, and add a brief end fade. All five workflows, 15 Godot suites/41 Python tests, 83 GUI checks and 23 Mobile checks pass. Actual Mobile and labelled long-text captures inspected; gameplay fingerprints preserved. Verified ARM64 APK and exact scopes: TEST_RESULTS.md.

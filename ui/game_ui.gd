@@ -415,7 +415,7 @@ func _build_card(parent: Node, color: Color) -> VBoxContainer:
 	panel.add_child(box)
 	return box
 
-func show_build(progress: RunProgression, active: Array[String], back: Callable, engineer: bool = false) -> void:
+func show_build(progress: RunProgression, active: Array[String], back: Callable, engineer: bool = false, protocol: CorruptionProtocol = null) -> void:
 	var box := _panel()
 	box.custom_minimum_size.x = 1000
 	build_heading = label_at(box, "DEPLOYMENT BUILD", 30, CYAN)
@@ -462,8 +462,35 @@ func show_build(progress: RunProgression, active: Array[String], back: Callable,
 	var passive_summary := label_at(box, "PASSIVE UPLINKS // " + ("   •   ".join(passives) if not passives.is_empty() else "NONE YET // COLLECT MEMORY TO UPGRADE"), 14, CYAN)
 	passive_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label_at(box, "Weapon mutations keep their slot. Run upgrades reset on redeployment.", 15, MUTED)
-	var back_button := button_at(box, "BACK TO PAUSE", back)
+	var actions := HBoxContainer.new()
+	box.add_child(actions)
+	if protocol != null:
+		var review := button_at(actions, "CORRUPTION // %d/%d" % [protocol.accepted.size(), CorruptionProtocol.MAX_LINKS], func(): show_corruption_review(protocol, progress.level, func(): show_build(progress, active, back, engineer, protocol)))
+		review.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		review.add_theme_color_override("font_color", Color("efa6ff"))
+	var back_button := button_at(actions, "BACK TO PAUSE", back)
+	back_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	back_button.grab_focus()
+
+func show_corruption_review(protocol: CorruptionProtocol, level: int, back: Callable) -> void:
+	var box := _panel()
+	box.custom_minimum_size.x = 800
+	# This is part of the build guide, so its text uses the existing QA query.
+	build_heading = label_at(box, "ACTIVE CORRUPTION", 32, Color("efa6ff"))
+	label_at(box, "%d/%d UNSTABLE LINKS" % [protocol.accepted.size(), CorruptionProtocol.MAX_LINKS], 18, MUTED)
+	var links: Array[Dictionary] = protocol.active_links()
+	if links.is_empty():
+		label_at(box, "CLEAN SIGNAL // NO ACTIVE LINKS", 23, CYAN)
+		label_at(box, "An optional link can replace one level-up choice.\nEach link grants power with a lasting cost for this deployment.", 17, MUTED)
+	for link in links:
+		var card := _build_card(box, Color("cf7aff"))
+		label_at(card, link["title"], 20, Color("efa6ff"))
+		label_at(card, "GAIN // " + link["gain"], 17, CYAN)
+		label_at(card, "COST // " + link["cost"], 17, Color("ffcf85"))
+	var next: String = "LINK CAP REACHED" if protocol.accepted.size() >= CorruptionProtocol.MAX_LINKS else ("AVAILABLE WITH AN UPGRADE CHOICE" if protocol.available(level) else "LEVEL %d" % protocol.next_level)
+	label_at(box, "NEXT OPTIONAL LINK // " + next, 16, Color("efa6ff"))
+	label_at(box, "Links reset after this deployment. Dash speed, bosses and warning times stay unchanged.", 14, MUTED)
+	button_at(box, "BACK TO BUILD", back).grab_focus()
 
 func visible_build_text() -> String:
 	if not is_instance_valid(build_heading) or not build_heading.is_visible_in_tree() or screen == null:

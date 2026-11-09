@@ -307,7 +307,7 @@ func resume_run() -> void:
 func open_build() -> void:
 	if state != State.PAUSED or not is_instance_valid(combat):
 		return
-	ui.show_build(progress, combat.mutations, func(): ui.show_pause(save.data["settings"]), combat.sentry.enabled)
+	ui.show_build(progress, combat.mutations, func(): ui.show_pause(save.data["settings"]), combat.sentry.enabled, combat.corruption)
 
 func go_menu() -> void:
 	if state in [State.PAUSED, State.UPGRADING, State.PLAYING]:

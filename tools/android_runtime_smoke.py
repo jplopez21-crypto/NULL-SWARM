@@ -513,7 +513,22 @@ def mobile_earned_build(start):
     check(frozen_navigation(guide, frozen) and frozen['panel'] == guide['panel']
           and frozen['build_text'] == guide['build_text'],
           'Mobile build guide freezes gameplay XP ranks rewards RNG dash and settings while rendering')
-    tap('BACK TO PAUSE', frozen)
+    tap('CORRUPTION //', frozen)
+    review = wait(lambda x: 'ACTIVE CORRUPTION' in x.get('build_text', '') and x.get('panel') == x.get('rendered_panel'))
+    check(frozen_navigation(frozen, review) and 'CLEAN SIGNAL' in review['build_text']
+          and 'NEXT OPTIONAL LINK //' in review['build_text'] and 'GAIN //' not in review['build_text'],
+          'Mobile actual build opens honest clean corruption review without altering earned progression')
+    capture('mobile-corruption-review')
+    time.sleep(.5)
+    review_frozen = wait(lambda x: x['rendered_frames'] > review['rendered_frames'] and x['sample_ticks'] > review['sample_ticks'])
+    check(frozen_navigation(review, review_frozen) and review_frozen['panel'] == review['panel']
+          and review_frozen['build_text'] == review['build_text'],
+          'Mobile corruption review freezes gameplay while fresh menu frames render')
+    tap('BACK TO BUILD', review_frozen)
+    restored = wait(lambda x: 'DEPLOYMENT BUILD' in x.get('build_text', '') and x.get('panel') == x.get('rendered_panel'))
+    check(frozen_navigation(review_frozen, restored) and restored['build_text'] == guide['build_text'],
+          'Mobile corruption Back restores the identical earned build without resuming combat')
+    tap('BACK TO PAUSE', restored)
     back = wait(lambda x: not x.get('build_text', '') and x.get('panel') == x.get('rendered_panel')
                 and any(b['text'] == 'RESUME' for b in x['buttons']))
     check(frozen_navigation(frozen, back) and back['panel'] != frozen['panel'],
@@ -527,6 +542,7 @@ def mobile_earned_build(start):
           and any(b['text'].startswith('DASH') for b in resumed['buttons']),
           'Mobile build Resume restores combat and both HUD actions with earned ranks intact')
     report['earned_build'] = {'paused':paused,'guide':guide,'frozen':frozen,'back':back,'resumed':resumed,
+                              'corruption_review':{'opened':review,'frozen':review_frozen,'returned':restored},
                               'method':'Actual touch navigation after ordinary earned XP/upgrade selection; no fixture or stat grant.'}
     capture('mobile-build-resumed')
     return resumed
@@ -534,7 +550,7 @@ def mobile_earned_build(start):
 
 def mobile_smoke():
     report['variant'] = 'x86_64 Android 35 / required Mobile renderer / read-only opt-in probe'
-    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices, earned-build guide navigation and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
+    report['scope'] = 'Mobile startup, actual two-finger controls, ordinary combat/earned XP/upgrade choices, earned-build and clean corruption-review navigation, and one same-process foreground return. No stat grants; no fallback accepted. Frame-pacing configuration is reported separately; not a phone FPS, shipping frame-pacing or full-run acceptance test.'
     try:
         adb('logcat', '-c')
         launch()

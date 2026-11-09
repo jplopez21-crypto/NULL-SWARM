@@ -2,10 +2,9 @@
 
 ## Current checkpoint
 
-- Combat announcements verified at source `3c0c371c7a645d2991ecc78fdac1642cebcdbb0b`: compact wrapped/input-transparent banner above touch controls, away from central combat. Remaining active read time survives hidden in-run menus, with a brief end fade. Actual Mobile Memory Tether upgrade and labelled native/long-title fixtures inspected. Timing/fade quantified by GUI tests; exact Android notification timing not separately measured.
-- All five workflows pass on attempt 1: 15 matching Godot suites/41 Python tests, 83 GUI checks/188 layouts (2,396 headless/2,397 rendered), Mobile 23 checks, ordinary 58 checks plus eighteen-cycle/56 checks, patched diagnostic eighteen cycles plus 58 gameplay checks. Gameplay/XP/pacing/stress/replay baselines preserved; failed unpatched control retained. Ten artifact integrity checks pass; exact evidence in TEST_RESULTS.md.
-- New verified ARM64 debug APK linked in TEST_RESULTS.md. Only HUD module changes among 44 compared executable/config entries; engine, other game modules and shipping settings match. Export progress backup before replacing rotating-key debug installs. Phone performance/audio, protected signing and release AAB remain unverified; emulator-only Swappy override unchanged. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
-- Next: wider notification/boss readability and earned build variation on Mobile, plus representative ARM64 profiling. Stable protected preview signing still requires owner secrets.
+- Added functioning Corruption review from the build guide: active links, actual gains/costs derived from protocol accessors, clean-state explanation, next optional-link threshold and full-cap state. Separate Back to Build action preserves the paused run; no purchases, reselection or stat changes. Shared read-only guide text supports QA without expanding the probe schema.
+- All 15 local Godot suites/41 Python tests pass: 91 real-GUI checks, 47 corruption checks, 200 layouts/2,600 headless checks. Tests cover detached review data, clean/partial/full geometry, actual GUI Redline selection/review without reapplying health cost, identical build return and protocol/RNG/rank/save integrity. Mobile path now includes clean review navigation; hosted verification pending for this source.
+- Next: inspect actual native/Mobile and full-link captures, verify lifecycle/gameplay parity, then publish a verified ARM64 debug APK. Active corruption tests use engine/UI fixtures; earned Android links remain open. Physical profiling/audio, protected signing/release AAB remain unverified. Main unchanged/unmerged; latest prior APK/results in TEST_RESULTS.md.
 
 ## Prior verified checkpoints
 

@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Corruption build review — local verification 2026-11-09
+
+- New functional build action reviews active corruption gains/costs, clean state, next threshold or full cap. Modifier text derives from protocol accessors; no selection or stat mutation occurs. Back restores the build while paused. Existing guide-text QA query covers both screens.
+- All 15 local Godot suites/41 Python tests pass: 91 GUI checks, 47 corruption checks and 200 layouts/2,600 headless checks. Detached data, clean/partial/full views and actual GUI Redline selection/review are tested, including no repeated HP cost, RNG/ranks/protocol/save integrity and safe panel dispatch. These are engine/UI fixtures, not earned Android links. Initial unchanged suites also passed before focused cases were added.
+- Hosted Android/rendered/export/full QA pending; Mobile clean review navigation is implemented but not yet claimed executed. Receipt: docs/qa/corruption-review/local-headless-results.json.
+
 ## Combat announcements — verified 2026-11-09
 
 Verified code/build source: `3c0c371c7a645d2991ecc78fdac1642cebcdbb0b`, tree `9a8a2cf83d3ec60c37a1d58e0ddcd130bdc6f32b`. Final checkpoint changes Markdown/JSON evidence only.

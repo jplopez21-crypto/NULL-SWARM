@@ -200,6 +200,20 @@ func run() -> void:
 		game.open_build()
 		check(game.ui.visible_build_text().contains("SOLAR HALO // ACTIVE") and game.ui.visible_build_text().contains("PLASMA ORBITALS 3/3"), "Halo replaces its weapon title while keeping original recipe names")
 		await inspect(game, "build-halo", size)
+		# Synthetic protocol fixtures for clean, partial and full review geometry.
+		var review_protocol := CorruptionProtocol.new()
+		game.ui.show_corruption_review(review_protocol, 2, func(): game.open_build())
+		check(game.ui.visible_build_text().contains("CLEAN SIGNAL") and game.ui.visible_build_text().contains("LEVEL 5"), "clean review explains the first optional link")
+		await inspect(game, "corruption-review-clean", size)
+		review_protocol.select("redline", 5, {})
+		game.ui.show_corruption_review(review_protocol, 5, func(): game.open_build())
+		check(game.ui.visible_build_text().contains("Maximum HP -20") and game.ui.visible_build_text().contains("LEVEL 10"), "partial review shows paid cost and next threshold")
+		await inspect(game, "corruption-review-partial", size)
+		review_protocol.select("fracture", 10, {})
+		review_protocol.select("hive", 15, {"drone": 1})
+		game.ui.show_corruption_review(review_protocol, 15, func(): game.open_build())
+		check(game.ui.visible_build_text().contains("3/3 UNSTABLE LINKS") and game.ui.visible_build_text().contains("LINK CAP REACHED") and game.ui.visible_build_text().contains("Walking speed -12%"), "full review includes all links and stops promising further offers")
+		await inspect(game, "corruption-review-full", size)
 		game.progress.ranks = saved_ranks
 		game.combat.mutations = saved_mutations
 		check(game.state == game.State.PAUSED and game.combat.director.elapsed == clock, "all guide states preserve paused combat")

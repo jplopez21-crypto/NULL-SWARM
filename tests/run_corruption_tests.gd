@@ -20,14 +20,23 @@ func offer(game: Node3D, level: int) -> void:
 
 func run() -> void:
 	var protocol := CorruptionProtocol.new()
+	check(protocol.active_links().is_empty() and protocol.next_level == 5 and protocol.accepted.is_empty(), "clean corruption review has no phantom effects or state changes")
 	check(not protocol.available(-1) and not protocol.available(4) and protocol.available(5), "links unlock at level five")
 	check(not protocol.select("unknown", 5, {}) and protocol.next_level == 5, "invalid link cannot advance state")
 	check(not protocol.eligible("hive", 5, {}) and not protocol.select("hive", 5, {}), "hive requires equipped drones")
 	check(protocol.select("redline", 5, {}), "first valid link accepted")
+	check(protocol.active_links().size() == 1 and protocol.active_links()[0]["id"] == "redline" and protocol.next_level == 10, "partial corruption review includes only the accepted link")
 	check(not protocol.available(9) and protocol.available(10), "accepted link requires five more levels")
 	check(not protocol.select("redline", 10, {}), "links cannot stack duplicate benefits or costs")
 	check(protocol.select("fracture", 10, {}) and protocol.select("hive", 15, {"drone": 1}), "all three distinct links can be acquired")
 	check(protocol.accepted.size() == 3 and not protocol.available(100), "corruption caps at three links")
+	var review: Array[Dictionary] = protocol.active_links()
+	check(review[0]["gain"] == "Weapon cycles +30%" and review[0]["cost"] == "Maximum HP -20", "review reports Redline benefit and paid health cost")
+	check(review[1]["gain"] == "Rifle / Arcstorm rounds +1" and review[1]["cost"] == "Regular enemy walking / charge pace +15%", "review scopes Fracture rounds and regular enemy cost correctly")
+	check(review[2]["gain"] == "Drone escorts +1" and review[2]["cost"] == "Walking speed -12%", "review reports Hive escort and walking modifiers")
+	review[0]["gain"] = "tampered"
+	review.clear()
+	check(protocol.active_links().size() == 3 and protocol.active_links()[0]["gain"] == "Weapon cycles +30%" and protocol.accepted.size() == 3 and protocol.next_level == 20, "review data is detached and cannot alter protocol or unlock timing")
 	check(is_equal_approx(protocol.cycle_rate(), 1.3) and protocol.extra_rounds() == 1 and protocol.extra_drones() == 1, "power modifiers stay bounded")
 	check(is_equal_approx(protocol.enemy_pace(), 1.15) and is_equal_approx(protocol.walk_rate(), 0.88), "risk modifiers stay bounded")
 	var clean := CorruptionProtocol.new()
