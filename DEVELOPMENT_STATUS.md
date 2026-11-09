@@ -2,9 +2,10 @@
 
 ## Current checkpoint
 
-- Added current mutation recipe progress to both prerequisite upgrade cards for all three existing mutations. Registry-based compact counters saturate when complete; gold finisher forecasts and active Singularity field stats remain intact. Offers/balance/RNG/save/input rules unchanged.
-- All 15 local Godot suites/59 Python tests pass, including 1,087 systems/101 GUI checks and existing 200 UI layouts. Hosted Android/export/rendered/full-QA checks pending; prior verified APK remains in TEST_RESULTS.md.
-- Next: inspect actual rendered/Android card progress and all existing gates, then broaden earned mutation/other-link coverage. Earlier intermittent Settings-return cause remains open, with delivery diagnostics available. Physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+- Verified mutation recipe progress cards at source `252254a16ea712241f3d28265e9358b6134f462c`: both prerequisite cards read actual ranks/requirements from the registry, saturate fulfilled counts and preserve gold completion forecasts/active field stats. No offers, costs, balance, RNG/save/input changes. Native staged recipe and actual Mobile card captures inspected.
+- All five workflows pass attempt 1: 15 Godot suites/59 Python tests, 1,087 systems/101 GUI checks, 42 Mobile/59 ordinary Android checks and existing 200 layouts. Eight model/ten GUI checks added; gameplay/XP/pacing/stress fingerprints and layout metadata preserved. Exact APK/results: TEST_RESULTS.md; receipts: docs/qa/recipe-progress/verified-ci.json.
+- Actual fresh Mobile audit covers seven zero-progress recipe cards across all three recipes in a Drone/passive run. Nonzero/saturated counters and all six prerequisite cards are engine/GUI/render fixtures; no earned nonzero Android counter/mutation acceptance claimed. Other transcripts have no complete fresh numbered offers for the extra audit. Only description caller/registry formatter change among 44 compared phone entries.
+- Next: broaden earned nonzero recipe/mutation/other-link coverage and continue combat/build playtesting. Earlier intermittent Settings-return cause remains open; new delivery diagnostics continue passing. Physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Emulator-only Swappy override unchanged. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
 
 ## Previous verified input diagnostic checkpoint
 

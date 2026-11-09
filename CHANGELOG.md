@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Mutation recipe progress
 
-- Show current prerequisite ranks on mutation-related upgrade cards, preserving gold completion previews and existing field statistics. All local suites pass with eight new model/ten GUI assertions; hosted verification pending. Offers and combat balance unchanged.
+- Show current prerequisite ranks on mutation-related upgrade cards, preserving gold completion previews and existing field statistics. All five workflows pass attempt 1: 15 Godot suites/59 Python tests, 101 GUI checks, 42 Mobile/59 ordinary Android checks. Native staged and actual Mobile cards inspected; seven zero-progress Mobile cards match the observed build. Gameplay fingerprints preserved; new verified APK/scope in TEST_RESULTS.md. Offers and combat balance unchanged.
 
 ## Development — 2026-11-09 / Settings-return input diagnostics
 
