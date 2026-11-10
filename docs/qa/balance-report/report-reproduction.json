@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "source_sha": "58b9293b81058113fe16c41d661d9b19deb33fc5",
+  "byte_identical": {
+    "balance-report.json": "9348ddcf863f9ff97e45199a5762023572512d5825177c3fb6a8c2205b195ad1",
+    "BALANCE_REPORT.md": "b4ec9387946310c1a0f5ad3b028a24d25a4361e74ceacde6e0be996aac2a871e"
+  },
+  "method": "Execute the committed CLI on fresh downloaded CI inputs and compare both generated files byte-for-byte.",
+  "baseline_comparison": {
+    "matched": 26,
+    "changed_observations": 0,
+    "changes": [],
+    "added": [],
+    "removed": []
+  },
+  "scope": "Reproducible summary of fresh simulated combat observations; not a new local playthrough or physical timing result."
+}

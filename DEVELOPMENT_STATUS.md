@@ -2,9 +2,9 @@
 
 ## Current checkpoint
 
-- Add reproducible normal-play balance summaries and matched-seed comparisons: survival/upgrade pacing/XP/mutation reach, with full test conditions kept separate. No human-fun/win-rate/performance inference and no automatic difficulty changes. Quality CI produces/publishes the report after four normal-play suites.
-- All 70 local Python tests pass, including eleven new report/CLI cases. Actual archive-to-archive comparison validates 26 runs/19 cohorts with zero changed selected observations. All 15 strict Godot suites pass; fresh hosted output verification pending. No shipping gameplay/source changes.
-- Next: verify new hosted summaries against raw cases and prior evidence, then use matched observations to guide combat/build playtesting. Earned nonzero recipe/mutation coverage, earlier intermittent Settings-return cause, physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+- Verified normal-play balance summaries/comparisons at source `58b9293b81058113fe16c41d661d9b19deb33fc5`. CI publishes readable/JSON reports for 26 fresh runs/19 separate cohorts, with survival, XP, pacing and mutation reach/timing. Raw-case/hash audit and byte-identical regeneration pass; 26 matched prior cases have zero changed selected observations. Missing events/coverage changes remain explicit; no human-fun/win-rate or phone-performance inference. Reports: docs/qa/balance-report/BALANCE_REPORT.md and verified-ci.json.
+- All five workflows ultimately pass: 70 Python tests/15 Godot suites, 42 Mobile/59 ordinary Android checks and existing gameplay/layout regressions. Four workflows pass attempt 1. Patched diagnostic first loses ADB after eighteen cycles/55 checks before the final log scan; original failure retained. Unchanged single-job retest passes eighteen cycles/56 checks plus 59 gameplay checks. Cause unconfirmed; no repair claimed. All 44 compared phone code/settings entries match: no reinstall needed.
+- Next: investigate cautious Arcstorm bot collection/pacing gaps with wider matched cases before balance changes; broaden earned nonzero recipe/mutation coverage and combat/build playtesting. Earlier intermittent Settings-return cause and post-cycle ADB failure remain open. Physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
 
 ## Previous verified recipe-card checkpoint
 

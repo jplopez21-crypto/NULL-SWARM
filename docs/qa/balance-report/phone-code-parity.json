@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 44,
+  "changed_entries": [],
+  "scope": "All selected game/Java/native engine/project settings entries match the prior verified phone APK. New testing/CI tools are excluded from normal exports; no gameplay reinstall needed."
+}

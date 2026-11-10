@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-09 / Normal-play balance reporting
 
-- Add readable/JSON normal-play summaries and matched-seed comparisons, preserving test conditions and unobserved events. Eleven new Python cases and prior-archive comparison pass; quality CI generation/publication configured. Hosted verification pending; shipping gameplay unchanged.
+- Add readable/JSON normal-play summaries and matched-seed comparisons, preserving test conditions and unobserved events. Fresh CI reports 26 runs/19 cohorts, with raw-case audit and byte-identical recreation passing. All 70 Python tests/15 Godot suites and five workflows ultimately pass; one diagnostic ADB-offline failure is retained and its unchanged job retest passes lifecycle/gameplay gates. Eleven new report/CLI cases pass; shipping code/settings match, no reinstall needed. Exact results/scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-09 / Mutation recipe progress
 
