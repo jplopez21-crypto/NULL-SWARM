@@ -273,6 +273,21 @@ func run() -> void:
 		QAReport.write("res://builds/qa/extended-seeds.json", report)
 		quit(0 if failures.is_empty() else 1)
 		return
+	if "--arcstorm-collection-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules Arcstorm collection probe")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202, 303, 404]:
+			for policy in ["cautious", "value_aware"]:
+				var result: Dictionary = await simulate(seed_value, "arcstorm", "vanguard", MAX_SECONDS, "local", policy, "clean", true)
+				cases.append(result)
+				print("ARCSTORM_COLLECTION_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Same combat rules, starting stats and upgrade preferences; navigation/dash policies differ.", "Adaptive enemies, combat, offers and actual selections may diverge normally after movement changes.", "Five-second XP proximity samples do not establish safety, human visibility or causal balance effects.", "Four fixed seeds; defeats remain observations. No XP, immunity or upgrade grants."]
+		QAReport.write("res://builds/qa/arcstorm-collection-probe.json", report)
+		print("ARCSTORM_COLLECTION_RESULT cases=", cases.size(), " failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--collector-probe" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("upgrade-gap collector investigation")
 		var cases: Array[Dictionary] = []

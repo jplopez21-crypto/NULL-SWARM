@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Arcstorm collection investigation — local verification 2026-11-10
+
+- Add a separate four-seed/two-policy normal-rule investigation with five-second XP traces, paired coverage/condition/accounting validation and a readable/JSON gap report. Existing navigation/dash policies, upgrade preferences and gameplay rules remain unchanged. Quality CI runs it after existing suites and publishes the report; standard cases remain separate.
+- Both local probes actually executed: initial eight Arcstorm/Kinetic cases, then eight traced Arcstorm cases. Four overlapping Arcstorm cases preserve all non-timing observations. Traced cautious outcomes: two defeats/two victories; value-aware: four victories. Both retain long gaps. XP conservation passes; nearby cold XP appears in 62/63 samples of one longest interval and all samples in the other seven. Proximity is not a safety/causality/human-balance result. Raw/summary provenance: docs/qa/arcstorm-collection/local-execution.json and local-analysis.json.
+- All 79 local Python tests/15 strict Godot suites pass, including nine new gap/proximity/paired-condition/accounting/CLI cases. Hosted fresh investigation/Android/export/full-QA verification pending. No weapon, spawn, pickup economy or default-bot changes.
+
 ## Normal-play balance reporting — verified with retained retest 2026-11-09
 
 Verified tool/build source: `58b9293b81058113fe16c41d661d9b19deb33fc5`, tree `bf04f173b95a5bb50115eaf21748c73476276f76`. Final checkpoint changes Markdown/JSON evidence only.

@@ -119,10 +119,16 @@ jobs:
           timeout 600s godot --headless --script tests/run_benchmark.gd -- --engineer-stress --phase-profile 2>&1 | tee builds/qa/engineer-stress.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/engineer-stress.log; then exit 1; fi
           test -s builds/qa/engineer-stress-report.json
+      - name: Arcstorm collection investigation
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --arcstorm-collection-probe 2>&1 | tee builds/qa/arcstorm-collection.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/arcstorm-collection.log; then exit 1; fi
+          python3 tools/report_collection_pacing.py --input builds/qa/arcstorm-collection-probe.json --output builds/qa
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/BALANCE_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/BALANCE_REPORT.md builds/qa/ARCSTORM_COLLECTION_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

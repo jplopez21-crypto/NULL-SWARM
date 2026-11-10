@@ -1,6 +1,12 @@
-# Development status — NULL//SWARM / 2026-11-09
+# Development status — NULL//SWARM / 2026-11-10
 
 ## Current checkpoint
+
+- Add a separate four-seed/two-policy Arcstorm trace investigation and report, preserving standard tests/gameplay/default bots. Local fresh eight-case run plus original eight-case probe pass; four overlap cases preserve full non-timing observations. Value-aware wins four/cautious two, but long gaps remain. Conserved cold XP appears within 16m during nearly all longest-gap samples; safe collection/causal balance effects are not established.
+- All 79 local Python tests/15 Godot suites pass. Nine new analyzer cases validate gap reconstruction, reach/sentinels, conditions/paired coverage, XP accounting/final totals, invalid input and CLI behavior. Quality CI configured after existing suites; hosted evidence pending.
+- Next: verify fresh CI trace/report parity and all existing gates, then investigate routes/dash behavior with broader playtesting before balance changes. Earned Android recipe/mutation coverage, earlier Settings-return/ADB causes, physical ARM64 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged.
+
+## Previous verified balance-report checkpoint
 
 - Verified normal-play balance summaries/comparisons at source `58b9293b81058113fe16c41d661d9b19deb33fc5`. CI publishes readable/JSON reports for 26 fresh runs/19 separate cohorts, with survival, XP, pacing and mutation reach/timing. Raw-case/hash audit and byte-identical regeneration pass; 26 matched prior cases have zero changed selected observations. Missing events/coverage changes remain explicit; no human-fun/win-rate or phone-performance inference. Reports: docs/qa/balance-report/BALANCE_REPORT.md and verified-ci.json.
 - All five workflows ultimately pass: 70 Python tests/15 Godot suites, 42 Mobile/59 ordinary Android checks and existing gameplay/layout regressions. Four workflows pass attempt 1. Patched diagnostic first loses ADB after eighteen cycles/55 checks before the final log scan; original failure retained. Unchanged single-job retest passes eighteen cycles/56 checks plus 59 gameplay checks. Cause unconfirmed; no repair claimed. All 44 compared phone code/settings entries match: no reinstall needed.
