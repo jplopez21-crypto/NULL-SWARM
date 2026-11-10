@@ -1,0 +1,1048 @@
+{
+  "status": "passed",
+  "verified_date": "2026-11-10",
+  "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+  "source_tree": "cb25bdeaa93a9167c09a7f007ba94dedaba66e57",
+  "local_commit": "8e611f5f4d006e0293dc23e2953d5c6c7fc2a9ff",
+  "runs": [
+    {
+      "run_id": 42734484077,
+      "name": "Validate and build Android",
+      "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42734484077",
+      "jobs": [
+        {
+          "id": 129560220818,
+          "name": "android",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Validate all workflow contexts and syntax",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Signing configuration regressions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Automated tests and scene smoke",
+              "conclusion": "success"
+            },
+            {
+              "name": "Render presentation captures",
+              "conclusion": "success"
+            },
+            {
+              "name": "Emit bounded CI verification preview",
+              "conclusion": "success"
+            },
+            {
+              "name": "Export debug APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42734484213,
+      "name": "Android Mobile renderer smoke",
+      "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42734484213",
+      "jobs": [
+        {
+          "id": 129560221694,
+          "name": "android-runtime",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Configure isolated emulator export",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Require Mobile renderer and real touch/combat recovery",
+              "conclusion": "success"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42734484230,
+      "name": "Android emulator runtime",
+      "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42734484230",
+      "jobs": [
+        {
+          "id": 129560221144,
+          "name": "android-runtime (lifecycle)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Configure isolated emulator export",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Touch, gameplay, pause and lifecycle smoke",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Repeated Android surface recovery",
+              "conclusion": "success"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 129560221562,
+          "name": "android-runtime (gameplay)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Configure isolated emulator export",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Touch, gameplay, pause and lifecycle smoke",
+              "conclusion": "success"
+            },
+            {
+              "name": "Repeated Android surface recovery",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42734484302,
+      "name": "Android Surface recovery investigation",
+      "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42734484302",
+      "jobs": [
+        {
+          "id": 129560225711,
+          "name": "android-runtime (control)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build isolated Java surface control or candidate",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reproduce control surface transitions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Strict candidate surface recovery",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Candidate gameplay and save regression",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 129560226204,
+          "name": "android-runtime (latched)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build isolated Java surface control or candidate",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reproduce control surface transitions",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Strict candidate surface recovery",
+              "conclusion": "success"
+            },
+            {
+              "name": "Candidate gameplay and save regression",
+              "conclusion": "success"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42734484384,
+      "name": "Repeatable gameplay QA",
+      "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42734484384",
+      "jobs": [
+        {
+          "id": 129560225707,
+          "name": "gameplay-qa",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned Godot",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and run system checks",
+              "conclusion": "success"
+            },
+            {
+              "name": "Paired spatial-query kernels",
+              "conclusion": "success"
+            },
+            {
+              "name": "Diagnostic observation gameplay parity",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-rules bot playtests",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-rules corruption sessions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Additional seeded sessions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-rules earned Engineer sessions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-play balance observations",
+              "conclusion": "success"
+            },
+            {
+              "name": "UI lifecycle and window-size captures",
+              "conclusion": "success"
+            },
+            {
+              "name": "Pickup merge A/B and collector comparison",
+              "conclusion": "success"
+            },
+            {
+              "name": "Upgrade pacing and collector comparison",
+              "conclusion": "success"
+            },
+            {
+              "name": "Synthetic combat CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Corrupted-loadout CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Singularity-field CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Engineer sentry CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Arcstorm collection investigation",
+              "conclusion": "success"
+            },
+            {
+              "name": "Publish QA summaries",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13725884716,
+      "name": "null-swarm-android-runtime",
+      "run_id": 42734484230,
+      "bytes": 3622367,
+      "digest": "sha256:0c5af608a812b2a981df1cf07b3bad6b4faf09b46f29005968f8843435ffc55e",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13725898837,
+      "name": "null-swarm-presentation-captures",
+      "run_id": 42734484077,
+      "bytes": 5164548,
+      "digest": "sha256:beb204b3ecf7858a92b5919db064a1dd233aaaa9b88fe4623bdfe2702ee59361",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13725939357,
+      "name": "null-swarm-surface-results-control",
+      "run_id": 42734484302,
+      "bytes": 1950985,
+      "digest": "sha256:e9d1f0833bd661e79a534f7f3ba9f195071b0a2217bac9b91b8bb08f77c0c706",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13725953664,
+      "name": "null-swarm-headless-results",
+      "run_id": 42734484077,
+      "bytes": 746167,
+      "digest": "sha256:475f312cf7448815a0800acf5e3fc8da0923a123c3fe2c1e18a1a52bd4448537",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13725979107,
+      "name": "null-swarm-android-lifecycle",
+      "run_id": 42734484230,
+      "bytes": 3082277,
+      "digest": "sha256:0197792bd1caecf52a3461716fb146aa7f2e6b00f26c86e46b09f0009eca73bf",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13725998539,
+      "name": "null-swarm-development-apk",
+      "run_id": 42734484077,
+      "bytes": 29143274,
+      "digest": "sha256:806cde3fc273e90881b797aa7bb936a7b09d79642c4dc479be602f5b4ad57f54",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13726049735,
+      "name": "null-swarm-surface-results-latched",
+      "run_id": 42734484302,
+      "bytes": 4865138,
+      "digest": "sha256:51aa8c6edc93537834ea564f48319b97a87629a5bd8bd500a2cbc39dc09d921e",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13726778048,
+      "name": "null-swarm-gameplay-qa",
+      "run_id": 42734484384,
+      "bytes": 20934556,
+      "digest": "sha256:3e14d3a79d7060d13cece49d411e92cf07324d00e104cece804180ce0d3ee4d6",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13726832727,
+      "name": "null-swarm-mobile-emulator-apk",
+      "run_id": 42734484213,
+      "bytes": 31535784,
+      "digest": "sha256:2b4c1217157e5642024f35be9fee67c5734833ebf040c4e0b72273986f4c9136",
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13727620227,
+      "name": "null-swarm-android-mobile",
+      "run_id": 42734484213,
+      "bytes": 2944139,
+      "digest": "sha256:3b06bb4bd6ddf2a7e87e7a067dcaecdd073f5cef78c88dc6707728184b4962f7",
+      "hash_crc": "passed"
+    }
+  ],
+  "collection": {
+    "status": "passed",
+    "cases": 8,
+    "pairs": 4,
+    "seeds": [
+      101,
+      202,
+      303,
+      404
+    ],
+    "local_ci_non_timing_case_and_trace_parity": true,
+    "canonical_cautious_cases_match": 2,
+    "analysis_parity": true,
+    "raw_sha256": "7fdd1ff943291ad932b12d6f90078e25dd4d5cdf4e359a8a33c47cc92678f18e",
+    "longest_gap_samples": 468,
+    "nearby_cold_xp_samples": 467,
+    "only_outside_sensor_samples": 1,
+    "outcomes": {
+      "cautious": {
+        "victory": 2,
+        "defeat": 2,
+        "time_limit": 0
+      },
+      "value_aware": {
+        "victory": 4,
+        "defeat": 0,
+        "time_limit": 0
+      }
+    },
+    "scope": "Fresh CI eight cases and complete five-second traces equal executed local data except host timings. Two overlapping canonical cautious cases remain unchanged. Proximity is not safe reachability; four seeds do not establish human balance or cause."
+  },
+  "reproduction": {
+    "status": "passed",
+    "input_sha256": "7fdd1ff943291ad932b12d6f90078e25dd4d5cdf4e359a8a33c47cc92678f18e",
+    "outputs": {
+      "arcstorm-collection-analysis.json": {
+        "byte_identical": true,
+        "sha256": "57a923bb4fb8b37a763009945b330c5695b8d4a181220594862c54a08b94f2ff",
+        "bytes": 6468
+      },
+      "ARCSTORM_COLLECTION_REPORT.md": {
+        "byte_identical": true,
+        "sha256": "a492613d3ac7f7ba154c4cd30ff886cbded7ddfbd1a0a761d5a0930fdb2221cf",
+        "bytes": 2108
+      }
+    }
+  },
+  "native": {
+    "apk_sha256": "abfb6758b7aa409b25d5d79bf6a95800613f44a4ed775dcfe29310665c015195",
+    "apk_bytes": 79520810,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "changed_module_sha256": {}
+  },
+  "qa": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2601,
+    "ui_layouts": 200,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_checks_validated_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "mobile_checks": 42,
+  "android_checks": 59,
+  "lifecycle": {
+    "cycles": 18,
+    "checks": 56,
+    "recovered_bad_surface_warnings": 11
+  },
+  "latched_lifecycle": {
+    "cycles": 18,
+    "checks": 56,
+    "recovered_bad_surface_warnings": 9
+  },
+  "latched_gameplay_checks": 59,
+  "control": {
+    "status": "failed",
+    "recorded_cycles": 8,
+    "completed_cycles": 7,
+    "checks": 22,
+    "passing_checks": 22,
+    "outcome": {
+      "driver_exit_code": 1,
+      "driver_status": "failed",
+      "outcome": "known_surface_failure_reproduced",
+      "scope": "Control collection outcome, not a passing recovery test when driver_status is failed."
+    },
+    "error_prefix": "Runtime condition timed out",
+    "scope": "Deliberately unpatched control failed on the eighth return after seven completed cycles. Successful workflow collection is not passing recovery acceptance."
+  },
+  "phone_parity": {
+    "status": "passed",
+    "selected_entries": 44,
+    "unchanged_entries": 44,
+    "changed_entries": [],
+    "scope": "All selected compiled game, Java/native engine and shipping settings entries match the previous verified phone APK. New test mode/reporting tools are excluded; no gameplay reinstall needed."
+  },
+  "recipe_cards": {
+    "mobile/android-mobile.json": {
+      "cards": 8,
+      "recipes": [
+        "arcstorm",
+        "halo",
+        "singularity"
+      ],
+      "owned_prerequisite_cases": 5
+    },
+    "android/android-runtime.json": {
+      "cards": 0,
+      "recipes": [],
+      "owned_prerequisite_cases": 0
+    },
+    "latched/gameplay/android-runtime.json": {
+      "cards": 0,
+      "recipes": [],
+      "owned_prerequisite_cases": 0
+    }
+  },
+  "receipt_files": {
+    "ARCSTORM_COLLECTION_REPORT.md": {
+      "bytes": 2108,
+      "sha256": "a492613d3ac7f7ba154c4cd30ff886cbded7ddfbd1a0a761d5a0930fdb2221cf"
+    },
+    "android-verification.json": {
+      "bytes": 12203,
+      "sha256": "5dfd58fcf47da7031ddf83750c17505933d968d003df7e0343e4c98947180bb1"
+    },
+    "arcstorm-collection-analysis.json": {
+      "bytes": 6468,
+      "sha256": "57a923bb4fb8b37a763009945b330c5695b8d4a181220594862c54a08b94f2ff"
+    },
+    "balance-report-verification.json": {
+      "bytes": 630,
+      "sha256": "fc19e3701cf2d0ac341a34e45adeabca2f595955d9448920f153b56a777dbf9b"
+    },
+    "collection-ci-observation.json": {
+      "bytes": 234,
+      "sha256": "8db6009cc650a1dd8a8b4cea793a981dd35a34fbe3195624c9fb6cee4dfc9adc"
+    },
+    "collection-report-reproduction.json": {
+      "bytes": 494,
+      "sha256": "230ed92a39421ee483e3c063339815554e5cd9720ed91f2db74ad45e96beec41"
+    },
+    "collection-report-verification.json": {
+      "bytes": 864,
+      "sha256": "11a88f7f02d325b273992e0e6f2d43ff7c36671b7fa04b40900e8e6eb9767ab4"
+    },
+    "control-outcome.json": {
+      "bytes": 563,
+      "sha256": "3057a6a7d82b681c786fbfffd603f7e62f52d9bb303149e0de1af207947c5ecd"
+    },
+    "export-smoke.json": {
+      "bytes": 370,
+      "sha256": "8a6fcbf4358252546a6d344b5e88b6fc52c710a38303068403e551cc7500e6f0"
+    },
+    "latched-gameplay-verification.json": {
+      "bytes": 12004,
+      "sha256": "e98fd3d6de02398f46cf9bc9d7a15cb0f9cff26fed63a8938ea7072693c14585"
+    },
+    "latched-lifecycle-verification.json": {
+      "bytes": 1617,
+      "sha256": "4a9b08854bd2489cd453b6df7b553e1ae9f60a09840e0dd16c491cf323d89241"
+    },
+    "lifecycle-verification.json": {
+      "bytes": 1796,
+      "sha256": "78a8fa7174972e1926759b4665b7a5a0a2de8ff394d4f13d2079eaa686bdc4a2"
+    },
+    "local-analysis.json": {
+      "bytes": 6468,
+      "sha256": "e29c6e9ec3a88bb9a2b5655de7e544746c5de205dd8b88b3ed865467411f29f1"
+    },
+    "local-execution.json": {
+      "bytes": 928,
+      "sha256": "9c46b6e4f3a3b6525740fc8acd3742a5116e7db00e906875cd9eac9de87a7c20"
+    },
+    "local-headless-results.json": {
+      "bytes": 1975,
+      "sha256": "bf02a8eb9c46b1ebdb2cbc65fdb057408426a72877e50622c335d61efe7fbd69"
+    },
+    "mobile-verification.json": {
+      "bytes": 1213,
+      "sha256": "5687cb051a74a648156172620f80ef91fbd6914f6a8ac68096c27b3982b7229c"
+    },
+    "modal-visibility-verification.json": {
+      "bytes": 981,
+      "sha256": "d63a03879b93461300a06975428fe5c33d04281099ae9ea002e64e593b17741a"
+    },
+    "native-verification.json": {
+      "bytes": 1921,
+      "sha256": "b2699009c9cafb7c0aa262644caa9c24b7f9eb44c32a35b507bcd8c7c41f104f"
+    },
+    "phone-code-parity.json": {
+      "bytes": 307,
+      "sha256": "243263d7c5b9690f13f17d7a346b7791b9e47d1c76038df8a2bd9c11b7409980"
+    },
+    "python-ci-observation.json": {
+      "bytes": 253,
+      "sha256": "1e669bd24a14f432e88017b5709fcf859788c75b7141bc214cb57677de78cdc9"
+    },
+    "qa-verification.json": {
+      "bytes": 712,
+      "sha256": "bfc620a72a0b93c67d74d8ce5e8bc85d77fe218a2853d07bcac5cd5d2fd2390d"
+    },
+    "recipe-card-observations.json": {
+      "bytes": 4388,
+      "sha256": "01a2402c784693500bcc64ccda7cb834e594c3e0bd6fb3f0bdb2a84254ab3bda"
+    },
+    "visual-review.json": {
+      "bytes": 510,
+      "sha256": "b357eb46e52b5845a3cc6803cb303074c93ca3724ab454529d8559cdae341807"
+    }
+  },
+  "limits": [
+    "The eight Arcstorm investigation cases remain separate from the canonical 26 normal sessions/19 cohorts. Raw trace is in full-QA artifact 13726778048; source hash retained in analysis.",
+    "Local and hosted complete traces/cases match except host timing. Nearby cold XP does not establish safe routes or cause; normal defeats remain observations.",
+    "No balance, default-bot, gameplay, engine, shipping configuration or save changes. All 44 selected phone entries match the prior verified APK; no reinstall needed.",
+    "Eight fresh Mobile recipe card records across all three recipes include five partial-progress records. Restored panel inspected. No saturated counter or earned full mutation acceptance.",
+    "Prior intermittent Settings-return timeout and ADB loss remain open. Current single-tap diagnostics and current first-attempt acceptance pass; no repair claimed.",
+    "Software Mobile emulator alone disables Swappy; shipping default preserved. Physical ARM64/S23 performance/audio and protected signing/release AAB remain unverified.",
+    "Independent APK CRC/config/code checks and exact-assets startup pass. CI signature verification passed; not independently rerun locally. Main unchanged and PR unmerged."
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-10 / Arcstorm collection investigation
 
-- Add a four-seed/two-policy normal-rule trace and audited gap/proximity report to quality CI. Local sixteen probe runs, four overlap parity checks, 79 Python tests and 15 Godot suites pass. Long gaps remain despite nearby conserved XP and improved alternate-policy outcomes; no balance/causal-human claim. Hosted verification pending; gameplay unchanged.
+- Add a four-seed/two-policy normal-rule trace and audited gap/proximity report to quality CI. Eight fresh hosted cases/full traces match local results; report regenerates byte-for-byte. All five workflows pass attempt 1, with 79 Python tests/15 Godot suites and 42 Mobile/59 Android checks. Long gaps remain despite nearby conserved XP; no causal balance claim. Actual Mobile partial recipe counters verified. Shipping code/settings match; no reinstall needed. Exact evidence/scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-09 / Normal-play balance reporting
 

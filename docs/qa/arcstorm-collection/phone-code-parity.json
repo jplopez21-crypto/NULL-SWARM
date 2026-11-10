@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 44,
+  "changed_entries": [],
+  "scope": "All selected compiled game, Java/native engine and shipping settings entries match the previous verified phone APK. New test mode/reporting tools are excluded; no gameplay reinstall needed."
+}

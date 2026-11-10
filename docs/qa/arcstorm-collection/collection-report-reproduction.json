@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "input_sha256": "7fdd1ff943291ad932b12d6f90078e25dd4d5cdf4e359a8a33c47cc92678f18e",
+  "outputs": {
+    "arcstorm-collection-analysis.json": {
+      "byte_identical": true,
+      "sha256": "57a923bb4fb8b37a763009945b330c5695b8d4a181220594862c54a08b94f2ff",
+      "bytes": 6468
+    },
+    "ARCSTORM_COLLECTION_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "a492613d3ac7f7ba154c4cd30ff886cbded7ddfbd1a0a761d5a0930fdb2221cf",
+      "bytes": 2108
+    }
+  }
+}

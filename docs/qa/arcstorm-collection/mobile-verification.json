@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "renderer": "mobile",
+  "checks": 42,
+  "earned_corruption": {
+    "level": 5,
+    "total_xp": 138,
+    "kills": 59,
+    "before_max": 100,
+    "after_max": 80,
+    "cycle_gain_percent": 30,
+    "no_repeated_cost": true,
+    "same_process_background_cost_retention": true
+  },
+  "earned_passive": {
+    "ranks": {
+      "magnet": 1
+    },
+    "summary": "PASSIVE UPLINKS // MEMORY TETHER 1/5",
+    "observed_caps": {
+      "MEMORY TETHER": 5
+    },
+    "choices": 1,
+    "chosen_indices": [
+      "02"
+    ],
+    "retained_through_background_return": true,
+    "scope": "Actually earned passive selection and dedicated display; exact caps remain the engine/UI regression contract. Not all seven passive effects or a full Mobile run."
+  },
+  "corruption_cancel": {
+    "status": "passed",
+    "level": 5,
+    "xp": 138,
+    "same_process": true,
+    "fresh_panel_round_trip": true,
+    "scope": "Actual earned optional-link decline/reopen with unchanged full offers, rerolls and seventeen observed fields before Redline selection."
+  },
+  "scope": "Independent complete transcript verification executed; compact summary omits repeated full game snapshots, retained in hosted artifact."
+}
