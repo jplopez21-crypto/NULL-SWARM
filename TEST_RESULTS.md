@@ -1,5 +1,11 @@
 # NULL//SWARM test results
 
+## Frozen collector validation — local verification 2026-11-12
+
+- Declared seeds 606/707 × Arcstorm/Halo/Kinetic × reference/candidate in local commit `580dba1` before running them. All three policy source hashes match the preceding verified code and are recorded in raw output/pinned by the analyzer. No candidate/reference tuning after results. New `--detour-holdout` mode and `report_detour_holdout.py` validate twelve runs/six pairs/three separate cohorts; original cases/default policies remain untouched. These seeds cease to be held-out for later tuning based on them.
+- All twelve local runs complete without script/invariant errors. Arcstorm gaps: 233.81→157.14s and 306.38→139.20s (all victories). Halo 606 changes defeat→victory but gap 31.49→77.54s; 707 changes victory→defeat and gap 19.57→38.89s. Kinetic gaps: 197.62→74.53s and 24.00→124.31s (all victories). Mixed XP deltas are retained per pair; run duration differs on defeats, so totals/gaps are not equal-exposure balance estimates. This evidence does not justify replacing the reference bots or inferring human fun.
+- All 100 Python tests/15 strict Godot suites pass, including six new matrix/source-freeze/cohort/accounting/CLI tests. All six earlier report files remain byte-identical on previous raw input after generic seed/profile validation reuse. Local raw hash/provenance/analysis/headless summary: docs/qa/holdout/. Hosted import/export/Android/Mobile/full-QA checks pending; no new physical-device or release-signing clearance claimed.
+
 ## Alternate collector experiment — verified 2026-11-12
 
 Verified tool/build source: `1bb55ed9cfc856f588df2452a1fc1007f52b0449`, tree `8664d2a01cd156c8227f3a3e1c3d66c042555e01`. Final checkpoint changes Markdown/JSON evidence only.

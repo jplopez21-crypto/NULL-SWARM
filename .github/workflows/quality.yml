@@ -132,10 +132,16 @@ jobs:
           timeout 900s godot --headless --script tests/run_playtests.gd -- --detour-probe 2>&1 | tee builds/qa/detour-probe.log
           if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/detour-probe.log; then exit 1; fi
           python3 tools/report_detour_probe.py --input builds/qa/detour-probe.json --output builds/qa
+      - name: Frozen collector validation
+        run: |
+          set -o pipefail
+          timeout 900s godot --headless --script tests/run_playtests.gd -- --detour-holdout 2>&1 | tee builds/qa/detour-holdout.log
+          if grep -E 'SCRIPT ERROR|ERROR:' builds/qa/detour-holdout.log; then exit 1; fi
+          python3 tools/report_detour_holdout.py --input builds/qa/detour-holdout.json --output builds/qa
       - name: Publish QA summaries
         if: ${{ !cancelled() }}
         run: |
-          for report in builds/qa/BOT_REPORT.md builds/qa/BALANCE_REPORT.md builds/qa/ARCSTORM_COLLECTION_REPORT.md builds/qa/ROUTE_REPORT.md builds/qa/DETOUR_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
+          for report in builds/qa/BOT_REPORT.md builds/qa/BALANCE_REPORT.md builds/qa/ARCSTORM_COLLECTION_REPORT.md builds/qa/ROUTE_REPORT.md builds/qa/DETOUR_REPORT.md builds/qa/HOLDOUT_REPORT.md builds/qa/STRESS_REPORT.md builds/qa/XP_COMPARISON.md builds/qa/PACING_REPORT.md builds/qa/CORRUPTION_STRESS_REPORT.md builds/qa/GRAVITY_STRESS_REPORT.md builds/qa/ENGINEER_STRESS_REPORT.md; do
             if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

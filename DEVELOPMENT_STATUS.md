@@ -2,6 +2,12 @@
 
 ## Current checkpoint
 
+- Added frozen-policy validation on new seeds 606/707 across Arcstorm/Halo/Kinetic (twelve runs/six pairs), declared in local commit `580dba1` before execution. Candidate, inherited collector and base driver hashes match the prior verified source; no tuning after these outcomes. Arcstorm gaps shorten twice; Halo swaps a win/loss and has longer gaps; Kinetic has one shorter and one longer gap. Keep the candidate experimental and both references unchanged.
+- All 100 Python tests/15 strict Godot suites pass locally. Six earlier report files remain byte-identical on prior inputs. Local validation/report/provenance: docs/qa/holdout/. Hosted import/export/emulator/full-QA verification pending; new matrix stays separate from prior design cases and canonical cohorts.
+- Next: finish hosted parity/artifact checks, retain profile-specific tradeoffs and broaden actual earned-mutation coverage. No gameplay, phone-performance or release-signing clearance added.
+
+## Previous verified detour checkpoint
+
 - Verified explicit alternate collector at source `1bb55ed9cfc856f588df2452a1fc1007f52b0449`. All eight hosted cases/full route/XP traces match local execution except timings. All four candidate gaps shorten (120.90/170.70/19.97/136.67s versus 319.55/249.50/223.25/306.52s); all eight win. XP changes +296/+104/-76/+239. Earlier design seeds, not held-out or human validation. [Report](docs/qa/detour/DETOUR_REPORT.md).
 - All five workflows pass attempt 1: 94 Python tests/15 Godot suites, 1,113 systems/101 GUI checks, 42 Mobile/59 ordinary Android checks and existing gameplay/layout regressions. Fresh reference cases, all eight original route cases and default report semantics are preserved. All six fresh report files regenerate byte-for-byte. Fixture failures/corrections retained; no production repair claimed. [Receipts](docs/qa/detour/verified-ci.json).
 - Ordinary/patched lifecycle each passes eighteen cycles/56 checks; unpatched control reproduces the known failure during cycle eight after seven completed cycles. Earlier Settings-return/ADB causes remain open. All 44 selected shipping game/engine/settings entries match: no reinstall needed. Next: held-out seeds/other builds before adopting any experimental reference policy. Completed earned mutations, physical ARM64/S23 profiling/audio and protected release signing remain open. Main unchanged/unmerged; current review notes in docs/DEVELOPMENT_PR.md.
