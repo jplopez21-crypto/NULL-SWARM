@@ -288,20 +288,29 @@ func run() -> void:
 		QAReport.write("res://builds/qa/extended-seeds.json", report)
 		quit(0 if failures.is_empty() else 1)
 		return
-	if "--detour-probe" in OS.get_cmdline_user_args():
-		var report := QAReport.metadata("normal-rules detour experiment")
+	if "--detour-probe" in OS.get_cmdline_user_args() or "--detour-holdout" in OS.get_cmdline_user_args():
+		var holdout: bool = "--detour-holdout" in OS.get_cmdline_user_args()
+		var report := QAReport.metadata("normal-rules detour holdout" if holdout else "normal-rules detour experiment")
 		var cases: Array[Dictionary] = []
-		for seed_value in [101, 202, 303, 404]:
-			for policy in ["value_aware", "detour"]:
-				var result: Dictionary = await simulate(seed_value, "arcstorm", "vanguard", MAX_SECONDS, "local", policy, "clean", true, false, true)
-				cases.append(result)
-				print("DETOUR_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
+		for profile in (["arcstorm", "halo", "kinetic"] if holdout else ["arcstorm"]):
+			for seed_value in ([606, 707] if holdout else [101, 202, 303, 404]):
+				for policy in ["value_aware", "detour"]:
+					var result: Dictionary = await simulate(seed_value, profile, "vanguard", MAX_SECONDS, "local", policy, "clean", true, false, true)
+					cases.append(result)
+					print("DETOUR_CASE profile=", profile, " seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
 		report["cases"] = cases
 		report["failures"] = failures
 		report["route_schema"] = 1
 		report["limitations"] = ["Explicit experimental five-metre waypoint commitment after sixteen decisions with low net travel. Existing reference policies unchanged.", "Normal stick input, inherited danger dashes and upgrade preferences only; no stat grants, immunity, teleporting or RNG writes.", "Path clearance is a limited prediction within existing sensors, not a safety guarantee. Movement changes adaptation, offers and subsequent upgrades.", "Four fixed seed pairs; defeats and mixed results remain observations, not failed balance tests or human-fun estimates."]
-		QAReport.write("res://builds/qa/detour-probe.json", report)
-		print("DETOUR_RESULT cases=", cases.size(), " failures=", failures.size())
+		if holdout:
+			report["candidate_source_sha256"] = FileAccess.get_file_as_string("res://tests/detour_bot.gd").sha256_text()
+			var policy_sources: Dictionary = {}
+			for path in ["tests/detour_bot.gd", "tests/value_aware_bot.gd", "tests/bot_driver.gd"]:
+				policy_sources[path] = FileAccess.get_file_as_string("res://" + path).sha256_text()
+			report["policy_sources_sha256"] = policy_sources
+			report["limitations"] = ["Two previously unused seeds across Arcstorm, Halo and Kinetic. Candidate and reference sources frozen from the preceding experiment; no tuning after observing these cases.", "Normal new-player stats, stick/dash controls and inherited upgrade preferences. No grants, immunity, teleporting or RNG writes.", "Different movement changes enemies, offers and later choices. Two seeds per profile cannot establish population win rates, human fun or safe paths.", "Original design cases and canonical gameplay matrices remain separate; mixed outcomes are observations, not balance failures."]
+		QAReport.write("res://builds/qa/detour-holdout.json" if holdout else "res://builds/qa/detour-probe.json", report)
+		print("DETOUR_HOLDOUT_RESULT" if holdout else "DETOUR_RESULT", " cases=", cases.size(), " failures=", failures.size())
 		quit(0 if failures.is_empty() else 1)
 		return
 	if "--arcstorm-collection-probe" in OS.get_cmdline_user_args():

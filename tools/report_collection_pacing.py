@@ -47,14 +47,14 @@ def longest_gap(choices, duration):
     return {'start': start, 'end': end, 'seconds': round(end - start, 2)}
 
 
-def describe_case(case, policies=POLICIES):
+def describe_case(case, policies=POLICIES, seeds=SEEDS, profile='arcstorm'):
     if not isinstance(case, dict) or case.get('outcome') not in ('victory', 'defeat', 'time_limit'):
         raise ValueError('invalid case/outcome')
-    for key, expected in {'profile': 'arcstorm', 'kit': 'vanguard', 'fixture': 'new player',
+    for key, expected in {'profile': profile, 'kit': 'vanguard', 'fixture': 'new player',
                           'pickup_mode': 'local', 'link_policy': 'clean', 'research': {}}.items():
         if case.get(key) != expected:
             raise ValueError(f'unmatched starting condition: {key}')
-    if type(case.get('seed')) is not int or case['seed'] not in SEEDS or case.get('bot_policy') not in policies:
+    if type(case.get('seed')) is not int or case['seed'] not in seeds or case.get('bot_policy') not in policies:
         raise ValueError('unexpected seed or policy')
     duration = numeric(case.get('survived_seconds'), 'duration')
     if duration <= 0:
@@ -104,26 +104,26 @@ def describe_case(case, policies=POLICIES):
             'uncollected_xp': case['uncollected_xp'], 'longest_gap': gap, 'trace_samples': len(trace)}
 
 
-def analyze(source, policies=POLICIES, kind='normal-rules Arcstorm collection probe'):
+def analyze(source, policies=POLICIES, kind='normal-rules Arcstorm collection probe', seeds=SEEDS, profile='arcstorm'):
     if len(policies) != 2 or len(set(policies)) != 2 or any(not isinstance(p, str) or not p for p in policies):
         raise ValueError('investigation requires two distinct named policies')
     if (not isinstance(source, dict) or type(source.get('schema')) is not int or source['schema'] != 1
             or source.get('kind') != kind or source.get('failures') != []
-            or not isinstance(source.get('cases'), list) or len(source['cases']) != len(SEEDS) * len(policies)):
+            or not isinstance(source.get('cases'), list) or len(source['cases']) != len(seeds) * len(policies)):
         raise ValueError('incomplete, failed or unsupported investigation')
     if not isinstance(source.get('godot'), str) or not source['godot'] or numeric(source.get('fixed_step'), 'fixed step') <= 0:
         raise ValueError('missing engine/step provenance')
     cases, seen = [], set()
     for case in source['cases']:
-        row = describe_case(case, policies); key = (row['seed'], row['policy'])
+        row = describe_case(case, policies, seeds, profile); key = (row['seed'], row['policy'])
         if key in seen:
             raise ValueError('duplicate paired case')
         seen.add(key); cases.append(row)
-    if seen != {(s, p) for s in SEEDS for p in policies}:
+    if seen != {(s, p) for s in seeds for p in policies}:
         raise ValueError('incomplete paired coverage')
     cases.sort(key=lambda c: (c['seed'], policies.index(c['policy'])))
     pairs = []
-    for seed in SEEDS:
+    for seed in seeds:
         a, b = [next(c for c in cases if c['seed'] == seed and c['policy'] == policy) for policy in policies]
         pairs.append({'seed': seed, policies[0] + '_outcome': a['outcome'], policies[1] + '_outcome': b['outcome'],
                       policies[1] + '_minus_' + policies[0]: {'survived_seconds': round(b['survived_seconds'] - a['survived_seconds'], 2),

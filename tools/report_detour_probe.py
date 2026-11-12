@@ -4,7 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-from report_collection_pacing import analyze
+from report_collection_pacing import SEEDS, analyze
 from report_route_pacing import analyze_routes
 
 POLICIES = ('value_aware', 'detour')
@@ -19,9 +19,9 @@ LIMITS = [
 ]
 
 
-def report(source):
-    collection = analyze(source, POLICIES, KIND)
-    routes = analyze_routes(source, POLICIES, KIND)
+def report(source, seeds=SEEDS, profile='arcstorm', kind=KIND):
+    collection = analyze(source, POLICIES, kind, seeds, profile)
+    routes = analyze_routes(source, POLICIES, kind, seeds, profile)
     detours = []
     for case in source['cases']:
         if case['bot_policy'] != 'detour':
