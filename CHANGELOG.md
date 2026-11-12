@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-12 / Alternate collector experiment
 
-- Add explicit bounded detour navigation and an eight-case matched experiment/report without replacing reference bots or gameplay. Local candidate gaps shorten in all four pairs; XP changes are mixed. Reference full traces/default reports remain identical, 94 Python tests pass and corrected systems pass 1,113 checks. Hosted verification in progress; no human-balance or held-out claim.
+- Add explicit bounded detour navigation and an eight-case matched experiment/report without replacing reference bots or gameplay. All hosted/local full traces match; candidate gaps shorten in all four pairs while XP changes remain mixed. Reports regenerate byte-for-byte and all five workflows pass attempt 1 (94 Python tests, 15 Godot suites, 1,113 systems, 42 Mobile/59 ordinary Android checks). Shipping code/settings match; no reinstall needed. No held-out or human-balance claim; exact evidence in TEST_RESULTS.md.
 
 ## Development — 2026-11-12 / Arcstorm route observation
 

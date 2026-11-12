@@ -1,0 +1,8 @@
+{
+  "run_id": 43303885090,
+  "job_id": 131481916742,
+  "markers": [
+    "2026-11-12T21:03:22.8522243Z DETOUR_RESULT cases=8 failures=0",
+    "2026-11-12T21:03:23.0108146Z DETOUR_REPORT observed cases=8 pairs=4"
+  ]
+}
