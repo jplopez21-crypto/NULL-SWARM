@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 44,
+  "changed_entries": [],
+  "scope": "All 38 game bytecodes, three DEX, two native libraries and shipping project settings match the previous verified phone APK. Test scripts and observer remain excluded. No gameplay reinstall needed."
+}

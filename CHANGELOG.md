@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-12 / Frozen collector validation
 
-- Add a separately declared twelve-run validation matrix on new seeds across three weapon profiles, pinning candidate/inherited source hashes. Local outcomes expose mixed Halo/Kinetic tradeoffs; reference bots and gameplay stay unchanged. All 100 Python tests/15 Godot suites and six default-report parity checks pass. Hosted validation pending; no universal navigation or human-balance claim.
+- Add a separately declared twelve-run validation matrix across new seeds/three weapon profiles with frozen policy hashes. All hosted/local full traces match; mixed Halo/Kinetic tradeoffs keep the candidate experimental. All five workflows pass attempt 1 (100 Python tests, 15 Godot suites, 42 Mobile/59 ordinary Android checks); prior cases/report semantics remain preserved and all eight fresh report files regenerate exactly. Shipping code/settings match; no reinstall needed. Exact results/scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-12 / Alternate collector experiment
 

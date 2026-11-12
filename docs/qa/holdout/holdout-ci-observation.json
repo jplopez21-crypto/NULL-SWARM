@@ -1,0 +1,8 @@
+{
+  "run_id": 43322606941,
+  "job_id": 131546883838,
+  "markers": [
+    "2026-11-12T23:05:37.3648120Z DETOUR_HOLDOUT_RESULT cases=12 failures=0",
+    "2026-11-12T23:05:37.5490944Z HOLDOUT_REPORT observed cases=12 pairs=6 cohorts=3"
+  ]
+}

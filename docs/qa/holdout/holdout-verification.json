@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "cases": 12,
+  "pairs": [
+    {
+      "profile": "arcstorm",
+      "seed": 606,
+      "reference_outcome": "victory",
+      "candidate_outcome": "victory",
+      "reference_gap": 233.81,
+      "candidate_gap": 157.14,
+      "survived_seconds": 0.0,
+      "xp_collected": -180,
+      "longest_gap_seconds": -76.67
+    },
+    {
+      "profile": "arcstorm",
+      "seed": 707,
+      "reference_outcome": "victory",
+      "candidate_outcome": "victory",
+      "reference_gap": 306.38,
+      "candidate_gap": 139.2,
+      "survived_seconds": 0.0,
+      "xp_collected": 84,
+      "longest_gap_seconds": -167.18
+    },
+    {
+      "profile": "halo",
+      "seed": 606,
+      "reference_outcome": "defeat",
+      "candidate_outcome": "victory",
+      "reference_gap": 31.49,
+      "candidate_gap": 77.54,
+      "survived_seconds": 483.9,
+      "xp_collected": 15626,
+      "longest_gap_seconds": 46.05
+    },
+    {
+      "profile": "halo",
+      "seed": 707,
+      "reference_outcome": "victory",
+      "candidate_outcome": "defeat",
+      "reference_gap": 19.57,
+      "candidate_gap": 38.89,
+      "survived_seconds": -473.4,
+      "xp_collected": -15441,
+      "longest_gap_seconds": 19.32
+    },
+    {
+      "profile": "kinetic",
+      "seed": 606,
+      "reference_outcome": "victory",
+      "candidate_outcome": "victory",
+      "reference_gap": 197.62,
+      "candidate_gap": 74.53,
+      "survived_seconds": 0.0,
+      "xp_collected": 245,
+      "longest_gap_seconds": -123.09
+    },
+    {
+      "profile": "kinetic",
+      "seed": 707,
+      "reference_outcome": "victory",
+      "candidate_outcome": "victory",
+      "reference_gap": 24.0,
+      "candidate_gap": 124.31,
+      "survived_seconds": 0.0,
+      "xp_collected": 174,
+      "longest_gap_seconds": 100.31
+    }
+  ],
+  "cohorts": 3,
+  "local_ci_complete_case_route_and_xp_trace_parity": true,
+  "policy_sources_frozen": {
+    "tests/bot_driver.gd": "78f227a043c340a49a00f62b6da87038ffdc04e6b2b745fe0e05d31bb2ce96bf",
+    "tests/detour_bot.gd": "8258fe6d9cb81f4e38da6c81a767ecb70fd8b16c85c62caa87889cb8673fe39a",
+    "tests/value_aware_bot.gd": "d0761cead0d6e7012feff3f1ca148a9ccf9b28b8e032e1ca396d9622ff8ec893"
+  },
+  "previous_original_route_and_design_cases_preserved": 16,
+  "report_cohorts_pairs_and_route_windows_match_raw": true,
+  "all_recorded_dash_requests_activated": true,
+  "raw_sha256": "ed0facf8aeb4c38e3da3d804126ae08211661ce988a8cbd0a6d6e3bb44c6d6c5",
+  "decision": "Keep experimental; mixed Halo/Kinetic outcomes do not support replacing reference policies.",
+  "scope": "Validation relative to preceding design cases; two seeds per profile, differing survival exposure. No human or population acceptance; these seeds are not held-out for later tuning against them."
+}

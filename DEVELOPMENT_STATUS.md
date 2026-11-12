@@ -2,9 +2,9 @@
 
 ## Current checkpoint
 
-- Added frozen-policy validation on new seeds 606/707 across Arcstorm/Halo/Kinetic (twelve runs/six pairs), declared in local commit `580dba1` before execution. Candidate, inherited collector and base driver hashes match the prior verified source; no tuning after these outcomes. Arcstorm gaps shorten twice; Halo swaps a win/loss and has longer gaps; Kinetic has one shorter and one longer gap. Keep the candidate experimental and both references unchanged.
-- All 100 Python tests/15 strict Godot suites pass locally. Six earlier report files remain byte-identical on prior inputs. Local validation/report/provenance: docs/qa/holdout/. Hosted import/export/emulator/full-QA verification pending; new matrix stays separate from prior design cases and canonical cohorts.
-- Next: finish hosted parity/artifact checks, retain profile-specific tradeoffs and broaden actual earned-mutation coverage. No gameplay, phone-performance or release-signing clearance added.
+- Verified frozen-policy validation at source `1510d9be78f8132b042ce3ce97d07b1cca8e3781`: new seeds 606/707 across three profiles, twelve runs/six pairs. All complete hosted cases/routes/XP traces match local execution except timings. Arcstorm gaps shorten twice; Halo swaps a win/loss and has longer gaps; Kinetic has one shorter/one longer gap. Keep the candidate experimental and both references unchanged. Three policy source hashes remain frozen from the preceding source; matrix declared locally before execution. [Report](docs/qa/holdout/HOLDOUT_REPORT.md).
+- All five workflows pass attempt 1: 100 Python tests/15 Godot suites, 1,113 systems/101 GUI checks, 42 Mobile/59 ordinary Android checks and existing gameplay/layout regressions. Earlier sixteen route/design cases and canonical 26 runs/19 cohorts remain preserved. All eight fresh report files regenerate byte-for-byte. Ordinary/patched recovery each passes eighteen cycles/56 checks; unpatched control reproduces its known failure during cycle eight. [Evidence](docs/qa/holdout/verified-ci.json).
+- All 44 selected prior shipping game/engine/settings entries match: no reinstall needed. No gameplay, bot parameters or balance changes. Next: retain profile-specific tradeoffs and broaden actual earned-mutation coverage, rather than adopt a universal navigation policy. Earlier Settings-return/ADB causes, physical ARM64/S23 profiling/audio and protected signing/release AAB remain open. Main unchanged/unmerged; review notes in docs/DEVELOPMENT_PR.md.
 
 ## Previous verified detour checkpoint
 
