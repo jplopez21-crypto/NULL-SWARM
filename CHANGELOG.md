@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-12 / Arcstorm route observation
+
+- Add read-only actual travel/reversal/dash measurements and audited route reports to the existing eight-case investigation. Local full gameplay/XP-trace parity, 88 Python tests and 15 Godot suites pass; repeated opposite commands expose bot oscillation while requested dashes activate. Hosted verification pending. Gameplay and existing policies unchanged.
+
 ## Development — 2026-11-10 / Arcstorm collection investigation
 
 - Add a four-seed/two-policy normal-rule trace and audited gap/proximity report to quality CI. Eight fresh hosted cases/full traces match local results; report regenerates byte-for-byte. All five workflows pass attempt 1, with 79 Python tests/15 Godot suites and 42 Mobile/59 Android checks. Long gaps remain despite nearby conserved XP; no causal balance claim. Actual Mobile partial recipe counters verified. Shipping code/settings match; no reinstall needed. Exact evidence/scope: TEST_RESULTS.md.

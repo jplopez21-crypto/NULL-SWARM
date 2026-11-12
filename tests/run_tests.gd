@@ -13,6 +13,7 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
+	_test_route_observer()
 	var damage_fixture := {"pulse": 50.5, "drone": 25, "arcstorm": 12.5, "halo": 12.0, "rail": 0, "thermal": -1, "bad": "30", "infinite": INF, "nan": NAN, 17: 10}
 	var frozen_damage := damage_fixture.duplicate(true)
 	var damage_rows := Arsenal.damage_breakdown(damage_fixture)
@@ -1030,3 +1031,35 @@ func _test_performance_capture() -> void:
 	check(game.performance_history.samples.is_empty() and game.performance_history.next_ms == 0 and not game._sample_performance(0, 0), "new deployment clears old evidence while zero FPS stays a warm-up")
 	game.audio.shutdown()
 	game.free()
+
+func _test_route_observer() -> void:
+	var route := preload("res://tests/route_observer.gd").new()
+	route.begin_step(Vector3.ZERO, Vector2.RIGHT, false, 0.0, true)
+	route.end_step(Vector3(3, 20, 0), 0.0, 1.0)
+	var first: Dictionary = route.snapshot(1.0)
+	check(first["travel_m"] == 3.0 and first["active_seconds"] == 1.0 and first["steps"] == 1, "route measures actual horizontal movement, excluding vertical decoration")
+	route.begin_step(Vector3(3, 0, 0), Vector2.LEFT, true, 1.0, true)
+	route.end_step(Vector3.ZERO, 0.9, 0.1)
+	var second: Dictionary = route.snapshot(1.1)
+	check(second["travel_m"] == 6.0 and second["command_reversals"] == 1, "route exposes a returning path and opposite command despite zero net travel")
+	check(second["dash_requests"] == 1 and second["dash_activations"] == 0, "route distinguishes rejected cooldown requests from actual dashes")
+	route.begin_step(Vector3.ZERO, Vector2.RIGHT, true, 0.0, false)
+	route.end_step(Vector3(100, 0, 0), 2.5, 10.0)
+	check(route.snapshot(1.1) == second, "paused observation cannot count movement, reversals, requests or readiness")
+	route.end_step(Vector3(100, 0, 0), 2.5, 10.0)
+	check(route.snapshot(1.1) == second, "a repeated end cannot double count the same step")
+	first["travel_m"] = 999
+	check(route.snapshot(1.1)["travel_m"] == 6.0, "route snapshots cannot alter the accumulator")
+	var player := SwarmPlayer.new()
+	root.add_child(player)
+	player.dash_cooldown = 0.01
+	var before: Vector3 = player.position
+	route.begin_step(before, Vector2.RIGHT, true, player.dash_cooldown, true)
+	check(player.tick(1.0 / 60.0, Vector2.RIGHT, true), "real player accepts a dash when cooldown expires within this tick")
+	var after: Vector3 = player.position
+	route.end_step(after, player.dash_cooldown, 1.0 / 60.0)
+	var actual: Dictionary = route.snapshot(1.12)
+	check(actual["dash_activations"] == 1 and actual["dash_requests"] == 2, "route recognizes actual player cooldown transition without treating every request as success")
+	check(absf(actual["dash_ready_seconds"] - 1.017) < 0.001, "route readiness includes the same-tick expired cooldown and excludes busy ticks")
+	check(actual["steps"] == 3 and player.position == after and before != after, "read-only observation preserves actual dash position and counts playing steps only")
+	player.free()

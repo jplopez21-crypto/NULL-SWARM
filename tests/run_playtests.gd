@@ -64,7 +64,7 @@ func _pacing_sample(game: Node3D) -> Dictionary:
 		"position": [snappedf(game.player.position.x, 0.01), snappedf(game.player.position.z, 0.01)],
 		"speed": game.player.effective_speed(), "magnet": game.player.magnet, "kills": game.combat.kills}
 
-func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean", trace_pacing: bool = false, diagnostics: bool = false) -> Dictionary:
+func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean", trace_pacing: bool = false, diagnostics: bool = false, trace_route: bool = false) -> Dictionary:
 	var starting_failures: int = failures.size()
 	var game := _game(seed_value, kit, pickup_mode)
 	if diagnostics:
@@ -80,6 +80,8 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 	var snapshots: Array[Dictionary] = []
 	var next_snapshot: float = 60.0
 	var pacing_trace: Array[Dictionary] = []
+	var route_trace: Array[Dictionary] = []
+	var route := preload("res://tests/route_observer.gd").new()
 	var next_trace: float = 0.0
 	var wall_start := Time.get_ticks_usec()
 	while steps < int(duration / DT) + 1000 and game.state != game.State.RESULTS and game.combat.director.elapsed < duration:
@@ -96,8 +98,12 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 				game.select_corruption(id)
 				bot.choices.append({"at": snappedf(game.combat.director.elapsed, 0.01), "id": "corruption:" + id})
 		bot.tick(game, DT)
+		if trace_route:
+			route.begin_step(game.player.position, game.input_router.stick, game.input_router.dash_requested, game.player.dash_cooldown, game.state == game.State.PLAYING)
 		var start := Time.get_ticks_usec()
 		game._physics_process(DT)
+		if trace_route:
+			route.end_step(game.player.position, game.player.dash_cooldown, DT)
 		if diagnostics:
 			# Synthetic FPS drives the real read-only sampling path; not device data.
 			game._sample_performance(steps * 17, 60.0)
@@ -115,6 +121,8 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 			next_snapshot += 60.0
 		if trace_pacing and game.combat.director.elapsed >= next_trace:
 			pacing_trace.append(_pacing_sample(game))
+			if trace_route:
+				route_trace.append(route.snapshot(game.combat.director.elapsed))
 			next_trace += 5.0
 		_check(is_finite(game.player.position.x) and is_finite(game.player.health.current), "non-finite player state")
 		_check(absf(game.player.position.x) <= 47.01 and absf(game.player.position.z) <= 47.01, "movement escaped arena")
@@ -161,6 +169,9 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		_check(result["architect_defeated"] and float(result["survived_seconds"]) >= 600.0, "invalid victory")
 	if trace_pacing:
 		pacing_trace.append(_pacing_sample(game))
+		if trace_route:
+			route_trace.append(route.snapshot(game.combat.director.elapsed))
+			result["route_trace"] = route_trace
 		result["pacing_trace"] = pacing_trace
 		for sample in pacing_trace:
 			_check(sample["dropped"] == sample["collected"] + sample["cold_xp"] + sample["attracted_xp"], "pacing trace lost XP accounting")
@@ -278,11 +289,12 @@ func run() -> void:
 		var cases: Array[Dictionary] = []
 		for seed_value in [101, 202, 303, 404]:
 			for policy in ["cautious", "value_aware"]:
-				var result: Dictionary = await simulate(seed_value, "arcstorm", "vanguard", MAX_SECONDS, "local", policy, "clean", true)
+				var result: Dictionary = await simulate(seed_value, "arcstorm", "vanguard", MAX_SECONDS, "local", policy, "clean", true, false, true)
 				cases.append(result)
 				print("ARCSTORM_COLLECTION_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
 		report["cases"] = cases
 		report["failures"] = failures
+		report["route_schema"] = 1
 		report["limitations"] = ["Same combat rules, starting stats and upgrade preferences; navigation/dash policies differ.", "Adaptive enemies, combat, offers and actual selections may diverge normally after movement changes.", "Five-second XP proximity samples do not establish safety, human visibility or causal balance effects.", "Four fixed seeds; defeats remain observations. No XP, immunity or upgrade grants."]
 		QAReport.write("res://builds/qa/arcstorm-collection-probe.json", report)
 		print("ARCSTORM_COLLECTION_RESULT cases=", cases.size(), " failures=", failures.size())

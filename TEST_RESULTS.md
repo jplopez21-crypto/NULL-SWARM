@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Arcstorm route observation — local verification 2026-11-12
+
+- Added a test-only per-step primitive-value observer plus a separate route analyzer/CI report. It records actual planar distance, command reversals over 120 degrees, dash requests/observed activations and ready time. Existing bot policies, movement, cooldowns and game rules remain unchanged. Explicitly rejects old proximity-only traces, unpaired samples, nonmonotonic/impossible motion or dash accounting; unobserved boundary windows stay unobserved.
+- Fresh local eight-case run completes without invariant/script errors. Every previous complete non-timing case and XP trace matches, excluding only the additional route trace; all recorded dash requests activate. Sampled seed-202 cautious gap window: 314.15s, 2,232.06m traveled, 0.10m net displacement, 2,337 opposite commands, 9/9 dashes and 292.68s ready. This supports bot oscillation as an investigation target; does not establish safe routes, human balance or a weapon defect. Other cases retain long gaps and reversals as recorded in local analysis.
+- All 88 Python tests/15 strict Godot suites pass locally, including ten new engine checks (1,097 system checks) and nine Python report/CLI tests. First direct Godot invocation fails on an unwritable default XDG path and aborts; existing isolated-XDG convention passes. Editor import separately reports sandbox TCP listener errors; additional-network request did not execute before interruption. No successful local editor import or fresh hosted build claimed yet. Local provenance/results: docs/qa/route-pacing/local-execution.json, local-headless-results.json and local-route-analysis.json.
+- Hosted import/export/Android/Mobile/full-QA gates pending. Shipping gameplay/default bots unchanged; no physical-device or release-signing clearance.
+
 ## Arcstorm collection investigation — verified 2026-11-10
 
 Verified tool/build source: `19abd777d680a9f489cf528d4abd0f77b7c2c1be`, tree `cb25bdeaa93a9167c09a7f007ba94dedaba66e57`. Final checkpoint changes Markdown/JSON evidence only.

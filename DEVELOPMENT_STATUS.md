@@ -1,6 +1,12 @@
-# Development status — NULL//SWARM / 2026-11-10
+# Development status — NULL//SWARM / 2026-11-12
 
 ## Current checkpoint
+
+- Added read-only actual-travel/reversal/dash observations to the separate Arcstorm probe and a validated route report in quality CI. Local eight-case/full-XP-trace parity with the previous checkpoint passes. Bot command oscillation is visible: seed 202 cautious travels 2,232m over a sampled 314s gap window but finishes 0.10m from its start, reversing 2,337 times. Every recorded dash request activates. No navigation, balance or gameplay changes.
+- All 88 Python tests/15 strict Godot suites pass locally (1,097 system checks). Ten new engine/nine Python regressions verify measurement/accounting/CLI boundaries. Editor import reaches a local TCP sandbox restriction; hosted import/build/emulator/full-QA verification pending. Local evidence: docs/qa/route-pacing/.
+- Next: verify hosted gates and route/report parity, then evaluate an explicit alternate path-planning experiment. Existing shipping code remains unchanged; phone performance/audio and protected release signing remain open.
+
+## Previous verified collection checkpoint
 
 - Verified separate four-seed/two-policy Arcstorm investigation at source `19abd777d680a9f489cf528d4abd0f77b7c2c1be`. All eight fresh hosted cases/full traces match executed local observations except host timing; report regenerates byte-for-byte. Value-aware wins four/cautious two, but long gaps remain. Conserved cold XP appears within 16m in 467/468 longest-gap samples; proximity does not establish safe routes or a balance cause. [Report](docs/qa/arcstorm-collection/ARCSTORM_COLLECTION_REPORT.md).
 - All five workflows pass attempt 1: 79 Python tests/15 Godot suites, 42 Mobile/59 ordinary Android checks and existing gameplay/layout regressions. Nine new analyzer tests pass. Standard 26 sessions/19 cohorts, 32 gameplay/XP cases, four pacing cases and 24 stress fingerprints remain unchanged. All 44 selected shipping executable/settings entries match: no reinstall needed. [Evidence](docs/qa/arcstorm-collection/verified-ci.json).
