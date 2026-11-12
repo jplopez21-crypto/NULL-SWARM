@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Alternate collector experiment — local verification 2026-11-12
+
+- Added explicit `detour` navigation alongside unchanged cautious/value-aware references. It inherits upgrade preferences/danger dashes, detects sixteen low-net decisions and commits to a bounded waypoint, yielding to dash requests and cancelling predicted obstructions. Normal stick input only; no grants, immunity, teleporting, combat RNG or gameplay changes. Separate eight-case CI experiment/report added after existing route tests; canonical matrices remain separate.
+- Local eight-case run passes invariants/script checks. Four candidate victories retain shorter longest gaps: 120.90/170.70/19.97/136.67s versus reference 319.55/249.50/223.25/306.52s. Collected XP changes +296/+104/-76/+239. All four full reference case/route/XP traces match the previous checkpoint except host timing. Four default reports regenerate byte-for-byte after generic two-policy validator reuse. These are design seeds from prior observations, not held-out or human balance evidence. Local-analysis.json retains route windows of differing lengths/times and signed deltas.
+- All 94 Python tests pass, including six new experiment accounting/pair/schema/CLI cases. Corrected systems run passes 1,113 checks (sixteen new candidate regressions). Initial unit fixture first assigns an untyped array to typed warning locations; after correction, walking assertions expose inherited dash selection. Busy cooldown now isolates walking commitment, and explicit dash-yield tests cover the other branch. Failed fixture logs/initial strict summary retained; no initial-suite success claimed. Candidate code and full-run conditions were unchanged by fixture corrections.
+- All fifteen strict Godot suites pass on the corrected rerun; hosted import/export/emulator/full-QA verification pending. Local evidence: docs/qa/detour/. Shipping game/reference bots unchanged; physical-device and release-signing clearance remain open.
+
 ## Arcstorm route observation — verified 2026-11-12
 
 Verified tool/build source: `9a68ebb5347431f77a08c5f0fc60b9ce952ac1ab`, tree `609127850e6883fdcf7e44bc720738e60caf154d`. Final checkpoint changes Markdown/JSON evidence only.

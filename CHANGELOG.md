@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-12 / Alternate collector experiment
+
+- Add explicit bounded detour navigation and an eight-case matched experiment/report without replacing reference bots or gameplay. Local candidate gaps shorten in all four pairs; XP changes are mixed. Reference full traces/default reports remain identical, 94 Python tests pass and corrected systems pass 1,113 checks. Hosted verification in progress; no human-balance or held-out claim.
+
 ## Development — 2026-11-12 / Arcstorm route observation
 
 - Add read-only actual travel/reversal/dash measurements and audited route reports to the existing eight-case investigation. All hosted/local full traces match and reports regenerate byte-for-byte; all five workflows pass attempt 1 (88 Python tests, 15 Godot suites, 42 Mobile/59 ordinary Android checks). Repeated opposite commands expose bot oscillation while requested dashes activate. Shipping code/settings match; no reinstall needed. Gameplay and existing policies unchanged. Exact evidence/scope: TEST_RESULTS.md.

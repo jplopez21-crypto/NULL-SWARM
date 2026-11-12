@@ -14,6 +14,7 @@ func _initialize() -> void:
 
 func run() -> void:
 	_test_route_observer()
+	_test_detour_bot()
 	var damage_fixture := {"pulse": 50.5, "drone": 25, "arcstorm": 12.5, "halo": 12.0, "rail": 0, "thermal": -1, "bad": "30", "infinite": INF, "nan": NAN, 17: 10}
 	var frozen_damage := damage_fixture.duplicate(true)
 	var damage_rows := Arsenal.damage_breakdown(damage_fixture)
@@ -1063,3 +1064,82 @@ func _test_route_observer() -> void:
 	check(absf(actual["dash_ready_seconds"] - 1.017) < 0.001, "route readiness includes the same-tick expired cooldown and excludes busy ticks")
 	check(actual["steps"] == 3 and player.position == after and before != after, "read-only observation preserves actual dash position and counts playing steps only")
 	player.free()
+
+func _test_detour_bot() -> void:
+	var script := preload("res://tests/detour_bot.gd")
+	var alternating: Array[Vector3] = []
+	var straight: Array[Vector3] = []
+	var tiny: Array[Vector3] = []
+	for i in range(16):
+		alternating.append(Vector3(i % 2, 0, 0))
+		straight.append(Vector3(i, 0, 0))
+		tiny.append(Vector3((i % 2) * 0.05, 0, 0))
+	check(script.looping(alternating), "experimental bot detects large travel with low net progress")
+	check(not script.looping(straight) and not script.looping(tiny), "detour detector preserves progressing and genuinely stationary paths")
+	alternating.pop_back()
+	check(not script.looping(alternating), "detour requires a full sixteen-decision history")
+	alternating.append(Vector3(1, 0, 0))
+	var game: Node3D = load("res://scenes/main.tscn").instantiate()
+	game.save.path = "user://qa_detour_unit.json"
+	for suffix in ["", ".bak", ".tmp"]:
+		DirAccess.remove_absolute(game.save.path + suffix)
+	root.add_child(game)
+	game.set_process(false)
+	game.set_physics_process(false)
+	game.save.data = SaveStore.defaults()
+	game.start_run()
+	game.audio.shutdown()
+	var bot := script.new()
+	bot.profile = "arcstorm"
+	check(bot._clear(game, Vector3.ZERO, Vector3(5, 0, 0)), "experimental path accepts an empty bounded segment")
+	check(not bot._clear(game, Vector3.ZERO, Vector3(46, 0, 0)), "experimental waypoint rejects the arena edge")
+	var enemy: SwarmEnemy = game.combat.spawn(0, Vector3(3, 0, 0))
+	game.combat.grid.rebuild(game.combat.enemies)
+	check(not bot._clear(game, Vector3.ZERO, Vector3(5, 0, 0)), "experimental path rejects enemy intersections")
+	check(bot._clear(game, Vector3.ZERO, Vector3(0, 0, 5)), "experimental path may sidestep a blocked pickup route")
+	game.combat.fire(Vector3(0, 0, 2), Vector3.ZERO, true)
+	check(not bot._clear(game, Vector3.ZERO, Vector3(0, 0, 5)), "experimental path respects local hostile shots")
+	for shot in game.combat.hostile_projectiles:
+		shot.active = false
+	game.combat.encounters.warning_time = 1.0
+	game.combat.encounters.attacking_radial = false
+	game.combat.encounters.locations.assign([Vector3(0, 0, 4)])
+	check(not bot._clear(game, Vector3.ZERO, Vector3(0, 0, 5)), "experimental path respects visible area warnings")
+	game.combat.encounters.warning_time = 0.0
+	game.pickups.drop(Vector3(8, 0, 0), 25)
+	bot.target_mesh = game.pickups.items[0]["mesh"]
+	# This fixture isolates walking commitment while inherited dash is busy.
+	game.player.dash_cooldown = 1.0
+	bot.recent.assign(alternating)
+	var rng_before: int = game.combat.rng.state
+	var before: Vector3 = game.player.position
+	var ranks_before: Dictionary = game.progress.ranks.duplicate()
+	bot.tick(game, 1.0 / 60.0)
+	check(bot.detours_started == 1 and bot.detour_remaining > 0.0 and not game.input_router.dash_requested, "loop starts a bounded legal stick detour without a granted dash")
+	check(game.player.position == before and game.combat.rng.state == rng_before and game.progress.ranks == ranks_before and enemy.position == Vector3(3, 0, 0), "navigation changes input only, preserving positions RNG and build stats")
+	check(game.input_router.stick == bot.movement and is_equal_approx(bot.movement.length(), 1.0), "detour uses the normal normalized virtual-stick path")
+	bot.reaction = 0.0
+	game.input_router.dash_requested = true
+	var dash_count: int = bot.dashes
+	bot.tick(game, 1.0 / 60.0)
+	check(bot.detour_remaining == 0.0 and game.input_router.dash_requested and bot.dashes == dash_count, "detour yields to a normal inherited dash request without manufacturing an activation")
+	game.input_router.dash_requested = false
+	bot.waypoint = Vector3(5, 0, 0)
+	bot.detour_remaining = 1.0
+	bot.reaction = 0.0
+	bot.tick(game, 1.0 / 60.0)
+	check(bot.detour_remaining == 0.0 and bot.detours_cancelled == 1, "newly obstructed committed path cancels rather than overriding collision prediction")
+	bot.detour_remaining = 1.0
+	game.pause_run()
+	var remaining: float = bot.detour_remaining
+	bot.tick(game, 1.0)
+	check(bot.detour_remaining == remaining, "paused bot does not spend detour commitment time")
+	game.state = game.State.PLAYING
+	game.progress.add_xp(18)
+	game.show_upgrade()
+	bot.tick(game, 1.0 / 60.0)
+	check(bot.detour_remaining == 0.0 and bot.recent.is_empty(), "legal level-up selection resets stale detour history")
+	game.audio.shutdown()
+	game.free()
+	for suffix in ["", ".bak", ".tmp"]:
+		DirAccess.remove_absolute("user://qa_detour_unit.json" + suffix)

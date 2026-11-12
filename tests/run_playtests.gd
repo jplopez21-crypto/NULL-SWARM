@@ -70,6 +70,8 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 	if diagnostics:
 		game.change_setting("performance_stats", true)
 	var bot: PlaytestBot = ValueAwareBot.new() if bot_policy == "value_aware" else PlaytestBot.new()
+	if bot_policy == "detour":
+		bot = preload("res://tests/detour_bot.gd").new()
 	bot.profile = profile
 	var steps: int = 0
 	var max_enemies: int = 0
@@ -165,6 +167,8 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"simulation_step_p95_ms": QAReport.percentile(samples, 0.95), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
 	if kit == "engineer":
 		result["field_sentry"] = {"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots}
+	if bot_policy == "detour":
+		result["detours"] = {"started": bot.get("detours_started"), "cancelled": bot.get("detours_cancelled")}
 	if result["outcome"] == "victory":
 		_check(result["architect_defeated"] and float(result["survived_seconds"]) >= 600.0, "invalid victory")
 	if trace_pacing:
@@ -282,6 +286,22 @@ func run() -> void:
 		report["failures"] = failures
 		report["limitations"] = ["Additional fixed seeds, not random exploration or human balance evidence.", "Same cautious navigation and normal combat; earned kits have no research grants."]
 		QAReport.write("res://builds/qa/extended-seeds.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--detour-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules detour experiment")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202, 303, 404]:
+			for policy in ["value_aware", "detour"]:
+				var result: Dictionary = await simulate(seed_value, "arcstorm", "vanguard", MAX_SECONDS, "local", policy, "clean", true, false, true)
+				cases.append(result)
+				print("DETOUR_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["route_schema"] = 1
+		report["limitations"] = ["Explicit experimental five-metre waypoint commitment after sixteen decisions with low net travel. Existing reference policies unchanged.", "Normal stick input, inherited danger dashes and upgrade preferences only; no stat grants, immunity, teleporting or RNG writes.", "Path clearance is a limited prediction within existing sensors, not a safety guarantee. Movement changes adaptation, offers and subsequent upgrades.", "Four fixed seed pairs; defeats and mixed results remain observations, not failed balance tests or human-fun estimates."]
+		QAReport.write("res://builds/qa/detour-probe.json", report)
+		print("DETOUR_RESULT cases=", cases.size(), " failures=", failures.size())
 		quit(0 if failures.is_empty() else 1)
 		return
 	if "--arcstorm-collection-probe" in OS.get_cmdline_user_args():

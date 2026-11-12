@@ -5,7 +5,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
-from report_collection_pacing import analyze, numeric
+from report_collection_pacing import POLICIES, analyze, numeric
 
 COUNTERS = ('steps', 'command_reversals', 'dash_requests', 'dash_activations')
 MEASURES = ('travel_m', 'active_seconds', 'dash_ready_seconds')
@@ -26,8 +26,8 @@ def point(sample):
     return [numeric(x, 'position', -100) for x in p]
 
 
-def analyze_routes(source):
-    base = analyze(source)  # Reuse full paired-condition, XP, outcome and gap validation.
+def analyze_routes(source, policies=POLICIES, kind='normal-rules Arcstorm collection probe'):
+    base = analyze(source, policies, kind)  # Reuse full paired-condition, XP, outcome and gap validation.
     if type(source.get('route_schema')) is not int or source['route_schema'] != 1:
         raise ValueError('missing route schema; older proximity traces cannot measure travel')
     cases = []
