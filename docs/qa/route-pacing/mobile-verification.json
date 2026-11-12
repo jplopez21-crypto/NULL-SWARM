@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "renderer": "mobile",
+  "checks": 42,
+  "earned_corruption": {
+    "level": 5,
+    "total_xp": 133,
+    "kills": 33,
+    "before_max": 100,
+    "after_max": 80,
+    "cycle_gain_percent": 30,
+    "no_repeated_cost": true,
+    "same_process_background_cost_retention": true
+  },
+  "scope": "Independent complete transcript validation executed; raw game snapshots remain in hosted artifact. No fresh manual screenshot review claimed in this route-only checkpoint."
+}

@@ -2,7 +2,7 @@
 
 ## Development — 2026-11-12 / Arcstorm route observation
 
-- Add read-only actual travel/reversal/dash measurements and audited route reports to the existing eight-case investigation. Local full gameplay/XP-trace parity, 88 Python tests and 15 Godot suites pass; repeated opposite commands expose bot oscillation while requested dashes activate. Hosted verification pending. Gameplay and existing policies unchanged.
+- Add read-only actual travel/reversal/dash measurements and audited route reports to the existing eight-case investigation. All hosted/local full traces match and reports regenerate byte-for-byte; all five workflows pass attempt 1 (88 Python tests, 15 Godot suites, 42 Mobile/59 ordinary Android checks). Repeated opposite commands expose bot oscillation while requested dashes activate. Shipping code/settings match; no reinstall needed. Gameplay and existing policies unchanged. Exact evidence/scope: TEST_RESULTS.md.
 
 ## Development — 2026-11-10 / Arcstorm collection investigation
 
