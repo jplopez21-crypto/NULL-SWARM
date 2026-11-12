@@ -1,6 +1,7 @@
 class_name PickupSystem
 extends Node3D
 
+const CRYSTALS = preload("res://effects/memory_crystals.gd")
 const SOFT_BUDGET: int = 300
 const MERGE_RADIUS: float = 3.0
 var items: Array[Dictionary] = []
@@ -10,7 +11,6 @@ var total_dropped: int = 0
 var merged_count: int = 0
 var max_merge_distance: float = 0.0
 var peak_count: int = 0
-static var packet_shape: SphereMesh
 
 func drop(at: Vector3, amount: int) -> void:
 	if amount <= 0:
@@ -39,14 +39,7 @@ func drop(at: Vector3, amount: int) -> void:
 	# Existing XP never changes location; fresh XP moves at most MERGE_RADIUS.
 	var mesh: MeshInstance3D
 	if pooled.is_empty():
-		if packet_shape == null:
-			packet_shape = SphereMesh.new()
-			packet_shape.radius = 0.16
-			packet_shape.height = 0.32
-			packet_shape.radial_segments = 8
-			packet_shape.rings = 4
 		mesh = MeshInstance3D.new()
-		mesh.mesh = packet_shape
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(mesh)
 	else:
@@ -59,8 +52,8 @@ func drop(at: Vector3, amount: int) -> void:
 
 func _present(mesh: MeshInstance3D, xp: int) -> void:
 	mesh.scale = Vector3.ONE * clampf(1.0 + log(maxf(1.0, float(xp) / 5.0)) * 0.22, 1.0, 2.5)
-	var color := Color("ffe39b") if xp >= 100 else (Color("78f8d4") if xp >= 25 else Color("58d5ff"))
-	mesh.material_override = SwarmVisuals.material(color, true)
+	mesh.mesh = CRYSTALS.mesh(xp)
+	mesh.material_override = CRYSTALS.material(xp)
 
 func tick(delta: float, player: SwarmPlayer) -> int:
 	var earned: int = 0

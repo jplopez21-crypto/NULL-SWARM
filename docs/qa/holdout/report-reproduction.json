@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "outputs": {
+    "arcstorm-collection-analysis.json": {
+      "byte_identical": true,
+      "sha256": "e4ea64d8e80678727928d3f63d5ed3b7028ad03a9e0f7a3ee12d028f150e6d03",
+      "bytes": 6468
+    },
+    "ARCSTORM_COLLECTION_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "a492613d3ac7f7ba154c4cd30ff886cbded7ddfbd1a0a761d5a0930fdb2221cf",
+      "bytes": 2108
+    },
+    "route-analysis.json": {
+      "byte_identical": true,
+      "sha256": "810538f59a319bb5abf5a2b2249c3a746c1424a1b6503faba2242681b39d0ef6",
+      "bytes": 67035
+    },
+    "ROUTE_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "9b3e59a179ef1a4626ebefccba4e41666044ad8b95d03d330a46b4777bf60f75",
+      "bytes": 1646
+    },
+    "detour-analysis.json": {
+      "byte_identical": true,
+      "sha256": "306b11e78ee0884c8962929d2390ff5842c7777509d543af52dc4ccb7a2e3192",
+      "bytes": 41447
+    },
+    "DETOUR_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "f3e1307f9bd6bbd57d15a513e7442ecf345c1353806d6f7e75ffbff75d2ae554",
+      "bytes": 1861
+    },
+    "holdout-analysis.json": {
+      "byte_identical": true,
+      "sha256": "d15730be3867f8a33ead6e6bf5ae209a1455e0ea2e90bac5f8433220b3838382",
+      "bytes": 48680
+    },
+    "HOLDOUT_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "db95c75368c60820b78657a53f9dad4a5de76d16e03094a48c38745878a1f39b",
+      "bytes": 1470
+    }
+  }
+}

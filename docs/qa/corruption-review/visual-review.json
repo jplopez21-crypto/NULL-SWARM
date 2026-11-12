@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "captures/build_overview.png",
+      "sha256": "9439446bb10c2c4bc5fc3ed10e09f48fa29ac859b1b7a847acca258e8d5e621b"
+    },
+    {
+      "path": "mobile/mobile-corruption-review.png",
+      "sha256": "75f03b5ac65fc41c7f2c42ea901d4c38275baa5599b53e27f51f3ffbd965f633"
+    },
+    {
+      "path": "qa/ui/1280x720-corruption-review-full.png",
+      "sha256": "a0901562d05b84e5465ed31646f1d96818bef3485646cb889ad1227c2f94143b"
+    }
+  ],
+  "observation": "Native build has reachable Corruption and Back actions. Actual Mobile clean review shows 0/3, no phantom gains, next level-five hint and Back to Build. Synthetic full-link board fits all benefit/cost cards, cap state and Back. Active-link coverage is engine/UI fixtures, not earned Android links."
+}

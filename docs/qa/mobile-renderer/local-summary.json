@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "godot_suites": 15,
+  "python_tests": 27,
+  "workflow_yaml_bash_files": 6,
+  "scope": "Local Godot/Python/syntax only; actual Android and Java execution in hosted CI."
+}

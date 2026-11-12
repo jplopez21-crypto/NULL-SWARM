@@ -1,0 +1,47 @@
+{
+  "source": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+  "run_id": 42413052578,
+  "job_id": 128525102491,
+  "collection_status": "passed",
+  "recovery_driver_status": "failed",
+  "completed_cycles": 13,
+  "failed_cycle": 14,
+  "passed_checks_before_timeout": 40,
+  "app_egl_warnings": [
+    "11-07 20:56:55.254  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:57:11.651  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:57:20.021  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:57:36.879  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:57:46.185  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:58:02.416  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:58:11.162  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 20:58:27.884  3427  3548 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "last_state": {
+    "state": "paused",
+    "rendered_frames": 333,
+    "sample_ticks": 121341,
+    "lifecycle": {
+      "background_events": 28,
+      "foreground_generation": 26,
+      "rendered_generation": 26
+    },
+    "process": 3427
+  },
+  "image_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6",
+  "image_extrema": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "scope": "Unpatched control failed recovery. Collection success is not a recovery pass."
+}

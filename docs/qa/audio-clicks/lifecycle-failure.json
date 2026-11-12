@@ -1,0 +1,18 @@
+{
+  "source": "349ab6f001b45cab1a7540ecb4d07df2fcdba91d",
+  "job": 128257898135,
+  "run": 42324930092,
+  "attempt": 1,
+  "status": "failed",
+  "failed_cycle": 2,
+  "failure": "Foreground generation/frame did not advance; actual screenshot was black. Existing Compatibility emulator Surface failure reproduced.",
+  "driver_lines": [
+    "11-07 01:39:40.224  3774  3774 E Surface : freeAllBuffers: 1 buffers were freed while being dequeued!",
+    "11-07 01:39:40.393  3774  3800 E Surface : getSlotFromBufferLocked: unknown buffer: 0x0",
+    "11-07 01:39:40.440  3774  3800 E BufferQueueProducer: [SurfaceView[com.nullswarm.game.emulatorqa/com.godot.game.GodotAppLauncher]#1(BLAST Consumer)1](id:ebe00000001,api:0,p:-1,c:3774) dequeueBuffer: BufferQueue has been abandoned",
+    "11-07 01:39:40.440  3774  3800 E EGL_emulation: tid 3800: swapBuffers(789): error 0x300d (EGL_BAD_SURFACE)",
+    "11-07 01:39:40.440  3774  3800 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "failed_frame_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6",
+  "action": "One unchanged lifecycle-only retest requested. No fix or permanent recovery claimed."
+}

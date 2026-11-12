@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "completed_cycles": 5,
+  "cycles_recorded": 6,
+  "checks_recorded": 16,
+  "checks_passed": 16,
+  "scope": "Unpatched diagnostic control; evidence collection success is not recovery acceptance. Failed transcript/log/screenshots retained."
+}

@@ -1,0 +1,30 @@
+{
+  "source": "554b92c73cbd9d8e969509a801d31c96a52b962b",
+  "native_run": 41244412904,
+  "job": 124664746943,
+  "artifact": 13059061159,
+  "zip_sha256": "cbe54e4f6309b8df79287e5848102683b2df0338b7626b04f4ee0cc5ec3a0fcc",
+  "status": "failure",
+  "cause_observed": "Audio assertions all passed (32/0); strict runner rejected ObjectDB instances leaked at process exit. Other thirteen suites, including new touch Pause, passed. Original nonverbose log does not identify leaked class.",
+  "audio_report": {
+    "checks": 32,
+    "failures": [],
+    "memory_cue": {
+      "combat_voices": 12,
+      "dc_offset": -6.92182971585181e-07,
+      "dedicated_memory_voices": 1,
+      "duration_seconds": 0.0899773242630385,
+      "largest_sample_step": 0.0362548828125,
+      "limits": "Offline PCM/playback/routing and game integration checks; no human listening or phone speaker mix acceptance.",
+      "minimum_interval_ms": 140,
+      "mono": true,
+      "peak": 0.145111083984375,
+      "raw_pcm_sha256": "391986f7ecfebb4a1b09706b1c9a649e3d2a360bd29152e2aed4f2f96bca178f",
+      "rms": 0.0477058508263352,
+      "sample_rate": 22050
+    }
+  },
+  "local_reproduction": "Six separate verbose original-suite runs were clean. No claim of a reproduced hardware/backend root cause.",
+  "correction": "Test-only explicit tracking of audio stream/playback IDs and bounded post-free mixer drain, new release assertion and always-verbose audio CI logs. Production audio/game code unchanged; no ignored leak messages.",
+  "corrected_local": "Audio 33/0, all 14 strict suites pass, tracked audio instances released; hosted acceptance pending."
+}

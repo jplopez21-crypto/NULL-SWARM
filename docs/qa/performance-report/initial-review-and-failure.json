@@ -1,0 +1,16 @@
+{
+  "source": "95ef253e72462bcf6d62ae3670a48890d77ba8ee",
+  "native_run": 41206562174,
+  "native_status": "success",
+  "native_capture_artifact": 13045025278,
+  "native_capture_sha256": "0e8403e883ffcc7817b2f9f1bde0636c4ecf75ac65b673a4de422c56a97b7d57",
+  "native_review": "Report fits, but FPS summary was buried in raw JSON. Added visible summary and higher read-only contrast.",
+  "android_run": 41206562167,
+  "android_job": 124552712953,
+  "android_status": "failure",
+  "completed_checks_before_stop": 18,
+  "failure": "Wait for Report copied timed out after immediate clipboard readback returned nonmatching content. Feature availability was true and the button was enabled.",
+  "runtime_artifact": 13045110161,
+  "runtime_artifact_sha256": "aa94cec3817b983e5f690c3d06bb0cfa8c37943f8d5ace89c436ba2fbabbb6cf",
+  "correction": "Compact complete JSON payload, cooperative exact readback for up to three seconds, honest unverified timeout, duplicate-tap coalescing and cancellation on report exit/redeployment. Explicit delayed/denied fake OS ports are unit regressions; actual Android rerun remains required."
+}

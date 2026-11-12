@@ -31,6 +31,20 @@ func eligible(id: String) -> bool:
 		return false
 	return not Arsenal.DATA.has(id) or ranks.has(id) or equipped() < Arsenal.MAX_SLOTS
 
+func mutations_completed_by(id: String, active: Array[String]) -> Array[String]:
+	# Read-only forecast of a legal pick crossing a recipe's rank threshold.
+	# Already-ready/active recipes must not be attributed to unrelated upgrades.
+	var result: Array[String] = []
+	if not eligible(id):
+		return result
+	var before: Array[String] = Arsenal.mutation(ranks)
+	var projected: Dictionary = ranks.duplicate()
+	projected[id] = int(projected.get(id, 0)) + 1
+	for mutation in Arsenal.mutation(projected):
+		if not before.has(mutation) and not active.has(mutation):
+			result.append(mutation)
+	return result
+
 func choices(rng: RandomNumberGenerator) -> Array[String]:
 	var available: Array[String] = []
 	var weapons: Array[String] = []

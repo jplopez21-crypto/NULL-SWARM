@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 41,
+  "changed_entries": [
+    "assets/scripts/main.gdc",
+    "assets/systems/corruption_protocol.gdc",
+    "assets/ui/game_ui.gdc"
+  ],
+  "scope": "Only build caller, UI and read-only corruption formatter modules change. Java/native engine, other 35 compiled game modules and shipping project settings match the previous verified phone APK."
+}

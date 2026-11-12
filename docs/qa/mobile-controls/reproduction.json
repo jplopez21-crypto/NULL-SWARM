@@ -1,0 +1,24 @@
+{
+  "before": {
+    "accepted_source": "77675f86015ec8a1a1b1cc06ea03e3093fffef17",
+    "actual_cooldown": 0.001,
+    "moving_pause_state": 1,
+    "near_ready_gauge": 99.96,
+    "near_ready_label": "DASH / 0.0s",
+    "scope": "Synthetic engine input/HUD reproduction, no physical phone claim.",
+    "stopped_pause_state": 3,
+    "phase": "before"
+  },
+  "after": {
+    "accepted_source": "77675f86015ec8a1a1b1cc06ea03e3093fffef17",
+    "actual_cooldown": 0.001,
+    "moving_pause_state": 3,
+    "near_ready_gauge": 99.96,
+    "near_ready_label": "DASH / 0.1s",
+    "scope": "Synthetic engine input/HUD reproduction, no physical phone claim.",
+    "stopped_pause_state": 3,
+    "phase": "after",
+    "local_uncommitted_fix": true
+  },
+  "scope": "Measured before/after engine input/HUD reproduction; enum 1=PLAYING, 3=PAUSED; synthetic near-ready timer does not alter gameplay balance."
+}

@@ -1,0 +1,436 @@
+{
+  "verified_game_and_test_code": "f1d3de77181d7b27d4c12e845f08b6a7954f48c9",
+  "report_checkpoint_only": true,
+  "previous_verified_game_code": "aebf6c374ab0b9bd679a12405ca3878d08581d92",
+  "workflows": [
+    {
+      "id": 41229375892,
+      "name": "Validate and build Android",
+      "head_sha": "f1d3de77181d7b27d4c12e845f08b6a7954f48c9",
+      "conclusion": "success",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41229375892",
+      "updated_at": "2026-10-31T18:27:50Z"
+    },
+    {
+      "id": 41229375886,
+      "name": "Android emulator runtime",
+      "head_sha": "f1d3de77181d7b27d4c12e845f08b6a7954f48c9",
+      "conclusion": "success",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41229375886",
+      "updated_at": "2026-10-31T18:30:55Z"
+    },
+    {
+      "id": 41229375903,
+      "name": "Repeatable gameplay QA",
+      "head_sha": "f1d3de77181d7b27d4c12e845f08b6a7954f48c9",
+      "conclusion": "success",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41229375903",
+      "updated_at": "2026-10-31T18:40:01Z"
+    }
+  ],
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 43,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 32,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 12,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 63,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 23,
+        "errors": []
+      },
+      {
+        "suite": "touch-dash",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 69,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1030,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2340,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "728b9d977f822d5927832e9ba4809601e8fcaef80a0b4357850de8ad02b1004d",
+    "apk_bytes": 27799000,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "unchanged_previous_compiled_modules": [
+      "assets/bosses/encounter_director.gdc",
+      "assets/effects/memory_crystals.gdc",
+      "assets/components/health.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/weapons/weapon_rig.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/systems/combat_world.gdc",
+      "assets/systems/performance_history.gdc",
+      "assets/scripts/player.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/enemies/chassis_models.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/enemies/enemy.gdc",
+      "assets/systems/research.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/systems/progression.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/systems/pickup_system.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/systems/spawn_director.gdc"
+    ],
+    "changed_module_sha256": {
+      "assets/scripts/main.gdc": "c3d8008df47f60b59354db8a4cb161207b5d99ac3d6d1d3f5f95fd5b0014b2ba",
+      "assets/ui/game_ui.gdc": "0a0c363687981156906a587d7107dbf4161cf4026656f736356a3f6bbd40efcb",
+      "assets/systems/android_qa_probe.gdc": "2ca26706e36507470e1313d8d3687e79654f1271d409ab76c7970f0be8efedf6",
+      "assets/systems/input_router.gdc": "f44b01f381693a16547944af8655f0ee4aa03c091e7e62ab7f9dd64df0d14b0d"
+    }
+  },
+  "native_downloads": [
+    {
+      "id": 13053430334,
+      "name": "null-swarm-development-apk",
+      "digest": "sha256:13925b1ddae94bca1a43b84837faf06c450a672a7167a01a18593197a2560622",
+      "size_in_bytes": 27875116,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13053375629,
+      "name": "null-swarm-headless-results",
+      "digest": "sha256:2e3d6a4536ec492fe2e6b642aeb0d88b4b31e6b22c5188c968af7836e64cafe9",
+      "size_in_bytes": 11147,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13052419741,
+      "name": "null-swarm-presentation-captures",
+      "digest": "sha256:66dd6d4cb7b6a38905eafeab94201976dbe24e92777f8c93a81340ea3e252d16",
+      "size_in_bytes": 4303035,
+      "hash_crc": "passed"
+    }
+  ],
+  "android": {
+    "run": 41229375886,
+    "artifact": 13053475745,
+    "zip_sha256": "2113dd8a1e7ed0f88d541877778afd7995877e25fce857b7c00cf8a0a12a3a89",
+    "checks": 45,
+    "status": "passed",
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "new_multitouch_checks": [
+      {
+        "name": "joystick-first: independent held fingers activate dash and movement together",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: releasing dash preserves held movement",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: both touch controls release cleanly",
+        "passed": true
+      },
+      {
+        "name": "joystick-first: touch releases produce exactly one dash",
+        "passed": true
+      },
+      {
+        "name": "dash-first: independent held fingers activate dash and movement together",
+        "passed": true
+      },
+      {
+        "name": "dash-first: releasing dash preserves held movement",
+        "passed": true
+      },
+      {
+        "name": "dash-first: both touch controls release cleanly",
+        "passed": true
+      },
+      {
+        "name": "dash-first: touch releases produce exactly one dash",
+        "passed": true
+      }
+    ],
+    "actual_multitouch_samples": [
+      {
+        "multitouch": "joystick-first",
+        "injection": "shell UID / real Android two-pointer MotionEvent",
+        "samples": {
+          "both_held": {
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": 11,
+              "joystick_id": 7,
+              "stick": [
+                1.0,
+                0.0
+              ]
+            },
+            "position": [
+              5.01666641235352,
+              0.0
+            ],
+            "dashes": 1,
+            "dash_readiness": 4.0,
+            "time": 1.06666666666667,
+            "state": "playing"
+          },
+          "dash_released": {
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": -1,
+              "joystick_id": 7,
+              "stick": [
+                1.0,
+                0.0
+              ]
+            },
+            "position": [
+              10.3166694641113,
+              0.0
+            ],
+            "dashes": 1,
+            "dash_readiness": 26.67,
+            "time": 1.63333333333333,
+            "state": "playing"
+          },
+          "released": {
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": -1,
+              "joystick_id": -1,
+              "stick": [
+                0.0,
+                0.0
+              ]
+            },
+            "position": [
+              11.2500038146973,
+              0.0
+            ],
+            "dashes": 1,
+            "dash_readiness": 48.0,
+            "time": 2.16666666666666,
+            "state": "playing"
+          }
+        }
+      },
+      {
+        "multitouch": "dash-first",
+        "injection": "shell UID / real Android two-pointer MotionEvent",
+        "samples": {
+          "both_held": {
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": 11,
+              "joystick_id": 7,
+              "stick": [
+                1.0,
+                0.0
+              ]
+            },
+            "position": [
+              2.80000066757202,
+              -4.94999980926514
+            ],
+            "dashes": 2,
+            "dash_readiness": 25.33,
+            "time": 1.5,
+            "state": "playing"
+          },
+          "dash_released": {
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": -1,
+              "joystick_id": 7,
+              "stick": [
+                1.0,
+                0.0
+              ]
+            },
+            "position": [
+              4.6666693687439,
+              -4.94999980926514
+            ],
+            "dashes": 2,
+            "dash_readiness": 36.0,
+            "time": 1.76666666666667,
+            "state": "playing"
+          },
+          "released": {
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": -1,
+              "joystick_id": -1,
+              "stick": [
+                0.0,
+                0.0
+              ]
+            },
+            "position": [
+              5.60000371932983,
+              -4.94999980926514
+            ],
+            "dashes": 2,
+            "dash_readiness": 46.67,
+            "time": 2.03333333333333,
+            "state": "playing"
+          }
+        }
+      }
+    ],
+    "multitouch_scope": "Genuine two-pointer Android MotionEvents, held/read back through read-only probe; fresh Engineer deployments after labelled Architect backup fixture. Not physical S23 touch latency or an earned-on-device unlock claim.",
+    "ordinary_checkpoint": {
+      "kills": 34,
+      "time": 30.1166666666662,
+      "salvage": 1,
+      "xp": 108,
+      "level": 4
+    },
+    "same_signer_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 3,
+        "enabled": true,
+        "position": [
+          22.7376403808594,
+          2.04177498817444
+        ],
+        "remaining": 0.100000000000006,
+        "shots": 1,
+        "status": "FIELD SENTRY 0.1s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 9.20000000000004,
+      "hp": 80.0,
+      "kills": 4
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 6.5,
+      "simulation_seconds_per_wall_second": 0.786547328451312,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "hash_crc_logcat": "passed"
+  },
+  "gameplay_comparison": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2341,
+    "ui_layouts": 168,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_receipt_matches_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "qa_download": {
+    "run": 41229375903,
+    "artifact": 13053716335,
+    "zip_sha256": "c28cfb94fc655028191f2fa343590af717f398dfe853c0a8dcd6076d5c229d2c",
+    "bytes": 19549669,
+    "hash_crc": "passed"
+  },
+  "visual_review": {
+    "native": "Inspected native staged dash_feedback.png; unchanged HUD geometry. Not an Android touch benchmark.",
+    "android": "Inspected both actual multitouch-joystick-first.png and multitouch-dash-first.png; visible held joystick, dash cooldown and sentry, readable controls."
+  },
+  "limits": [
+    "Android software emulator remains below performance targets; unseeded observation does not establish a causal FPS change.",
+    "Physical S23 Ultra multitouch feel/latency, ARM64 Mobile FPS, thermals, Android 10/cutouts and human audio mix remain unverified.",
+    "Debug signing rotates; preserve backups. Owner-protected Preview/release signing remains unavailable; no release AAB claimed."
+  ],
+  "local_setup_issue": "Initial ad-hoc repro lacked writable default /home user-data and crashed before gameplay. Re-run with isolated writable XDG paths reproduced the input bug and all strict suites passed. Editor import also reported sandbox socket-listener and absent local Android SDK diagnostics."
+}

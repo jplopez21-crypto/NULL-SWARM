@@ -1,0 +1,20 @@
+{
+  "source": "f905ac3c369aaafa21f429cd6d36564aed808485",
+  "run_id": 42405911355,
+  "job_id": 128503437122,
+  "attempt": 1,
+  "job_status": "failed",
+  "exit_code": 255,
+  "passed_lifecycle_checks": 56,
+  "passed_lifecycle_cycles": 18,
+  "recovered_swap_warnings": 10,
+  "failed_stage": "Between independent suites, during app force-stop/clear before gameplay driver starts.",
+  "evidence": {
+    "activities": "adb: no devices/emulators found",
+    "final_logcat": "- waiting for device -",
+    "gameplay_report_exists": false,
+    "emulator_log": "Stops after boot messages; no captured host fatal/exit cause."
+  },
+  "diagnosis": "Emulator disconnected; exact host cause undetermined. Not a passing gameplay test.",
+  "next": "One unchanged job retest; retain original artifacts and record both outcomes."
+}

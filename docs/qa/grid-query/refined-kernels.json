@@ -1,0 +1,169 @@
+{
+  "cases": [
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 1.02864583333333,
+      "kind": "query",
+      "legacy_median_us": 0.96875,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          1.03125,
+          1.01041666666667,
+          1.02604166666667,
+          1.03298611111111
+        ],
+        "legacy": [
+          0.984375,
+          0.96875,
+          0.949652777777778,
+          0.96875
+        ]
+      },
+      "speedup": 0.941772151898734
+    },
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 15.3203125,
+      "kind": "nearest",
+      "legacy_median_us": 21.5590277777778,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          15.1684027777778,
+          15.3038194444444,
+          15.8368055555556,
+          15.3368055555556
+        ],
+        "legacy": [
+          22.3836805555556,
+          21.7986111111111,
+          20.9583333333333,
+          21.3194444444444
+        ]
+      },
+      "speedup": 1.40721853929401
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 72,
+      "current_median_us": 1.27256944444444,
+      "kind": "query",
+      "legacy_median_us": 1.22829861111111,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          1.34895833333333,
+          1.28819444444444,
+          1.25694444444444,
+          1.22048611111111
+        ],
+        "legacy": [
+          1.359375,
+          1.19618055555556,
+          1.21527777777778,
+          1.24131944444444
+        ]
+      },
+      "speedup": 0.965211459754434
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 27711,
+      "current_median_us": 23.71875,
+      "kind": "nearest",
+      "legacy_median_us": 30.3220486111111,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          24.1545138888889,
+          23.5069444444444,
+          23.2638888888889,
+          23.9305555555556
+        ],
+        "legacy": [
+          31.2934027777778,
+          30.3055555555556,
+          29.4427083333333,
+          30.3385416666667
+        ]
+      },
+      "speedup": 1.27839994144342
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 4488,
+      "current_median_us": 8.28993055555556,
+      "kind": "query",
+      "legacy_median_us": 8.56770833333333,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          8.43402777777778,
+          8.14583333333333,
+          8.93402777777778,
+          8.140625
+        ],
+        "legacy": [
+          8.72743055555556,
+          8.09722222222222,
+          8.40798611111111,
+          8.83159722222222
+        ]
+      },
+      "speedup": 1.03350785340314
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 175506,
+      "current_median_us": 129.3828125,
+      "kind": "nearest",
+      "legacy_median_us": 139.908854166667,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          130.206597222222,
+          128.559027777778,
+          133.041666666667,
+          125.569444444444
+        ],
+        "legacy": [
+          135.512152777778,
+          141.059027777778,
+          139.682291666667,
+          140.135416666667
+        ]
+      },
+      "speedup": 1.08135579574502
+    }
+  ],
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "failures": [],
+  "fixed_step": 0.0166666666666667,
+  "godot": "4.6.3-stable (official)",
+  "kind": "paired spatial-query kernel timing",
+  "limitations": [
+    "Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
+    "Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
+    "Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
+    "Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."
+  ],
+  "logical_cpus": 3,
+  "os": "Linux",
+  "rendering": "headless / no GPU frame measurements",
+  "schema": 1
+}

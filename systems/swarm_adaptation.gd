@@ -43,7 +43,7 @@ func tick(delta: float, position: Vector3, damage: Dictionary, allow_new: bool =
 		for id in damage:
 			var amount: float = maxf(0.0, float(damage[id]) - float(previous_damage.get(id, 0.0)))
 			entry["total"] += amount
-			if id in ["pulse", "rail", "drone"]:
+			if id in ["pulse", "rail", "drone", "singularity"]:
 				entry["direct"] += amount
 			elif id in ["arc", "arcstorm"]:
 				entry["electric"] += amount

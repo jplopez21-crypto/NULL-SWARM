@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "layouts": 200,
+  "checks": 2601,
+  "all_previous_layout_metadata_preserved": true,
+  "scope": "Existing four-viewport synthetic UI fixture metadata preserved; actual changed text separately reviewed in native and Mobile captures."
+}

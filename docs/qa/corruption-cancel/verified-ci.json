@@ -1,0 +1,3014 @@
+{
+  "status": "passed_with_retest",
+  "verified_date": "2026-11-09",
+  "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+  "source_tree": "71846c607e7193fba820303b8c8292f8fcf50267",
+  "local_commit": "3c82a6f0b6fdaddeca8c8bdb26fc945ea3310f3b",
+  "runs": [
+    {
+      "run_id": 42650384450,
+      "name": "Validate and build Android",
+      "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42650384450",
+      "jobs": [
+        {
+          "id": 129274835607,
+          "name": "android",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Validate all workflow contexts and syntax",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Signing configuration regressions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Automated tests and scene smoke",
+              "conclusion": "success"
+            },
+            {
+              "name": "Render presentation captures",
+              "conclusion": "success"
+            },
+            {
+              "name": "Emit bounded CI verification preview",
+              "conclusion": "success"
+            },
+            {
+              "name": "Export debug APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42650384410,
+      "name": "Android Surface recovery investigation",
+      "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42650384410",
+      "jobs": [
+        {
+          "id": 129274833043,
+          "name": "android-runtime (control)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build isolated Java surface control or candidate",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reproduce control surface transitions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Strict candidate surface recovery",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Candidate gameplay and save regression",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 129274833526,
+          "name": "android-runtime (latched)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build isolated Java surface control or candidate",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reproduce control surface transitions",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Strict candidate surface recovery",
+              "conclusion": "success"
+            },
+            {
+              "name": "Candidate gameplay and save regression",
+              "conclusion": "success"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42650384482,
+      "name": "Android Mobile renderer smoke",
+      "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42650384482",
+      "jobs": [
+        {
+          "id": 129274833159,
+          "name": "android-runtime",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Configure isolated emulator export",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Require Mobile renderer and real touch/combat recovery",
+              "conclusion": "success"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42650384466,
+      "name": "Repeatable gameplay QA",
+      "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42650384466",
+      "jobs": [
+        {
+          "id": 129274834683,
+          "name": "gameplay-qa",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned Godot",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and run system checks",
+              "conclusion": "success"
+            },
+            {
+              "name": "Paired spatial-query kernels",
+              "conclusion": "success"
+            },
+            {
+              "name": "Diagnostic observation gameplay parity",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-rules bot playtests",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-rules corruption sessions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Additional seeded sessions",
+              "conclusion": "success"
+            },
+            {
+              "name": "Normal-rules earned Engineer sessions",
+              "conclusion": "success"
+            },
+            {
+              "name": "UI lifecycle and window-size captures",
+              "conclusion": "success"
+            },
+            {
+              "name": "Pickup merge A/B and collector comparison",
+              "conclusion": "success"
+            },
+            {
+              "name": "Upgrade pacing and collector comparison",
+              "conclusion": "success"
+            },
+            {
+              "name": "Synthetic combat CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Corrupted-loadout CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Singularity-field CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Engineer sentry CPU benchmark",
+              "conclusion": "success"
+            },
+            {
+              "name": "Publish QA summaries",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 42650385080,
+      "name": "Android emulator runtime",
+      "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 2,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/42650385080",
+      "jobs": [
+        {
+          "id": 129288899419,
+          "name": "android-runtime (gameplay)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Configure isolated emulator export",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Touch, gameplay, pause and lifecycle smoke",
+              "conclusion": "success"
+            },
+            {
+              "name": "Repeated Android surface recovery",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 129288901894,
+          "name": "android-runtime (lifecycle)",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Godot and matching templates",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android SDK packages",
+              "conclusion": "success"
+            },
+            {
+              "name": "Import and configure Android exporter",
+              "conclusion": "success"
+            },
+            {
+              "name": "Configure isolated emulator export",
+              "conclusion": "success"
+            },
+            {
+              "name": "Launch isolated assets from exported emulator APK",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build shell-only multi-pointer touch injector",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install emulator Linux dependencies",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Android emulator and system image",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reclaim Android emulator disk budget",
+              "conclusion": "success"
+            },
+            {
+              "name": "Boot emulator",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned image-check dependency",
+              "conclusion": "success"
+            },
+            {
+              "name": "Touch, gameplay, pause and lifecycle smoke",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Repeated Android surface recovery",
+              "conclusion": "success"
+            },
+            {
+              "name": "Collect Android diagnostics",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact": {
+        "id": 13690186986,
+        "name": "null-swarm-android-lifecycle",
+        "size_in_bytes": 3105704,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690186986",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690186986/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:08:55Z",
+        "expires_at": "2026-11-23T16:08:53Z",
+        "updated_at": "2026-11-09T16:08:55Z",
+        "digest": "sha256:d439447305616f9b12b11a889b94366fc36b7d30b12601e7d3e949b989ee6f9e",
+        "workflow_run": {
+          "id": 42650385080,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/56b92e78-d5ea-40f8-9b08-28ae76808f6d/null-swarm-android-lifecycle.zip",
+        "size_bytes": 3105704
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13690216318,
+        "name": "null-swarm-presentation-captures",
+        "size_in_bytes": 5174218,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690216318",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690216318/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:05:06Z",
+        "expires_at": "2026-11-23T16:05:04Z",
+        "updated_at": "2026-11-09T16:05:06Z",
+        "digest": "sha256:ec5eea18a6950f0c680ce0495cc3497da9a6dca99ece600cf93ea9474196ec13",
+        "workflow_run": {
+          "id": 42650384450,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/0ec8903f-fab8-47f9-83ee-8d23882d1911/null-swarm-presentation-captures.zip",
+        "size_bytes": 5174218
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13691535537,
+        "name": "null-swarm-android-mobile",
+        "size_in_bytes": 2473219,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13691535537",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13691535537/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:12:08Z",
+        "expires_at": "2026-11-23T16:12:07Z",
+        "updated_at": "2026-11-09T16:12:08Z",
+        "digest": "sha256:3d527a8fba883beb486ccd906fda75b5648a20d2cc55bc033f6ca2a5992cc0e7",
+        "workflow_run": {
+          "id": 42650384482,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/e473c3de-c4e8-4ffc-949a-346b37e39b0f/null-swarm-android-mobile.zip",
+        "size_bytes": 2473219
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13690248057,
+        "name": "null-swarm-gameplay-qa",
+        "size_in_bytes": 20872481,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690248057",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690248057/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:15:08Z",
+        "expires_at": "2026-11-23T16:15:06Z",
+        "updated_at": "2026-11-09T16:15:08Z",
+        "digest": "sha256:0327ee39c835967b0b0b2ad54a2568fe3716dfc75ab940314d2a377c5f74a1c7",
+        "workflow_run": {
+          "id": 42650384466,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/dd69ab2b-9681-4daf-b637-5a0c8a4f9db2/null-swarm-gameplay-qa.zip",
+        "size_bytes": 20872481
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13692725524,
+        "name": "null-swarm-android-runtime",
+        "size_in_bytes": 3360808,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13692725524",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13692725524/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:32:47Z",
+        "expires_at": "2026-11-23T16:32:46Z",
+        "updated_at": "2026-11-09T16:32:47Z",
+        "digest": "sha256:9f7fbd235b3988dbf2ab89223b8198223642ac734cb45becf65e7dc26b1e3c35",
+        "workflow_run": {
+          "id": 42650385080,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/8485b0e4-ee2e-4492-bd28-d95196dd2832/null-swarm-android-runtime.zip",
+        "size_bytes": 3360808
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13690726176,
+        "name": "null-swarm-surface-results-latched",
+        "size_in_bytes": 4638915,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690726176",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690726176/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:11:15Z",
+        "expires_at": "2026-11-23T16:11:13Z",
+        "updated_at": "2026-11-09T16:11:15Z",
+        "digest": "sha256:24d74e5830463fb8665cc5245ae75631814d647cfb15c1a933316272c70fa8bb",
+        "workflow_run": {
+          "id": 42650384410,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/9433cb01-6645-4eab-aecf-a31e575d5304/null-swarm-surface-results-latched.zip",
+        "size_bytes": 4638915
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13690576140,
+        "name": "null-swarm-surface-results-control",
+        "size_in_bytes": 3158972,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690576140",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690576140/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:09:16Z",
+        "expires_at": "2026-11-23T16:09:15Z",
+        "updated_at": "2026-11-09T16:09:16Z",
+        "digest": "sha256:9e32167c3db5f3168a44739b7868787d8cc171a90a1e4e6de547ed5bd881353f",
+        "workflow_run": {
+          "id": 42650384410,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/64aabbfe-6d05-4e74-9bc4-1a44b281ef10/null-swarm-surface-results-control.zip",
+        "size_bytes": 3158972
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13688859839,
+        "name": "null-swarm-headless-results",
+        "size_in_bytes": 746162,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13688859839",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13688859839/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:05:08Z",
+        "expires_at": "2026-11-23T16:05:06Z",
+        "updated_at": "2026-11-09T16:05:08Z",
+        "digest": "sha256:69ff1beb96865b18ce92f5523a070710f23155264395e8253b909e5f9f57e22e",
+        "workflow_run": {
+          "id": 42650384450,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/b09e526a-174b-416f-b5ef-4473facb23ae/null-swarm-headless-results.zip",
+        "size_bytes": 746162
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13691530610,
+        "name": "null-swarm-mobile-emulator-apk",
+        "size_in_bytes": 31534971,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13691530610",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13691530610/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:12:11Z",
+        "expires_at": "2026-11-23T16:12:08Z",
+        "updated_at": "2026-11-09T16:12:11Z",
+        "digest": "sha256:b39c8cdad3a68a339e6922d3eaea57a56e7148da16a78f7efb8f087a838a17e1",
+        "workflow_run": {
+          "id": 42650384482,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/29634d20-df58-47bb-90c0-91240698f92c/null-swarm-mobile-emulator-apk.zip",
+        "size_bytes": 31534971
+      },
+      "hash_crc": "passed"
+    },
+    {
+      "artifact": {
+        "id": 13690685153,
+        "name": "null-swarm-development-apk",
+        "size_in_bytes": 29142491,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690685153",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690685153/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:05:03Z",
+        "expires_at": "2027-02-07T16:00:42Z",
+        "updated_at": "2026-11-09T16:05:03Z",
+        "digest": "sha256:81bffce305815ead20d60a010dcf951db4bb799b7c091d316282ae6b33c2d3b2",
+        "workflow_run": {
+          "id": 42650384450,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/bfc48a12-2b4d-45c5-9426-10956bee674a/null-swarm-development-apk.zip",
+        "size_bytes": 29142491
+      },
+      "hash_crc": "passed"
+    }
+  ],
+  "retained_failure": {
+    "status": "failed",
+    "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+    "run_id": 42650385080,
+    "job_id": 129274837597,
+    "attempt": 1,
+    "artifact": {
+      "artifact": {
+        "id": 13690291769,
+        "name": "null-swarm-android-runtime",
+        "size_in_bytes": 1957861,
+        "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690291769",
+        "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13690291769/zip",
+        "expired": false,
+        "created_at": "2026-11-09T16:08:38Z",
+        "expires_at": "2026-11-23T16:08:37Z",
+        "updated_at": "2026-11-09T16:08:38Z",
+        "digest": "sha256:c74a5038b95611d24b466149bf9bb94d14e46c41a833be6e916ea74f7b323f33",
+        "workflow_run": {
+          "id": 42650385080,
+          "repository_id": 1427713669,
+          "head_repository_id": 1427713669,
+          "head_branch": "development/android-validation",
+          "head_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5"
+        }
+      },
+      "local": {
+        "path": "/workspace/attachments/4ff3e326-2e10-49c8-856c-a25e45f2e6bb/null-swarm-android-runtime.zip",
+        "size_bytes": 1957861
+      },
+      "hash_crc": "passed"
+    },
+    "passed_checks_before_timeout": 22,
+    "explicit_failed_checks": [],
+    "failed_transition": "Pause -> Settings following same-process background return",
+    "error": "Runtime condition timed out; last state: {'architects': 0, 'attack_lanes': {'charge': {'ground_mesh': True, 'length': 7.0, 'surfaces': 1, 'triangles': 12, 'width': 1.08000004291534}, 'sentry': {'ground_mesh': True, 'length': 7.0, 'surfaces': 1, 'triangles': 7, 'width': 0.800000011920929}}, 'backup_code_length': 0, 'backup_recovery_available': False, 'buttons': [{'disabled': False, 'rect': [425.0, 280.0, 430.0, 57.0], 'text': 'RESUME'}, {'disabled': False, 'rect': [425.0, 349.0, 430.0, 57.0], 'text': 'BUILD // MUTATIONS'}, {'disabled': False, 'rect': [425.0, 418.0, 430.0, 57.0], 'text': 'SETTINGS'}, {'disabled': False, 'rect': [425.0, 487.0, 430.0, 57.0], 'text': 'END DEPLOYMENT'}], 'canvas': [1280.0, 720.0], 'chain_feedback': {'text': 'CHAIN 36 // 4 KILLS TO OVERCLOCK // BREAKS IN 2.3s', 'value': 80.0, 'visible': False}, 'combat_rng': '4143187877070131845', 'corruption': {'accepted': [], 'cycle_rate': 1.0, 'enemy_pace': 1.0, 'extra_drones': 0, 'extra_rounds': 0, 'next_level': 5, 'walk_rate': 1.0}, 'damage_by_weapon': {'arc': 72.5071428571429, 'drone': 230.556190476191, 'orbit': 13.0, 'pulse': 807.751309523809}, 'dash_readiness': 100.0, 'dashes': 1, 'destruction_feedback': {'fragment_triangles': 8, 'fragments_live': 0, 'kill_cue_last_dispatch_ms': 119577, 'kill_cue_pcm_bytes': 6174, 'kill_cue_pcm_sha256': '320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe'}, 'drags': 53, 'edit_fields': [], 'engine': '4.6.3-stable (official)', 'health': {'current': 100.0, 'max_shield': 30.0, 'maximum': 100.0, 'shield': 30.0}, 'hp': 100.0, 'kills': 36, 'level': 4, 'lifecycle': {'background_events': 2, 'foreground_generation': 2, 'rendered_generation': 2}, 'memory_audio_plays': 19, 'operative_visible': True, 'operative_visuals': {'instances': 5, 'surfaces': 6, 'triangles': 296}, 'panel': 159031235031, 'pending': 0, 'performance_copy_status': '', 'performance_stats_text': '3 FPS / 333.3ms AVG FRAME  \u2022  ENEMIES 9  \u2022  SHOTS 2  \u2022  DRAWS 55  \u2022  ENGINE 53.3MB', 'performance_stats_visible': False, 'position': [39.4166946411133, 8.47220611572266], 'process': 3570, 'ranks': {'arc': 1, 'drone': 1, 'orbit': 1}, 'rendered_frames': 451, 'rendered_panel': 159031235031, 'rendered_state': 'paused', 'renderer': 'gl_compatibility', 'results_title': '', 'run_analysis_text': '', 'salvage': 1, 'sample_ticks': 156639, 'schema': 1, 'selected_kit': 'vanguard', 'sentry': {'activations': 0, 'enabled': False, 'position': [0.0, 0.0], 'remaining': 0.0, 'shots': 0, 'status': ''}, 'settings': {'flashes': True, 'master': 0.8, 'music': 0.35, 'performance_stats': True, 'quality': 1, 'sfx': 0.65, 'shake': True, 'ui': 0.65}, 'shield_status': 'SHIELD ONLINE', 'state': 'paused', 'time': 30.8333333333329, 'touch_controls': {'dash_enabled': False, 'dash_id': -1, 'joystick_id': -1, 'pause_enabled': False, 'pause_id': -1, 'stick': [0.0, 0.0]}, 'touches': 65, 'xp': 110, 'performance_report_characters': 0, 'target_count': 14}",
+    "crash_markers": [],
+    "retained": [
+      "failed-android-attempt1/android-runtime.json",
+      "failed-android-attempt1/logcat.txt",
+      "failed-android-attempt1/failure.png"
+    ],
+    "scope": "Original timeout retained; exact-source single-job retest is diagnostic, not proof the intermittent touch/lifecycle issue is fixed."
+  },
+  "native": {
+    "apk_sha256": "a697c38350a2d2016ac80dbfab8d40050e667725c29607dc8b734fdc8d05579b",
+    "apk_bytes": 79520034,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "unchanged_previous_compiled_modules": [
+      "assets/bosses/encounter_director.gdc",
+      "assets/components/health.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/effects/debris_fragment.gdc",
+      "assets/effects/memory_crystals.gdc",
+      "assets/effects/operative_model.gdc",
+      "assets/enemies/attack_lanes.gdc",
+      "assets/enemies/chassis_models.gdc",
+      "assets/enemies/enemy.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/scripts/main.gdc",
+      "assets/scripts/player.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/systems/android_qa_probe.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/systems/combat_world.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/systems/input_router.gdc",
+      "assets/systems/performance_history.gdc",
+      "assets/systems/pickup_system.gdc",
+      "assets/systems/progression.gdc",
+      "assets/systems/research.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/systems/spawn_director.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/ui/dash_button.gdc",
+      "assets/ui/game_ui.gdc",
+      "assets/ui/touch_action_button.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/weapons/weapon_rig.gdc"
+    ],
+    "changed_module_sha256": {}
+  },
+  "qa": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2601,
+    "ui_layouts": 200,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_checks_validated_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "mobile": {
+    "status": "passed",
+    "renderer": "mobile",
+    "checks": 42,
+    "upgrade_transactions": 1,
+    "earned_upgrade": {
+      "transactions": [
+        {
+          "offered": {
+            "architects": 0,
+            "attack_lanes": {
+              "charge": {
+                "ground_mesh": true,
+                "length": 7.0,
+                "surfaces": 1,
+                "triangles": 12,
+                "width": 1.08000004291534
+              },
+              "sentry": {
+                "ground_mesh": true,
+                "length": 7.0,
+                "surfaces": 1,
+                "triangles": 7,
+                "width": 0.800000011920929
+              }
+            },
+            "backup_code_length": 0,
+            "backup_recovery_available": false,
+            "build_text": "",
+            "buttons": [
+              {
+                "disabled": false,
+                "rect": [
+                  151.0,
+                  245.0,
+                  341.0,
+                  255.0
+                ],
+                "text": "01\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nMUTATION: Arc 3 + Amplified Pulse 3"
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  504.0,
+                  245.0,
+                  292.0,
+                  255.0
+                ],
+                "text": "02\n\nAEGIS CAPACITOR\nShield 30 \u2192 42\nRecharges after 5s unharmed."
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  808.0,
+                  245.0,
+                  321.0,
+                  255.0
+                ],
+                "text": "03\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3"
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  980.0,
+                  512.0,
+                  149.0,
+                  57.0
+                ],
+                "text": "REROLL  /  2"
+              }
+            ],
+            "canvas": [
+              1280.0,
+              720.0
+            ],
+            "chain_feedback": {
+              "text": "CHAIN 6 // 14 KILLS TO OVERCLOCK // BREAKS IN 2.3s",
+              "value": 30.0,
+              "visible": false
+            },
+            "combat_rng": "-2653345871081199620",
+            "corruption": {
+              "accepted": [],
+              "cycle_rate": 1.0,
+              "enemy_pace": 1.0,
+              "extra_drones": 0,
+              "extra_rounds": 0,
+              "next_level": 5,
+              "walk_rate": 1.0
+            },
+            "damage_by_weapon": {
+              "pulse": 200.023214285714
+            },
+            "dash_readiness": 100.0,
+            "dashes": 1,
+            "destruction_feedback": {
+              "fragment_triangles": 8,
+              "fragments_live": 0,
+              "kill_cue_last_dispatch_ms": 120987,
+              "kill_cue_pcm_bytes": 6174,
+              "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+            },
+            "drags": 54,
+            "edit_fields": [],
+            "engine": "4.6.3-stable (official)",
+            "health": {
+              "current": 100.0,
+              "max_shield": 30.0,
+              "maximum": 100.0,
+              "shield": 30.0
+            },
+            "hp": 100.0,
+            "kills": 6,
+            "level": 2,
+            "lifecycle": {
+              "background_events": 0,
+              "foreground_generation": 0,
+              "rendered_generation": 0
+            },
+            "memory_audio_plays": 3,
+            "operative_visible": true,
+            "operative_visuals": {
+              "instances": 5,
+              "surfaces": 6,
+              "triangles": 296
+            },
+            "panel": 237213061496,
+            "pending": 1,
+            "performance_copy_status": "",
+            "performance_report_text": "",
+            "performance_stats_text": "",
+            "performance_stats_visible": false,
+            "position": [
+              -18.1812782287598,
+              3.72071862220764
+            ],
+            "process": 3676,
+            "ranks": {},
+            "rendered_frames": 123,
+            "rendered_panel": 237213061496,
+            "rendered_state": "upgrading",
+            "renderer": "mobile",
+            "results_title": "",
+            "run_analysis_text": "",
+            "salvage": 0,
+            "sample_ticks": 161189,
+            "schema": 1,
+            "selected_kit": "vanguard",
+            "sentry": {
+              "activations": 0,
+              "enabled": false,
+              "position": [
+                0.0,
+                0.0
+              ],
+              "remaining": 0.0,
+              "shots": 0,
+              "status": ""
+            },
+            "settings": {
+              "flashes": true,
+              "master": 0.8,
+              "music": 0.35,
+              "performance_stats": false,
+              "quality": 1,
+              "sfx": 0.65,
+              "shake": true,
+              "ui": 0.65
+            },
+            "shield_status": "SHIELD ONLINE",
+            "state": "upgrading",
+            "targets": [
+              [
+                14.7153396606445,
+                -9.44659042358398
+              ],
+              [
+                -25.7376899719238,
+                -3.48802518844604
+              ]
+            ],
+            "time": 10.8000000000001,
+            "touch_controls": {
+              "dash_enabled": false,
+              "dash_id": -1,
+              "joystick_id": -1,
+              "pause_enabled": false,
+              "pause_id": -1,
+              "stick": [
+                0.0,
+                0.0
+              ]
+            },
+            "touches": 66,
+            "xp": 20
+          },
+          "frozen": {
+            "architects": 0,
+            "attack_lanes": {
+              "charge": {
+                "ground_mesh": true,
+                "length": 7.0,
+                "surfaces": 1,
+                "triangles": 12,
+                "width": 1.08000004291534
+              },
+              "sentry": {
+                "ground_mesh": true,
+                "length": 7.0,
+                "surfaces": 1,
+                "triangles": 7,
+                "width": 0.800000011920929
+              }
+            },
+            "backup_code_length": 0,
+            "backup_recovery_available": false,
+            "build_text": "",
+            "buttons": [
+              {
+                "disabled": false,
+                "rect": [
+                  151.0,
+                  245.0,
+                  341.0,
+                  255.0
+                ],
+                "text": "01\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nMUTATION: Arc 3 + Amplified Pulse 3"
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  504.0,
+                  245.0,
+                  292.0,
+                  255.0
+                ],
+                "text": "02\n\nAEGIS CAPACITOR\nShield 30 \u2192 42\nRecharges after 5s unharmed."
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  808.0,
+                  245.0,
+                  321.0,
+                  255.0
+                ],
+                "text": "03\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3"
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  980.0,
+                  512.0,
+                  149.0,
+                  57.0
+                ],
+                "text": "REROLL  /  2"
+              }
+            ],
+            "canvas": [
+              1280.0,
+              720.0
+            ],
+            "chain_feedback": {
+              "text": "CHAIN 6 // 14 KILLS TO OVERCLOCK // BREAKS IN 2.3s",
+              "value": 30.0,
+              "visible": false
+            },
+            "combat_rng": "-2653345871081199620",
+            "corruption": {
+              "accepted": [],
+              "cycle_rate": 1.0,
+              "enemy_pace": 1.0,
+              "extra_drones": 0,
+              "extra_rounds": 0,
+              "next_level": 5,
+              "walk_rate": 1.0
+            },
+            "damage_by_weapon": {
+              "pulse": 200.023214285714
+            },
+            "dash_readiness": 100.0,
+            "dashes": 1,
+            "destruction_feedback": {
+              "fragment_triangles": 8,
+              "fragments_live": 0,
+              "kill_cue_last_dispatch_ms": 120987,
+              "kill_cue_pcm_bytes": 6174,
+              "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+            },
+            "drags": 54,
+            "edit_fields": [],
+            "engine": "4.6.3-stable (official)",
+            "health": {
+              "current": 100.0,
+              "max_shield": 30.0,
+              "maximum": 100.0,
+              "shield": 30.0
+            },
+            "hp": 100.0,
+            "kills": 6,
+            "level": 2,
+            "lifecycle": {
+              "background_events": 0,
+              "foreground_generation": 0,
+              "rendered_generation": 0
+            },
+            "memory_audio_plays": 3,
+            "operative_visible": true,
+            "operative_visuals": {
+              "instances": 5,
+              "surfaces": 6,
+              "triangles": 296
+            },
+            "panel": 237213061496,
+            "pending": 1,
+            "performance_copy_status": "",
+            "performance_report_text": "",
+            "performance_stats_text": "",
+            "performance_stats_visible": false,
+            "position": [
+              -18.1812782287598,
+              3.72071862220764
+            ],
+            "process": 3676,
+            "ranks": {},
+            "rendered_frames": 125,
+            "rendered_panel": 237213061496,
+            "rendered_state": "upgrading",
+            "renderer": "mobile",
+            "results_title": "",
+            "run_analysis_text": "",
+            "salvage": 0,
+            "sample_ticks": 163314,
+            "schema": 1,
+            "selected_kit": "vanguard",
+            "sentry": {
+              "activations": 0,
+              "enabled": false,
+              "position": [
+                0.0,
+                0.0
+              ],
+              "remaining": 0.0,
+              "shots": 0,
+              "status": ""
+            },
+            "settings": {
+              "flashes": true,
+              "master": 0.8,
+              "music": 0.35,
+              "performance_stats": false,
+              "quality": 1,
+              "sfx": 0.65,
+              "shake": true,
+              "ui": 0.65
+            },
+            "shield_status": "SHIELD ONLINE",
+            "state": "upgrading",
+            "targets": [
+              [
+                14.7153396606445,
+                -9.44659042358398
+              ],
+              [
+                -25.7376899719238,
+                -3.48802518844604
+              ]
+            ],
+            "time": 10.8000000000001,
+            "touch_controls": {
+              "dash_enabled": false,
+              "dash_id": -1,
+              "joystick_id": -1,
+              "pause_enabled": false,
+              "pause_id": -1,
+              "stick": [
+                0.0,
+                0.0
+              ]
+            },
+            "touches": 66,
+            "xp": 20
+          },
+          "selected": {
+            "architects": 0,
+            "attack_lanes": {
+              "charge": {
+                "ground_mesh": true,
+                "length": 7.0,
+                "surfaces": 1,
+                "triangles": 12,
+                "width": 1.08000004291534
+              },
+              "sentry": {
+                "ground_mesh": true,
+                "length": 7.0,
+                "surfaces": 1,
+                "triangles": 7,
+                "width": 0.800000011920929
+              }
+            },
+            "backup_code_length": 0,
+            "backup_recovery_available": false,
+            "build_text": "",
+            "buttons": [
+              {
+                "disabled": false,
+                "rect": [
+                  1133.0,
+                  18.0,
+                  121.0,
+                  75.0
+                ],
+                "text": "II  PAUSE"
+              },
+              {
+                "disabled": false,
+                "rect": [
+                  1074.0,
+                  607.0,
+                  180.0,
+                  95.0
+                ],
+                "text": "DASH / READY"
+              }
+            ],
+            "canvas": [
+              1280.0,
+              720.0
+            ],
+            "chain_feedback": {
+              "text": "CHAIN 7 // 13 KILLS TO OVERCLOCK // BREAKS IN 2.9s",
+              "value": 35.0,
+              "visible": true
+            },
+            "combat_rng": "-208310898383615506",
+            "corruption": {
+              "accepted": [],
+              "cycle_rate": 1.0,
+              "enemy_pace": 1.0,
+              "extra_drones": 0,
+              "extra_rounds": 0,
+              "next_level": 5,
+              "walk_rate": 1.0
+            },
+            "damage_by_weapon": {
+              "pulse": 212.844642857143
+            },
+            "dash_readiness": 100.0,
+            "dashes": 1,
+            "destruction_feedback": {
+              "fragment_triangles": 8,
+              "fragments_live": 4,
+              "kill_cue_last_dispatch_ms": 165356,
+              "kill_cue_pcm_bytes": 6174,
+              "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+            },
+            "drags": 54,
+            "edit_fields": [],
+            "engine": "4.6.3-stable (official)",
+            "health": {
+              "current": 100.0,
+              "max_shield": 42.0,
+              "maximum": 100.0,
+              "shield": 42.0
+            },
+            "hp": 100.0,
+            "kills": 7,
+            "level": 2,
+            "lifecycle": {
+              "background_events": 0,
+              "foreground_generation": 0,
+              "rendered_generation": 0
+            },
+            "memory_audio_plays": 3,
+            "operative_visible": true,
+            "operative_visuals": {
+              "instances": 5,
+              "surfaces": 6,
+              "triangles": 296
+            },
+            "panel": 0,
+            "pending": 0,
+            "performance_copy_status": "",
+            "performance_report_text": "",
+            "performance_stats_text": "",
+            "performance_stats_visible": false,
+            "position": [
+              -18.1812782287598,
+              3.72071862220764
+            ],
+            "process": 3676,
+            "ranks": {
+              "shield": 1
+            },
+            "rendered_frames": 127,
+            "rendered_panel": 0,
+            "rendered_state": "playing",
+            "renderer": "mobile",
+            "results_title": "",
+            "run_analysis_text": "",
+            "salvage": 0,
+            "sample_ticks": 165358,
+            "schema": 1,
+            "selected_kit": "vanguard",
+            "sentry": {
+              "activations": 0,
+              "enabled": false,
+              "position": [
+                0.0,
+                0.0
+              ],
+              "remaining": 0.0,
+              "shots": 0,
+              "status": ""
+            },
+            "settings": {
+              "flashes": true,
+              "master": 0.8,
+              "music": 0.35,
+              "performance_stats": false,
+              "quality": 1,
+              "sfx": 0.65,
+              "shake": true,
+              "ui": 0.65
+            },
+            "shield_status": "SHIELD ONLINE",
+            "state": "playing",
+            "targets": [
+              [
+                14.7153396606445,
+                -9.44659042358398
+              ],
+              [
+                -25.7376899719238,
+                -3.48802518844604
+              ],
+              [
+                -14.488621711731,
+                10.1653308868408
+              ]
+            ],
+            "time": 11.0666666666668,
+            "touch_controls": {
+              "dash_enabled": true,
+              "dash_id": -1,
+              "joystick_id": -1,
+              "pause_enabled": true,
+              "pause_id": -1,
+              "stick": [
+                0.0,
+                0.0
+              ]
+            },
+            "touches": 67,
+            "xp": 20
+          },
+          "chosen_text": "02\n\nAEGIS CAPACITOR\nShield 30 \u2192 42\nRecharges after 5s unharmed.",
+          "chosen_index": "02",
+          "changed_rank": "shield"
+        }
+      ],
+      "resumed": {
+        "architects": 0,
+        "attack_lanes": {
+          "charge": {
+            "ground_mesh": true,
+            "length": 7.0,
+            "surfaces": 1,
+            "triangles": 12,
+            "width": 1.08000004291534
+          },
+          "sentry": {
+            "ground_mesh": true,
+            "length": 7.0,
+            "surfaces": 1,
+            "triangles": 7,
+            "width": 0.800000011920929
+          }
+        },
+        "backup_code_length": 0,
+        "backup_recovery_available": false,
+        "build_text": "",
+        "buttons": [
+          {
+            "disabled": false,
+            "rect": [
+              1133.0,
+              18.0,
+              121.0,
+              75.0
+            ],
+            "text": "II  PAUSE"
+          },
+          {
+            "disabled": false,
+            "rect": [
+              1074.0,
+              607.0,
+              180.0,
+              95.0
+            ],
+            "text": "DASH / READY"
+          }
+        ],
+        "canvas": [
+          1280.0,
+          720.0
+        ],
+        "chain_feedback": {
+          "text": "CHAIN 7 // 13 KILLS TO OVERCLOCK // BREAKS IN 2.9s",
+          "value": 35.0,
+          "visible": true
+        },
+        "combat_rng": "-208310898383615506",
+        "corruption": {
+          "accepted": [],
+          "cycle_rate": 1.0,
+          "enemy_pace": 1.0,
+          "extra_drones": 0,
+          "extra_rounds": 0,
+          "next_level": 5,
+          "walk_rate": 1.0
+        },
+        "damage_by_weapon": {
+          "pulse": 212.844642857143
+        },
+        "dash_readiness": 100.0,
+        "dashes": 1,
+        "destruction_feedback": {
+          "fragment_triangles": 8,
+          "fragments_live": 4,
+          "kill_cue_last_dispatch_ms": 165356,
+          "kill_cue_pcm_bytes": 6174,
+          "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+        },
+        "drags": 54,
+        "edit_fields": [],
+        "engine": "4.6.3-stable (official)",
+        "health": {
+          "current": 100.0,
+          "max_shield": 42.0,
+          "maximum": 100.0,
+          "shield": 42.0
+        },
+        "hp": 100.0,
+        "kills": 7,
+        "level": 2,
+        "lifecycle": {
+          "background_events": 0,
+          "foreground_generation": 0,
+          "rendered_generation": 0
+        },
+        "memory_audio_plays": 3,
+        "operative_visible": true,
+        "operative_visuals": {
+          "instances": 5,
+          "surfaces": 6,
+          "triangles": 296
+        },
+        "panel": 0,
+        "pending": 0,
+        "performance_copy_status": "",
+        "performance_report_text": "",
+        "performance_stats_text": "",
+        "performance_stats_visible": false,
+        "position": [
+          -18.1812782287598,
+          3.72071862220764
+        ],
+        "process": 3676,
+        "ranks": {
+          "shield": 1
+        },
+        "rendered_frames": 127,
+        "rendered_panel": 0,
+        "rendered_state": "playing",
+        "renderer": "mobile",
+        "results_title": "",
+        "run_analysis_text": "",
+        "salvage": 0,
+        "sample_ticks": 165358,
+        "schema": 1,
+        "selected_kit": "vanguard",
+        "sentry": {
+          "activations": 0,
+          "enabled": false,
+          "position": [
+            0.0,
+            0.0
+          ],
+          "remaining": 0.0,
+          "shots": 0,
+          "status": ""
+        },
+        "settings": {
+          "flashes": true,
+          "master": 0.8,
+          "music": 0.35,
+          "performance_stats": false,
+          "quality": 1,
+          "sfx": 0.65,
+          "shake": true,
+          "ui": 0.65
+        },
+        "shield_status": "SHIELD ONLINE",
+        "state": "playing",
+        "targets": [
+          [
+            14.7153396606445,
+            -9.44659042358398
+          ],
+          [
+            -25.7376899719238,
+            -3.48802518844604
+          ],
+          [
+            -14.488621711731,
+            10.1653308868408
+          ]
+        ],
+        "time": 11.0666666666668,
+        "touch_controls": {
+          "dash_enabled": true,
+          "dash_id": -1,
+          "joystick_id": -1,
+          "pause_enabled": true,
+          "pause_id": -1,
+          "stick": [
+            0.0,
+            0.0
+          ]
+        },
+        "touches": 67,
+        "xp": 20
+      },
+      "method": "Ordinary kills and memory pickups, real joystick/card touches. No fixture or stat grant.",
+      "selection_strategy": "Prefer a visible passive; otherwise choose first and earn another offer. At most eight choices and a 300-second collection deadline; no rerolls."
+    },
+    "graphics_log": [
+      "11-09 16:05:26.597  3676  3676 D Godot   : usesVulkan(): true",
+      "11-09 16:05:27.314  3676  3714 I godot   : Vulkan 1.3.0 - Forward Mobile - Using Device #0: Unknown - SwiftShader Device (Subzero)"
+    ],
+    "combat": {
+      "kills": 1,
+      "time": 4.53333333333332,
+      "damage_by_weapon": {
+        "pulse": 30.075
+      }
+    },
+    "captures": {
+      "mobile-menu": 0.9900173611111112,
+      "multitouch-joystick-first": 0.9839409722222222,
+      "multitouch-paused": 0.9917534722222222,
+      "mobile-combat": 0.9743923611111112,
+      "mobile-upgrade-01": 0.9613715277777778,
+      "mobile-upgrade-applied": 0.9696180555555556,
+      "mobile-build-earned": 0.9678819444444444,
+      "mobile-corruption-review": 0.9661458333333334,
+      "mobile-build-resumed": 0.9700520833333334,
+      "mobile-link-progression-01": 0.9444444444444444,
+      "mobile-link-progression-02": 0.9895833333333334,
+      "mobile-corruption-trigger": 0.9704861111111112,
+      "mobile-corruption-declined": 0.9605034722222222,
+      "mobile-redline-offer": 0.9874131944444444,
+      "mobile-linked-build-earned": 0.9691840277777778,
+      "mobile-linked-corruption-review": 0.9696180555555556,
+      "mobile-linked-build-resumed": 0.9691840277777778,
+      "mobile-returned": 0.9865451388888888
+    },
+    "same_process_fresh_paused_return": true,
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage"
+    ],
+    "resumed_combat_advances": true,
+    "mobile_emulator_swappy": false,
+    "native_phone_swappy_default": true,
+    "same_38_game_modules": true,
+    "native_engine_same_as_previous_user_build": true,
+    "scope": "Android 35 x86_64 Mobile/Vulkan software emulator smoke with explicit Swappy override. Shipping frame pacing, ARM64 runtime, phone FPS/thermals and full Mobile runs are not validated. Ordinary XP/upgrade touch validated without stat grants.",
+    "earned_build": {
+      "ranks": {
+        "shield": 1
+      },
+      "guide_text": "DEPLOYMENT BUILD\nCombat paused. Mutations activate automatically when both ranks are reached.\nWEAPONS 1/4\n01 // PULSE RIFLE\nAMPLIFIED PULSE RANK 0\n02 // EMPTY SLOT\nNew weapons fill empty slots.\n03 // EMPTY SLOT\nNew weapons fill empty slots.\n04 // EMPTY SLOT\nNew weapons fill empty slots.\nMUTATION PATHS\nARCSTORM RIFLE // IN PROGRESS\nAMPLIFIED PULSE 0/3 + ARC EMITTER 0/3\nROUNDS NOW CHAIN\nSOLAR HALO // IN PROGRESS\nPLASMA ORBITALS 0/3 + THERMAL BURST 0/3\nORBITALS RADIATE HEAT\nSINGULARITY LANCE // IN PROGRESS\nRAIL LANCE 0/3 + MEMORY TETHER 0/3\nRAIL IMPACTS LEAVE GRAVITY FIELDS\nPASSIVE UPLINKS // AEGIS CAPACITOR 1/5\nWeapon mutations keep their slot. Run upgrades reset on redeployment.",
+      "frozen_fields": [
+        "time",
+        "position",
+        "hp",
+        "kills",
+        "xp",
+        "ranks",
+        "combat_rng",
+        "damage_by_weapon",
+        "salvage",
+        "level",
+        "pending",
+        "settings",
+        "selected_kit",
+        "dash_readiness",
+        "dashes",
+        "health",
+        "corruption"
+      ],
+      "fresh_navigation": true,
+      "resumed_time": 11.4666666666668,
+      "frozen_time": 11.2000000000001,
+      "scope": "One actual earned early build: pause/build/back/Resume; no full-run or earned mutation claim."
+    },
+    "earned_passive": {
+      "ranks": {
+        "shield": 1
+      },
+      "summary": "PASSIVE UPLINKS // AEGIS CAPACITOR 1/5",
+      "observed_caps": {
+        "AEGIS CAPACITOR": 5
+      },
+      "choices": 1,
+      "chosen_indices": [
+        "02"
+      ],
+      "retained_through_background_return": true,
+      "scope": "Actually earned passive selection and dedicated display; exact caps remain the engine/UI regression contract. Not all seven passive effects or a full Mobile run."
+    },
+    "corruption_review": {
+      "clean_text": "ACTIVE CORRUPTION\n0/3 UNSTABLE LINKS\nCLEAN SIGNAL // NO ACTIVE LINKS\nAn optional link can replace one level-up choice.\nEach link grants power with a lasting cost for this deployment.\nNEXT OPTIONAL LINK // LEVEL 5\nLinks reset after this deployment. Dash speed, bosses and warning times stay unchanged.",
+      "frozen_fields": [
+        "time",
+        "position",
+        "hp",
+        "kills",
+        "xp",
+        "ranks",
+        "combat_rng",
+        "damage_by_weapon",
+        "salvage",
+        "level",
+        "pending",
+        "settings",
+        "selected_kit",
+        "dash_readiness",
+        "dashes",
+        "health",
+        "corruption"
+      ],
+      "fresh_paused_navigation": true,
+      "identical_build_return": true,
+      "only_back_action": true,
+      "scope": "Clean early-run subsection; actually earned Redline is separately recorded below."
+    },
+    "earned_corruption": {
+      "level": 5,
+      "total_xp": 135,
+      "kills": 37,
+      "card_text": "REDLINE SYNC\n\nGAIN: Weapon cycles +30%\nRifle 0.42s -> 0.32s\n\nCOST: Maximum HP 100 -> 80\nCurrent HP capped, no healing.",
+      "before_max": 100,
+      "after_max": 80,
+      "cycle_gain_percent": 30,
+      "next_level": 10,
+      "pending_before": 1,
+      "pending_after": 0,
+      "normal_progression_choices": 2,
+      "queued_choices": 0,
+      "active_review_text": "ACTIVE CORRUPTION\n1/3 UNSTABLE LINKS\nREDLINE SYNC\nGAIN // Weapon cycles +30%\nCOST // Maximum HP -20\nNEXT OPTIONAL LINK // LEVEL 10\nLinks reset after this deployment. Dash speed, bosses and warning times stay unchanged.",
+      "frozen_fields": [
+        "time",
+        "position",
+        "hp",
+        "kills",
+        "xp",
+        "ranks",
+        "combat_rng",
+        "damage_by_weapon",
+        "salvage",
+        "level",
+        "pending",
+        "settings",
+        "selected_kit",
+        "dash_readiness",
+        "dashes",
+        "health",
+        "corruption"
+      ],
+      "no_repeated_cost": true,
+      "same_process_background_cost_retention": true,
+      "scope": "One ordinary earned Redline transaction/active review/return, not all corruption paths or full Mobile runs."
+    },
+    "corruption_cancel": {
+      "status": "passed",
+      "level": 5,
+      "xp": 135,
+      "frozen_fields": [
+        "time",
+        "position",
+        "hp",
+        "kills",
+        "xp",
+        "ranks",
+        "combat_rng",
+        "damage_by_weapon",
+        "salvage",
+        "level",
+        "pending",
+        "settings",
+        "selected_kit",
+        "dash_readiness",
+        "dashes",
+        "health",
+        "corruption"
+      ],
+      "original_upgrade_actions": [
+        [
+          "01\n\nRAIL LANCE\nRANK 2 \u2192 3 // DMG 83 \u2192 101\n\nA piercing beam drills\nthrough the whole line.\nEVOLVE: Singularity Lance\nRail 3 + Tether 3\nPull field; bosses stay anchored.",
+          false
+        ],
+        [
+          "02\n\nMEMORY TETHER\nRANK 0 \u2192 1\nAttraction 2.6m \u2192 3.8m\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3",
+          false
+        ],
+        [
+          "03\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks.",
+          false
+        ],
+        [
+          "REROLL  /  2",
+          false
+        ],
+        [
+          "UNSTABLE LINK // OPTIONAL POWER + COST FOR THIS RUN",
+          false
+        ]
+      ],
+      "restored_upgrade_actions": [
+        [
+          "01\n\nRAIL LANCE\nRANK 2 \u2192 3 // DMG 83 \u2192 101\n\nA piercing beam drills\nthrough the whole line.\nEVOLVE: Singularity Lance\nRail 3 + Tether 3\nPull field; bosses stay anchored.",
+          false
+        ],
+        [
+          "02\n\nMEMORY TETHER\nRANK 0 \u2192 1\nAttraction 2.6m \u2192 3.8m\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3",
+          false
+        ],
+        [
+          "03\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks.",
+          false
+        ],
+        [
+          "REROLL  /  2",
+          false
+        ],
+        [
+          "UNSTABLE LINK // OPTIONAL POWER + COST FOR THIS RUN",
+          false
+        ]
+      ],
+      "original_link_actions": [
+        [
+          "REDLINE SYNC\n\nGAIN: Weapon cycles +30%\nRifle 0.42s -> 0.32s\n\nCOST: Maximum HP 100 -> 80\nCurrent HP capped, no healing.",
+          false
+        ],
+        [
+          "FRACTURED CHAMBER\n\nGAIN: Rifle rounds 1 -> 2\nExtra round can also chain.\n\nCOST: Regular enemy pace\n100% -> 115% (incl. charges)\nBosses and warning times unchanged.",
+          false
+        ],
+        [
+          "PARASITIC HIVE\n\nREQUIRES DRONE HIVE\n\nGAIN: One additional escort\nCOST: Walking speed -12%\nDash speed stays unchanged.",
+          true
+        ],
+        [
+          "KEEP MY UPGRADE CHOICES // BACK",
+          false
+        ]
+      ],
+      "reopened_link_actions": [
+        [
+          "REDLINE SYNC\n\nGAIN: Weapon cycles +30%\nRifle 0.42s -> 0.32s\n\nCOST: Maximum HP 100 -> 80\nCurrent HP capped, no healing.",
+          false
+        ],
+        [
+          "FRACTURED CHAMBER\n\nGAIN: Rifle rounds 1 -> 2\nExtra round can also chain.\n\nCOST: Regular enemy pace\n100% -> 115% (incl. charges)\nBosses and warning times unchanged.",
+          false
+        ],
+        [
+          "PARASITIC HIVE\n\nREQUIRES DRONE HIVE\n\nGAIN: One additional escort\nCOST: Walking speed -12%\nDash speed stays unchanged.",
+          true
+        ],
+        [
+          "KEEP MY UPGRADE CHOICES // BACK",
+          false
+        ]
+      ],
+      "same_process": true,
+      "fresh_panel_round_trip": true,
+      "scope": "Actual earned optional-link decline/reopen with unchanged full offers, rerolls and seventeen observed fields before Redline selection."
+    }
+  },
+  "android": {
+    "earned_analysis": {
+      "method": "Ordinary touch combat/XP/upgrades followed by End Deployment and Run Analysis; before any synthetic Engineer progress fixture",
+      "damage_by_weapon": {
+        "arc": 457.97630952381,
+        "pulse": 724.479166666667
+      },
+      "text": "DEPLOYMENT ANALYSIS\nRECORDED DAMAGE // Support, slows and shields are not measured here.\nLOADOUT // PULSE RIFLE (AMPLIFIER 0)  /  PLASMA ORBITALS R2  /  ARC EMITTER R1\nCORRUPTION 0/3 // CLEAN SIGNAL\nPULSE SHOTS\n724  /  61.3%\nARC EMITTER\n458  /  38.7%\nDrone Systems combines Hive and field sentry fire. Pulse shots exclude Arcstorm chains.\nSwipe / wheel / D-pad: scroll. B / Esc: back to results.",
+      "frozen": {
+        "time": 31.1166666666662,
+        "kills": 37,
+        "ranks": {
+          "arc": 1,
+          "orbit": 2
+        },
+        "combat_rng": "-3584518054815428974",
+        "damage_by_weapon": {
+          "arc": 457.97630952381,
+          "pulse": 724.479166666667
+        },
+        "salvage": 1
+      }
+    },
+    "status": "passed",
+    "checks": 58,
+    "pause_samples": {
+      "multitouch_pause": true,
+      "injection": "shell UID / real Android two-pointer MotionEvent",
+      "samples": {
+        "walking": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": 7,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              1.0,
+              0.0
+            ]
+          },
+          "position": [
+            0.933333396911621,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.55,
+          "state": "playing"
+        },
+        "paused_while_fingers_held": {
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            2.80000066757202,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.816666666666668,
+          "state": "paused"
+        },
+        "resumed": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            2.80000066757202,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 1.21666666666667,
+          "state": "playing"
+        }
+      }
+    },
+    "apk_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "ordinary_checkpoint": {
+      "architects": 0,
+      "attack_lanes": {
+        "charge": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 12,
+          "width": 1.08000004291534
+        },
+        "sentry": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 7,
+          "width": 0.800000011920929
+        }
+      },
+      "backup_code_length": 0,
+      "backup_recovery_available": false,
+      "build_text": "",
+      "buttons": [
+        {
+          "disabled": false,
+          "rect": [
+            1133.0,
+            18.0,
+            121.0,
+            75.0
+          ],
+          "text": "II  PAUSE"
+        },
+        {
+          "disabled": false,
+          "rect": [
+            1074.0,
+            607.0,
+            180.0,
+            95.0
+          ],
+          "text": "DASH / READY"
+        }
+      ],
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "chain_feedback": {
+        "text": "CHAIN 37 // 3 KILLS TO OVERCLOCK // BREAKS IN 3.0s",
+        "value": 85.0,
+        "visible": true
+      },
+      "combat_rng": "-3584518054815428974",
+      "corruption": {
+        "accepted": [],
+        "cycle_rate": 1.0,
+        "enemy_pace": 1.0,
+        "extra_drones": 0,
+        "extra_rounds": 0,
+        "next_level": 5,
+        "walk_rate": 1.0
+      },
+      "damage_by_weapon": {
+        "arc": 457.97630952381,
+        "pulse": 724.479166666667
+      },
+      "dash_readiness": 100.0,
+      "dashes": 1,
+      "destruction_feedback": {
+        "fragment_triangles": 8,
+        "fragments_live": 8,
+        "kill_cue_last_dispatch_ms": 86168,
+        "kill_cue_pcm_bytes": 6174,
+        "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+      },
+      "drags": 40,
+      "edit_fields": [],
+      "engine": "4.6.3-stable (official)",
+      "health": {
+        "current": 100.0,
+        "max_shield": 30.0,
+        "maximum": 100.0,
+        "shield": 30.0
+      },
+      "hp": 100.0,
+      "kills": 37,
+      "level": 4,
+      "lifecycle": {
+        "background_events": 0,
+        "foreground_generation": 0,
+        "rendered_generation": 0
+      },
+      "memory_audio_plays": 16,
+      "operative_visible": true,
+      "operative_visuals": {
+        "instances": 5,
+        "surfaces": 6,
+        "triangles": 296
+      },
+      "panel": 0,
+      "pending": 0,
+      "performance_copy_status": "",
+      "performance_report_text": "",
+      "performance_stats_text": "4 FPS / 250.0ms AVG FRAME  \u2022  ENEMIES 8  \u2022  SHOTS 1  \u2022  DRAWS 88  \u2022  ENGINE 53.2MB",
+      "performance_stats_visible": true,
+      "position": [
+        16.2684726715088,
+        -4.10754203796387
+      ],
+      "process": 3723,
+      "ranks": {
+        "arc": 1,
+        "orbit": 2
+      },
+      "rendered_frames": 294,
+      "rendered_panel": 0,
+      "rendered_state": "playing",
+      "renderer": "gl_compatibility",
+      "results_title": "",
+      "run_analysis_text": "",
+      "salvage": 1,
+      "sample_ticks": 87648,
+      "schema": 1,
+      "selected_kit": "vanguard",
+      "sentry": {
+        "activations": 0,
+        "enabled": false,
+        "position": [
+          0.0,
+          0.0
+        ],
+        "remaining": 0.0,
+        "shots": 0,
+        "status": ""
+      },
+      "settings": {
+        "flashes": true,
+        "master": 0.8,
+        "music": 0.35,
+        "performance_stats": true,
+        "quality": 1,
+        "sfx": 0.65,
+        "shake": true,
+        "ui": 0.65
+      },
+      "shield_status": "SHIELD ONLINE",
+      "state": "playing",
+      "targets": [
+        [
+          -8.6609992980957,
+          -2.54923248291016
+        ],
+        [
+          -6.41436815261841,
+          2.8465211391449
+        ],
+        [
+          -7.32442998886108,
+          6.58281993865967
+        ],
+        [
+          19.3929405212402,
+          28.1426105499268
+        ],
+        [
+          4.83235025405884,
+          12.4425954818726
+        ],
+        [
+          5.37390184402466,
+          12.8180980682373
+        ],
+        [
+          7.01808309555054,
+          13.4739742279053
+        ],
+        [
+          15.5869159698486,
+          12.4891796112061
+        ],
+        [
+          10.303915977478,
+          14.704273223877
+        ],
+        [
+          28.4142780303955,
+          11.4943933486938
+        ],
+        [
+          38.9898071289062,
+          -7.57529306411743
+        ],
+        [
+          26.4856719970703,
+          -20.7700042724609
+        ],
+        [
+          19.4248332977295,
+          9.92372226715088
+        ],
+        [
+          41.9393920898438,
+          -9.23699951171875
+        ],
+        [
+          8.42771244049072,
+          -1.18686091899872
+        ],
+        [
+          10.2714977264404,
+          -0.173446074128151
+        ],
+        [
+          12.7679176330566,
+          2.06289148330688
+        ],
+        [
+          10.5667972564697,
+          6.12754583358765
+        ]
+      ],
+      "time": 30.7999999999995,
+      "touch_controls": {
+        "dash_enabled": true,
+        "dash_id": -1,
+        "joystick_id": -1,
+        "pause_enabled": true,
+        "pause_id": -1,
+        "stick": [
+          0.0,
+          0.0
+        ]
+      },
+      "touches": 52,
+      "xp": 95
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "median_fps": 5.0,
+      "simulation_seconds_per_wall_second": 0.45707472178060204,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "isolated_export": {
+      "apk_sha256": "1f56f1ac9de0bc61835b1378468e1a5b27397acb7fdf21a496e1a95c1fd3d0f2",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 102,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "logcat_scans": "passed",
+    "scope": "Ordinary earned Android run: End Deployment, real damage channels/shares, frozen time/RNG/rewards and Back/menu retention verified before any Engineer progress fixture. Mobile physical performance remains unverified."
+  },
+  "lifecycle": {
+    "status": "passed",
+    "cycles": 18,
+    "checks": 56,
+    "background_seconds": [
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0
+    ],
+    "same_process_fresh_foreground_frames": true,
+    "readable_captures": 19,
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage"
+    ],
+    "resumed_combat_advances": true,
+    "app_egl_bad_surface_warnings": 9,
+    "warning_lines": [
+      "11-09 16:06:14.683  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:06:23.705  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:06:53.244  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:16.428  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:26.463  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:43.915  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:08:11.012  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:08:19.241  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:08:36.553  3643  3669 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+    ],
+    "scope": "Bounded startup-run Compatibility emulator recovery checks. Actual callbacks, readable returned screens, frozen gameplay and advancing resumed combat. No production Surface fix or physical-device clearance established."
+  },
+  "latched_lifecycle": {
+    "status": "passed",
+    "cycles": 18,
+    "checks": 56,
+    "background_seconds": [
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0,
+      0.25,
+      1.0,
+      3.0
+    ],
+    "same_process_fresh_foreground_frames": true,
+    "readable_captures": 19,
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage"
+    ],
+    "resumed_combat_advances": true,
+    "app_egl_bad_surface_warnings": 11,
+    "warning_lines": [
+      "11-09 16:06:10.195  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:06:25.898  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:06:34.298  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:06:50.952  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:06:56.490  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:10.059  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:16.721  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:32.379  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:38.502  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:07:53.517  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+      "11-09 16:08:00.467  3735  3765 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+    ],
+    "scope": "Bounded startup-run Compatibility emulator recovery checks. Actual callbacks, readable returned screens, frozen gameplay and advancing resumed combat. No production Surface fix or physical-device clearance established."
+  },
+  "latched_gameplay": {
+    "earned_analysis": {
+      "method": "Ordinary touch combat/XP/upgrades followed by End Deployment and Run Analysis; before any synthetic Engineer progress fixture",
+      "damage_by_weapon": {
+        "drone": 210.157142857143,
+        "orbit": 13.0,
+        "pulse": 758.833452380952,
+        "rail": 88.4329761904761
+      },
+      "text": "DEPLOYMENT ANALYSIS\nRECORDED DAMAGE // Support, slows and shields are not measured here.\nLOADOUT // PULSE RIFLE (AMPLIFIER 0)  /  PLASMA ORBITALS R1  /  RAIL LANCE R1  /  DRONE HIVE R1\nCORRUPTION 0/3 // CLEAN SIGNAL\nPULSE SHOTS\n759  /  70.9%\nDRONE SYSTEMS\n210  /  19.6%\nRAIL LANCE\n88  /  8.3%\nPLASMA ORBITALS\n13  /  1.2%\nDrone Systems combines Hive and field sentry fire. Pulse shots exclude Arcstorm chains.\nSwipe / wheel / D-pad: scroll. B / Esc: back to results.",
+      "frozen": {
+        "time": 30.5833333333329,
+        "kills": 34,
+        "ranks": {
+          "drone": 1,
+          "orbit": 1,
+          "rail": 1
+        },
+        "combat_rng": "-4530035981229311346",
+        "damage_by_weapon": {
+          "drone": 210.157142857143,
+          "orbit": 13.0,
+          "pulse": 758.833452380952,
+          "rail": 88.4329761904761
+        },
+        "salvage": 1
+      }
+    },
+    "status": "passed",
+    "checks": 58,
+    "pause_samples": {
+      "multitouch_pause": true,
+      "injection": "shell UID / real Android two-pointer MotionEvent",
+      "samples": {
+        "walking": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": 7,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              1.0,
+              0.0
+            ]
+          },
+          "position": [
+            0.933333396911621,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.683333333333334,
+          "state": "playing"
+        },
+        "paused_while_fingers_held": {
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.16666674613953,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.716666666666667,
+          "state": "paused"
+        },
+        "resumed": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.16666674613953,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 1.16666666666667,
+          "state": "playing"
+        }
+      }
+    },
+    "apk_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "ordinary_checkpoint": {
+      "architects": 0,
+      "attack_lanes": {
+        "charge": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 12,
+          "width": 1.08000004291534
+        },
+        "sentry": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 7,
+          "width": 0.800000011920929
+        }
+      },
+      "backup_code_length": 0,
+      "backup_recovery_available": false,
+      "build_text": "",
+      "buttons": [
+        {
+          "disabled": false,
+          "rect": [
+            1133.0,
+            18.0,
+            121.0,
+            75.0
+          ],
+          "text": "II  PAUSE"
+        },
+        {
+          "disabled": false,
+          "rect": [
+            1074.0,
+            607.0,
+            180.0,
+            95.0
+          ],
+          "text": "DASH / READY"
+        }
+      ],
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "chain_feedback": {
+        "text": "CHAIN 33 // 7 KILLS TO OVERCLOCK // BREAKS IN 2.8s",
+        "value": 65.0,
+        "visible": true
+      },
+      "combat_rng": "-4530035981229311346",
+      "corruption": {
+        "accepted": [],
+        "cycle_rate": 1.0,
+        "enemy_pace": 1.0,
+        "extra_drones": 0,
+        "extra_rounds": 0,
+        "next_level": 5,
+        "walk_rate": 1.0
+      },
+      "damage_by_weapon": {
+        "drone": 210.157142857143,
+        "orbit": 13.0,
+        "pulse": 758.833452380952,
+        "rail": 81.1714285714285
+      },
+      "dash_readiness": 100.0,
+      "dashes": 1,
+      "destruction_feedback": {
+        "fragment_triangles": 8,
+        "fragments_live": 4,
+        "kill_cue_last_dispatch_ms": 69996,
+        "kill_cue_pcm_bytes": 6174,
+        "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+      },
+      "drags": 39,
+      "edit_fields": [],
+      "engine": "4.6.3-stable (official)",
+      "health": {
+        "current": 100.0,
+        "max_shield": 30.0,
+        "maximum": 100.0,
+        "shield": 30.0
+      },
+      "hp": 100.0,
+      "kills": 33,
+      "level": 4,
+      "lifecycle": {
+        "background_events": 0,
+        "foreground_generation": 0,
+        "rendered_generation": 0
+      },
+      "memory_audio_plays": 14,
+      "operative_visible": true,
+      "operative_visuals": {
+        "instances": 5,
+        "surfaces": 6,
+        "triangles": 296
+      },
+      "panel": 0,
+      "pending": 0,
+      "performance_copy_status": "",
+      "performance_report_text": "",
+      "performance_stats_text": "5 FPS / 200.0ms AVG FRAME  \u2022  ENEMIES 11  \u2022  SHOTS 2  \u2022  DRAWS 73  \u2022  ENGINE 53.2MB",
+      "performance_stats_visible": true,
+      "position": [
+        30.7538108825684,
+        -17.4587745666504
+      ],
+      "process": 5780,
+      "ranks": {
+        "drone": 1,
+        "orbit": 1,
+        "rail": 1
+      },
+      "rendered_frames": 315,
+      "rendered_panel": 0,
+      "rendered_state": "playing",
+      "renderer": "gl_compatibility",
+      "results_title": "",
+      "run_analysis_text": "",
+      "salvage": 1,
+      "sample_ticks": 70181,
+      "schema": 1,
+      "selected_kit": "vanguard",
+      "sentry": {
+        "activations": 0,
+        "enabled": false,
+        "position": [
+          0.0,
+          0.0
+        ],
+        "remaining": 0.0,
+        "shots": 0,
+        "status": ""
+      },
+      "settings": {
+        "flashes": true,
+        "master": 0.8,
+        "music": 0.35,
+        "performance_stats": true,
+        "quality": 1,
+        "sfx": 0.65,
+        "shake": true,
+        "ui": 0.65
+      },
+      "shield_status": "SHIELD ONLINE",
+      "state": "playing",
+      "targets": [
+        [
+          -4.443039894104,
+          -11.3770503997803
+        ],
+        [
+          19.3529148101807,
+          30.6880683898926
+        ],
+        [
+          -5.8310866355896,
+          20.5632514953613
+        ],
+        [
+          17.2529525756836,
+          12.1413841247559
+        ],
+        [
+          17.8420314788818,
+          10.8171072006226
+        ],
+        [
+          9.04019737243652,
+          5.06440353393555
+        ],
+        [
+          13.6644144058228,
+          12.6382312774658
+        ],
+        [
+          9.28766918182373,
+          -14.8261528015137
+        ],
+        [
+          39.9653205871582,
+          0.164660006761551
+        ],
+        [
+          38.9247741699219,
+          -19.5657558441162
+        ],
+        [
+          41.2286186218262,
+          -21.0034637451172
+        ],
+        [
+          2.95885801315308,
+          -8.63001537322998
+        ],
+        [
+          40.991813659668,
+          -6.47779083251953
+        ],
+        [
+          28.6494274139404,
+          -29.1032409667969
+        ],
+        [
+          28.5193481445312,
+          1.80788087844849
+        ]
+      ],
+      "time": 30.2666666666662,
+      "touch_controls": {
+        "dash_enabled": true,
+        "dash_id": -1,
+        "joystick_id": -1,
+        "pause_enabled": true,
+        "pause_id": -1,
+        "stick": [
+          0.0,
+          0.0
+        ]
+      },
+      "touches": 51,
+      "xp": 90
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "median_fps": 5,
+      "simulation_seconds_per_wall_second": 0.43575338519158596,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "isolated_export": {
+      "apk_sha256": "138fae9e13c20ec684a6b12a740ce6387b73c1cc8df8e9e1acb9a9f2a3144745",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 102,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "logcat_scans": "passed",
+    "scope": "Ordinary earned Android run: End Deployment, real damage channels/shares, frozen time/RNG/rewards and Back/menu retention verified before any Engineer progress fixture. Mobile physical performance remains unverified."
+  },
+  "control": {
+    "status": "passed",
+    "completed_cycles": 18,
+    "checks_recorded": 56,
+    "checks_passed": 56,
+    "scope": "Unpatched diagnostic observation; this sample completed. One clean sample or successful collection does not establish reliable recovery."
+  },
+  "phone_parity": {
+    "status": "passed",
+    "selected_entries": 44,
+    "unchanged_entries": 44,
+    "changed_entries": [],
+    "scope": "All selected compiled game/Java/native engine/project settings entries match the previous verified phone APK. Test-tooling-only source change; QA probe remains disabled in normal exports. No gameplay update installation needed."
+  },
+  "modal_visibility": {
+    "status": "passed",
+    "method": "Every complete UI snapshot in five actual Android transcripts is checked. Mobile and both lifecycle transcripts include full paused UI: no visible chain or gameplay buttons, modal controls available; playing restores both HUD actions. Ordinary/latched gameplay transcripts only retain complete playing UI, with condensed pause snapshots covered separately by existing touch regressions. UI headless tests separately cover hints and nested settings/build.",
+    "samples": {
+      "mobile/android-mobile.json": {
+        "playing": 10,
+        "upgrading": 13,
+        "paused": 16
+      },
+      "android/android-runtime.json": {
+        "playing": 1
+      },
+      "lifecycle/android-lifecycle.json": {
+        "playing": 36,
+        "paused": 36
+      },
+      "latched/lifecycle/android-lifecycle.json": {
+        "playing": 36,
+        "paused": 36
+      },
+      "latched/gameplay/android-runtime.json": {
+        "playing": 1
+      }
+    }
+  },
+  "layouts": {
+    "status": "passed",
+    "layouts": 200,
+    "checks": 2601,
+    "all_previous_layout_metadata_preserved": true
+  },
+  "visual_review": {
+    "status": "passed",
+    "reviewed": [
+      {
+        "path": "mobile/mobile-corruption-declined.png",
+        "sha256": "dcb451e860e4c28975c7f0ed9f117f470a6e30dfc0fcc9451f3a7796a35731c2"
+      },
+      {
+        "path": "mobile/mobile-redline-offer.png",
+        "sha256": "19c21c429a81f200ccebf942ac24b8b2e220f5753813ef6abffe7e1b85909c11"
+      },
+      {
+        "path": "mobile/mobile-linked-corruption-review.png",
+        "sha256": "7ffe32d092a3aabc59f3c1dd873750d3c7fb82e028f35f0d1b783b0551945180"
+      },
+      {
+        "path": "mobile/mobile-linked-build-resumed.png",
+        "sha256": "e2e7231c4daa19eacae79c305cdaeed535efd92a3ca14bd3c99792435b40abb2"
+      },
+      {
+        "path": "failed-android-attempt1/failure.png",
+        "sha256": "d96170c552aa98bf6b8e66862ecd1d1eef9a535f90770f78effef545715d3d14"
+      }
+    ],
+    "observation": "Actual declined offer fits three original cards, REROLL / 2 and enabled optional link. Reopened picker shows HP 100 to 80/+30% cycles and honestly disabled Hive prerequisite. Active view shows Redline 1/3, -20 HP, +30% cycles and next level 10; resumed HUD shows 80 HP/42 shield with touch actions. Separate ordinary Android failure capture remains at the pause menu; Settings transition did not occur. The cause of that timeout is unconfirmed."
+  },
+  "python_ci": {
+    "status": "passed",
+    "source_sha": "cc0b21e65049356ec385d7a5be8df69e490664f5",
+    "run_id": 42650384450,
+    "job_id": 129274835607,
+    "markers": [
+      "2026-11-09T16:01:29.2201211Z Ran 51 tests in 2.541s",
+      "2026-11-09T16:01:29.2201582Z OK"
+    ]
+  },
+  "reviewer_history": {
+    "status": "corrected",
+    "stage": "Independent post-download reviewer",
+    "initial_result": "failed",
+    "reason": "Reviewer incorrectly required the initial level-up entry snapshot to have already rendered. It records upgrading with the previous playing frame; the driver captures the offer before tapping.",
+    "correction": "Still compare all seventeen fields entry-to-picker and all exact actions. Require fresh rendered panels/process/counters throughout actual opened -> declined -> reopened path, matching the intended runtime predicates.",
+    "shipping_or_ci_source_changed": false
+  },
+  "limits": [
+    "One earned Redline decline/reopen/selection path on Android 35 x86_64 Mobile; other links/multiple links/earned mutations/full Mobile runs remain open.",
+    "Ordinary Compatibility attempt 1 timed out opening Settings after background return; unchanged single-job retest passed all 58 checks. Cause unconfirmed; intermittent issue remains open.",
+    "Mobile software emulator alone disables Swappy; shipping frame pacing/default-enabled ARM64 settings are unchanged.",
+    "Physical ARM64/S23 performance, thermals, touch latency, audio and Android 10/cutout acceptance remain unverified.",
+    "Protected stable signing/release AAB unexecuted. CI signature passed; not independently rerun locally. Debug keys rotate; preserve backups before replacing installs."
+  ]
+}

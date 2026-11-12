@@ -8,3 +8,10 @@ export_credentials.cfg
 *.apk
 *.aab
 *.zip
+
+# Python test-tool caches
+__pycache__/
+*.pyc
+
+# Generated Godot Android source template; prepared by tools/android_surface.
+/android/

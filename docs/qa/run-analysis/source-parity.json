@@ -1,0 +1,19 @@
+{
+  "previous_local_head": "b52ad472e6ce0087629a85c16b8708ae0ccbed8c",
+  "changed_previous_main_functions": [
+    "_ready",
+    "_capture_session"
+  ],
+  "unchanged_previous_main_functions": 39,
+  "new_main_functions": [
+    "open_run_analysis"
+  ],
+  "unchanged_gameplay_files": [
+    "systems/combat_world.gd",
+    "systems/field_sentry.gd",
+    "systems/progression.gd",
+    "systems/corruption_protocol.gd",
+    "systems/spawn_director.gd"
+  ],
+  "scope": "Source comparison only; hosted replay/build checks pending."
+}

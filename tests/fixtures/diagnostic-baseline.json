@@ -1,0 +1,9 @@
+{
+  "verified_source": "a64caa8f3df88f8ed4e7da1b2698102617022cea",
+  "seed": 909,
+  "profile": "halo",
+  "kit": "vanguard",
+  "seconds": 180,
+  "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+  "scope": "Accepted normal-rules replay gameplay fingerprint, excluding only simulation-step and wall timings. Not device FPS."
+}

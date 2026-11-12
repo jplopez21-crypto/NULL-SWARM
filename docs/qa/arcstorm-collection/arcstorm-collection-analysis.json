@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "status": "observed",
+  "godot": "4.6.3-stable (official)",
+  "fixed_step": 0.0166666666666667,
+  "cases": [
+    {
+      "seed": 101,
+      "policy": "cautious",
+      "outcome": "defeat",
+      "survived_seconds": 527.63,
+      "level": 23,
+      "xp_collected": 2837,
+      "uncollected_xp": 9916,
+      "longest_gap": {
+        "start": 208.18,
+        "end": 527.63,
+        "seconds": 319.45,
+        "samples": 65,
+        "samples_with_nearby_cold_xp": 65,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 3.83,
+        "sampled_collected_delta": 110,
+        "maximum_pending": 0
+      },
+      "trace_samples": 107
+    },
+    {
+      "seed": 101,
+      "policy": "value_aware",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16228,
+      "uncollected_xp": 250,
+      "longest_gap": {
+        "start": 200.03,
+        "end": 519.58,
+        "seconds": 319.55,
+        "samples": 63,
+        "samples_with_nearby_cold_xp": 63,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 3.01,
+        "sampled_collected_delta": 99,
+        "maximum_pending": 0
+      },
+      "trace_samples": 122
+    },
+    {
+      "seed": 202,
+      "policy": "cautious",
+      "outcome": "defeat",
+      "survived_seconds": 534.15,
+      "level": 24,
+      "xp_collected": 2954,
+      "uncollected_xp": 9980,
+      "longest_gap": {
+        "start": 216.35,
+        "end": 534.15,
+        "seconds": 317.8,
+        "samples": 64,
+        "samples_with_nearby_cold_xp": 64,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 5.69,
+        "sampled_collected_delta": 0,
+        "maximum_pending": 0
+      },
+      "trace_samples": 108
+    },
+    {
+      "seed": 202,
+      "policy": "value_aware",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16112,
+      "uncollected_xp": 170,
+      "longest_gap": {
+        "start": 260.93,
+        "end": 510.43,
+        "seconds": 249.5,
+        "samples": 50,
+        "samples_with_nearby_cold_xp": 50,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 7.33,
+        "sampled_collected_delta": 142,
+        "maximum_pending": 0
+      },
+      "trace_samples": 122
+    },
+    {
+      "seed": 303,
+      "policy": "cautious",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16223,
+      "uncollected_xp": 204,
+      "longest_gap": {
+        "start": 186.5,
+        "end": 477.25,
+        "seconds": 290.75,
+        "samples": 58,
+        "samples_with_nearby_cold_xp": 58,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 4.64,
+        "sampled_collected_delta": 92,
+        "maximum_pending": 0
+      },
+      "trace_samples": 122
+    },
+    {
+      "seed": 303,
+      "policy": "value_aware",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16384,
+      "uncollected_xp": 125,
+      "longest_gap": {
+        "start": 225.02,
+        "end": 448.27,
+        "seconds": 223.25,
+        "samples": 44,
+        "samples_with_nearby_cold_xp": 44,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 6.9,
+        "sampled_collected_delta": 0,
+        "maximum_pending": 0
+      },
+      "trace_samples": 122
+    },
+    {
+      "seed": 404,
+      "policy": "cautious",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 16162,
+      "uncollected_xp": 206,
+      "longest_gap": {
+        "start": 193.05,
+        "end": 509.87,
+        "seconds": 316.82,
+        "samples": 63,
+        "samples_with_nearby_cold_xp": 62,
+        "samples_with_cold_xp_only_beyond_sensor": 1,
+        "nearest_cold_median": 8.27,
+        "sampled_collected_delta": 32,
+        "maximum_pending": 0
+      },
+      "trace_samples": 122
+    },
+    {
+      "seed": 404,
+      "policy": "value_aware",
+      "outcome": "victory",
+      "survived_seconds": 600.02,
+      "level": 56,
+      "xp_collected": 15901,
+      "uncollected_xp": 246,
+      "longest_gap": {
+        "start": 205.28,
+        "end": 511.8,
+        "seconds": 306.52,
+        "samples": 61,
+        "samples_with_nearby_cold_xp": 61,
+        "samples_with_cold_xp_only_beyond_sensor": 0,
+        "nearest_cold_median": 3.67,
+        "sampled_collected_delta": 52,
+        "maximum_pending": 0
+      },
+      "trace_samples": 122
+    }
+  ],
+  "pairs": [
+    {
+      "seed": 101,
+      "cautious_outcome": "defeat",
+      "value_aware_outcome": "victory",
+      "value_aware_minus_cautious": {
+        "survived_seconds": 72.39,
+        "xp_collected": 13391,
+        "longest_gap_seconds": 0.1
+      }
+    },
+    {
+      "seed": 202,
+      "cautious_outcome": "defeat",
+      "value_aware_outcome": "victory",
+      "value_aware_minus_cautious": {
+        "survived_seconds": 65.87,
+        "xp_collected": 13158,
+        "longest_gap_seconds": -68.3
+      }
+    },
+    {
+      "seed": 303,
+      "cautious_outcome": "victory",
+      "value_aware_outcome": "victory",
+      "value_aware_minus_cautious": {
+        "survived_seconds": 0.0,
+        "xp_collected": 161,
+        "longest_gap_seconds": -67.5
+      }
+    },
+    {
+      "seed": 404,
+      "cautious_outcome": "victory",
+      "value_aware_outcome": "victory",
+      "value_aware_minus_cautious": {
+        "survived_seconds": 0.0,
+        "xp_collected": -261,
+        "longest_gap_seconds": -10.3
+      }
+    }
+  ],
+  "limitations": [
+    "Normal rules and identical starting conditions/upgrade preferences; existing navigation and dash policies differ.",
+    "Movement can change adaptive enemies, offers and subsequent selections. Outcomes do not isolate one navigation component.",
+    "Five-second samples describe XP proximity, not safety, exact human visibility or collection opportunities.",
+    "Gaps measure time without an applied upgrade choice, including the final tail. Samples may omit interval boundaries.",
+    "Time is simulated combat time. Four fixed seeds do not establish human balance, enjoyment or device performance.",
+    "No spawn/damage/XP changes, teleportation, stat grants or injected immunity. Defeats are observations."
+  ],
+  "source_sha256": "7fdd1ff943291ad932b12d6f90078e25dd4d5cdf4e359a8a33c47cc92678f18e"
+}

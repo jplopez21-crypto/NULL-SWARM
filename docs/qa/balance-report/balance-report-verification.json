@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "runs": 26,
+  "cohorts": 19,
+  "outcomes": {
+    "victory": 22,
+    "defeat": 4
+  },
+  "mutation_rows": 30,
+  "metrics_checked": 8,
+  "raw_input_hashes_verified": true,
+  "all_group_values_match_raw_cases": true,
+  "host_cpu_timings_excluded": true,
+  "json_sha256": "9348ddcf863f9ff97e45199a5762023572512d5825177c3fb6a8c2205b195ad1",
+  "markdown_sha256": "b4ec9387946310c1a0f5ad3b028a24d25a4361e74ceacde6e0be996aac2a871e",
+  "scope": "Independent raw-case grouping/count/median/range/reach audit of fresh CI output. Selected bot observations, not overall gameplay parity or human balance acceptance."
+}

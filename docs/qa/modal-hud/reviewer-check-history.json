@@ -1,0 +1,9 @@
+{
+  "status": "corrected_and_passed",
+  "scope": "Independent evidence-review helpers; these were assertion assumptions, not game/CI failures. No code changes or CI retries resulted.",
+  "initial_failed_assumptions": [
+    "Layout count delta initially omitted four now-hidden performance-label checks; correct delta is 276, including 272 control checks.",
+    "Initial HUD action matching assumed duplicate spaces; actual updated dash labels use single spaces, so matching now normalizes whitespace.",
+    "Initial transcript assertion expected full paused UI in ordinary gameplay reports; those reports retain condensed pause snapshots. Full modal visibility is asserted only where full UI snapshots exist (Mobile and both lifecycle transcripts), with existing condensed touch regressions verified separately."
+  ]
+}

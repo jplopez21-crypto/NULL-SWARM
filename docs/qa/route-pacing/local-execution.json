@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "previous_complete_non_timing_cases_and_pacing_traces_match": true,
+  "route_requests_equal_bot_requests": true,
+  "raw_sha256": "a41a789a0fdc035e61e4a1c81c858b3a3d5a44f70d64322111e83ec1ff2d9abb",
+  "scope": "New read-only route observation preserves every previous case field and five-second pacing trace except host timings; route_trace is additional.",
+  "all_recorded_dash_requests_activated": true,
+  "python_tests": 88,
+  "observer_regressions": 10,
+  "initial_environment_failure": {
+    "exit_code": 134,
+    "cause": "Direct Godot invocation could not create the default /home/agent XDG user-data directory and aborted. Existing isolated XDG convention resolves the launch.",
+    "log_sha256": "2a85dce0a98255b44cdb9f045fdf6bbc97b52645ba565d936b0ab1e998361b2f",
+    "isolated_systems_checks": 1097
+  },
+  "editor_import": {
+    "status": "blocked_local_socket",
+    "log_sha256": "b7e2b94b60863e185113acc0583af3fa58426154e9d62b0d3623470b422a5ae5",
+    "errors": "Editor local TCP listener cannot create a socket in sandbox. Additional-network request did not execute before interruption; no successful editor import claimed. Hosted import pending."
+  }
+}

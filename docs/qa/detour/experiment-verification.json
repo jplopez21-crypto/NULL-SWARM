@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "local_ci_complete_case_route_and_xp_trace_parity": true,
+  "previous_original_route_cases_preserved": 8,
+  "fresh_reference_cases_match": 4,
+  "report_pairs_and_route_windows_match_raw": true,
+  "all_recorded_dash_requests_activated": true,
+  "raw_sha256": "688736a2b69c8f05a19b5547e91400da7b3d73c66265bd120873e4a82621ffbe",
+  "pairs": [
+    {
+      "seed": 101,
+      "reference_gap": 319.55,
+      "candidate_gap": 120.9,
+      "collected_xp_delta": 296,
+      "gap_delta": -198.65,
+      "detours": {
+        "cancelled": 1,
+        "started": 121
+      }
+    },
+    {
+      "seed": 202,
+      "reference_gap": 249.5,
+      "candidate_gap": 170.7,
+      "collected_xp_delta": 104,
+      "gap_delta": -78.8,
+      "detours": {
+        "cancelled": 1,
+        "started": 202
+      }
+    },
+    {
+      "seed": 303,
+      "reference_gap": 223.25,
+      "candidate_gap": 19.97,
+      "collected_xp_delta": -76,
+      "gap_delta": -203.28,
+      "detours": {
+        "cancelled": 0,
+        "started": 1
+      }
+    },
+    {
+      "seed": 404,
+      "reference_gap": 306.52,
+      "candidate_gap": 136.67,
+      "collected_xp_delta": 239,
+      "gap_delta": -169.85,
+      "detours": {
+        "cancelled": 1,
+        "started": 191
+      }
+    }
+  ],
+  "scope": "Explicit experiment only; four earlier design seeds, not held-out. All gaps shorten, XP changes are mixed. Reference bots and shipping game unchanged; no human balance acceptance."
+}

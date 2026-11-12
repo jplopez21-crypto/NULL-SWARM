@@ -1,0 +1,125 @@
+{
+  "verified_game_and_test_code": "0f592f7ea0d0fad3d5a0f112820407119ebd0879",
+  "matched_git_tree_before_followup": "d19b45afdf4034848f5a8da8b483f2dd6fe68b7e",
+  "headless": {
+    "suites": [
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 24,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 5,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 50,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 430,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1140,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "independent_artifact_checks": {
+    "code": "0f592f7ea0d0fad3d5a0f112820407119ebd0879",
+    "archives": {
+      "native": {
+        "zip_sha256": "31858cb812317000581858d5b23627303998addd027a83e17f5a392305352651",
+        "crc": "passed"
+      },
+      "qa": {
+        "zip_sha256": "d67930f26d335d35825dbf8295f501875be79756e0e435e4cff766a42f45e056",
+        "crc": "passed"
+      },
+      "android": {
+        "zip_sha256": "4cdc8d23c4e90a79567287eed3a5aa06e1dfe48490389027ac908e75c78b7897",
+        "crc": "passed"
+      }
+    },
+    "native": {
+      "apk_sha256": "80fc96bf7a891c063b478137f2d204dfa016a2031ec4a24bd731c32317de7789",
+      "apk_bytes": 27757066,
+      "architecture": "arm64-v8a",
+      "package": "com.nullswarm.game.development",
+      "qa_probe_enabled": false,
+      "signature": "CI apksigner passed; independent archive/hash/manifest checks passed"
+    },
+    "android": {
+      "checks": 18,
+      "checkpoint_salvage": 1,
+      "checkpoint_time": 31.0833333333328,
+      "checkpoint_kills": 36,
+      "update": {
+        "from_version": 7,
+        "to_version": 8,
+        "settings_retained": true,
+        "salvage": 1.0
+      }
+    },
+    "qa": {
+      "normal_sessions": 22,
+      "victories": 18,
+      "defeats": 4,
+      "unchanged_normal_and_xp_cases_except_timings": 28,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 18,
+      "ui_checks": 1140,
+      "ui_layouts": 100,
+      "deterministic_replay": true
+    }
+  },
+  "android_visual_review": "Inspected actual Android upgrade.png: singular 1 UPGRADE READY heading is legible; choices/reroll fit.",
+  "limits": [
+    "Runtime Android variant is x86_64 Compatibility; physical ARM64 Mobile performance remains unverified.",
+    "Persistent Preview signing remains unprovisioned."
+  ]
+}

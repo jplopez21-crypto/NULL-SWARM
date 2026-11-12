@@ -1,0 +1,328 @@
+{
+  "created_utc": "2026-10-29T13:51:06.573161+00:00",
+  "order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "sources": {
+    "baseline": {
+      "commit": "c6cb5f0cdb2ecf576ac5589fec2a1220ab2608db",
+      "dirty": false,
+      "sha256": {
+        "systems/spatial_grid.gd": "7e67bd5e772ee8d031f839301b38ea12c573d3e0abb5512b85d2871b2792e316",
+        "resources/enemy_definition.gd": "164c3c54826ab27ee44acb731476abbfd3e6dd136dcd591de680c95bc9a68083",
+        "systems/combat_world.gd": "db94d72738ac632f3613addc5294a1c13e97fa159adb2e4862d184a9d9b17f39",
+        "tests/run_benchmark.gd": "81785f5163c7808b0efeeab03cd692d12719a98815f6b12c7ae7af118f1f6de3"
+      }
+    },
+    "candidate": {
+      "commit": "f19e0d25017ead6c32de8a2bdb10327f971b3e64",
+      "dirty": false,
+      "sha256": {
+        "systems/spatial_grid.gd": "3965f0298fef1773783fd7f29310c12cd4d0b3d6f3242685dce0edc8d2891090",
+        "resources/enemy_definition.gd": "164c3c54826ab27ee44acb731476abbfd3e6dd136dcd591de680c95bc9a68083",
+        "systems/combat_world.gd": "5966209d18103e4ec0b7ad20ceac2ed1fc28493d3607213a79e319fda5162a2b",
+        "tests/run_benchmark.gd": "81785f5163c7808b0efeeab03cd692d12719a98815f6b12c7ae7af118f1f6de3"
+      }
+    }
+  },
+  "cases": [
+    {
+      "enemies": 100,
+      "quality": "low",
+      "gameplay_fingerprint": "1e881bfea94e6df8794263d3a675753afa5a534267a9a371ded4e8724de32b8f",
+      "baseline": {
+        "mean_ms_runs": [
+          2.65354833333334,
+          2.44991833333333
+        ],
+        "p95_ms_runs": [
+          4.619,
+          3.965
+        ],
+        "median_mean_ms": 2.5517333333333347,
+        "median_p95_ms": 4.292,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.0356291666666667,
+          "effects_and_spawning": 0.06207750000000001,
+          "enemy_update": 0.24817333333333297,
+          "friendly_projectiles": 1.72168833333333,
+          "grid_and_gravity": 0.1087091666666665,
+          "hostile_projectiles": 0.1237616666666665,
+          "targeting_and_rifle": 0.04573166666666665
+        }
+      },
+      "candidate": {
+        "mean_ms_runs": [
+          2.70158166666667,
+          2.34984
+        ],
+        "p95_ms_runs": [
+          4.445,
+          4.136
+        ],
+        "median_mean_ms": 2.525710833333335,
+        "median_p95_ms": 4.2905,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.035369166666666646,
+          "effects_and_spawning": 0.06502333333333335,
+          "enemy_update": 0.2650383333333335,
+          "friendly_projectiles": 1.663714166666665,
+          "grid_and_gravity": 0.1086483333333335,
+          "hostile_projectiles": 0.12498083333333351,
+          "targeting_and_rifle": 0.0477325
+        }
+      },
+      "whole_fixture_mean_speedup": 1.010303040101252
+    },
+    {
+      "enemies": 100,
+      "quality": "high",
+      "gameplay_fingerprint": "1e881bfea94e6df8794263d3a675753afa5a534267a9a371ded4e8724de32b8f",
+      "baseline": {
+        "mean_ms_runs": [
+          2.72150166666667,
+          2.54380833333333
+        ],
+        "p95_ms_runs": [
+          4.445,
+          4.311
+        ],
+        "median_mean_ms": 2.6326549999999997,
+        "median_p95_ms": 4.378,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.037805000000000005,
+          "effects_and_spawning": 0.1800933333333335,
+          "enemy_update": 0.2290625,
+          "friendly_projectiles": 1.7300375,
+          "grid_and_gravity": 0.1030416666666665,
+          "hostile_projectiles": 0.113698333333333,
+          "targeting_and_rifle": 0.04592083333333335
+        }
+      },
+      "candidate": {
+        "mean_ms_runs": [
+          3.23298166666667,
+          3.17368833333333
+        ],
+        "p95_ms_runs": [
+          5.852,
+          5.423
+        ],
+        "median_mean_ms": 3.203335,
+        "median_p95_ms": 5.6375,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.047537499999999996,
+          "effects_and_spawning": 0.2471116666666665,
+          "enemy_update": 0.3302483333333335,
+          "friendly_projectiles": 1.96165416666667,
+          "grid_and_gravity": 0.1304991666666665,
+          "hostile_projectiles": 0.157894166666667,
+          "targeting_and_rifle": 0.0558683333333333
+        }
+      },
+      "whole_fixture_mean_speedup": 0.821848167612816
+    },
+    {
+      "enemies": 300,
+      "quality": "low",
+      "gameplay_fingerprint": "fc991ec8f2e273ca5116166dbad85a75bffcbc2d12c713e1ba9cf269c8f842aa",
+      "baseline": {
+        "mean_ms_runs": [
+          3.98212333333334,
+          3.53942333333333
+        ],
+        "p95_ms_runs": [
+          10.58,
+          9.622
+        ],
+        "median_mean_ms": 3.760773333333335,
+        "median_p95_ms": 10.100999999999999,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.04536833333333335,
+          "effects_and_spawning": 0.0650183333333333,
+          "enemy_update": 0.6802066666666665,
+          "friendly_projectiles": 2.303495,
+          "grid_and_gravity": 0.229015,
+          "hostile_projectiles": 0.13596750000000002,
+          "targeting_and_rifle": 0.07773166666666664
+        }
+      },
+      "candidate": {
+        "mean_ms_runs": [
+          3.81153000000001,
+          4.20763666666667
+        ],
+        "p95_ms_runs": [
+          10.514,
+          12.441
+        ],
+        "median_mean_ms": 4.009583333333341,
+        "median_p95_ms": 11.4775,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.0440925,
+          "effects_and_spawning": 0.0751,
+          "enemy_update": 0.7848166666666665,
+          "friendly_projectiles": 2.4086274999999997,
+          "grid_and_gravity": 0.24122333333333298,
+          "hostile_projectiles": 0.1409966666666665,
+          "targeting_and_rifle": 0.079785
+        }
+      },
+      "whole_fixture_mean_speedup": 0.9379461706328575
+    },
+    {
+      "enemies": 300,
+      "quality": "high",
+      "gameplay_fingerprint": "fc991ec8f2e273ca5116166dbad85a75bffcbc2d12c713e1ba9cf269c8f842aa",
+      "baseline": {
+        "mean_ms_runs": [
+          4.27701333333334,
+          4.044165
+        ],
+        "p95_ms_runs": [
+          10.241,
+          11.172
+        ],
+        "median_mean_ms": 4.16058916666667,
+        "median_p95_ms": 10.7065,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.0500191666666667,
+          "effects_and_spawning": 0.2265875,
+          "enemy_update": 0.7630058333333329,
+          "friendly_projectiles": 2.420068333333335,
+          "grid_and_gravity": 0.23319416666666648,
+          "hostile_projectiles": 0.15098583333333349,
+          "targeting_and_rifle": 0.07769999999999999
+        }
+      },
+      "candidate": {
+        "mean_ms_runs": [
+          4.44410333333333,
+          4.33495
+        ],
+        "p95_ms_runs": [
+          12.355,
+          13.209
+        ],
+        "median_mean_ms": 4.389526666666665,
+        "median_p95_ms": 12.782,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.053752499999999995,
+          "effects_and_spawning": 0.24162250000000002,
+          "enemy_update": 0.8097916666666665,
+          "friendly_projectiles": 2.50861916666667,
+          "grid_and_gravity": 0.25563,
+          "hostile_projectiles": 0.164675,
+          "targeting_and_rifle": 0.08289166666666664
+        }
+      },
+      "whole_fixture_mean_speedup": 0.9478446043536974
+    },
+    {
+      "enemies": 600,
+      "quality": "low",
+      "gameplay_fingerprint": "dace52b9bb2ecd9797308462115c23e2fc40cdab7b09cfa4991ea3f7d3c46b84",
+      "baseline": {
+        "mean_ms_runs": [
+          5.91155166666667,
+          7.13958
+        ],
+        "p95_ms_runs": [
+          20.833,
+          22.062
+        ],
+        "median_mean_ms": 6.525565833333335,
+        "median_p95_ms": 21.447499999999998,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.06780749999999999,
+          "effects_and_spawning": 0.084525,
+          "enemy_update": 1.6291875,
+          "friendly_projectiles": 3.657989166666665,
+          "grid_and_gravity": 0.47666166666666654,
+          "hostile_projectiles": 0.1889616666666665,
+          "targeting_and_rifle": 0.1316675
+        }
+      },
+      "candidate": {
+        "mean_ms_runs": [
+          6.62974833333334,
+          8.545555
+        ],
+        "p95_ms_runs": [
+          23.396,
+          25.671
+        ],
+        "median_mean_ms": 7.58765166666667,
+        "median_p95_ms": 24.5335,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.08037333333333335,
+          "effects_and_spawning": 0.12700249999999985,
+          "enemy_update": 1.9487175,
+          "friendly_projectiles": 4.116504166666665,
+          "grid_and_gravity": 0.5759916666666665,
+          "hostile_projectiles": 0.2349933333333335,
+          "targeting_and_rifle": 0.1450408333333335
+        }
+      },
+      "whole_fixture_mean_speedup": 0.8600244344374445
+    },
+    {
+      "enemies": 600,
+      "quality": "high",
+      "gameplay_fingerprint": "dace52b9bb2ecd9797308462115c23e2fc40cdab7b09cfa4991ea3f7d3c46b84",
+      "baseline": {
+        "mean_ms_runs": [
+          6.405655,
+          7.95881833333333
+        ],
+        "p95_ms_runs": [
+          22.249,
+          25.577
+        ],
+        "median_mean_ms": 7.182236666666665,
+        "median_p95_ms": 23.913,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.07047833333333335,
+          "effects_and_spawning": 0.2649475,
+          "enemy_update": 1.7441849999999999,
+          "friendly_projectiles": 4.00368,
+          "grid_and_gravity": 0.4856308333333335,
+          "hostile_projectiles": 0.193519166666667,
+          "targeting_and_rifle": 0.135938333333333
+        }
+      },
+      "candidate": {
+        "mean_ms_runs": [
+          6.79497000000001,
+          6.97604166666666
+        ],
+        "p95_ms_runs": [
+          21.794,
+          21.439
+        ],
+        "median_mean_ms": 6.885505833333335,
+        "median_p95_ms": 21.616500000000002,
+        "mean_phase_ms": {
+          "arsenal_and_sentry": 0.06888416666666665,
+          "effects_and_spawning": 0.2749825,
+          "enemy_update": 1.7279975,
+          "friendly_projectiles": 3.682901666666665,
+          "grid_and_gravity": 0.499436666666667,
+          "hostile_projectiles": 0.198243333333333,
+          "targeting_and_rifle": 0.133175833333333
+        }
+      },
+      "whole_fixture_mean_speedup": 1.043094994110212
+    }
+  ],
+  "gameplay_parity": true,
+  "limits": [
+    "Two serial samples/version in AB/BA order on a shared local host; not a confidence interval.",
+    "Synthetic invulnerable/sustained load; whole-fixture timing includes player, pickups and refill.",
+    "Phase timing covers CombatWorld only and adds instrumentation overhead.",
+    "No rendering, Android/phone FPS or thermal claim; no hardware-dependent pass threshold."
+  ]
+}

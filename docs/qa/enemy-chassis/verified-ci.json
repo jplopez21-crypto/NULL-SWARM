@@ -1,0 +1,231 @@
+{
+  "verified_game_and_test_code": "bc54a9468c39b457d8b9623a2e67faad41f82356",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 58,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 954,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2244,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "590bd66422e5829673fb6b64eea25584fbaadd811a6ee1c5ae1ebf329b42afee",
+    "apk_bytes": 27782131,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "chassis_payload_sha256": "ace3e5b709d34eedca003d54b46ff9bb52d039169d78b443dc2607843e312ea8",
+    "combat_grid_collision_arena_deck_payloads_unchanged": true,
+    "code": "bc54a9468c39b457d8b9623a2e67faad41f82356",
+    "run": 40927291888,
+    "artifact": 12920813112,
+    "zip_sha256": "6f6b9c702b74d5294f344db265d793c07d913af7d0bbe53d727028dfe703b79d",
+    "status": "passed"
+  },
+  "presentation": {
+    "run": 40927291888,
+    "artifact": 12921451603,
+    "zip_sha256": "6d1049af21eb477c4f08c84f55ff70fb1067c43927fcaf58aaa6c600ba64784b",
+    "hash_crc": "passed"
+  },
+  "android": {
+    "run": 40927291797,
+    "artifact": 12919964771,
+    "zip_sha256": "8b9aaf09d46c797f0660ee32fda62b6fde583d734aef8890f8d4c2565613d470",
+    "status": "passed",
+    "checks": 33,
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "chain_feedback_sample": {
+      "text": "CHAIN 1 // 19 KILLS TO OVERCLOCK // BREAKS IN 2.8s",
+      "value": 5.0,
+      "visible": true,
+      "kills": 1
+    },
+    "ordinary_checkpoint": {
+      "kills": 38,
+      "simulation_seconds": 30.4833333333329,
+      "salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 3,
+        "enabled": true,
+        "position": [
+          29.5862369537354,
+          3.45069169998169
+        ],
+        "remaining": 2.73333333333333,
+        "shots": 1,
+        "status": "FIELD SENTRY 2.7s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 6.56666666666665,
+      "hp": 80.0,
+      "kills": 3
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 3,
+      "simulation_seconds_per_wall_second": 0.3552704194260472,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "archive_hash_crc_and_logcat_scans": "passed"
+  },
+  "gameplay_qa": {
+    "run": 40927291658,
+    "artifact": 12921873036,
+    "zip_sha256": "75bd03fc6b1477d4d1a67d7805ae3294b99cf3427b72b282e4208bd13a9ea42e",
+    "status": "passed",
+    "archive_hash_crc": "passed",
+    "full_report_comparison": {
+      "normal_sessions": 26,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 22
+      },
+      "unchanged_gameplay_and_xp_cases_except_timings": 32,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 24,
+      "ui_checks": 2245,
+      "ui_layouts": 160,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_summary_matches_local_native_qa": true,
+      "kernel_parity_cases": 9,
+      "profiled_engineer_cases": 6
+    }
+  },
+  "visual_review": {
+    "inspected": true,
+    "sources": [
+      "native enemy_lineup.png: enlarged/labelled/staged",
+      "native combat.png: ordinary framing/staged build",
+      "actual Android first-kill scene"
+    ],
+    "observations": [
+      "Six role silhouettes differ through tracked/pointed/tall/shielded/winged/forked profiles.",
+      "Existing eye markers and warnings remain distinct against the industrial deck.",
+      "Reference camera hold is desktop-only; ordinary/Android camera behavior is unchanged."
+    ]
+  },
+  "geometry_budget": {
+    "scope": "One of each regular archetype, body plus unchanged eye; excludes telegraphs and bosses.",
+    "old_body_mesh_instances": 22,
+    "new_body_mesh_instances": 12,
+    "old_body_triangles": 747,
+    "new_body_triangles": 467,
+    "hull_triangles": {
+      "crawler": 66,
+      "striker": 27,
+      "sentry": 78,
+      "bulwark": 74,
+      "skimmer": 66,
+      "insulator": 84
+    },
+    "limit_per_hull": 96,
+    "limits": [
+      "Structural geometry/instance counts, not measured GPU draw calls or FPS.",
+      "Individual crawler/sentry/bulwark models have more triangles; reductions are across the equal six-type sample."
+    ]
+  },
+  "unchanged_enemy_logic_function_hashes": {
+    "activate": "1111acd06786be18e92193c711c9cbce46746612eb768a448fdbaa94b5ed3657",
+    "deactivate": "787d69e3b08213c0996610b44833b457f00c2daf5fad3c62bef2cce52765e979",
+    "think": "86274d08262a97b331ba1fdc68f0b2eae5b032a3cca7a5192e558ff9a17d51b3",
+    "tick": "7a78de3e7c877c7c23d298b1c7bb7aa0227a70531fdc17cc618c0e9d2b2596e2",
+    "hit": "edc0936cc3b6e685beea0655757318413df3fdbeec6bdf8b61bab3bec95123ee"
+  },
+  "limits": [
+    "Structural instance/triangle reductions across an equal six-type sample are not measured GPU/FPS gains; some individual models have more triangles.",
+    "Canonical IDs share their definition tint; configuring a different tint for one canonical ID updates its shared material.",
+    "Lineup is enlarged and paused; native build/mutation captures are staged, not proof of normal progression or phone-size accessibility.",
+    "Engineer mobile checks restore a labelled Architect backup fixture after ordinary earned-progress checks; not actual earning of that unlock on-device.",
+    "Physical ARM64 Mobile FPS/thermals, Android 10, cutouts, human fun and accessibility validation remain open.",
+    "Diagnostic signing rotates; preserve installations/saves. Persistent Preview signing needs protected owner credentials.",
+    "Original procedural visuals remain development art; no final commercial art/audio or release AAB claimed. Main remains unmerged."
+  ]
+}

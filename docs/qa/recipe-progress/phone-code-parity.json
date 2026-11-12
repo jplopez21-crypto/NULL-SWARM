@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "selected_entries": 44,
+  "unchanged_entries": 42,
+  "changed_entries": [
+    "assets/scripts/main.gdc",
+    "assets/weapons/arsenal.gdc"
+  ],
+  "scope": "Only upgrade-description caller and pure registry formatter modules change. Other 36 compiled game modules, Java/native engine and shipping settings match the prior verified phone APK; normal QA probe remains disabled."
+}

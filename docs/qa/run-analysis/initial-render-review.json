@@ -1,0 +1,15 @@
+{
+  "initial_source": "3b06462d77ad58e9c84f0f74a64e31a595137ff0",
+  "native_run": 41326494570,
+  "initial_native_status": "success; strict suites, staged capture, export, signature and isolated exact-assets startup passed",
+  "finding": "Actual staged capture had readable rows and controls, but sixth row required scrolling while 48 logical pixels could fit inside the phone-safe panel. Increased scroll viewport 216 to 264 so all six current channels fit; dense future-content cases retain scrolling. Added maximum four-weapon/three-corruption context to dense layout fixtures.",
+  "capture_sha256": "f7f8221f6093546c44ff2478abf874159fb3e23d8713d7872ad6941c2f8f0699",
+  "scope": "Frozen synthetic desktop presentation fixture; not earned Android results or physical readability proof.",
+  "corrected_acceptance": "Passed at a69e5119bf804fe7e846945a6699c03848edc2e8: actual final native six-row report inspected, all current channels visible without scrolling; overflow/maximum-context and genuine engine joypad B/D-pad/Escape fixtures pass all four windows. Native/Android/full QA passed. Synthetic render scope retained.",
+  "controller_review": {
+    "source": "4b5c74c32f6c8eaf4fa475de08517d8bc6570373",
+    "finding": "Actual joypad-B GUI test failed. Godot's default ui_cancel lacks joypad B; scrollbar D-pad events move focus rather than its range. Added report-local B/Escape return, D-pad range handling only while its scrollbar is focused, an on-screen hint and actual joypad up/down/B plus Escape regressions. Combat inputs and global mappings unchanged.",
+    "initial_log": "controller-before.log",
+    "corrected_acceptance": "Passed at a69e5119bf804fe7e846945a6699c03848edc2e8: actual engine joypad B from Back and scrollbar, D-pad up/down and Escape navigation pass without changing time/RNG/ranks/save/rewards. Physical controller use is not claimed."
+  }
+}

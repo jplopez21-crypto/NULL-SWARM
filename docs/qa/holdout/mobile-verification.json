@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "renderer": "mobile",
+  "checks": 42,
+  "earned_corruption": {
+    "level": 5,
+    "total_xp": 138,
+    "kills": 34,
+    "before_max": 100,
+    "after_max": 80,
+    "cycle_gain_percent": 30,
+    "no_repeated_cost": true,
+    "same_process_background_cost_retention": true
+  },
+  "scope": "Independent complete transcript verification executed; raw snapshots remain in hosted artifact. No fresh manual art review or full earned mutation acceptance claimed in this test-only checkpoint."
+}

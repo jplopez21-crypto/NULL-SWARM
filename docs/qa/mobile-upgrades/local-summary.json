@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "godot_suites": 15,
+  "python_tests": 32,
+  "workflow_yaml_bash_files": 6,
+  "initial_fixture_failure": "The level mutation case initially assigned its existing value; fixture corrected to increment it. Implementation was not changed to make this case pass.",
+  "scope": "Local headless/Python/syntax tests; actual Android execution is hosted."
+}

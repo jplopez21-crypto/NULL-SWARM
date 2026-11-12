@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "recorded_cycles": 8,
+  "completed_cycles": 7,
+  "checks": 22,
+  "passing_checks": 22,
+  "outcome": {
+    "driver_exit_code": 1,
+    "driver_status": "failed",
+    "outcome": "known_surface_failure_reproduced",
+    "scope": "Control collection outcome, not a passing recovery test when driver_status is failed."
+  },
+  "error_prefix": "Runtime condition timed out",
+  "scope": "Deliberately unpatched control failed on the eighth return after seven completed cycles. Successful workflow collection is not passing recovery acceptance."
+}
