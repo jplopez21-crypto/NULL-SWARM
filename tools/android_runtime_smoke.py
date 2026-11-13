@@ -20,6 +20,7 @@ from build_observation import frozen_navigation
 from passive_observation import PASSIVE_LABELS, passive_card, passive_summary_matches
 from corruption_observation import corruption_offer_frozen, corruption_navigation_preserved, redline_selected, redline_terms, same_offer_actions
 from input_delivery import describe_delivery
+from mutation_observation import choose_card as mutation_card, recipe_cards_valid, complete as mutation_complete, active_build, dealt_damage, earned_history
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -28,6 +29,7 @@ parser.add_argument('--upgrade-apk', help='Install a same-signer higher-version 
 parser.add_argument('--engineer-backup', help='Explicit synthetic earned-kit code; restored through GUI only after ordinary persistence checks')
 mode = parser.add_mutually_exclusive_group()
 mode.add_argument('--mobile-smoke', action='store_true', help='Require actual Mobile renderer; exercise genuine touch/combat and one return without stat grants')
+mode.add_argument('--mobile-mutation', action='store_true', help='Bounded ordinary Mobile Arcstorm pursuit; report unreached outcomes honestly, without grants')
 mode.add_argument('--lifecycle-only', action='store_true', help='Run strict Home/launcher recovery cycles without granting progress')
 parser.add_argument('--lifecycle-cycles', type=int, default=6, choices=range(1, 31), help='Bounded lifecycle sample count (default 6, maximum 30)')
 args = parser.parse_args()
@@ -487,7 +489,7 @@ def mobile_collect_offer(s, deadline):
     return s
 
 
-def mobile_pick_upgrade(capture_name, prefer_passive=False):
+def mobile_pick_upgrade(capture_name, prefer_passive=False, pursue_mutation=False):
     offered = wait(lambda x: x['state'] == 'upgrading' and x['pending'] > 0)
     cards = [b for b in offered['buttons'] if re.match(r'^0[123]\n', b['text']) and not b['disabled']]
     capture(capture_name)
@@ -497,7 +499,9 @@ def mobile_pick_upgrade(capture_name, prefer_passive=False):
                   and x['sample_ticks'] > offered['sample_ticks'])
     if len(cards) != 3 or {b['text'].split('\n', 1)[0] for b in cards} != {'01','02','03'} or not upgrade_frozen(offered, frozen):
         raise AssertionError('Mobile upgrade offer is invalid or gameplay advanced while choosing')
-    chosen = (passive_card(cards) if prefer_passive else None) or next(b for b in cards if b['text'].startswith('01\n'))
+    if pursue_mutation and not recipe_cards_valid(cards, frozen['ranks']):
+        raise AssertionError('Visible mutation recipe counters disagree with the current earned ranks')
+    chosen = (mutation_card(cards, frozen['ranks']) if pursue_mutation else None) or (passive_card(cards) if prefer_passive else None) or next(b for b in cards if b['text'].startswith('01\n'))
     chosen_index = chosen['text'].split('\n', 1)[0]
     tap(chosen_index+'\n', frozen)
     selected = wait(lambda x: x.get('ranks') != frozen['ranks'])
@@ -724,6 +728,105 @@ def mobile_smoke():
         print('ANDROID_MOBILE_RESULT', report['status'], 'checks=', len(checks), flush=True)
 
 
+def mobile_mutation_probe():
+    report['variant'] = 'x86_64 Android 35 / required Mobile renderer / ordinary mutation pursuit'
+    report['scope'] = 'Bounded coverage experiment. Death, offer exhaustion and time/choice budgets are observations. Collection success is not mutation acceptance; verified coverage requires active build text and real Arcstorm damage. No grants, rerolls, seed writes or fallback.'
+    report['transactions'] = []
+    report['mutation_verified'] = False
+    report['coverage'] = 'not_reached'
+    began = time.monotonic()
+    try:
+        adb('logcat', '-c')
+        launch()
+        menu = wait(lambda x: x['state'] == 'menu', 120)
+        report['engine'] = menu['engine']; report['renderer'] = menu['renderer']
+        check(menu['renderer'] == 'mobile', 'mutation pursuit requires actual Mobile renderer without fallback')
+        capture('mutation-menu')
+        tap('DEPLOY', menu)
+        s = wait(lambda x: x['state'] == 'playing')
+        start = s
+        report['start'] = start
+        check(s['selected_kit'] == 'vanguard' and not s['ranks'] and s['level'] == 1
+              and not s['corruption']['accepted'], 'mutation pursuit starts a clean ordinary Vanguard deployment')
+        deadline = time.monotonic() + 720
+        reason = 'budget'
+        while True:
+            report['latest'] = s
+            if s['state'] == 'results':
+                reason = 'run_ended'; break
+            if time.monotonic() >= deadline:
+                break
+            if s['state'] == 'upgrading':
+                if len(report['transactions']) >= 24:
+                    reason = 'choice_budget'; break
+                transaction, s = mobile_pick_upgrade(f'mutation-choice-{len(report["transactions"])+1:02d}', pursue_mutation=True)
+                report['transactions'].append(transaction)
+                continue
+            if s['state'] != 'playing':
+                raise AssertionError('Unexpected state during ordinary mutation pursuit')
+            if mutation_complete(s['ranks']) and dealt_damage(s):
+                reason = 'mutation_damage'; break
+            targets = s.get('targets', [])
+            if targets:
+                x,z = s['position']; goal = min(targets, key=lambda p:(p[0]-x)**2+(p[1]-z)**2)
+                move(goal[0]-x, goal[1]-z, s, 650)
+            else:
+                move(math.cos(s['time']*.45), math.sin(s['time']*.45), s, 500)
+            s = read()
+        report['stop_reason'] = reason
+        report['final_combat'] = s
+        check(earned_history(start, report['transactions'], s), 'recorded ordinary touches account for every earned rank without grants or extra selections')
+        report['coverage'] = 'eligible' if mutation_complete(s['ranks']) else ('partial' if any(s['ranks'].get(k,0)>0 for k in ('damage','arc')) else 'not_reached')
+        if s['state'] == 'playing':
+            tap('PAUSE', s)
+            paused = wait(lambda x: x['state'] in ('paused','upgrading','results'))
+            if paused['state'] == 'paused':
+                tap('BUILD // MUTATIONS', paused)
+                guide = wait(lambda x:'DEPLOYMENT BUILD' in x.get('build_text',''))
+                check(frozen_navigation(paused, guide) and passive_summary_matches(guide['build_text'],guide['ranks']),
+                      'mutation pursuit build review matches actual earned ranks and freezes gameplay')
+                capture('mutation-build')
+                report['build'] = guide
+                if mutation_complete(guide['ranks']):
+                    check(active_build(guide), 'actually earned Arcstorm is equipped and marked ACTIVE in the build guide')
+                adb('shell','input','keyevent','3'); time.sleep(1); launch()
+                returned = wait(lambda x:fresh_resumed_frame(guide,x),60)
+                check(frozen_navigation(guide,returned) and returned['build_text']==guide['build_text'],
+                      'earned mutation build survives a same-process background return with unchanged ranks and gameplay')
+                capture('mutation-returned')
+                report['returned'] = returned
+                report['mutation_verified'] = active_build(guide) and active_build(returned) and dealt_damage(s)
+                if report['mutation_verified']:report['coverage'] = 'active_and_damaged'
+                tap('BACK TO PAUSE', returned)
+                back = wait(lambda x:x['state']=='paused' and any(b['text']=='RESUME' for b in x['buttons']))
+                tap('RESUME',back)
+                resumed = wait(lambda x:x['state'] in ('playing','results') and x['time']>back['time'],60)
+                check(resumed['process']==back['process'] and resumed['renderer']=='mobile'
+                      and resumed['ranks']==back['ranks'], 'mutation build resumes ordinary combat with earned ranks intact')
+                report['resumed'] = resumed
+                capture('mutation-resumed')
+        log = adb('logcat','-d');(out/'logcat.txt').write_text(log)
+        report['graphics_log'] = [line for line in log.splitlines() if str(start['process']) in line.split() and ('Vulkan' in line or 'Mobile' in line)]
+        fatal = [line for line in log.splitlines() if any(t in line for t in ['SCRIPT ERROR','FATAL EXCEPTION','Fatal signal']) or ('godot' in line.lower() and ('ERROR:' in line or 'USER ERROR' in line)) or 'ANR in '+args.package in line]
+        check(not fatal, 'mutation pursuit has no script error app ANR or fatal crash')
+        report['status'] = 'observed'
+        return 0
+    except Exception as error:
+        report['status'] = 'failed';report['error'] = str(error)
+        try:
+            capture('mutation-failure',wait_for_game=False)
+            (out/'logcat.txt').write_text(adb('logcat','-d'))
+        except Exception:
+            pass
+        return 1
+    finally:
+        report['wall_seconds'] = round(time.monotonic()-began,2)
+        (out/'android-mutation.json').write_text(json.dumps(report,indent=2))
+        print('ANDROID_MUTATION_RESULT',report['status'],'coverage=',report['coverage'],'checks=',len(checks),flush=True)
+
+
+if args.mobile_mutation:
+    raise SystemExit(mobile_mutation_probe())
 if args.mobile_smoke:
     raise SystemExit(mobile_smoke())
 

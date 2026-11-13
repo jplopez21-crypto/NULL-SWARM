@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "python_tests": 108,
+  "strict_godot_suites": 15,
+  "local_android": "not run: adb and /dev/kvm unavailable",
+  "hosted_android": "pending",
+  "mutation_verified": false,
+  "scope": "Local predicates/engine checks only; no actual Android mutation acceptance yet.",
+  "source_file_sha256": {
+    "tools/android_runtime_smoke.py": "cbd7b94297cab71110ac4da782a86ebfddcf75f33f918a06742a340131bb1020",
+    "tools/mutation_observation.py": "31fe6ed0dc981440361bd48f91f7eddaf4b2646e350fcb3990f843afcb7cf172",
+    "tests/test_mutation_observation.py": "9359e748340fd8d957623d82b840cdff389fbf81b8b5e7edcdc369cdb2fdfbc8",
+    ".github/workflows/android-mobile.yml": "4bbfebaed5c38b510fe141a3bf9c44ef970b8ae89ece35d59525cdef3dff0784"
+  }
+}

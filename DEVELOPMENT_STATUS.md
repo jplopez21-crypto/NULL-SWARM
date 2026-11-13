@@ -1,6 +1,12 @@
-# Development status — NULL//SWARM / 2026-11-12
+# Development status — NULL//SWARM / 2026-11-13
 
 ## Current checkpoint
+
+- Added a separate normal-play Mobile mutation pursuit and read-only card/history/build/damage predicates. No grants, rerolls or game changes. Actual mutation acceptance requires earned prerequisites, active equipped build text, effective Arcstorm damage and same-process background persistence; incomplete/death/budget outcomes remain explicit observations. Existing Mobile smoke and all earlier tests preserved.
+- All 108 Python tests/15 Godot suites pass locally. Eight new predicate tests cover mutation badges, target/passive selection, counter saturation, false active/damage claims and transaction-ledger integrity. Local ADB/KVM unavailable; actual Android observations and hosted build/emulator/full-QA gates pending. Local verification: docs/qa/mobile-mutation/.
+- Next: inspect the actual Android trace/screens, fix real failures and retain honest coverage limits. No earned full Android mutation or physical-device/release clearance claimed yet.
+
+## Previous verified frozen-policy checkpoint
 
 - Verified frozen-policy validation at source `1510d9be78f8132b042ce3ce97d07b1cca8e3781`: new seeds 606/707 across three profiles, twelve runs/six pairs. All complete hosted cases/routes/XP traces match local execution except timings. Arcstorm gaps shorten twice; Halo swaps a win/loss and has longer gaps; Kinetic has one shorter/one longer gap. Keep the candidate experimental and both references unchanged. Three policy source hashes remain frozen from the preceding source; matrix declared locally before execution. [Report](docs/qa/holdout/HOLDOUT_REPORT.md).
 - All five workflows pass attempt 1: 100 Python tests/15 Godot suites, 1,113 systems/101 GUI checks, 42 Mobile/59 ordinary Android checks and existing gameplay/layout regressions. Earlier sixteen route/design cases and canonical 26 runs/19 cohorts remain preserved. All eight fresh report files regenerate byte-for-byte. Ordinary/patched recovery each passes eighteen cycles/56 checks; unpatched control reproduces its known failure during cycle eight. [Evidence](docs/qa/holdout/verified-ci.json).

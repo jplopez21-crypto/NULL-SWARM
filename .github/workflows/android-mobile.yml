@@ -13,8 +13,13 @@ permissions:
   contents: read
 jobs:
   android-runtime:
+    name: mobile-${{ matrix.scenario }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [smoke, mutation]
     env:
       GODOT_VERSION: 4.6.3
       EXPECTED_EMULATOR_VERSION: 37.2.13.0
@@ -143,7 +148,11 @@ jobs:
       - name: Require Mobile renderer and real touch/combat recovery
         run: |
           set -o pipefail
-          timeout 900s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --mobile-smoke --package com.nullswarm.game.mobileqa 2>&1 | tee builds/android-runtime/smoke.log
+          if [ '${{ matrix.scenario }}' = mutation ]; then
+            timeout 1100s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --mobile-mutation --package com.nullswarm.game.mobileqa 2>&1 | tee builds/android-runtime/smoke.log
+          else
+            timeout 900s /tmp/null-swarm-runtime-python/bin/python tools/android_runtime_smoke.py --mobile-smoke --package com.nullswarm.game.mobileqa 2>&1 | tee builds/android-runtime/smoke.log
+          fi
       - name: Collect Android diagnostics
         if: ${{ always() }}
         run: |
@@ -157,7 +166,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: ${{ always() }}
         with:
-          name: null-swarm-android-mobile
+          name: ${{ matrix.scenario == 'smoke' && 'null-swarm-android-mobile' || 'null-swarm-android-mutation' }}
           path: |
             builds/android-runtime/
             !builds/android-runtime/*.apk
@@ -166,7 +175,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: ${{ always() }}
         with:
-          name: null-swarm-mobile-emulator-apk
+          name: ${{ matrix.scenario == 'smoke' && 'null-swarm-mobile-emulator-apk' || 'null-swarm-mutation-emulator-apk' }}
           path: builds/android-runtime/emulator-debug.apk
           retention-days: 14
           if-no-files-found: warn

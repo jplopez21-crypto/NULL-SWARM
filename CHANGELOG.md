@@ -1,5 +1,9 @@
 # Changelog
 
+## Development — 2026-11-13 / Android mutation pursuit
+
+- Add separate ordinary Mobile mutation coverage with badge-aware visible-card selection, earned transaction ledger and active-build/damage/return acceptance. Explicit partial/death/budget observations avoid false mutation claims. Existing smoke/gameplay preserved; 108 Python tests/15 Godot suites pass locally. Hosted Android verification pending.
+
 ## Development — 2026-11-12 / Frozen collector validation
 
 - Add a separately declared twelve-run validation matrix across new seeds/three weapon profiles with frozen policy hashes. All hosted/local full traces match; mixed Halo/Kinetic tradeoffs keep the candidate experimental. All five workflows pass attempt 1 (100 Python tests, 15 Godot suites, 42 Mobile/59 ordinary Android checks); prior cases/report semantics remain preserved and all eight fresh report files regenerate exactly. Shipping code/settings match; no reinstall needed. Exact results/scope: TEST_RESULTS.md.
