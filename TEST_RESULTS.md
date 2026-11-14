@@ -1,9 +1,10 @@
 # NULL//SWARM test results
 
-## Android mutation pursuit — local verification 2026-11-13
+## Android mutation pursuit — local verification / publication blocked 2026-11-14
 
 - Added a separate Mobile matrix job pursuing Arcstorm through ordinary movement and legal visible-card taps. Original 42-check smoke remains separate. New experiment records complete transactions, rendered offers/current counters, actual rank ledger, build review, damage and background return. No grants/rerolls/seed writes/research fixtures or game changes. Normal death and bounded coverage exhaustion are observations; `mutation_verified` requires active equipped text plus positive real damage and preserved earned build after return. A green collection job alone does not certify mutation completion.
 - All 108 Python tests/15 strict Godot suites pass locally. Eight new tests reject incorrect/stale recipe counters, registry-title-only active claims, nonpositive/nonfinite damage, disabled/incorrect cards, extra/missing rank transactions and wrong-process histories; badge-aware/passive fallback and input immutability pass. Python syntax checks pass. Local Android cannot run (ADB/KVM absent); hosted actual results/screens and all export/emulator/full-QA gates pending. No earned full Android mutation claimed.
+- Publishing attempts did not return before interruption: two GitHub `create_tree` requests and one `create_branch` request. Subsequent connected reads verify development still at `189525255657af69c150b4b8d3e5b4b2b53dfc6f`, staging branch absent and main unchanged. No backend cause/permission rejection established; no additional write retries planned in this checkpoint. Local feature commit `8b4f80f` remains preserved. No CI run, new APK or actual mutation acceptance for this unpublished change. Exact blocker/local handoff: docs/qa/mobile-mutation/.
 
 ## Frozen collector validation — verified 2026-11-12
 

@@ -1,0 +1,32 @@
+{
+  "status": "publication_blocked",
+  "verified_date": "2026-11-14",
+  "local_feature_commit": "8b4f80f59748a0a3032dae9b88a376bb10e99189",
+  "local_feature_tree": "7190edc61360abe779aa5b2651ed6039e1364b66",
+  "remote_development": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+  "remote_main": "28a563e3b262d09296e52635a30d29289bccacf5",
+  "remote_staging_ref_observed": false,
+  "read_access": "verified",
+  "new_hosted_validation": "not run",
+  "new_apk": "not produced",
+  "mutation_verified": false,
+  "attempts": [
+    {
+      "tool": "github_create_tree",
+      "result": "no result before interruption",
+      "elapsed_seconds_reported": 7173.7
+    },
+    {
+      "tool": "github_create_tree",
+      "result": "no result before interruption",
+      "elapsed_seconds_reported": 5135.5
+    },
+    {
+      "tool": "github_create_branch",
+      "result": "no result before interruption",
+      "elapsed_seconds_reported": 18614.4
+    }
+  ],
+  "cause": "Unconfirmed. These observations do not establish a permission rejection or backend failure reason. Unreferenced objects, if any, are not considered published.",
+  "next": "Preserve local work; resume publication once connected GitHub writes respond, then execute actual hosted Android tests."
+}
