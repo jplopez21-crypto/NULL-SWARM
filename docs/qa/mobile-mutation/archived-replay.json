@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "verified_date": "2026-11-15",
+  "mode": "offline replay of an earlier Android run; no new device execution",
+  "source_run_id": 43322607040,
+  "source_artifact_id": 13992201255,
+  "source_commit": "1510d9be78f8132b042ce3ce97d07b1cca8e3781",
+  "input_sha256": "e96af8d3bd93b7e19709232efa97a3b3676374f4e05bf191e3b7d28b5a53a52e",
+  "actual_upgrade_transactions_validated": 3,
+  "fresh_offer_panels_validated": 4,
+  "registry_title_only_negative_control": true,
+  "no_source_snapshot_mutation": true,
+  "counter_and_selection_observations": [
+    {
+      "path": "/earned_upgrade/transactions/0/offered",
+      "level": 2,
+      "ranks": {},
+      "chosen_title": "SERVO OVERDRIVE",
+      "actual_card_text": "03\n\nSERVO OVERDRIVE\nSpeed 7.0 \u2192 7.7\nOutrun the machine tide."
+    },
+    {
+      "path": "/corruption_cancel/restored",
+      "level": 5,
+      "ranks": {
+        "drone": 1,
+        "speed": 1,
+        "thermal": 1
+      },
+      "chosen_title": "ARC EMITTER",
+      "actual_card_text": "03\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nARCSTORM: Pulse 0/3 + Arc 0/3"
+    },
+    {
+      "path": "/earned_corruption/progression/0/offered",
+      "level": 3,
+      "ranks": {
+        "speed": 1
+      },
+      "chosen_title": "AMPLIFIED PULSE",
+      "actual_card_text": "02\n\nAMPLIFIED PULSE\nDamage 18 \u2192 24\nARCSTORM: Pulse 0/3 + Arc 0/3"
+    },
+    {
+      "path": "/earned_corruption/progression/1/offered",
+      "level": 4,
+      "ranks": {
+        "speed": 1,
+        "thermal": 1
+      },
+      "chosen_title": "PHASE ROUNDS",
+      "actual_card_text": "03\n\nPHASE ROUNDS\nPierce 0 \u2192 1\nPunch through another unit."
+    }
+  ],
+  "mutation_verified": false,
+  "limits": "Selection decisions are hypothetical replay outputs; no new taps or movement occurred. Actual transactions were recorded by the preceding smoke, not the new mutation pursuit. No positive Android mutation acceptance.",
+  "whole_input_snapshot_unchanged_after_history_checks": true
+}

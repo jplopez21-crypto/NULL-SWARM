@@ -4,6 +4,7 @@
 
 - Add separate ordinary Mobile mutation coverage with badge-aware visible-card selection, earned transaction ledger and active-build/damage/return acceptance. Explicit partial/death/budget observations avoid false mutation claims. Existing smoke/gameplay preserved; 108 Python tests/15 Godot suites pass locally. Hosted Android verification pending.
 - 2026-11-14: preserve the local feature and package a handoff after three uncompleted GitHub publishing requests. Read access verifies the remote development/main refs unchanged; no new hosted run/APK/mutation acceptance claimed. Publication remains blocked; cause unconfirmed.
+- 2026-11-15: validate new observation predicates against an archived real Android trace (three rank transactions/four fresh offer panels) and reject an unevolved recipe-title-only build. Bounded publishing/network probes remain unresolved; update the preserved patch and blocker evidence. No new Android execution or APK claimed.
 
 ## Development — 2026-11-12 / Frozen collector validation
 

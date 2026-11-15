@@ -28,5 +28,23 @@
     }
   ],
   "cause": "Unconfirmed. These observations do not establish a permission rejection or backend failure reason. Unreferenced objects, if any, are not considered published.",
-  "next": "Preserve local work; resume publication once connected GitHub writes respond, then execute actual hosted Android tests."
+  "next": "Preserve local work; resume publication once connected GitHub writes respond, then execute actual hosted Android tests.",
+  "latest_recheck": {
+    "date": "2026-11-15",
+    "connected_read": "verified",
+    "development_ref": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "main_ref": "28a563e3b262d09296e52635a30d29289bccacf5",
+    "write_probe": {
+      "kind": "no-op tree request using the existing project.godot blob; no ref/branch update requested",
+      "result": "no result within 45-second observation; outcome unconfirmed"
+    },
+    "cli_network_probe": {
+      "default_sandbox": "proxy connection blocked: socket operation not permitted",
+      "additional_network_read_check": "unresolved within 45-second observation; no permission rejection established"
+    },
+    "docker": "installed but socket connection blocked by sandbox; daemon health unverified",
+    "credentials": "CLI authentication not verified because network access was blocked; no credential values inspected or printed",
+    "new_hosted_validation": "not run",
+    "new_apk": "not produced"
+  }
 }

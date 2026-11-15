@@ -1,10 +1,11 @@
-# Development status — NULL//SWARM / 2026-11-14
+# Development status — NULL//SWARM / 2026-11-15
 
 ## Current checkpoint
 
 - Added a separate normal-play Mobile mutation pursuit and read-only card/history/build/damage predicates. No grants, rerolls or game changes. Actual mutation acceptance requires earned prerequisites, active equipped build text, effective Arcstorm damage and same-process background persistence; incomplete/death/budget outcomes remain explicit observations. Existing Mobile smoke and all earlier tests preserved.
 - All 108 Python tests/15 Godot suites pass locally. Eight new predicate tests cover mutation badges, target/passive selection, counter saturation, false active/damage claims and transaction-ledger integrity. Local ADB/KVM unavailable; actual Android observations and hosted build/emulator/full-QA gates have not run for this change. Local verification: docs/qa/mobile-mutation/.
 - Publication blocked: two GitHub create-tree requests and a separate create-branch request returned no result before interruption. Read access works; verified development ref remains `189525255657af69c150b4b8d3e5b4b2b53dfc6f`, main unchanged, staging branch absent. Cause unconfirmed; no permission rejection or successful publication claimed. Feature is committed locally as `8b4f80f`; blocker receipt/handoff in docs/qa/mobile-mutation/.
+- Nov 15 recheck: a bounded no-op tree probe returns no result within 45 seconds; no branch/ref mutation requested. Shell proxy access is blocked by the sandbox; the additional-network read check remains unresolved. No authentication or permission failure diagnosed. Offline replay of the prior verified Mobile trace passes three actual rank transactions/four fresh offer panels; recipe-only build text is correctly rejected as active mutation evidence. This is archived-data compatibility coverage, not a new Android run. Receipt: docs/qa/mobile-mutation/archived-replay.json.
 - Next: publish the preserved change when GitHub writes respond, then inspect actual Android traces/screens and fix real failures. No new APK, earned full Android mutation or physical-device/release clearance claimed.
 
 ## Previous verified frozen-policy checkpoint

@@ -15,3 +15,7 @@ Local commands actually executed:
 - `python3 -m py_compile tools/android_runtime_smoke.py tools/mutation_observation.py`
 
 The local environment has neither ADB nor KVM. GitHub reads work, but three publishing requests returned no result before interruption. See publish-blocker.json; no root cause or approval rejection has been established.
+
+On Nov 15, a bounded no-op tree probe also returned no result within 45 seconds. Default CLI proxy connections are blocked by sandbox sockets; the additional-network read check remains unresolved. No ref change was requested by the probe. Authentication and backend cause remain unconfirmed.
+
+Offline compatibility replay now passes three recorded upgrade transactions and four fresh offer panels from the prior verified Mobile artifact (run 43322607040/artifact 13992201255). The new helpers correctly reject an unevolved build that lists Arcstorm only in its recipe guide. Replay selection outputs are hypothetical, and no new Android touches or mutation occurred. See archived-replay.json for the input hash, source, actual card text and limits.
