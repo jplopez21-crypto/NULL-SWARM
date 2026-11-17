@@ -412,6 +412,7 @@ func run() -> void:
 	await settle()
 	check(game.ui.results_heading.text == "EXTRACTION COMPLETE" and game.result_won and not game.result_aborted, "subsequent victory keeps its extraction wording")
 	await test_upgrade_shortcuts(game)
+	await test_hull_alert(game)
 	game.audio.shutdown()
 	await create_timer(0.2).timeout
 	game.queue_free()
@@ -554,3 +555,63 @@ func test_upgrade_shortcuts(game: Node3D) -> void:
 	var result_ranks: Dictionary = game.progress.ranks.duplicate()
 	send_upgrade_key(KEY_2)
 	check(game.state == game.State.RESULTS and game.progress.ranks == result_ranks and game.save.data == result_save, "number keys cannot redeploy or award upgrades from results")
+
+func test_hull_alert(game: Node3D) -> void:
+	game.save.data = SaveStore.defaults()
+	game.save.data["settings"]["flashes"] = false
+	game.start_run()
+	game.set_physics_process(false)
+	# Settings normally propagate on the first physics tick, which this suite freezes.
+	game._physics_process(0)
+	game._process(0)
+	check(not game.ui.hull_critical and game.ui.health_label.text.begins_with("VANGUARD /") and game.ui.health_fill.bg_color == GameUI.CYAN, "healthy deployment shows the operative and normal hull color")
+	var fill: StyleBoxFlat = game.ui.health_fill
+	check(game.player.health.take_damage(105.0), "real damage drains shield and leaves the fixture at 25 hull")
+	game._process(0)
+	check(game.player.health.current == 25 and game.player.health.shield == 0 and game.ui.health_label.text == "HULL CRITICAL / 25 HP + 0 SHIELD", "real hull damage triggers an explicit warning at exactly one quarter health")
+	check(game.ui.health_fill.bg_color == GameUI.CRITICAL_HULL_COLOR and game.ui.health_label.get_theme_color("font_color") == GameUI.CRITICAL_HULL_COLOR and not game.player.flash_feedback, "critical text and bar remain readable with impact flashes disabled")
+	check(game.ui.defense_label.text == "SHIELD DOWN / RECHARGE IN 5.0s" and game.ui.shield_bar.get_theme_stylebox("fill").bg_color == Color("5cbbf6"), "hull alert preserves shield status and the distinct shield color")
+	game.player.health.shield = game.player.health.max_shield
+	game._process(0)
+	check(game.ui.hull_critical and game.ui.health_label.text.ends_with("30 SHIELD") and game.ui.defense_label.text == "SHIELD ONLINE", "full shields do not hide critical hull damage")
+	var before_health := Vector4(game.player.health.current, game.player.health.maximum, game.player.health.shield, game.player.health.recharge_delay)
+	var before_rng: int = game.combat.rng.state
+	var before_save: Dictionary = game.save.data.duplicate(true)
+	for i in range(20):
+		game.ui.update_hud(game.player, game.progress, game.combat)
+	check(game.ui.health_fill == fill and fill.bg_color == GameUI.CRITICAL_HULL_COLOR and game.ui.health_label.modulate == Color.WHITE, "repeated warning updates reuse the fill and keep a steady unflashing label")
+	check(before_health == Vector4(game.player.health.current, game.player.health.maximum, game.player.health.shield, game.player.health.recharge_delay) and game.combat.rng.state == before_rng and game.save.data == before_save, "reading critical HUD cannot change health shields RNG or saved progress")
+	for fixture in [[100.0, 25.001, false], [160.0, 40.0, true], [160.0, 40.001, false], [85.0, 21.25, true], [85.0, 21.251, false]]:
+		game.player.health.maximum = fixture[0]
+		game.player.health.current = fixture[1]
+		game._process(0)
+		check(game.ui.hull_critical == fixture[2] and game.ui.health_label.text.begins_with("HULL CRITICAL" if fixture[2] else "VANGUARD"), "alert uses actual fractional health and current maximum after chassis or corruption changes")
+		check(game.ui.health_fill.bg_color == (GameUI.CRITICAL_HULL_COLOR if fixture[2] else GameUI.CYAN), "hull fill restores on either threshold crossing")
+	game.player.health.maximum = 100.0
+	game.player.health.current = 25.0
+	game._process(0)
+	game.pause_run()
+	await settle()
+	check(not game.ui.health_label.is_visible_in_tree() and game.ui.hull_critical, "pause hides the combat warning without changing its health state")
+	game.resume_run()
+	game._process(0)
+	check(game.ui.health_label.is_visible_in_tree() and game.ui.hull_critical, "resume restores the still-relevant hull warning")
+	game.progress.add_xp(18)
+	game.show_upgrade()
+	game.offered.assign(["health"])
+	game._render_upgrades()
+	await settle()
+	click(game, "REINFORCED CHASSIS")
+	game._process(0)
+	check(game.player.health.maximum == 120 and game.player.health.current == 50 and not game.ui.hull_critical and game.ui.health_label.text.begins_with("VANGUARD /"), "real healing upgrade clears critical warning against its new maximum")
+	check(game.ui.health_label.get_theme_color("font_color") == GameUI.CYAN and game.ui.health_fill == fill and fill.bg_color == GameUI.CYAN, "healing restores the ordinary text and shared original fill instance")
+	game.player.health.current = 1.0
+	game._process(0)
+	game.finish_run(false)
+	await settle()
+	check(not game.ui.health_label.is_visible_in_tree(), "results hide the combat hull warning")
+	game.save.data["selected_kit"] = "engineer"
+	game.start_run()
+	game.set_physics_process(false)
+	game._process(0)
+	check(not game.ui.hull_critical and game.ui.health_label.text.begins_with("ENGINEER /") and game.ui.health_fill.bg_color == GameUI.CYAN, "redeployment clears stale critical color and restores the new operative title")

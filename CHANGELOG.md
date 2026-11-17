@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-11-17 / Critical hull feedback
+
+- Show a steady `HULL CRITICAL` readout and warm health bar at 25% of current maximum health, preserving separate shield status. Healing and redeployment restore the normal readout; no added sounds or flashes.
+- Local checks pass: 121 Python tests, 15 Godot suites, 160 GUI checks, 200 layouts and two bounded gameplay-parity runs. Correct one frozen-physics test fixture; publishing and Android verification remain pending, with no new APK claimed.
+
 ## Development — 2026-11-17 / Upgrade keyboard selection
 
 - Select visible upgrade cards with 1/2/3 or numpad keys; desktop footer lists available shortcuts. Use the ordinary upgrade path, including repairs and mutations, while rejecting held repeats, modified keys, stale offers and other menus.

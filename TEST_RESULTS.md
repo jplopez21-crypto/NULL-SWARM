@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Critical hull feedback — local verification 2026-11-17
+
+- **Passed:** 121 Python tests and all 15 strict Godot 4.6.3 suites, including 160 GUI checks and 2,892 headless geometry checks across 200 layouts. New engine fixtures cover actual damage crossing 25%, full-shield/low-hull distinction, disabled flashes, fractional thresholds after maximum-health changes, steady repeated HUD reads, pause/resume, healing through a real upgrade click, results and a different operative's redeployment. Warning text fits without overlap with timer/pause across four viewport sizes; existing `shield-down` layout now also exercises critical hull.
+- **Passed:** two normal-rules seed-909 Halo runs of 180 simulated seconds each, diagnostics off/on. Fingerprint remains `cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a`. This bounded replay is not a full normal-play/holdout/stress rerun or a rendered FPS measurement.
+- **Initial failure corrected:** the disabled-flashes GUI fixture froze physics before settings propagation. Its first run had one failure out of 160 checks. Applying the ordinary first zero-delta physics tick fixes the fixture; production settings behavior was not changed. Initial failure and final receipts are retained in [critical-hull evidence](docs/qa/critical-hull/local-verification.json).
+- **Could not run:** new Android export/emulator/device and rendered screenshot checks. Local ADB/KVM are absent; GitHub development read succeeds but the no-op publishing probe remains unconfirmed after 45 seconds. No new hosted run, APK or device acceptance claimed. The last published APK lacks these unpublished HUD/input changes. Older verification statements below retain their original scope.
+
 ## Upgrade keyboard selection — local verification 2026-11-17
 
 - **Passed:** 121 Python tests; all 15 strict Godot 4.6.3 suites; 136 GUI input checks; 2,672 headless geometry checks across 200 layouts. Actual engine input dispatch covers all six number/numpad keys, queued offers, held-key repeats/releases/modifiers, unavailable indices, capped/stale choices, backup text entry, paused/results/corruption screens, repair and Arcstorm completion. Synthetic XP/rank fixtures are explicit and do not establish earned-on-device acceptance.

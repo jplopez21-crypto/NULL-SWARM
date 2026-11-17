@@ -29,6 +29,8 @@ signal performance_copy_requested
 const TOUCH_ACTION = preload("res://ui/touch_action_button.gd")
 const CYAN := Color("78f8d4")
 const MUTED := Color("8cabb9")
+const CRITICAL_HULL_COLOR := Color("ff9274")
+const CRITICAL_HULL_FRACTION: float = 0.25
 var root: Control
 var safe: MarginContainer
 var column: VBoxContainer
@@ -36,6 +38,8 @@ var overlay: CenterContainer
 var screen: PanelContainer
 var hud: VBoxContainer
 var health_bar: ProgressBar
+var health_fill: StyleBoxFlat
+var hull_critical: bool = false
 var shield_bar: ProgressBar
 var xp_bar: ProgressBar
 var xp_label: Label
@@ -195,6 +199,7 @@ func _build_hud() -> void:
 	top.add_child(vital)
 	health_label = label_at(vital, "VANGUARD  /  100 HP", 18, CYAN)
 	health_bar = _bar(vital, CYAN, 13)
+	health_fill = health_bar.get_theme_stylebox("fill") as StyleBoxFlat
 	shield_bar = _bar(vital, Color("5cbbf6"), 6)
 	defense_label = label_at(vital, "SHIELD ONLINE", 13, MUTED)
 	status_label = label_at(top, "", 23)
@@ -757,7 +762,13 @@ func set_performance_copy_pending() -> void:
 		performance_copy_status.text = "Copying report..."
 
 func update_hud(player: SwarmPlayer, progress: RunProgression, combat: CombatWorld) -> void:
-	health_label.text = "%s / %d HP + %d SHIELD" % [operative_title, ceili(player.health.current), ceili(player.health.shield)]
+	var critical: bool = player.health.current <= player.health.maximum * CRITICAL_HULL_FRACTION
+	health_label.text = "%s / %d HP + %d SHIELD" % ["HULL CRITICAL" if critical else operative_title, ceili(player.health.current), ceili(player.health.shield)]
+	if critical != hull_critical:
+		hull_critical = critical
+		var hull_color: Color = CRITICAL_HULL_COLOR if critical else CYAN
+		health_fill.bg_color = hull_color
+		health_label.add_theme_color_override("font_color", hull_color)
 	health_bar.value = 100.0 * player.health.current / player.health.maximum
 	shield_bar.value = 100.0 * player.health.shield / maxf(1.0, player.health.max_shield)
 	xp_bar.value = 100.0 * progress.xp / progress.threshold()

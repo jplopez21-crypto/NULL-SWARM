@@ -32,6 +32,11 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 		check(bounds.encloses(game.ui.surge_label.get_global_rect()), "%s %s: chain feedback fits viewport" % [size, stage])
 		check(game.ui.surge_label.get_global_rect().encloses(game.ui.surge_gauge.get_global_rect()), "%s %s: reward gauge fits its HUD row" % [size, stage])
 		check(game.ui.surge_gauge.position.y >= game.ui.surge_label.get_line_height(), "%s %s: gauge stays below reward text" % [size, stage])
+	if game.ui.health_label.is_visible_in_tree():
+		var hull_label: Label = game.ui.health_label
+		check(bounds.encloses(hull_label.get_global_rect()), "%s %s: hull status fits viewport" % [size, stage])
+		check(hull_label.get_minimum_size().x <= hull_label.size.x + 1.0, "%s %s: hull status text fits without horizontal clipping" % [size, stage])
+		check(not hull_label.get_global_rect().intersects(game.ui.status_label.get_global_rect()) and not hull_label.get_global_rect().intersects(game.ui.pause_button.get_global_rect()), "%s %s: hull warning stays clear of timer and pause" % [size, stage])
 	if is_instance_valid(game.ui.upgrade_header) and game.ui.upgrade_header.is_visible_in_tree():
 		check(bounds.encloses(game.ui.upgrade_header.get_global_rect()), "%s %s: upgrade queue heading fits viewport" % [size, stage])
 	for hint in game.ui.root.find_children("UpgradeChoiceHint", "Label", true, false):
@@ -147,7 +152,11 @@ func run() -> void:
 		game.player.health.recharge_delay = 5
 		game._process(0)
 		check(game.ui.defense_label.text.contains("SHIELD DOWN"), "shield-down HUD explains recovery delay")
+		game.player.health.current = game.player.health.maximum * 0.25
+		game._process(0)
+		check(game.ui.health_label.text.begins_with("HULL CRITICAL") and game.ui.health_fill.bg_color == GameUI.CRITICAL_HULL_COLOR, "critical hull text and color accompany the shield-down layout")
 		await inspect(game, "shield-down", size)
+		game.player.health.current = game.player.health.maximum
 		game.player.health.recharge_delay = 0
 		game._process(0)
 		check(game.ui.defense_label.text == "SHIELD RECHARGING", "HUD distinguishes active recharge from waiting")

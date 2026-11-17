@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-17",
+  "status": "passed locally; Android/publication pending",
+  "godot": {
+    "suites": 15,
+    "status": "passed",
+    "gui_checks": 160,
+    "ui_checks": 2892,
+    "layouts": 200,
+    "rendered_capture": false
+  },
+  "feature": "Steady critical-hull text and bar color at <=25% of actual maximum hull; shield status remains separate",
+  "python": {
+    "tests": 121,
+    "status": "passed"
+  },
+  "replay": {
+    "cases": 2,
+    "seed": 909,
+    "profile": "halo",
+    "simulated_seconds_each": 180,
+    "diagnostics": "off/on",
+    "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+    "failures": []
+  },
+  "source_sha256": {
+    "scripts/main.gd": "5c37fff85a637054387b5c1d6bbf73291f35264bd966c6c8a6ae48febffbe6a4",
+    "ui/game_ui.gd": "f03c034a51802aa9cab13f4dd1e8f0396f93211be00ced1c28cc775e5a04cb55",
+    "tests/run_gui_input_tests.gd": "6e179d60d749b276fe0a4cda97fa0edbc1d9d41439267ef585b8cf36c1164ad5",
+    "tests/run_ui_tests.gd": "b258c83160036daa9f63725e139d4876410bdfcd8fc25d91e28b5ec623c89d64"
+  },
+  "raw_log_sha256": {
+    "python.log": "af40f0bb1c996b4c2be79a8fc0d687f94a2986048661f533dbfaa204fbdd6cf2",
+    "headless.log": "a88b8c321b5c15f7dd50c8f383a58a6e0c448b90ee4d48bcdeeeeefaf9c9e1be",
+    "replay.log": "825aa35e855b69c9dfcd90818756a1cc325c84acd32b146563daff49bd985c62",
+    "initial-gui-fixture-failure.log": "3e75fd9ec081ddf23e8332a58934b29f908d858c9da66235286ed34a790ed361"
+  },
+  "raw_ui_report_sha256": "a4295dfc2082a92b5ede0f9ade9b4b3a75e7e1676ead6af50962be83245dfc11",
+  "commands": [
+    "python3 -m unittest discover -s tests -p test_*.py",
+    "python3 tools/run_headless_checks.py",
+    "godot --headless --script tests/run_playtests.gd -- --diagnostics-parity"
+  ],
+  "initial_failure": {
+    "checks": 160,
+    "failures": 1,
+    "cause": "Fixture froze physics before settings propagation, so the player still had its default flash_feedback value.",
+    "fix": "Apply one ordinary zero-delta physics tick before frozen HUD checks. No production settings fix claimed."
+  },
+  "coverage": [
+    "Real shield and hull damage at threshold",
+    "Critical text/color with impact flashes disabled",
+    "Full shields cannot hide low hull",
+    "Fractional thresholds and changed maximum health",
+    "Steady repeated read-only HUD updates and fill reuse",
+    "Pause/resume and results visibility",
+    "Ordinary healing upgrade click clears alert",
+    "New operative deployment resets title/color",
+    "Four viewport sizes; text bounds/width and timer/pause separation"
+  ],
+  "publication": {
+    "development_ref_read": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "no_op_tree_probe": "unconfirmed after 45 seconds; no ref mutation requested",
+    "new_apk": false
+  },
+  "limits": [
+    "Headless GUI/geometry fixtures; not rendered screenshots or physical input acceptance.",
+    "Explicit fixture HP/XP/ranks are not ordinary earned-on-device observations.",
+    "Two bounded replays, not full normal-play/holdout/stress matrices or device FPS.",
+    "ADB/KVM unavailable locally; no new Android build, emulator run or device installation.",
+    "Changed HUD/input sources require a future APK; the last published APK lacks these features."
+  ]
+}

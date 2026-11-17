@@ -2,6 +2,13 @@
 
 ## Current checkpoint
 
+- Added a steady `HULL CRITICAL` health readout and warm health-bar color at or below 25% of current maximum health. Shield status remains separate; healing and a new deployment restore the operative title/color. No new flashes, sounds, gameplay rules or per-frame style resources.
+- Local Godot 4.6.3 verification passes 121 Python tests and all 15 strict Godot suites, including 160 GUI checks and 2,892 geometry checks across 200 layouts. Two seed-909/180-second Halo diagnostics-parity replays preserve the accepted fingerprint. One initial GUI fixture failure was corrected by applying the normal first physics tick before testing disabled flashes; no related game bug claimed. Evidence: docs/qa/critical-hull/local-verification.json.
+- GitHub development read still resolves to `189525255657af69c150b4b8d3e5b4b2b53dfc6f`; the bounded 45-second no-op tree probe returned no result. Publication remains unconfirmed. No new APK, emulator run or rendered screenshot acceptance; the changed HUD/input sources require a future build. Main remains unmerged.
+- Next: publish the preserved commits when writes respond, run hosted export/emulator gates, then inspect critical-hull readability, upgrade controls and earned-mutation traces on Android. Physical S23/ARM64 performance, audio and release signing remain open.
+
+## Previous unpublished upgrade shortcuts
+
 - Added upgrade selection with 1/2/3 and numpad keys through the existing card-selection path, with a desktop hint listing available choices. Held-key repeats, key releases, modifiers, stale/capped offers, corruption panels and other menus cannot spend choices. Touch cards and controller navigation remain available.
 - Verified locally on Godot 4.6.3: 121 Python tests and all 15 strict Godot suites pass, including 136 GUI checks and 2,672 geometry checks across 200 layouts. Two 180-second seed-909 Halo replays preserve the accepted diagnostics-parity fingerprint. Engine fixtures cover real input dispatch, queued choices, repair and mutation completion; these are not Android or rendered-device tests. Evidence: docs/qa/upgrade-shortcuts/local-verification.json.
 - GitHub publishing remains unconfirmed after this checkpoint's bounded 45-second no-op tree probe. No new APK, emulator run or rendered screenshot acceptance. The new input/UI source requires a future build; previous APKs do not contain it. Changes are preserved locally for publication to the development branch; main remains unmerged.
