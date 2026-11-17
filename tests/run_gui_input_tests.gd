@@ -411,6 +411,7 @@ func run() -> void:
 	game.finish_run(true)
 	await settle()
 	check(game.ui.results_heading.text == "EXTRACTION COMPLETE" and game.result_won and not game.result_aborted, "subsequent victory keeps its extraction wording")
+	await test_upgrade_shortcuts(game)
 	game.audio.shutdown()
 	await create_timer(0.2).timeout
 	game.queue_free()
@@ -418,3 +419,138 @@ func run() -> void:
 	QAReport.write("res://builds/qa/gui-input-tests.json", {"checks": checks, "failures": failures})
 	print("GUI_INPUT_RESULT checks=", checks, " failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
+
+func send_upgrade_key(code: Key, pressed: bool = true, repeat: bool = false, modifier: String = "") -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	event.echo = repeat
+	if code in [KEY_1, KEY_2, KEY_3]:
+		event.unicode = int(code)
+	if not modifier.is_empty():
+		event.set(modifier, true)
+	root.push_input(event, true)
+
+func shortcut_offer(game: Node3D, ids: Array[String], xp: int = 18) -> void:
+	# Explicit engine integration fixtures, not earned-on-Android telemetry.
+	game.start_run()
+	game.set_physics_process(false)
+	game.progress.add_xp(xp)
+	game.show_upgrade()
+	game.offered.assign(ids)
+	game._render_upgrades()
+
+func test_upgrade_shortcuts(game: Node3D) -> void:
+	game.save.data = SaveStore.defaults()
+	var ids: Array[String] = ["damage", "rate", "magnet"]
+	for pair in [[KEY_1, 0], [KEY_2, 1], [KEY_3, 2], [KEY_KP_1, 0], [KEY_KP_2, 1], [KEY_KP_3, 2]]:
+		shortcut_offer(game, ids)
+		await settle()
+		var before_rng: int = game.combat.rng.state
+		var before_time: float = game.combat.director.elapsed
+		var before_save: Dictionary = game.save.data.duplicate(true)
+		var panel: PanelContainer = game.ui.screen
+		send_upgrade_key(pair[0])
+		check(game.progress.ranks == {ids[pair[1]]: 1} and game.progress.pending == 0 and game.state == game.State.PLAYING, "number/numpad selects exactly the matching visible card through real input dispatch")
+		check(retained_until_frame_end(panel), "keyboard selection safely retires the upgrade panel during input dispatch")
+		check(game.combat.director.elapsed == before_time and game.combat.rng.state == before_rng and game.save.data == before_save and not game.input_router.dash_requested, "single-choice shortcut adds no combat time RNG save grants or dash")
+		send_upgrade_key(pair[0], false)
+		await settle()
+	shortcut_offer(game, ids, 46)
+	await settle()
+	send_upgrade_key(KEY_1)
+	check(game.progress.pending == 1 and game.state == game.State.UPGRADING and game.progress.ranks.get("damage") == 1, "first key consumes only one earned choice while another offer is queued")
+	var held_ranks: Dictionary = game.progress.ranks.duplicate()
+	var held_rng: int = game.combat.rng.state
+	send_upgrade_key(KEY_1, true, true)
+	send_upgrade_key(KEY_1, false)
+	for modifier in ["ctrl_pressed", "alt_pressed", "shift_pressed", "meta_pressed"]:
+		send_upgrade_key(KEY_2, true, false, modifier)
+	for code in [KEY_0, KEY_4, KEY_KP_0]:
+		send_upgrade_key(code)
+	check(game.progress.pending == 1 and game.progress.ranks == held_ranks and game.combat.rng.state == held_rng, "key repeat release modifiers and unrelated numbers cannot consume queued choices")
+	var selected: String = game.offered[1]
+	send_upgrade_key(KEY_2)
+	check(game.progress.pending == 0 and game.state == game.State.PLAYING and int(game.progress.ranks.get(selected, 0)) == int(held_ranks.get(selected, 0)) + 1, "a fresh second key applies its newly displayed card")
+	send_upgrade_key(KEY_2, false)
+	await settle()
+	shortcut_offer(game, ["damage"])
+	await settle()
+	var hint: Label = game.ui.screen.find_child("UpgradeChoiceHint", true, false)
+	check(hint != null and hint.text.contains("KEYS 1 TO SELECT") and not hint.text.contains("1/2"), "desktop hint lists only the available shortcut for a one-card offer")
+	for code in [KEY_2, KEY_3, KEY_KP_2, KEY_KP_3]:
+		send_upgrade_key(code)
+	check(game.progress.pending == 1 and game.progress.ranks.is_empty() and game.state == game.State.UPGRADING, "unavailable card indices cannot apply a hidden choice")
+	send_upgrade_key(KEY_KP_1)
+	check(game.progress.pending == 0 and game.progress.ranks == {"damage": 1}, "numpad one selects a valid single-card offer")
+	send_upgrade_key(KEY_KP_1, false)
+	shortcut_offer(game, ids)
+	game.progress.ranks = {"damage": 2, "arc": 3}
+	game.combat.update_build(game.progress.ranks)
+	game._render_upgrades()
+	await settle()
+	check(not game.combat.mutations.has("arcstorm"), "keyboard completion fixture starts below the real recipe threshold")
+	send_upgrade_key(KEY_1)
+	check(game.progress.ranks.get("damage") == 3 and game.combat.mutations.has("arcstorm") and game.progress.pending == 0 and game.state == game.State.PLAYING, "number key completes the ordinary mutation-selection path exactly once")
+	send_upgrade_key(KEY_1, false)
+	shortcut_offer(game, ids)
+	game.progress.pending = 0
+	send_upgrade_key(KEY_1)
+	check(game.progress.ranks.is_empty() and game.progress.pending == 0, "stale upgrade state without an earned choice cannot grant a rank")
+	shortcut_offer(game, ids)
+	game.progress.ranks["damage"] = RunProgression.CAPS["damage"]
+	send_upgrade_key(KEY_1)
+	check(game.progress.ranks["damage"] == RunProgression.CAPS["damage"] and game.progress.pending == 1, "stale ineligible card cannot bypass its upgrade cap through a shortcut")
+	game.start_run()
+	game.set_physics_process(false)
+	send_upgrade_key(KEY_1)
+	check(game.state == game.State.PLAYING and game.progress.ranks.is_empty(), "number keys cannot apply upgrades during combat")
+	game.pause_run()
+	game.open_build()
+	await settle()
+	var build_panel: PanelContainer = game.ui.screen
+	send_upgrade_key(KEY_3)
+	check(game.state == game.State.PAUSED and game.ui.screen == build_panel and game.progress.ranks.is_empty(), "number keys cannot apply upgrades through a paused build guide")
+	game.go_menu()
+	game.open_backup()
+	await settle()
+	var entry: TextEdit = game.ui.screen.find_children("*", "TextEdit", true, false)[0]
+	entry.text = ""
+	entry.grab_focus()
+	send_upgrade_key(KEY_1)
+	send_upgrade_key(KEY_1, false)
+	await settle()
+	check(game.state == game.State.MENU and entry.text == "1", "number shortcut does not steal text entry in the backup menu")
+	game.go_menu()
+	game.start_run()
+	game.set_physics_process(false)
+	game.progress.add_xp(132)
+	game.show_upgrade()
+	game.show_corruption()
+	await settle()
+	var corruption_panel: PanelContainer = game.ui.screen
+	var pending: int = game.progress.pending
+	var corruption_rng: int = game.combat.rng.state
+	send_upgrade_key(KEY_1)
+	send_upgrade_key(KEY_KP_3)
+	check(game.corruption_panel and game.ui.screen == corruption_panel and game.progress.pending == pending and game.progress.ranks.is_empty() and game.combat.corruption.accepted.is_empty() and game.combat.rng.state == corruption_rng, "number keys cannot buy corruption or select hidden upgrade cards behind its panel")
+	game.start_run()
+	game.set_physics_process(false)
+	for id in RunProgression.CAPS:
+		if not Arsenal.DATA.has(id) or id in ["arc", "rail", "drone"]:
+			game.progress.ranks[id] = RunProgression.CAPS[id]
+	game.progress.add_xp(18)
+	game.player.health.current = 50.0
+	game.show_upgrade()
+	await settle()
+	check(game.offered == ["repair"] and game.progress.equipped() == 4, "maxed legal slots and passives produce the real repair-only offer")
+	send_upgrade_key(KEY_1)
+	check(game.state == game.State.PLAYING and game.progress.pending == 0 and game.progress.ranks.get("repair") == 1 and game.player.health.current == 85.0, "repair shortcut uses the normal one-choice healing path")
+	send_upgrade_key(KEY_1, false)
+	game.finish_run(false)
+	await settle()
+	var result_save: Dictionary = game.save.data.duplicate(true)
+	var result_ranks: Dictionary = game.progress.ranks.duplicate()
+	send_upgrade_key(KEY_2)
+	check(game.state == game.State.RESULTS and game.progress.ranks == result_ranks and game.save.data == result_save, "number keys cannot redeploy or award upgrades from results")

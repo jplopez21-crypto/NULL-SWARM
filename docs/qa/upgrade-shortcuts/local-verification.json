@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-17",
+  "status": "passed locally; Android/publication pending",
+  "godot": {
+    "suites": 15,
+    "status": "passed",
+    "gui_checks": 136,
+    "ui_checks": 2672,
+    "layouts": 200,
+    "rendered_capture": false
+  },
+  "feature": "Select visible upgrade cards using 1/2/3 or numpad keys through ordinary select_upgrade",
+  "python": {
+    "tests": 121,
+    "status": "passed"
+  },
+  "replay": {
+    "cases": 2,
+    "seed": 909,
+    "profile": "halo",
+    "simulated_seconds_each": 180,
+    "diagnostics": "off/on",
+    "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+    "failures": []
+  },
+  "source_sha256": {
+    "scripts/main.gd": "5c37fff85a637054387b5c1d6bbf73291f35264bd966c6c8a6ae48febffbe6a4",
+    "ui/game_ui.gd": "53639865ea223a3111c11bb79b4b45d74b5134133297198ab3d1d2175d0ca0a2",
+    "tests/run_gui_input_tests.gd": "5039cd4f8ca9bb833f156ff63040fc6389734475741b6fb0223e54b950b71346",
+    "tests/run_ui_tests.gd": "07c23603478971b92039c999d9c835c15d2e15ba445c9069096c06b6e8b61654"
+  },
+  "raw_log_sha256": {
+    "python.log": "516dc5c306fbf5bf5df55658c8a3f97dc8e17052127249659ab797af087c3131",
+    "headless.log": "a88b8c321b5c15f7dd50c8f383a58a6e0c448b90ee4d48bcdeeeeefaf9c9e1be",
+    "replay.log": "825aa35e855b69c9dfcd90818756a1cc325c84acd32b146563daff49bd985c62"
+  },
+  "raw_ui_report_sha256": "f21f73bf2a8799760452e4531a92ae99e1b57fc9a0843bb9950fb0947d37fc0d",
+  "commands": [
+    "python3 -m unittest discover -s tests -p test_*.py",
+    "python3 tools/run_headless_checks.py",
+    "godot --headless --script tests/run_playtests.gd -- --diagnostics-parity"
+  ],
+  "input_coverage": [
+    "top-row 1/2/3",
+    "numpad 1/2/3",
+    "one and queued choices",
+    "repeat/release/modifier rejection",
+    "unavailable/capped/stale choice rejection",
+    "backup text entry",
+    "paused/results/corruption isolation",
+    "repair-only offer",
+    "Arcstorm completion"
+  ],
+  "limits": [
+    "Engine GUI fixtures use synthetic XP/offers/ranks; not Android-earned mutation acceptance.",
+    "Headless geometry only; no new rendered screenshots or physical keyboard test.",
+    "Two bounded normal-rules replays, not a rerun of full QA/holdout/stress matrices.",
+    "ADB/KVM absent locally; no new APK/export/emulator/device run.",
+    "GitHub no-op tree probe unconfirmed after 45 seconds; no new published commit or ref mutation claimed.",
+    "Current input/UI source differs from the last published APK; a future build is required."
+  ]
+}

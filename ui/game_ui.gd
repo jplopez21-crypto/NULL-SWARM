@@ -636,7 +636,14 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerol
 			first = button
 	var footer := HBoxContainer.new()
 	box.add_child(footer)
-	var caption := label_at(footer, "4 WEAPON SLOTS // CHOOSE A DIRECTION", 14, MUTED)
+	var caption_text := "4 WEAPON SLOTS // CHOOSE A DIRECTION"
+	if not OS.has_feature("mobile"):
+		var keys: Array[String] = []
+		for index in range(ids.size()):
+			keys.append(str(index + 1))
+		caption_text = "4 SLOTS // KEYS %s TO SELECT" % "/".join(keys)
+	var caption := label_at(footer, caption_text, 14, MUTED)
+	caption.name = "UpgradeChoiceHint"
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var reroll := button_at(footer, "REROLL  /  %d" % rerolls, func(): reroll_requested.emit())
 	reroll.disabled = rerolls <= 0

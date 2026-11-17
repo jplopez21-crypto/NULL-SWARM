@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-11-17 / Upgrade keyboard selection
+
+- Select visible upgrade cards with 1/2/3 or numpad keys; desktop footer lists available shortcuts. Use the ordinary upgrade path, including repairs and mutations, while rejecting held repeats, modified keys, stale offers and other menus.
+- Local verification passes 121 Python tests, 15 Godot suites, 136 GUI checks, 200 layouts and two bounded gameplay-parity replays. Publishing remains unconfirmed; no new Android build or device acceptance claimed.
+
 ## Development — 2026-11-13 / Android mutation pursuit
 
 - Add separate ordinary Mobile mutation coverage with badge-aware visible-card selection, earned transaction ledger and active-build/damage/return acceptance. Explicit partial/death/budget observations avoid false mutation claims. Existing smoke/gameplay preserved; 108 Python tests/15 Godot suites pass locally. Hosted Android verification pending.

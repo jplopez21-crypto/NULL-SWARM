@@ -34,6 +34,10 @@ func inspect(game: Node3D, stage: String, size: Vector2i) -> void:
 		check(game.ui.surge_gauge.position.y >= game.ui.surge_label.get_line_height(), "%s %s: gauge stays below reward text" % [size, stage])
 	if is_instance_valid(game.ui.upgrade_header) and game.ui.upgrade_header.is_visible_in_tree():
 		check(bounds.encloses(game.ui.upgrade_header.get_global_rect()), "%s %s: upgrade queue heading fits viewport" % [size, stage])
+	for hint in game.ui.root.find_children("UpgradeChoiceHint", "Label", true, false):
+		if hint.is_visible_in_tree():
+			check(bounds.encloses(hint.get_global_rect()), "%s %s: upgrade shortcut hint fits viewport" % [size, stage])
+			check(hint.get_minimum_size().x <= hint.size.x + 1.0, "%s %s: upgrade shortcut hint fits without horizontal clipping" % [size, stage])
 	var buttons: int = 0
 	for node in game.ui.root.find_children("*", "Button", true, false):
 		if node.is_visible_in_tree():

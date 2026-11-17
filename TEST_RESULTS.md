@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Upgrade keyboard selection — local verification 2026-11-17
+
+- **Passed:** 121 Python tests; all 15 strict Godot 4.6.3 suites; 136 GUI input checks; 2,672 headless geometry checks across 200 layouts. Actual engine input dispatch covers all six number/numpad keys, queued offers, held-key repeats/releases/modifiers, unavailable indices, capped/stale choices, backup text entry, paused/results/corruption screens, repair and Arcstorm completion. Synthetic XP/rank fixtures are explicit and do not establish earned-on-device acceptance.
+- **Passed:** two normal-rules seed-909 Halo runs of 180 simulated seconds each, diagnostics off/on. The fingerprint remains `cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a`; no script errors or leaks reported. This bounded replay does not rerun the entire normal-play, holdout or stress matrix and does not measure rendered FPS.
+- **Could not run:** new Android export/emulator/device/rendered screenshot checks. ADB/KVM are absent locally and the bounded publishing probe returned no result within 45 seconds; no CI publication, new APK or device installation claimed. Changed `scripts/main.gd` and `ui/game_ui.gd` require a new build before phone acceptance. Prior published APKs lack this feature.
+- Fresh reports, source hashes and limits: [local-verification.json](docs/qa/upgrade-shortcuts/local-verification.json). Archived evidence below retains its original scope; older statements that game source was unchanged apply only to those checkpoints.
+
 ## Android mutation pursuit — local verification / publication blocked 2026-11-17
 
 - Added a separate Mobile matrix job pursuing Arcstorm through ordinary movement and legal visible-card taps. Original 42-check smoke remains separate. New experiment records complete transactions, rendered offers/current counters, actual rank ledger, build review, damage and background return. No grants/rerolls/seed writes/research fixtures or game changes. Normal death and bounded coverage exhaustion are observations; `mutation_verified` requires active equipped text plus positive real damage and preserved earned build after return. A green collection job alone does not certify mutation completion.

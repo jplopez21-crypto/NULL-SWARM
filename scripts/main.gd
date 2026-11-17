@@ -267,7 +267,28 @@ func copy_performance_report() -> void:
 	report_copy_pending = ""
 	ui.set_performance_copy_status(false)
 
+func _upgrade_shortcut(event: InputEventKey) -> bool:
+	if state != State.UPGRADING or corruption_panel or not event.pressed or event.echo:
+		return false
+	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed or event.shift_pressed:
+		return false
+	var index: int = -1
+	match event.keycode:
+		KEY_1, KEY_KP_1: index = 0
+		KEY_2, KEY_KP_2: index = 1
+		KEY_3, KEY_KP_3: index = 2
+	if index < 0 or index >= offered.size() or progress.pending <= 0:
+		return false
+	var id: String = offered[index]
+	if id != "repair" and not progress.eligible(id):
+		return false
+	select_upgrade(id)
+	return true
+
 func _input(event: InputEvent) -> void:
+	if event is InputEventKey and _upgrade_shortcut(event):
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F3:
 		change_setting("performance_stats", not bool(save.data["settings"].get("performance_stats", false)))
 	if event.is_action_pressed("pause"):
