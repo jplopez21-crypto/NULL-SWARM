@@ -6,6 +6,7 @@
 - 2026-11-14: preserve the local feature and package a handoff after three uncompleted GitHub publishing requests. Read access verifies the remote development/main refs unchanged; no new hosted run/APK/mutation acceptance claimed. Publication remains blocked; cause unconfirmed.
 - 2026-11-15: validate new observation predicates against an archived real Android trace (three rank transactions/four fresh offer panels) and reject an unevolved recipe-title-only build. Bounded publishing/network probes remain unresolved; update the preserved patch and blocker evidence. No new Android execution or APK claimed.
 - 2026-11-17: reproduce and fix a mutation-test false positive where the wrong card's rank could be accepted. Require exact visible-card effects, including evolved/repair labels, and reject ambiguous cards. All 112 Python tests/15 Godot suites and archived card-effect replay pass; publishing remains unconfirmed and no new Android run/APK is claimed.
+- 2026-11-17 follow-up: extract the mutation driver into a testable flow and reproduce stale verified flags after late resume/capture/crash failures. Delay acceptance until full completion; failures retain unverified evidence. Nine synthetic flow tests bring the passing totals to 121 Python/15 Godot suites. Publishing remains blocked; no new device execution or APK claimed.
 
 ## Development — 2026-11-12 / Frozen collector validation
 

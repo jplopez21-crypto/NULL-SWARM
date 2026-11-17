@@ -56,5 +56,13 @@
     "cause": "Unconfirmed; no permission rejection established. Earlier CLI network limitation remains unresolved.",
     "new_hosted_validation": "not run",
     "new_apk": "not produced"
+  },
+  "latest_driver_flow_recheck": {
+    "date": "2026-11-17",
+    "read_access": "verified",
+    "development_ref": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "probe": "No-op existing-tree request produced no result within 45 seconds; no ref mutation requested.",
+    "cause": "Unconfirmed. No permission rejection or authentication failure established.",
+    "new_android_run": false
   }
 }
