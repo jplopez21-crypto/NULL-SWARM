@@ -5,6 +5,10 @@ from passive_observation import PASSIVE_LABELS
 from upgrade_observation import selected_rank, upgrade_frozen
 
 RECIPE = {'AMPLIFIED PULSE': 'damage', 'ARC EMITTER': 'arc'}
+CARD_RANKS = {**{title: key for key, title in PASSIVE_LABELS.items()},
+              'PLASMA ORBITALS': 'orbit', 'SOLAR HALO': 'orbit',
+              'ARC EMITTER': 'arc', 'RAIL LANCE': 'rail', 'SINGULARITY LANCE': 'rail',
+              'THERMAL BURST': 'thermal', 'DRONE HIVE': 'drone', 'FIELD REPAIR': 'repair'}
 
 
 def card_title(card):
@@ -51,16 +55,30 @@ def dealt_damage(sample):
     return complete(sample.get('ranks')) and type(amount) in (int,float) and math.isfinite(amount) and amount>0
 
 
+def selected_card_rank(card, before, current):
+    """Require the visible selected card's effect, not merely any rank increment."""
+    expected = CARD_RANKS.get(card_title(card))
+    if expected is None:
+        return None
+    matches = [c for c in before.get('buttons', []) if card_title(c) and c['text'] == card['text']]
+    if len(matches) != 1:
+        return None
+    return expected if selected_rank(before, current) == expected else None
+
+
 def earned_history(start, transactions, final):
     previous=start.get('ranks');process=start.get('process')
     if process is None or not isinstance(previous,dict) or final.get('process')!=process:return False
     for t in transactions:
         before,frozen,after=(t.get(k,{}) for k in ('offered','frozen','selected'))
         if before.get('process')!=process or before.get('ranks')!=previous or not upgrade_frozen(before,frozen):return False
-        changed=selected_rank(frozen,after)
         cards=[c for c in frozen.get('buttons',[]) if card_title(c)]
-        if (not changed or changed!=t.get('changed_rank') or t.get('chosen_index') not in ('01','02','03') or not recipe_cards_valid(cards,frozen.get('ranks'))
-                or not any(c['text']==t.get('chosen_text') and c['text'].startswith(t.get('chosen_index','')+'\n') for c in cards)):
+        chosen=[c for c in cards if c['text']==t.get('chosen_text') and c['text'].startswith(t.get('chosen_index','')+'\n')]
+        if (len(chosen)!=1 or t.get('chosen_index') not in ('01','02','03')
+                or not recipe_cards_valid(cards,frozen.get('ranks'))):
+            return False
+        changed=selected_card_rank(chosen[0],frozen,after)
+        if not changed or changed!=t.get('changed_rank'):
             return False
         previous=after['ranks']
     return final.get('ranks')==previous

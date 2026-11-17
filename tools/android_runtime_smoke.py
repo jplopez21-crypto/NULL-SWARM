@@ -20,7 +20,7 @@ from build_observation import frozen_navigation
 from passive_observation import PASSIVE_LABELS, passive_card, passive_summary_matches
 from corruption_observation import corruption_offer_frozen, corruption_navigation_preserved, redline_selected, redline_terms, same_offer_actions
 from input_delivery import describe_delivery
-from mutation_observation import choose_card as mutation_card, recipe_cards_valid, complete as mutation_complete, active_build, dealt_damage, earned_history
+from mutation_observation import choose_card as mutation_card, recipe_cards_valid, complete as mutation_complete, active_build, dealt_damage, earned_history, selected_card_rank
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--package', default='com.nullswarm.game.emulatorqa')
@@ -505,9 +505,10 @@ def mobile_pick_upgrade(capture_name, prefer_passive=False, pursue_mutation=Fals
     chosen_index = chosen['text'].split('\n', 1)[0]
     tap(chosen_index+'\n', frozen)
     selected = wait(lambda x: x.get('ranks') != frozen['ranks'])
-    changed = selected_rank(frozen, selected)
+    changed = selected_card_rank(chosen, frozen, selected) if pursue_mutation else selected_rank(frozen, selected)
     if changed is None:
-        raise AssertionError('Mobile upgrade touch did not apply exactly one rank/choice transaction')
+        raise AssertionError('Mobile mutation touch did not apply the selected card rank/choice transaction' if pursue_mutation
+                             else 'Mobile upgrade touch did not apply exactly one rank/choice transaction')
     transaction = {'offered':offered,'frozen':frozen,'selected':selected,'chosen_text':chosen['text'],'chosen_index':chosen_index,'changed_rank':changed}
     s = wait(lambda x: x['state'] == 'upgrading' or (x['state'] == 'playing' and x['pending'] == 0
              and x['time'] > frozen['time'] and x['rendered_frames'] > frozen['rendered_frames']))

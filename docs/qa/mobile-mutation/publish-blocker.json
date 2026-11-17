@@ -46,5 +46,15 @@
     "credentials": "CLI authentication not verified because network access was blocked; no credential values inspected or printed",
     "new_hosted_validation": "not run",
     "new_apk": "not produced"
+  },
+  "nov17_recheck": {
+    "date": "2026-11-17",
+    "read_access": "verified",
+    "development_ref": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "main_ref": "28a563e3b262d09296e52635a30d29289bccacf5",
+    "bounded_write_probe": "No-op tree using the existing project.godot blob, no result within 45 seconds. No ref/branch mutation requested.",
+    "cause": "Unconfirmed; no permission rejection established. Earlier CLI network limitation remains unresolved.",
+    "new_hosted_validation": "not run",
+    "new_apk": "not produced"
   }
 }

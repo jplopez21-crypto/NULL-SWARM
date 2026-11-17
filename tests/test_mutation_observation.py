@@ -5,7 +5,7 @@ import unittest
 import test_upgrade_observation as fixtures
 
 sys.path.insert(0,str(Path(__file__).parents[1]/'tools'))
-from mutation_observation import card_title, choose_card, recipe_cards_valid, complete, active_build, dealt_damage, earned_history
+from mutation_observation import card_title, choose_card, recipe_cards_valid, complete, active_build, dealt_damage, earned_history, selected_card_rank, CARD_RANKS
 
 
 def card(index,title,damage=0,arc=0,badge=False):
@@ -81,4 +81,37 @@ class MutationObservationTests(unittest.TestCase):
         start,rows,final=self.history();rows[0]['frozen']['rendered_panel']=0
         self.assertFalse(earned_history(start,rows,final))
         start,rows,final=self.history();start['ranks']={'arc':1}
+        self.assertFalse(earned_history(start,rows,final))
+
+    def test_history_rejects_a_different_visible_card_applying_the_recorded_rank(self):
+        start,rows,final=self.history()
+        # The log consistently says Arc was tapped, while the actual delta is damage.
+        # Merely checking one legal increment and a visible button used to accept this.
+        rows[0].update(chosen_text=rows[0]['frozen']['buttons'][1]['text'],chosen_index='02')
+        self.assertFalse(earned_history(start,rows,final))
+
+    def test_selected_card_effect_covers_passives_weapons_evolutions_and_badges(self):
+        expected={'AMPLIFIED PULSE':'damage','RAPID CYCLER':'rate','PHASE ROUNDS':'pierce',
+                  'SERVO OVERDRIVE':'speed','REINFORCED CHASSIS':'health','AEGIS CAPACITOR':'shield',
+                  'MEMORY TETHER':'magnet','PLASMA ORBITALS':'orbit','SOLAR HALO':'orbit',
+                  'ARC EMITTER':'arc','RAIL LANCE':'rail','SINGULARITY LANCE':'rail',
+                  'THERMAL BURST':'thermal','DRONE HIVE':'drone','FIELD REPAIR':'repair'}
+        self.assertEqual(CARD_RANKS,expected)
+        for title,rank in expected.items():
+            with self.subTest(title=title):
+                start,rows,final=self.history();before=rows[0]['frozen']
+                chosen=card('01',title,badge=True);before['buttons']=[chosen]
+                after={**final,'ranks':{rank:1}}
+                self.assertEqual(selected_card_rank(chosen,before,after),rank)
+                self.assertIsNone(selected_card_rank(chosen,before,{**after,'ranks':{'unrelated':1}}))
+
+    def test_selected_card_effect_rejects_disabled_unknown_and_absent_buttons(self):
+        start,rows,final=self.history();before=rows[0]['frozen'];chosen=before['buttons'][0]
+        self.assertIsNone(selected_card_rank({**chosen,'disabled':True},before,final))
+        self.assertIsNone(selected_card_rank(card('01','FUTURE WEAPON'),before,final))
+        self.assertIsNone(selected_card_rank(chosen,{**before,'buttons':[]},final))
+
+    def test_history_rejects_ambiguous_duplicate_buttons(self):
+        start,rows,final=self.history()
+        rows[0]['frozen']['buttons'].append(copy.deepcopy(rows[0]['frozen']['buttons'][0]))
         self.assertFalse(earned_history(start,rows,final))
