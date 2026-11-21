@@ -4,6 +4,7 @@
 
 - Guarantee a new legal card option on explicit rerolls without losing the weapon/slot rules. Disable exhausted-pool rerolls with an explanation and preserve credits/RNG; ordinary level-up draws stay unchanged.
 - Reproduce same-set and repair-only waste before the fix. Local 121 Python tests/15 Godot suites pass, with 1,375 systems/167 GUI checks, 204 layouts and bounded gameplay parity. New hosted build/device validation is pending.
+- Preserve the locally verified fix and clean-import patch after interrupted CLI execution and an unconfirmed bounded connector request; remote development remains unchanged. No new APK claimed.
 
 ## Development — 2026-11-21 / Published Android validation
 

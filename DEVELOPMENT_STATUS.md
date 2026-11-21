@@ -6,6 +6,7 @@
 - Reproduced both problems before the fix (seed 161 repeats rail/arc/drone; repair-only credit falls 2→1). Local checks pass: 121 Python tests, all 15 Godot suites, 1,375 systems/167 GUI checks, 2,932 geometry checks across 204 layouts and the unchanged two-case diagnostics-parity fingerprint. New coverage includes 256 forced-repeat legal-pool cases, no-alternative/zero-credit/no-pending guards and real GUI reroll/selection dispatch. Evidence: docs/qa/rerolls/local-verification.json.
 - New hosted render/export/Android checks and APK are pending for the reroll change. The previous verified APK below contains the earlier hull/input improvements. A direct APK copy was supplied after the owner could not use the Actions download; alternate release-asset upload returned HTTP 401 and no public release download is claimed.
 - Next: publish and inspect the new build and 204-layout captures, retain existing Android regression gates, then add dedicated ordinary Android reroll coverage and broaden earned mutation/phone testing. Main remains unmerged.
+- Publishing follow-up: CLI push calls were interrupted by tool-runtime replacements; a bounded connector tree request returned no result within 45 seconds. Final connected read still shows development at `829030f`; the new tree is not readable remotely. Cause unconfirmed, with no credential/permission rejection inferred. The tested fix is committed locally and preserved as an independently import-checked portable patch. No new hosted run or APK for rerolls.
 
 ## Previous published Android checkpoint
 

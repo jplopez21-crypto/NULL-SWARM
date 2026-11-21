@@ -6,6 +6,7 @@
 - **Passed:** 121 Python tests; all 15 strict Godot suites; 1,375 systems checks (256 seeded forced-repeat pool cases plus six edge checks added); 167 GUI checks; 2,932 headless geometry checks across **204 layouts**. Legal full-slot/passive-only pools, cap/uniqueness/weapon guarantees, no-pending/no-credit guards, queued choices, safe GUI panel retirement, real reroll click and selection of its fresh card are covered. Four new layouts exercise the exhausted-pool explanation. The strict runner requires all 204 layouts.
 - **Passed:** two seed-909/180-second Halo replay cases preserve diagnostics-parity fingerprint `cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a`. No full gameplay/stress rerun claimed locally. [Source hashes and scope](docs/qa/rerolls/local-verification.json).
 - **Pending:** fresh hosted rendered/export/Android checks and APK for this source. Dedicated ordinary Android reroll touch acceptance is not yet implemented; engine GUI dispatch is not phone acceptance. Previous published results/APK below retain their original source scope.
+- **Publication unconfirmed:** CLI execution was interrupted by tool-runtime replacements, then the connector tree request returned no result within 45 seconds. Final connected read remains `829030fcba5877c6f6220c11b9baa4439fb2a414`; no new tree/CI run/APK is claimed. Local verified code and a clean-import portable patch remain preserved. This is an execution/publication blocker, not a diagnosed credential or permission failure.
 
 ## Published Android validation — reviewed 2026-11-21
 
