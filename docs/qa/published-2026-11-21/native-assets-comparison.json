@@ -1,0 +1,12 @@
+{
+  "compiled_modules": 38,
+  "changed_modules": [
+    "assets/scripts/main.gdc",
+    "assets/ui/game_ui.gdc"
+  ],
+  "unchanged_modules": 36,
+  "project_binary_unchanged": true,
+  "native_probe_enabled": false,
+  "probe_basis": "Identical project.binary to earlier verified probe-disabled native export; exact-assets startup also passes.",
+  "excluded_test_tool_doc_assets": false
+}

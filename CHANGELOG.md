@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-11-21 / Published Android validation
+
+- Publish the seven preserved mutation-testing, keyboard-upgrade and critical-hull commits with their tested tree unchanged; main remains unmerged. All five Nov 17–18 CI workflows pass attempt 1: 121 Python tests, 15 Godot suites, 160 GUI checks and 200 rendered/headless layouts.
+- Verify the first complete ordinary earned Arcstorm on the Mobile emulator: sixteen legal choices, active build, 54 effective damage and same-process background/resume persistence. Preserve all prior gameplay/stress comparisons and retain the expected unpatched renderer failure.
+- Deliver a new verified ARM64 debug APK and archive download checks/screenshots/limits. Exact source, artifact and device-acceptance scope are in TEST_RESULTS.md; physical phone/release validation remains open.
+
 ## Development — 2026-11-17 / Critical hull feedback
 
 - Show a steady `HULL CRITICAL` readout and warm health bar at 25% of current maximum health, preserving separate shield status. Healing and redeployment restore the normal readout; no added sounds or flashes.

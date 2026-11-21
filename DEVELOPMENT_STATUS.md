@@ -1,20 +1,29 @@
-# Development status — NULL//SWARM / 2026-11-17
+# Development status — NULL//SWARM / 2026-11-21
 
 ## Current checkpoint
+
+- Published all seven preserved commits to development at `6499f36ae547d73ac99df1919a6d2344df6ed0ea`, with exactly the locally tested tree. Non-force CLI push works through permitted network access; the connector write failure cause remains undiagnosed. Main remains unchanged/unmerged. APK now includes upgrade keyboard shortcuts and steady critical-hull feedback.
+- All five workflows pass attempt 1 (executed Nov 17–18, reviewed Nov 21): 121 Python tests, 15 Godot suites, 160 GUI checks and 200 layouts (2,892 headless / 2,893 rendered checks). Complete normal-play/XP/pacing/collector cases match the earlier verified baseline except host timing; all 24 stress fingerprints match. Canonical 26 sessions retain 22 victories/four defeats across 19 cohorts.
+- Actual Android Mobile mutation pursuit verifies 16 ordinary earned choices, Amplified Pulse 3 + Arc 3, active equipped Arcstorm, 54 effective Arcstorm damage, frozen same-process background return and resumed combat. All eight acceptance checks pass; report retains `status: observed` with `mutation_verified: true`. This is one completed earned mutation, not all builds or human balance acceptance.
+- Ordinary Mobile/Compatibility pass 42/59 checks. Ordinary and patched lifecycle each pass 18 cycles/56 checks, recovering 11/12 bad-surface warnings. Deliberately unpatched control reproduces persistent failure during cycle eight after seven completed cycles/22 checks; its collection workflow succeeds as intended. Prior intermittent Settings-return/ADB-loss causes remain open.
+- New ARM64 debug APK: [download ZIP](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203815959/artifacts/14382823234), extract `android/null-swarm-development-debug.apk`. 79,522,078 bytes; SHA256 `6ea9c682ff711d16e0bf610869d7531cef81d217b47ae7324f221691462d038a`. CI signature and independent download/hash/CRC/native repair/ABI/attribution/exclusions/exact-assets startup checks pass. Back up progression before replacing rotating-debug-signed installs.
+- Nine archives verified; actual mutation cards/build/resumed combat and staged critical-hull render inspected. [Receipts and screenshots](docs/qa/published-2026-11-21/verified-ci.json). Physical S23/ARM64 FPS/thermals/audio/cutouts, physical keyboard, protected release signing/AAB and remaining commercial content remain open. Next: broaden earned Solar Halo/Singularity coverage and phone playtesting without treating software-emulator FPS as device acceptance.
+
+## Earlier local critical-hull checks (before publication)
 
 - Added a steady `HULL CRITICAL` health readout and warm health-bar color at or below 25% of current maximum health. Shield status remains separate; healing and a new deployment restore the operative title/color. No new flashes, sounds, gameplay rules or per-frame style resources.
 - Local Godot 4.6.3 verification passes 121 Python tests and all 15 strict Godot suites, including 160 GUI checks and 2,892 geometry checks across 200 layouts. Two seed-909/180-second Halo diagnostics-parity replays preserve the accepted fingerprint. One initial GUI fixture failure was corrected by applying the normal first physics tick before testing disabled flashes; no related game bug claimed. Evidence: docs/qa/critical-hull/local-verification.json.
 - GitHub development read still resolves to `189525255657af69c150b4b8d3e5b4b2b53dfc6f`; the bounded 45-second no-op tree probe returned no result. Publication remains unconfirmed. No new APK, emulator run or rendered screenshot acceptance; the changed HUD/input sources require a future build. Main remains unmerged.
 - Next: publish the preserved commits when writes respond, run hosted export/emulator gates, then inspect critical-hull readability, upgrade controls and earned-mutation traces on Android. Physical S23/ARM64 performance, audio and release signing remain open.
 
-## Previous unpublished upgrade shortcuts
+## Earlier local upgrade-shortcut checks (before publication)
 
 - Added upgrade selection with 1/2/3 and numpad keys through the existing card-selection path, with a desktop hint listing available choices. Held-key repeats, key releases, modifiers, stale/capped offers, corruption panels and other menus cannot spend choices. Touch cards and controller navigation remain available.
 - Verified locally on Godot 4.6.3: 121 Python tests and all 15 strict Godot suites pass, including 136 GUI checks and 2,672 geometry checks across 200 layouts. Two 180-second seed-909 Halo replays preserve the accepted diagnostics-parity fingerprint. Engine fixtures cover real input dispatch, queued choices, repair and mutation completion; these are not Android or rendered-device tests. Evidence: docs/qa/upgrade-shortcuts/local-verification.json.
 - GitHub publishing remains unconfirmed after this checkpoint's bounded 45-second no-op tree probe. No new APK, emulator run or rendered screenshot acceptance. The new input/UI source requires a future build; previous APKs do not contain it. Changes are preserved locally for publication to the development branch; main remains unmerged.
 - Next: publish the preserved commits when writes respond, run hosted export/emulator gates, then inspect actual upgrade input/layout and earned-mutation traces. Physical S23/ARM64 performance, audio and release signing remain open.
 
-## Previous unpublished Android mutation coverage
+## Earlier local Android mutation checks (before publication)
 
 - Added a separate normal-play Mobile mutation pursuit and read-only card/history/build/damage predicates. No grants, rerolls or game changes. Actual mutation acceptance requires earned prerequisites, active equipped build text, effective Arcstorm damage and same-process background persistence; incomplete/death/budget outcomes remain explicit observations. Existing Mobile smoke and all earlier tests preserved.
 - Latest local validation: 121 Python tests/15 Godot suites pass. Prior card-effect checks remain; nine new tests exercise the actual mutation flow through explicit synthetic device I/O. Acceptance is published only after resume, capture and crash checks succeed; failures clear the flag and retain unverified evidence. Ordinary death, budgets, missing damage, renderer fallback and pause/upgrade races are covered. These are driver tests, not new Android execution. Fresh receipt: docs/qa/mobile-mutation/flow-verification.json. Standard smoke behavior and Godot gameplay remain unchanged.

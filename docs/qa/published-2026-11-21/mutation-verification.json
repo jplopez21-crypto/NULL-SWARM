@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "transactions": 16,
+  "renderer": "mobile",
+  "ranks": {
+    "arc": 3,
+    "damage": 3,
+    "health": 1,
+    "magnet": 1,
+    "pierce": 3,
+    "rate": 1,
+    "shield": 2,
+    "speed": 2
+  },
+  "arcstorm_damage": 54.0,
+  "simulated_seconds": 157.283333333351,
+  "build_and_return_active": true,
+  "frozen_same_process_return": true,
+  "resumed_real_combat": true,
+  "source_report_sha256": "94b21beac57e0807f6270a444e1bb3838781310a2fc3d7c52a17e0f6065ad79e"
+}
