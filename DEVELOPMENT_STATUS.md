@@ -2,6 +2,13 @@
 
 ## Current checkpoint
 
+- Fixed rerolls that could spend a limited credit on the same card set or a repair-only pool. A valid reroll now guarantees at least one new legal option while preserving the weapon/slot rules. When every legal option is already shown, the button is disabled with `ALL OPTIONS SHOWN // REROLLS KEPT`; no credit or RNG is spent. Normal level-up draws remain unchanged.
+- Reproduced both problems before the fix (seed 161 repeats rail/arc/drone; repair-only credit falls 2→1). Local checks pass: 121 Python tests, all 15 Godot suites, 1,375 systems/167 GUI checks, 2,932 geometry checks across 204 layouts and the unchanged two-case diagnostics-parity fingerprint. New coverage includes 256 forced-repeat legal-pool cases, no-alternative/zero-credit/no-pending guards and real GUI reroll/selection dispatch. Evidence: docs/qa/rerolls/local-verification.json.
+- New hosted render/export/Android checks and APK are pending for the reroll change. The previous verified APK below contains the earlier hull/input improvements. A direct APK copy was supplied after the owner could not use the Actions download; alternate release-asset upload returned HTTP 401 and no public release download is claimed.
+- Next: publish and inspect the new build and 204-layout captures, retain existing Android regression gates, then add dedicated ordinary Android reroll coverage and broaden earned mutation/phone testing. Main remains unmerged.
+
+## Previous published Android checkpoint
+
 - Published all seven preserved commits to development at `6499f36ae547d73ac99df1919a6d2344df6ed0ea`, with exactly the locally tested tree. Non-force CLI push works through permitted network access; the connector write failure cause remains undiagnosed. Main remains unchanged/unmerged. APK now includes upgrade keyboard shortcuts and steady critical-hull feedback.
 - All five workflows pass attempt 1 (executed Nov 17–18, reviewed Nov 21): 121 Python tests, 15 Godot suites, 160 GUI checks and 200 layouts (2,892 headless / 2,893 rendered checks). Complete normal-play/XP/pacing/collector cases match the earlier verified baseline except host timing; all 24 stress fingerprints match. Canonical 26 sessions retain 22 victories/four defeats across 19 cohorts.
 - Actual Android Mobile mutation pursuit verifies 16 ordinary earned choices, Amplified Pulse 3 + Arc 3, active equipped Arcstorm, 54 effective Arcstorm damage, frozen same-process background return and resumed combat. All eight acceptance checks pass; report retains `status: observed` with `mutation_verified: true`. This is one completed earned mutation, not all builds or human balance acceptance.

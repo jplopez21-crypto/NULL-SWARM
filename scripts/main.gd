@@ -382,7 +382,7 @@ func _render_upgrades() -> void:
 		var completed: Array[String] = progress.mutations_completed_by(id, combat.mutations)
 		if not completed.is_empty():
 			mutation_hints[id] = completed
-	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level), progress.pending, mutation_hints)
+	ui.show_upgrades(offered, upgrade_description, progress.level, progress.rerolls, combat.corruption.available(progress.level), progress.pending, mutation_hints, progress.can_reroll(offered))
 
 func show_corruption() -> void:
 	if state != State.UPGRADING or progress.pending <= 0 or not combat.corruption.available(progress.level):
@@ -488,10 +488,14 @@ func _exit_tree() -> void:
 			player.health.depleted.disconnect(connection["callable"])
 
 func reroll_upgrades() -> void:
-	if state != State.UPGRADING or corruption_panel or progress.rerolls <= 0:
+	if state != State.UPGRADING or corruption_panel:
 		return
-	progress.rerolls -= 1
-	show_upgrade()
+	var rerolled: Array[String] = progress.reroll_choices(combat.rng, offered)
+	if rerolled.is_empty():
+		return
+	offered = rerolled
+	_render_upgrades()
+	audio.play("ui", "UI")
 
 func _weapon_sound(id: String) -> void:
 	if id in ["mutation", "overclock"]:

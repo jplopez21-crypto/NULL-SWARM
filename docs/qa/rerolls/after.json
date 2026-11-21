@@ -1,0 +1,25 @@
+{
+  "exhausted_pool": {
+    "after": [
+      "repair"
+    ],
+    "before": [
+      "repair"
+    ],
+    "credits_after": 2,
+    "credits_before": 2
+  },
+  "repeated_normal_offer": {
+    "first": [
+      "rail",
+      "arc",
+      "drone"
+    ],
+    "second": [
+      "arc",
+      "drone",
+      "rail"
+    ],
+    "seed": 161
+  }
+}

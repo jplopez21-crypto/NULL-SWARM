@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-11-21 / Useful rerolls
+
+- Guarantee a new legal card option on explicit rerolls without losing the weapon/slot rules. Disable exhausted-pool rerolls with an explanation and preserve credits/RNG; ordinary level-up draws stay unchanged.
+- Reproduce same-set and repair-only waste before the fix. Local 121 Python tests/15 Godot suites pass, with 1,375 systems/167 GUI checks, 204 layouts and bounded gameplay parity. New hosted build/device validation is pending.
+
 ## Development — 2026-11-21 / Published Android validation
 
 - Publish the seven preserved mutation-testing, keyboard-upgrade and critical-hull commits with their tested tree unchanged; main remains unmerged. All five Nov 17–18 CI workflows pass attempt 1: 121 Python tests, 15 Godot suites, 160 GUI checks and 200 rendered/headless layouts.

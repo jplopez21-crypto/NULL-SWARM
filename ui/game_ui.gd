@@ -607,7 +607,7 @@ func visible_run_analysis() -> String:
 			lines.append(node.text)
 	return "\n".join(lines)
 
-func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1, mutation_hints: Dictionary = {}) -> void:
+func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerolls: int = 0, unstable_available: bool = false, pending: int = 1, mutation_hints: Dictionary = {}, reroll_available: bool = true) -> void:
 	var box := _panel()
 	var ready := "%d %s READY" % [maxi(0, pending), "UPGRADE" if pending == 1 else "UPGRADES"]
 	upgrade_header = label_at(box, "MEMORY RECONSTRUCTED  /  LEVEL %02d  /  %s" % [level, ready], 18, CYAN)
@@ -647,11 +647,13 @@ func show_upgrades(ids: Array[String], descriptions: Callable, level: int, rerol
 		for index in range(ids.size()):
 			keys.append(str(index + 1))
 		caption_text = "4 SLOTS // KEYS %s TO SELECT" % "/".join(keys)
+	if not reroll_available and rerolls > 0:
+		caption_text = "ALL OPTIONS SHOWN // REROLLS KEPT"
 	var caption := label_at(footer, caption_text, 14, MUTED)
 	caption.name = "UpgradeChoiceHint"
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var reroll := button_at(footer, "REROLL  /  %d" % rerolls, func(): reroll_requested.emit())
-	reroll.disabled = rerolls <= 0
+	reroll.disabled = rerolls <= 0 or not reroll_available
 	if unstable_available:
 		var unstable := button_at(box, "UNSTABLE LINK // OPTIONAL POWER + COST FOR THIS RUN", func(): corruption_requested.emit())
 		unstable.add_theme_color_override("font_color", Color("efa6ff"))

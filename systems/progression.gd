@@ -72,3 +72,38 @@ func select(id: String, offered: Array[String]) -> bool:
 	ranks[id] = int(ranks.get(id, 0)) + 1
 	pending -= 1
 	return true
+
+func can_reroll(previous: Array[String]) -> bool:
+	if pending <= 0 or rerolls <= 0:
+		return false
+	for id in IDS:
+		if eligible(id) and not previous.has(id):
+			return true
+	return false
+
+func reroll_choices(rng: RandomNumberGenerator, previous: Array[String]) -> Array[String]:
+	if not can_reroll(previous):
+		return []
+	var result: Array[String] = choices(rng)
+	var introduces_option: bool = false
+	for id in result:
+		introduces_option = introduces_option or not previous.has(id)
+	if not introduces_option:
+		# Bounded fallback: preserve the ordinary draw unless it repeats the whole set.
+		var alternatives: Array[String] = []
+		for id in IDS:
+			if eligible(id) and not previous.has(id):
+				alternatives.append(id)
+		var replacement: String = alternatives[rng.randi_range(0, alternatives.size() - 1)]
+		var weapons: int = 0
+		for id in result:
+			if Arsenal.DATA.has(id):
+				weapons += 1
+		var replaceable: Array[int] = []
+		for index in range(result.size()):
+			# Keep the guaranteed weapon when the replacement is a passive.
+			if Arsenal.DATA.has(replacement) or not Arsenal.DATA.has(result[index]) or weapons > 1:
+				replaceable.append(index)
+		result[replaceable[rng.randi_range(0, replaceable.size() - 1)]] = replacement
+	rerolls -= 1
+	return result

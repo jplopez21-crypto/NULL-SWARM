@@ -239,6 +239,20 @@ func run() -> void:
 		check(not game.ui.memory_visible, "upgrade selection hides memory cue")
 		check(game.progress.pending == 3 and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "real XP overflow displays three ready upgrades")
 		await inspect(game, "upgrades", size)
+		# Explicit exhausted-pool fixture; restore the live queue and RNG untouched.
+		var queue_ranks: Dictionary = game.progress.ranks.duplicate()
+		var queue_offer: Array[String] = game.offered.duplicate()
+		for id in RunProgression.CAPS:
+			if not Arsenal.DATA.has(id) or id in ["arc", "rail", "drone"]:
+				game.progress.ranks[id] = RunProgression.CAPS[id]
+		game.offered.assign(["repair"])
+		game._render_upgrades()
+		var kept_hint: Label = game.ui.screen.find_child("UpgradeChoiceHint", true, false)
+		check(kept_hint.text == "ALL OPTIONS SHOWN // REROLLS KEPT", "exhausted upgrade pool explains preserved rerolls at every viewport")
+		await inspect(game, "reroll-exhausted", size)
+		game.progress.ranks = queue_ranks
+		game.offered = queue_offer
+		game._render_upgrades()
 		var before_reroll: int = game.progress.rerolls
 		game.reroll_upgrades()
 		check(game.progress.pending == 3 and game.progress.rerolls == before_reroll - 1 and game.ui.upgrade_header.text.contains("3 UPGRADES READY"), "reroll preserves queued-upgrade readout")

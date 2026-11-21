@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Reroll choices — local verification 2026-11-21
+
+- **Reproduced:** seed 161 yields the same rail/arc/drone set on consecutive ordinary draws, and the old reroll action spends a credit on a repair-only offer. [Before](docs/qa/rerolls/before.json) / [after](docs/qa/rerolls/after.json). Normal draws are intentionally unchanged; the explicit reroll now adds a bounded fallback when its entire set repeats. Exhausted pools keep both credit and RNG state.
+- **Passed:** 121 Python tests; all 15 strict Godot suites; 1,375 systems checks (256 seeded forced-repeat pool cases plus six edge checks added); 167 GUI checks; 2,932 headless geometry checks across **204 layouts**. Legal full-slot/passive-only pools, cap/uniqueness/weapon guarantees, no-pending/no-credit guards, queued choices, safe GUI panel retirement, real reroll click and selection of its fresh card are covered. Four new layouts exercise the exhausted-pool explanation. The strict runner requires all 204 layouts.
+- **Passed:** two seed-909/180-second Halo replay cases preserve diagnostics-parity fingerprint `cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a`. No full gameplay/stress rerun claimed locally. [Source hashes and scope](docs/qa/rerolls/local-verification.json).
+- **Pending:** fresh hosted rendered/export/Android checks and APK for this source. Dedicated ordinary Android reroll touch acceptance is not yet implemented; engine GUI dispatch is not phone acceptance. Previous published results/APK below retain their original source scope.
+
 ## Published Android validation — reviewed 2026-11-21
 
 Source `6499f36ae547d73ac99df1919a6d2344df6ed0ea`, tree `f222785fff662c7cf4153e8e4a37e881750fcab0`. All seven preserved commits published without changing their tested file tree. Workflows executed Nov 17–18; this checkpoint records the downloaded evidence and review. Main remains unchanged/unmerged. Earlier publication blockers below are historical.

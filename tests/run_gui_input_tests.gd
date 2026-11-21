@@ -413,6 +413,7 @@ func run() -> void:
 	check(game.ui.results_heading.text == "EXTRACTION COMPLETE" and game.result_won and not game.result_aborted, "subsequent victory keeps its extraction wording")
 	await test_upgrade_shortcuts(game)
 	await test_hull_alert(game)
+	await test_reroll_input(game)
 	game.audio.shutdown()
 	await create_timer(0.2).timeout
 	game.queue_free()
@@ -615,3 +616,48 @@ func test_hull_alert(game: Node3D) -> void:
 	game.set_physics_process(false)
 	game._process(0)
 	check(not game.ui.hull_critical and game.ui.health_label.text.begins_with("ENGINEER /") and game.ui.health_fill.bg_color == GameUI.CYAN, "redeployment clears stale critical color and restores the new operative title")
+
+func test_reroll_input(game: Node3D) -> void:
+	game.save.data = SaveStore.defaults()
+	game.start_run()
+	game.set_physics_process(false)
+	game.combat.rng.seed = 161
+	game.progress.add_xp(46)
+	game.show_upgrade()
+	await settle()
+	var previous: Array[String] = game.offered.duplicate()
+	check(previous == ["rail", "arc", "drone"], "real repeated-offer reproduction seed starts with its original three cards")
+	var before_ranks: Dictionary = game.progress.ranks.duplicate()
+	var before_save: Dictionary = game.save.data.duplicate(true)
+	var before_time: float = game.combat.director.elapsed
+	var panel: PanelContainer = game.ui.screen
+	click(game, "REROLL")
+	check(game.offered.any(func(id): return not previous.has(id)) and game.progress.rerolls == 1 and game.progress.pending == 2 and game.state == game.State.UPGRADING, "real reroll click replaces a previously identical draw with a new option and spends only one reroll")
+	check(retained_until_frame_end(panel) and game.progress.ranks == before_ranks and game.save.data == before_save and game.combat.director.elapsed == before_time, "reroll safely retires its panel while queued choices time ranks and saves remain frozen")
+	await settle()
+	var id: String = game.offered[0]
+	send_upgrade_key(KEY_1)
+	check(game.progress.ranks.get(id) == 1 and game.progress.pending == 1 and game.progress.rerolls == 1, "fresh rerolled offer remains selectable through the normal upgrade and queue path")
+	send_upgrade_key(KEY_1, false)
+	game.start_run()
+	game.set_physics_process(false)
+	for key in RunProgression.CAPS:
+		if not Arsenal.DATA.has(key) or key in ["arc", "rail", "drone"]:
+			game.progress.ranks[key] = RunProgression.CAPS[key]
+	game.progress.add_xp(18)
+	game.show_upgrade()
+	await settle()
+	var reroll: Button
+	for button in game.ui.screen.find_children("*", "Button", true, false):
+		if button.text.begins_with("REROLL"):
+			reroll = button
+	var hint: Label = game.ui.screen.find_child("UpgradeChoiceHint", true, false)
+	check(game.offered == ["repair"] and reroll != null and reroll.disabled and hint.text == "ALL OPTIONS SHOWN // REROLLS KEPT", "repair-only offer explains disabled reroll and preserves visible credits")
+	var before_rng: int = game.combat.rng.state
+	panel = game.ui.screen
+	game.reroll_upgrades()
+	check(game.ui.screen == panel and game.offered == ["repair"] and game.progress.rerolls == 2 and game.progress.pending == 1 and game.combat.rng.state == before_rng, "even a direct stale reroll request cannot spend credit or RNG on an exhausted pool")
+	game.progress.pending = 0
+	game.progress.ranks.clear()
+	game.reroll_upgrades()
+	check(game.progress.rerolls == 2 and game.combat.rng.state == before_rng and game.ui.screen == panel, "stale upgrading state without a pending choice cannot reroll")

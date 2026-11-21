@@ -159,6 +159,7 @@ func run() -> void:
 	slots.ranks = {"orbit": 1, "arc": 1, "rail": 1}
 	check(slots.equipped() == 4 and not slots.eligible("drone"), "four slots reject fifth weapon")
 	check(slots.eligible("arc"), "equipped weapons remain upgradeable at slot limit")
+	test_reroll_choices()
 	check(Arsenal.mutation({"damage": 3, "arc": 3}).has("arcstorm"), "Arcstorm prerequisites")
 	check(not Arsenal.mutation({"damage": 2, "arc": 3}).has("arcstorm"), "mutation requires both prerequisites")
 	check(Arsenal.mutation({"orbit": 3, "thermal": 3}).has("halo"), "Solar Halo prerequisites")
@@ -1143,3 +1144,47 @@ func _test_detour_bot() -> void:
 	game.free()
 	for suffix in ["", ".bak", ".tmp"]:
 		DirAccess.remove_absolute("user://qa_detour_unit.json" + suffix)
+
+func test_reroll_choices() -> void:
+	var passive_pool: Dictionary = {"arc": 5, "rail": 5, "drone": 5}
+	var last_four: Dictionary = passive_pool.duplicate()
+	for id in RunProgression.IDS:
+		if not Arsenal.DATA.has(id) and id not in ["damage", "rate", "speed", "shield"]:
+			last_four[id] = RunProgression.CAPS[id]
+	for ranks in [{}, {"arc": 1, "rail": 1, "drone": 1}, passive_pool, last_four]:
+		for seed_value in range(64):
+			var p := RunProgression.new()
+			p.ranks = ranks.duplicate()
+			p.pending = 2
+			var rng := RandomNumberGenerator.new()
+			rng.seed = seed_value
+			var before_rng: int = rng.state
+			var previous: Array[String] = p.choices(rng)
+			var frozen: Array[String] = previous.duplicate()
+			# Force an identical candidate draw to exercise bounded fallback for every pool.
+			rng.state = before_rng
+			var result: Array[String] = p.reroll_choices(rng, previous)
+			var new_option: bool = result.any(func(id): return not previous.has(id))
+			var weapon_available: bool = Arsenal.DATA.keys().any(func(id): return p.eligible(id))
+			var weapon_shown: bool = result.any(func(id): return Arsenal.DATA.has(id))
+			check(result.size() == 3 and new_option and result.all(func(id): return p.eligible(id)) and result[0] != result[1] and result[0] != result[2] and result[1] != result[2] and (not weapon_available or weapon_shown) and p.ranks == ranks and p.pending == 2 and p.rerolls == 1 and previous == frozen, "reroll introduces a legal unique option, keeps slot/weapon guarantees and spends exactly one credit across seeded fallback pools")
+	var limited := RunProgression.new()
+	limited.ranks = last_four.duplicate()
+	limited.ranks["shield"] = RunProgression.CAPS["shield"]
+	limited.pending = 1
+	var rng := RandomNumberGenerator.new()
+	var previous: Array[String] = limited.choices(rng)
+	var before_rng: int = rng.state
+	check(previous.size() == 3 and not limited.can_reroll(previous) and limited.reroll_choices(rng, previous).is_empty() and limited.rerolls == 2 and rng.state == before_rng, "three already-shown legal options preserve credits and RNG when no alternative exists")
+	for id in ["speed", "rate", "damage"]:
+		limited.ranks[id] = RunProgression.CAPS[id]
+		previous = limited.choices(rng)
+		before_rng = rng.state
+		check(not limited.can_reroll(previous) and limited.reroll_choices(rng, previous).is_empty() and limited.rerolls == 2 and rng.state == before_rng, "two one and repair-only pools cannot waste rerolls or advance RNG")
+	var fresh := RunProgression.new()
+	previous = fresh.choices(rng)
+	before_rng = rng.state
+	check(not fresh.can_reroll(previous) and fresh.reroll_choices(rng, previous).is_empty() and fresh.rerolls == 2 and rng.state == before_rng, "reroll without an earned pending choice is read-only")
+	fresh.pending = 1
+	fresh.rerolls = 0
+	check(not fresh.can_reroll(previous) and fresh.reroll_choices(rng, previous).is_empty() and rng.state == before_rng, "zero-credit reroll cannot draw free upgrades")
