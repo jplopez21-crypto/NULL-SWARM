@@ -1,5 +1,10 @@
 # Changelog
 
+## Development — 2026-11-24 / Android pipeline correction
+
+- Publish the tested reroll fix; native export and full gameplay QA pass. Retain six pre-gameplay emulator job failures caused by upstream version drift and Maven Central HTTP 429 responses.
+- Install an exact checksum-verified stable emulator archive and retain the version/image guards. Retry only rate-limited debug dependency exports with bounded waits and complete attempt logs; other errors fail immediately. All 127 local Python tests pass; corrected hosted runtime gates remain pending.
+
 ## Development — 2026-11-21 / Useful rerolls
 
 - Guarantee a new legal card option on explicit rerolls without losing the weapon/slot rules. Disable exhausted-pool rerolls with an explanation and preserve credits/RNG; ordinary level-up draws stay unchanged.

@@ -1,0 +1,9 @@
+{
+  "url": "https://dl.google.com/android/repository/emulator-linux_x64-16970787.zip",
+  "bytes": 350068887,
+  "official_sha1": "5f7314368fc6c05c937f6991bb4106214dc389e7",
+  "sha256": "a4405349d8a9c52136ab7861e5331dc40e85574bd91cb8889a298a2ff4c52e26",
+  "source_properties": "Pkg.UserSrc=false\nPkg.Revision=37.3.10\nPkg.Path=emulator\nPkg.Desc=Android Emulator\nPkg.BuildId=16970787",
+  "zip_crc": "passed",
+  "channel": "Google Android SDK channel-0 stable"
+}

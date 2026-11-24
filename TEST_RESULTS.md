@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Reroll hosted build / pipeline correction — 2026-11-24
+
+- **Published:** reroll source `2f6361c5e4ee7aa3c3401766bff3278e50a7e651`. Native Android run `45385963840` and full gameplay run `45385963803` pass attempt 1. The emulator jobs did not reach gameplay: four reject the newly installed 37.3.10.0 binary against the old version guard, and two exports fail resolving Maven Central dependencies with HTTP 429. [Original job evidence](docs/qa/rerolls-ci/initial-failures.json).
+- **Correction:** all three emulator workflows now install Google's exact stable build 16970787 archive with SHA256 verification instead of selecting latest via SDK manager. Version guard becomes 37.3.10.0; Android 35 Google APIs x86_64 revision-9 guard remains. Local archive size/official SHA1/computed SHA256/ZIP CRC and version banner verify. The version command emits a sandbox socket warning; emulator boot is unavailable locally because ADB/KVM are absent. [Pin provenance](docs/qa/rerolls-ci/emulator-pin.json).
+- **Correction:** debug-export helper retries only nonzero Maven Central HTTP 429 failures, at most three attempts with 30/60-second waits. Initial failure logs remain artifacts; script/parse/load and other errors are not retried. APK signature and native/attribution validation still run separately. **127 Python tests pass**, including six synthetic process-outcome tests for success, retained 429 recovery, exhaustion, unrelated failures, missing output and classification. All four edited YAML workflows and their shell blocks parse locally. Synthetic subprocess tests are not actual Android builds or network recovery.
+- **Pending:** fresh hosted actionlint/import/export/render/emulator/runtime gates after this correction, including actual behavior of the new emulator. Previous physical-device limitations remain. No new verified Android runtime acceptance is claimed from the failed jobs. [Local receipt](docs/qa/rerolls-ci/local-verification.json).
+
 ## Reroll choices — local verification 2026-11-21
 
 - **Reproduced:** seed 161 yields the same rail/arc/drone set on consecutive ordinary draws, and the old reroll action spends a credit on a repair-only offer. [Before](docs/qa/rerolls/before.json) / [after](docs/qa/rerolls/after.json). Normal draws are intentionally unchanged; the explicit reroll now adds a bounded fallback when its entire set repeats. Exhausted pools keep both credit and RNG state.

@@ -1,6 +1,13 @@
-# Development status — NULL//SWARM / 2026-11-21
+# Development status — NULL//SWARM / 2026-11-24
 
 ## Current checkpoint
+
+- Reroll commits are published at `2f6361c`. Its native Android build (`45385963840`) and full gameplay QA (`45385963803`) pass attempt 1. The three emulator workflows fail before gameplay: four jobs reject upstream emulator drift to 37.3.10.0, and two exports encounter Maven Central HTTP 429 dependency failures. Original failures are retained in docs/qa/rerolls-ci/initial-failures.json; these are not game-test passes.
+- Pin emulator build 16970787 / version 37.3.10.0 using an explicit Google archive URL and SHA256 in all three workflows. The downloaded archive matches Google's stable-channel size/SHA1, its recorded SHA256 and ZIP CRC; version banner matches. Android 35 Google APIs x86_64 image revision 9 remains guarded and matches current official metadata. A sandbox socket warning during the local version command is retained; no local emulator boot is claimed.
+- Add bounded debug-export retries only for Maven Central HTTP 429 (three attempts, 30/60-second waits). Preserve each attempt log and final receipt; script/parse/load failures and other export errors fail immediately. Signing and APK checks remain mandatory. All 127 local Python tests pass, including six new retry tests; edited YAML and shell blocks parse. Actual dependency recovery and the pinned emulator still need hosted acceptance.
+- Next: publish this pipeline correction, rerun all five gates, inspect the new exhausted-pool renders and actual Android results, then verify and deliver the reroll APK. Main remains unchanged/unmerged. Evidence: docs/qa/rerolls-ci/local-verification.json.
+
+## Reroll implementation checkpoint
 
 - Fixed rerolls that could spend a limited credit on the same card set or a repair-only pool. A valid reroll now guarantees at least one new legal option while preserving the weapon/slot rules. When every legal option is already shown, the button is disabled with `ALL OPTIONS SHOWN // REROLLS KEPT`; no credit or RNG is spent. Normal level-up draws remain unchanged.
 - Reproduced both problems before the fix (seed 161 repeats rail/arc/drone; repair-only credit falls 2→1). Local checks pass: 121 Python tests, all 15 Godot suites, 1,375 systems/167 GUI checks, 2,932 geometry checks across 204 layouts and the unchanged two-case diagnostics-parity fingerprint. New coverage includes 256 forced-repeat legal-pool cases, no-alternative/zero-credit/no-pending guards and real GUI reroll/selection dispatch. Evidence: docs/qa/rerolls/local-verification.json.
