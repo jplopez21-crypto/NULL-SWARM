@@ -1,0 +1,20 @@
+{
+  "repository": "jplopez21-crypto/NULL-SWARM",
+  "source_commit": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+  "source_branch": "development/android-validation",
+  "runs": {
+    "Validate and build Android": 45395018684,
+    "Repeatable gameplay QA": 45395018352,
+    "Android Mobile renderer smoke": 45395018484,
+    "Android emulator runtime": 45395018436,
+    "Android Surface recovery investigation": 45395018389
+  },
+  "artifact_id": 14920916753,
+  "artifact_bytes": 29145530,
+  "artifact_sha256": "58acabec334a87a960d0a8533853a92a141ddf34ae0a0e013554cf9a951361b9",
+  "apk_entry": "android/null-swarm-development-debug.apk",
+  "apk_bytes": 79522986,
+  "apk_sha256": "d7740178893ec2802559e81ac01d795dde53ba79c8b78a14d183aad34759ed7a",
+  "release_tag": "development-2b42f9b",
+  "asset_name": "NULL-SWARM-debug.apk"
+}

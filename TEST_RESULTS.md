@@ -1,5 +1,12 @@
 # NULL//SWARM test results
 
+## Download recovery — 2026-11-26
+
+- **Confirmed through GitHub:** all five corrected runs at `2b42f9bb091d77de3b3dc0a807facfc65febcf74` succeeded on attempt 1. Native `45395018684`, gameplay `45395018352`, Mobile `45395018484`, ordinary Android `45395018436`, surface investigation `45395018389`. Logs verify 127 Python tests/15 Godot suites, 167 GUI checks, 204 layouts/2,933 rendered checks, 42 Mobile/59 Compatibility checks, 56 ordinary/patched lifecycle checks and eight active-and-damaged mutation checks. Control failure remains an expected observation, not a shipping failure. [Source/log receipt](docs/qa/download-recovery/verified-source.json).
+- **Confirmed expiry:** the owner's XML error reports that the previous signed file-service URL expired. A new development-download workflow will copy the exact existing CI-signed APK into a public prerelease instead. Original APK: 79,522,986 bytes, SHA256 `d7740178893ec2802559e81ac01d795dde53ba79c8b78a14d183aad34759ed7a`; archive ID `14920916753`, SHA256 `58acabec334a87a960d0a8533853a92a141ddf34ae0a0e013554cf9a951361b9`.
+- **Passed locally:** all 136 Python tests, including nine new publication-guard tests. Cases reject non-development release targets, incomplete/failed/wrong-source CI gates, wrong/expired artifacts, archive/APK tampering, excluded test/tool assets and incorrect upload metadata. Failed gates cannot reach download or publication. Fixtures are explicitly synthetic archives and API records. Workflow YAML/shell blocks parse locally; hosted actionlint remains required.
+- **Pending:** the new workflow's actual artifact retrieval, release upload and public download. No new APK, signature or physical-device acceptance is implied by these local tests. The new workflow publishes only the previously verified payload; it never builds or signs a replacement. Game code remains unchanged from `2b42f9b`.
+
 ## Reroll hosted build / pipeline correction — 2026-11-24
 
 - **Published:** reroll source `2f6361c5e4ee7aa3c3401766bff3278e50a7e651`. Native Android run `45385963840` and full gameplay run `45385963803` pass attempt 1. The emulator jobs did not reach gameplay: four reject the newly installed 37.3.10.0 binary against the old version guard, and two exports fail resolving Maven Central dependencies with HTTP 429. [Original job evidence](docs/qa/rerolls-ci/initial-failures.json).

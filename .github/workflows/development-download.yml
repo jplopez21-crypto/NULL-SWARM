@@ -1,0 +1,35 @@
+name: Publish verified development APK
+on:
+  push:
+    branches: [development/android-validation]
+    paths:
+      - '.github/workflows/development-download.yml'
+      - 'tools/publish_development_download.py'
+      - '.github/development-download.json'
+      - 'tests/test_development_download.py'
+  workflow_dispatch:
+concurrency:
+  group: verified-development-download
+  cancel-in-progress: false
+permissions:
+  actions: read
+  contents: write
+jobs:
+  publish-download:
+    if: github.repository == 'jplopez21-crypto/NULL-SWARM' && github.ref == 'refs/heads/development/android-validation'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Test publication guards
+        run: python3 -m unittest discover -s tests -p 'test_development_download.py'
+      - name: Publish the exact verified APK as a development prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/publish_development_download.py --manifest .github/development-download.json --output builds/verified-download --publish
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: null-swarm-download-verification
+          path: builds/verified-download/*.json
+          if-no-files-found: warn

@@ -1,5 +1,11 @@
 # Changelog
 
+## Development — 2026-11-26 / Stable APK delivery
+
+- Restore the published source after workspace reset and confirm all five corrected CI workflows succeeded.
+- Add guarded development-prerelease delivery of the exact already signed APK, avoiding expiring file-service links and GitHub Actions ZIP downloads. Verify provenance and hashes before publication; leave main and game code unchanged.
+- All 136 local Python tests pass, including nine publication guards. Actual release publication/download remains pending until the workflow completes.
+
 ## Development — 2026-11-24 / Android pipeline correction
 
 - Publish the tested reroll fix; native export and full gameplay QA pass. Retain six pre-gameplay emulator job failures caused by upstream version drift and Maven Central HTTP 429 responses.

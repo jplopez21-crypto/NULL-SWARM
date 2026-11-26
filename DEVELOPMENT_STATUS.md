@@ -1,6 +1,13 @@
-# Development status — NULL//SWARM / 2026-11-24
+# Development status — NULL//SWARM / 2026-11-26
 
 ## Current checkpoint
+
+- Confirmed all five corrected workflows succeeded at `2b42f9b`, attempt 1. Logs verify the pinned emulator, 42 Mobile/59 Compatibility checks, 56 ordinary/patched lifecycle checks, eight active-and-damaged mutation checks, and 2,933 rendered UI checks across 204 layouts. The deliberately unpatched control still fails as expected. Source/log receipts: docs/qa/download-recovery/verified-source.json.
+- Owner's screenshot confirms the last file-service URL expired. Preparing a stable public development prerelease from the already verified APK, with no new build or signing identity. Publication verifies five successful source-matched gates, artifact provenance, archive/APK hashes, ZIP CRC/ABI/exclusions and uploaded release-asset metadata before exposing a direct APK link. Main is not modified.
+- New publication guards pass nine tests; all 136 Python tests pass locally. Synthetic archive/API tests are not Android or release-publication acceptance. The download workflow and manifest are source-only; shipping game code remains unchanged. Actual prerelease publication and anonymous download remain pending until the new workflow runs.
+- The earlier local workspace was reset; source was restored from the published development branch. No new signing keys or secrets were added. Next: publish/inspect the download job, verify its public asset and update installation links. Physical-phone performance and dedicated ordinary Android reroll touch acceptance remain open.
+
+## Earlier pipeline correction checkpoint
 
 - Reroll commits are published at `2f6361c`. Its native Android build (`45385963840`) and full gameplay QA (`45385963803`) pass attempt 1. The three emulator workflows fail before gameplay: four jobs reject upstream emulator drift to 37.3.10.0, and two exports encounter Maven Central HTTP 429 dependency failures. Original failures are retained in docs/qa/rerolls-ci/initial-failures.json; these are not game-test passes.
 - Pin emulator build 16970787 / version 37.3.10.0 using an explicit Google archive URL and SHA256 in all three workflows. The downloaded archive matches Google's stable-channel size/SHA1, its recorded SHA256 and ZIP CRC; version banner matches. Android 35 Google APIs x86_64 image revision 9 remains guarded and matches current official metadata. A sandbox socket warning during the local version command is retained; no local emulator boot is claimed.
