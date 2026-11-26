@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-21",
+  "status": "passed locally; new hosted checks pending",
+  "change": "Valid rerolls introduce at least one new legal option; exhausted pools preserve credits/RNG and disable the button with an explanation.",
+  "reproduction": {
+    "seed": 161,
+    "original_first": [
+      "rail",
+      "arc",
+      "drone"
+    ],
+    "original_second": [
+      "arc",
+      "drone",
+      "rail"
+    ],
+    "original_repair_only_credits": "2 -> 1",
+    "fixed_repair_only_credits": "2 -> 2",
+    "scope": "Synthetic scene/model fixtures, not earned-on-device evidence. Ordinary choices() intentionally remains unchanged; only explicit rerolls gain the fallback."
+  },
+  "tests": {
+    "python": 121,
+    "strict_godot_suites": 15,
+    "systems_checks": 1375,
+    "gui_checks": 167,
+    "ui_checks": 2932,
+    "layouts": 204,
+    "forced_repeat_seeded_legal_pools": 256,
+    "edge_checks": 6,
+    "bounded_diagnostics_parity_cases": 2,
+    "failures": []
+  },
+  "gameplay_parity_fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+  "source_sha256": {
+    "systems/progression.gd": "7ac035ce9fbad9c2345d2ab8ea8ea7fd480981fdadb45491c613be8a06cac5bc",
+    "scripts/main.gd": "8b79e402c18d6bdaeae5479405bf25c7b5800cf698c8c00bd221a65faf4b60a4",
+    "ui/game_ui.gd": "ca29500d543f7176ea0ec5903786f202730f327936c5d08934aecd6486fa3692",
+    "tests/run_tests.gd": "fefb17ce477af4ac0f0de7b9948f97a4ddca7c84341186bc6591ecd980e5b95e",
+    "tests/run_gui_input_tests.gd": "b793f644298ecbf41c62ffdc27e4ce7ab681522d36d28682e893e219a050c161",
+    "tests/run_ui_tests.gd": "70db8f45cfd05cd5db2bec9e8f604e6df7c4f297413b8cba0a2d8ac9a78691f8",
+    "tools/run_headless_checks.py": "e7e5952a9dafcaafe9dd503ad745851c945223939264dca8c9bffbbc43b5acfe"
+  },
+  "log_sha256": {
+    "before.log": "3807ec2b29436821686f4801ccdc2d5e7de8db2e59ebb3ebb2587fb9dae72683",
+    "after.log": "f5bdca1132de9fa8429927dabe5417760c9faf18e7d4c7ba1c6bdbf17c4a5689",
+    "python.log": "cef31814e8638f7dba4645410eea4c31d7e448beeb8b03af5c78ec92da04d1d6",
+    "headless.log": "a88b8c321b5c15f7dd50c8f383a58a6e0c448b90ee4d48bcdeeeeefaf9c9e1be",
+    "replay.log": "825aa35e855b69c9dfcd90818756a1cc325c84acd32b146563daff49bd985c62"
+  },
+  "limits": [
+    "Headless engine dispatch/geometry fixtures, not physical touch/controller/keyboard acceptance.",
+    "No new rendered screenshots, Android run or APK yet for this change.",
+    "Only two bounded gameplay replays rerun locally; full prior matrices remain historical until hosted verification.",
+    "Normal-offer selection, balances, caps and slot quantities are unchanged. Only explicit rerolls may consume additional combat RNG."
+  ]
+}

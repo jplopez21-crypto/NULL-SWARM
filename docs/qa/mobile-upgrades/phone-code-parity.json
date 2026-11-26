@@ -1,0 +1,5 @@
+{
+  "status": "passed",
+  "matching_selected_entries": 44,
+  "scope": "Native libraries, DEX, GDScript and project settings match previous verified phone build. Debug signing/container bytes can differ."
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "file": "bot-report.json",
+    "cases": 14,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "corruption-probe.json",
+    "cases": 4,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "extended-seeds.json",
+    "cases": 6,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "engineer-probe.json",
+    "cases": 2,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "xp-comparison.json",
+    "cases": 6,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "pacing-probe.json",
+    "cases": 4,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "arcstorm-collection-probe.json",
+    "cases": 8,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "detour-probe.json",
+    "cases": 8,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "detour-holdout.json",
+    "cases": 12,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "diagnostics-parity.json",
+    "cases": 2,
+    "same_except_host_timings": true,
+    "failures": []
+  },
+  {
+    "file": "stress-report.json",
+    "cases": 6,
+    "same_gameplay_fingerprints": true,
+    "failures": []
+  },
+  {
+    "file": "corruption-stress-report.json",
+    "cases": 6,
+    "same_gameplay_fingerprints": true,
+    "failures": []
+  },
+  {
+    "file": "gravity-stress-report.json",
+    "cases": 6,
+    "same_gameplay_fingerprints": true,
+    "failures": []
+  },
+  {
+    "file": "engineer-stress-report.json",
+    "cases": 6,
+    "same_gameplay_fingerprints": true,
+    "failures": []
+  }
+]

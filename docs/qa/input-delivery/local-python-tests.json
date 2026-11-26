@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "tests": 59,
+  "source_sha": "993d7606ae5a4cb94755dc82fb6e1a94942cdd60",
+  "scope": "Executed local unit/regression suite; hosted count independently observed in python-ci-observation.json."
+}

@@ -1,0 +1,408 @@
+{
+  "cases": [
+    {
+      "adaptations": [
+        {
+          "at": 120.02,
+          "event": "analysis",
+          "metrics": {
+            "close_share": 0.0919323509107343,
+            "direct_share": 0.908067649089266,
+            "electric_share": 0.0,
+            "sample_seconds": 45.4666666666666,
+            "stationary_share": 0.0102639296187683,
+            "total_damage": 3187.44445238092
+          },
+          "style": "bulwarks"
+        },
+        {
+          "at": 120.02,
+          "event": "warning",
+          "starts_at": 128.02,
+          "style": "bulwarks"
+        },
+        {
+          "at": 128.03,
+          "event": "active",
+          "expires_at": 173.03,
+          "style": "bulwarks"
+        },
+        {
+          "at": 173.03,
+          "event": "expired",
+          "style": "bulwarks"
+        }
+      ],
+      "architect_defeated": false,
+      "architect_spawned": false,
+      "banked_salvage": 13,
+      "bot_policy": "cautious",
+      "corruption": [],
+      "damage_by_weapon": {
+        "halo": 316.303595238094,
+        "orbit": 496.43292857144,
+        "pulse": 8274.29179761909,
+        "rail": 4033.98911904766,
+        "thermal": 1557.99178571429
+      },
+      "damage_events": 2,
+      "dashes": 11,
+      "first_level_seconds": 14.63,
+      "first_new_weapon_seconds": 14.63,
+      "fixture": "new player",
+      "gravity_fields": {
+        "activations": 0,
+        "pull_distance": 0.0,
+        "pulses": 0
+      },
+      "health": 100.0,
+      "kills": 260,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 171.7,
+      "level": 19,
+      "link_policy": "clean",
+      "longest_upgrade_gap_seconds": 17.6,
+      "max_enemies": 23,
+      "max_merge_distance": 0.0,
+      "max_projectiles": 9,
+      "minimum_health": 100.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 75,
+          "level": 8,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 164,
+          "level": 14,
+          "time": 120
+        },
+        {
+          "hp": 100.0,
+          "kills": 260,
+          "level": 19,
+          "time": 180
+        }
+      ],
+      "mutations": {
+        "halo": 61.5
+      },
+      "outcome": "time_limit",
+      "peak_pickups": 17,
+      "pickup_merges": 0,
+      "pickup_mode": "local",
+      "profile": "halo",
+      "research": {
+
+      },
+      "resisted_hits": 0,
+      "seed": 909,
+      "simulation_step_p95_ms": 0.31,
+      "spawned_by_type": {
+        "bulwark": 34,
+        "crawler": 139,
+        "sentry": 35,
+        "striker": 68
+      },
+      "survived_seconds": 180.0,
+      "uncollected_pickups": 17,
+      "uncollected_xp": 156,
+      "upgrade_choices": [
+        {
+          "at": 14.63,
+          "id": "orbit"
+        },
+        {
+          "at": 22.6,
+          "id": "pierce"
+        },
+        {
+          "at": 27.33,
+          "id": "orbit"
+        },
+        {
+          "at": 29.87,
+          "id": "thermal"
+        },
+        {
+          "at": 37.55,
+          "id": "thermal"
+        },
+        {
+          "at": 44.88,
+          "id": "thermal"
+        },
+        {
+          "at": 52.37,
+          "id": "magnet"
+        },
+        {
+          "at": 61.48,
+          "id": "orbit"
+        },
+        {
+          "at": 75.37,
+          "id": "pierce"
+        },
+        {
+          "at": 85.65,
+          "id": "rail"
+        },
+        {
+          "at": 94.53,
+          "id": "rail"
+        },
+        {
+          "at": 103.0,
+          "id": "rail"
+        },
+        {
+          "at": 116.28,
+          "id": "rail"
+        },
+        {
+          "at": 133.88,
+          "id": "orbit"
+        },
+        {
+          "at": 144.02,
+          "id": "orbit"
+        },
+        {
+          "at": 154.33,
+          "id": "damage"
+        },
+        {
+          "at": 162.65,
+          "id": "thermal"
+        },
+        {
+          "at": 171.7,
+          "id": "rail"
+        }
+      ],
+      "wall_seconds": 2.810689,
+      "warden_defeated": false,
+      "warden_spawned": false,
+      "weapons_and_ranks": {
+        "damage": 1,
+        "magnet": 1,
+        "orbit": 5,
+        "pierce": 2,
+        "rail": 5,
+        "thermal": 4
+      },
+      "xp_collected": 1908
+    },
+    {
+      "adaptations": [
+        {
+          "at": 120.02,
+          "event": "analysis",
+          "metrics": {
+            "close_share": 0.0919323509107343,
+            "direct_share": 0.908067649089266,
+            "electric_share": 0.0,
+            "sample_seconds": 45.4666666666666,
+            "stationary_share": 0.0102639296187683,
+            "total_damage": 3187.44445238092
+          },
+          "style": "bulwarks"
+        },
+        {
+          "at": 120.02,
+          "event": "warning",
+          "starts_at": 128.02,
+          "style": "bulwarks"
+        },
+        {
+          "at": 128.03,
+          "event": "active",
+          "expires_at": 173.03,
+          "style": "bulwarks"
+        },
+        {
+          "at": 173.03,
+          "event": "expired",
+          "style": "bulwarks"
+        }
+      ],
+      "architect_defeated": false,
+      "architect_spawned": false,
+      "banked_salvage": 13,
+      "bot_policy": "cautious",
+      "corruption": [],
+      "damage_by_weapon": {
+        "halo": 316.303595238094,
+        "orbit": 496.43292857144,
+        "pulse": 8274.29179761909,
+        "rail": 4033.98911904766,
+        "thermal": 1557.99178571429
+      },
+      "damage_events": 2,
+      "dashes": 11,
+      "first_level_seconds": 14.63,
+      "first_new_weapon_seconds": 14.63,
+      "fixture": "new player",
+      "gravity_fields": {
+        "activations": 0,
+        "pull_distance": 0.0,
+        "pulses": 0
+      },
+      "health": 100.0,
+      "kills": 260,
+      "kit": "vanguard",
+      "last_upgrade_seconds": 171.7,
+      "level": 19,
+      "link_policy": "clean",
+      "longest_upgrade_gap_seconds": 17.6,
+      "max_enemies": 23,
+      "max_merge_distance": 0.0,
+      "max_projectiles": 9,
+      "minimum_health": 100.0,
+      "minute_snapshots": [
+        {
+          "hp": 100.0,
+          "kills": 75,
+          "level": 8,
+          "time": 60
+        },
+        {
+          "hp": 100.0,
+          "kills": 164,
+          "level": 14,
+          "time": 120
+        },
+        {
+          "hp": 100.0,
+          "kills": 260,
+          "level": 19,
+          "time": 180
+        }
+      ],
+      "mutations": {
+        "halo": 61.5
+      },
+      "outcome": "time_limit",
+      "peak_pickups": 17,
+      "pickup_merges": 0,
+      "pickup_mode": "local",
+      "profile": "halo",
+      "research": {
+
+      },
+      "resisted_hits": 0,
+      "seed": 909,
+      "simulation_step_p95_ms": 0.3,
+      "spawned_by_type": {
+        "bulwark": 34,
+        "crawler": 139,
+        "sentry": 35,
+        "striker": 68
+      },
+      "survived_seconds": 180.0,
+      "uncollected_pickups": 17,
+      "uncollected_xp": 156,
+      "upgrade_choices": [
+        {
+          "at": 14.63,
+          "id": "orbit"
+        },
+        {
+          "at": 22.6,
+          "id": "pierce"
+        },
+        {
+          "at": 27.33,
+          "id": "orbit"
+        },
+        {
+          "at": 29.87,
+          "id": "thermal"
+        },
+        {
+          "at": 37.55,
+          "id": "thermal"
+        },
+        {
+          "at": 44.88,
+          "id": "thermal"
+        },
+        {
+          "at": 52.37,
+          "id": "magnet"
+        },
+        {
+          "at": 61.48,
+          "id": "orbit"
+        },
+        {
+          "at": 75.37,
+          "id": "pierce"
+        },
+        {
+          "at": 85.65,
+          "id": "rail"
+        },
+        {
+          "at": 94.53,
+          "id": "rail"
+        },
+        {
+          "at": 103.0,
+          "id": "rail"
+        },
+        {
+          "at": 116.28,
+          "id": "rail"
+        },
+        {
+          "at": 133.88,
+          "id": "orbit"
+        },
+        {
+          "at": 144.02,
+          "id": "orbit"
+        },
+        {
+          "at": 154.33,
+          "id": "damage"
+        },
+        {
+          "at": 162.65,
+          "id": "thermal"
+        },
+        {
+          "at": 171.7,
+          "id": "rail"
+        }
+      ],
+      "wall_seconds": 2.774545,
+      "warden_defeated": false,
+      "warden_spawned": false,
+      "weapons_and_ranks": {
+        "damage": 1,
+        "magnet": 1,
+        "orbit": 5,
+        "pierce": 2,
+        "rail": 5,
+        "thermal": 4
+      },
+      "xp_collected": 1908
+    }
+  ],
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "diagnostic_observations": 120,
+  "failures": [],
+  "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+  "fixed_step": 0.0166666666666667,
+  "godot": "4.6.3-stable (official)",
+  "kind": "diagnostic observation gameplay parity",
+  "limits": "Synthetic supplied 60FPS forces sampler execution during the seeded normal-rules replay; not a rendered/device FPS measurement or human balance test.",
+  "logical_cpus": 3,
+  "os": "Linux",
+  "rendering": "headless / no GPU frame measurements",
+  "schema": 1
+}

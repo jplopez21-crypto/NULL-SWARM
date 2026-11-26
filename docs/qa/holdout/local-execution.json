@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "cases": 12,
+  "pairs": 6,
+  "profiles": [
+    "arcstorm",
+    "halo",
+    "kinetic"
+  ],
+  "seeds": [
+    606,
+    707
+  ],
+  "declaration_commit": "580dba14109f642991f2f7b1815a58c6f47bb4c0",
+  "declared_before_execution": true,
+  "policy_sources_match_previous_verified_code": {
+    "tests/bot_driver.gd": "78f227a043c340a49a00f62b6da87038ffdc04e6b2b745fe0e05d31bb2ce96bf",
+    "tests/detour_bot.gd": "8258fe6d9cb81f4e38da6c81a767ecb70fd8b16c85c62caa87889cb8673fe39a",
+    "tests/value_aware_bot.gd": "d0761cead0d6e7012feff3f1ca148a9ccf9b28b8e032e1ca396d9622ff8ec893"
+  },
+  "previous_default_reports_byte_identical": 6,
+  "python_tests": 100,
+  "strict_godot_suites": 15,
+  "raw_sha256": "d7c33693dc2493987278c3c9fa19addd03e7b5d9b52f1747c1e2735b86fb38d8",
+  "scope": "New validation relative to the prior candidate design cases; no tuning after results. This is not human/population acceptance or a universally improved policy."
+}

@@ -1,0 +1,113 @@
+{
+  "status": "passed",
+  "transcripts": {
+    "mobile/android-mobile.json": {
+      "cards": 7,
+      "recipes": [
+        "arcstorm",
+        "halo",
+        "singularity"
+      ],
+      "owned_prerequisite_cases": 0,
+      "observations": [
+        {
+          "path": "/earned_upgrade/transactions/0/offered",
+          "title": "PLASMA ORBITALS",
+          "recipe": "halo",
+          "level": 2,
+          "ranks": {
+            "orbit": 0,
+            "thermal": 0
+          },
+          "expected": "Orbitals 0/3 + Thermal 0/3",
+          "text": "02\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nHALO: Orbitals 0/3 + Thermal 0/3"
+        },
+        {
+          "path": "/corruption_cancel/ordinary",
+          "title": "PLASMA ORBITALS",
+          "recipe": "halo",
+          "level": 5,
+          "ranks": {
+            "orbit": 0,
+            "thermal": 0
+          },
+          "expected": "Orbitals 0/3 + Thermal 0/3",
+          "text": "01\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nHALO: Orbitals 0/3 + Thermal 0/3"
+        },
+        {
+          "path": "/corruption_cancel/restored",
+          "title": "PLASMA ORBITALS",
+          "recipe": "halo",
+          "level": 5,
+          "ranks": {
+            "orbit": 0,
+            "thermal": 0
+          },
+          "expected": "Orbitals 0/3 + Thermal 0/3",
+          "text": "01\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nHALO: Orbitals 0/3 + Thermal 0/3"
+        },
+        {
+          "path": "/earned_corruption/progression/0/offered",
+          "title": "RAIL LANCE",
+          "recipe": "singularity",
+          "level": 3,
+          "ranks": {
+            "rail": 0,
+            "magnet": 0
+          },
+          "expected": "Rail 0/3 + Tether 0/3",
+          "text": "01\n\nRAIL LANCE\nNEW WEAPON // PIERCE\n\nA piercing beam drills\nthrough the whole line.\nEVOLVE: Singularity Lance\nRail 0/3 + Tether 0/3\nPull field; bosses stay anchored."
+        },
+        {
+          "path": "/earned_corruption/progression/0/offered",
+          "title": "ARC EMITTER",
+          "recipe": "arcstorm",
+          "level": 3,
+          "ranks": {
+            "damage": 0,
+            "arc": 0
+          },
+          "expected": "Pulse 0/3 + Arc 0/3",
+          "text": "03\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nARCSTORM: Pulse 0/3 + Arc 0/3"
+        },
+        {
+          "path": "/earned_corruption/progression/1/offered",
+          "title": "AMPLIFIED PULSE",
+          "recipe": "arcstorm",
+          "level": 4,
+          "ranks": {
+            "damage": 0,
+            "arc": 0
+          },
+          "expected": "Pulse 0/3 + Arc 0/3",
+          "text": "02\n\nAMPLIFIED PULSE\nDamage 18 \u2192 24\nARCSTORM: Pulse 0/3 + Arc 0/3"
+        },
+        {
+          "path": "/earned_corruption/progression/1/offered",
+          "title": "PLASMA ORBITALS",
+          "recipe": "halo",
+          "level": 4,
+          "ranks": {
+            "orbit": 0,
+            "thermal": 0
+          },
+          "expected": "Orbitals 0/3 + Thermal 0/3",
+          "text": "03\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nHALO: Orbitals 0/3 + Thermal 0/3"
+        }
+      ]
+    },
+    "android/android-runtime.json": {
+      "cards": 0,
+      "recipes": [],
+      "owned_prerequisite_cases": 0,
+      "observations": []
+    },
+    "latched/gameplay/android-runtime.json": {
+      "cards": 0,
+      "recipes": [],
+      "owned_prerequisite_cases": 0,
+      "observations": []
+    }
+  },
+  "scope": "Fresh actual Android upgrade panels checked against observed current ranks, with completed counts capped at three. Observed recipes only; not earned weapon mutation acceptance. Native/UI fixtures separately cover every prerequisite card."
+}

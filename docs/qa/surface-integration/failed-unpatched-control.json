@@ -1,0 +1,46 @@
+{
+  "source": "f905ac3c369aaafa21f429cd6d36564aed808485",
+  "run_id": 42405911355,
+  "job_id": 128503436984,
+  "recovery_driver_status": "failed",
+  "collection_status": "passed",
+  "completed_cycles": 16,
+  "failed_cycle": 17,
+  "passed_checks_before_failure": 49,
+  "app_egl_warnings": [
+    "11-07 19:29:01.314  3327  3363 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:11.398  3327  3363 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:37.636  3327  3363 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:29:54.292  3327  3363 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:30:02.135  3327  3363 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-07 19:30:46.512  3327  3363 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "last_state": {
+    "state": "paused",
+    "time": 8.16666666666665,
+    "rendered_frames": 387,
+    "sample_ticks": 158101,
+    "lifecycle": {
+      "background_events": 34,
+      "foreground_generation": 32,
+      "rendered_generation": 32
+    },
+    "process": 3327
+  },
+  "scope": "Unpatched control failed recovery, not a passing recovery test. Original diagnostic disconnection/retest recorded separately.",
+  "failure_image_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6",
+  "failure_image_extrema": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "reference_complete_non_timing_case_route_and_xp_trace_parity": 4,
+  "previous_default_reports_byte_identical": 4,
+  "raw_sha256": "bbb20a20342adcfd8813c10e401c0c52d7ee9337c689514bb77367b8a0ae9943",
+  "initial_fixture_error": {
+    "cause": "Unit fixture assigned an untyped array to typed encounter locations. Corrected to assign and a nonradial warning; strict headless rerun required. No successful initial suite claimed.",
+    "log_sha256": "d64efa913d7acf0940cfd54657f51368dfdab47ae2117115711594f0798dfaf5"
+  },
+  "limits": "Four fixed matched seeds; altered movement changes adaptation/offers. All four candidate gaps shorten; collected XP decreases in one. No human balance inference or reference-policy replacement.",
+  "fixture_corrections": {
+    "initial_array_assignment_error_retained": true,
+    "inherited_dash_assumption": "First walking fixture allowed the inherited collector to request a dash. Isolated the walking path with a busy cooldown; probe rules and candidate code unchanged.",
+    "log_sha256": "bdfd76137d6db21585f35ec719439e2807ad43afbe62e53b0e43e0ff48ba557b",
+    "initial_strict_summary": {
+      "suites": [
+        {
+          "suite": "engineer",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 27,
+          "errors": []
+        },
+        {
+          "suite": "gui-input",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 101,
+          "errors": []
+        },
+        {
+          "suite": "audio",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 59,
+          "errors": []
+        },
+        {
+          "suite": "android-probe",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 33,
+          "errors": []
+        },
+        {
+          "suite": "resources",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 77,
+          "errors": []
+        },
+        {
+          "suite": "input",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 23,
+          "errors": []
+        },
+        {
+          "suite": "touch-dash",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 69,
+          "errors": []
+        },
+        {
+          "suite": "touch-pause",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 97,
+          "errors": []
+        },
+        {
+          "suite": "operative",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 41,
+          "errors": []
+        },
+        {
+          "suite": "destruction",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 59,
+          "errors": []
+        },
+        {
+          "suite": "attack-lanes",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 67,
+          "errors": []
+        },
+        {
+          "suite": "systems",
+          "status": "failed",
+          "exit_code": 1,
+          "checks": null,
+          "errors": [
+            "ERROR: FAIL: loop starts a bounded legal stick detour without a granted dash",
+            "ERROR: FAIL: newly obstructed committed path cancels rather than overriding collision prediction"
+          ]
+        },
+        {
+          "suite": "corruption",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 47,
+          "errors": []
+        },
+        {
+          "suite": "ui-headless",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": 2600,
+          "errors": []
+        },
+        {
+          "suite": "scene-smoke",
+          "status": "passed",
+          "exit_code": 0,
+          "checks": null,
+          "errors": []
+        }
+      ],
+      "status": "failed"
+    },
+    "corrected_systems_checks": 1113
+  },
+  "python_tests": 94
+}

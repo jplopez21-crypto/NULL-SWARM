@@ -1,0 +1,6 @@
+{
+  "source_remote": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+  "source_sha256": "1b9666bbf9052bfc1a9cb484e8725efd54e5539ce3f0dd88b8a9d243793d8c7e",
+  "fixture_sha256": "fbce1179ccc5b2ebfed622fb5e8ad67d0d0a354221b07795d260abb101b5dd0d",
+  "scope": "Frozen accepted enemy; only class_name removed for paired same-worker behavior/visibility traces."
+}

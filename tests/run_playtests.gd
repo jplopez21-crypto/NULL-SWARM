@@ -1,6 +1,7 @@
 extends SceneTree
 
 var failures: Array[String] = []
+var diagnostic_observations: int = 0
 const DT: float = 1.0 / 60.0
 const MAX_SECONDS: float = 720.0
 
@@ -26,6 +27,8 @@ func _game(seed_value: int, kit: String, pickup_mode: String = "local") -> Node3
 		game.save.data["salvaged_kills"] = 150
 	if kit == "sentinel":
 		game.save.data["wardens"] = 1
+	if kit == "engineer":
+		game.save.data["architects"] = 1
 	game.save.data["selected_kit"] = kit
 	game.start_run()
 	if pickup_mode == "legacy":
@@ -37,10 +40,38 @@ func _game(seed_value: int, kit: String, pickup_mode: String = "local") -> Node3
 	game.audio.shutdown()
 	return game
 
-func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean") -> Dictionary:
+func _pacing_sample(game: Node3D) -> Dictionary:
+	var cold_xp: int = 0
+	var attracted_xp: int = 0
+	var local_xp: int = 0
+	var nearest: float = INF
+	for item in game.pickups.items:
+		if item["attract"]:
+			attracted_xp += int(item["xp"])
+			continue
+		cold_xp += int(item["xp"])
+		var offset: Vector3 = item["mesh"].position - game.player.position
+		offset.y = 0.0
+		var distance: float = offset.length()
+		nearest = minf(nearest, distance)
+		if distance <= 16.0:
+			local_xp += int(item["xp"])
+	return {"time": snappedf(game.combat.director.elapsed, 0.01), "level": game.progress.level,
+		"xp": game.progress.xp, "threshold": game.progress.threshold(), "pending": game.progress.pending,
+		"dropped": game.pickups.total_dropped, "collected": game.pickups.total_collected,
+		"cold_xp": cold_xp, "attracted_xp": attracted_xp, "cold_xp_within_16m": local_xp,
+		"nearest_cold_m": snappedf(nearest, 0.01) if nearest < INF else -1.0,
+		"position": [snappedf(game.player.position.x, 0.01), snappedf(game.player.position.z, 0.01)],
+		"speed": game.player.effective_speed(), "magnet": game.player.magnet, "kills": game.combat.kills}
+
+func simulate(seed_value: int, profile: String, kit: String, duration: float = MAX_SECONDS, pickup_mode: String = "local", bot_policy: String = "cautious", link_policy: String = "clean", trace_pacing: bool = false, diagnostics: bool = false, trace_route: bool = false) -> Dictionary:
 	var starting_failures: int = failures.size()
 	var game := _game(seed_value, kit, pickup_mode)
+	if diagnostics:
+		game.change_setting("performance_stats", true)
 	var bot: PlaytestBot = ValueAwareBot.new() if bot_policy == "value_aware" else PlaytestBot.new()
+	if bot_policy == "detour":
+		bot = preload("res://tests/detour_bot.gd").new()
 	bot.profile = profile
 	var steps: int = 0
 	var max_enemies: int = 0
@@ -50,6 +81,10 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 	var samples: Array[float] = []
 	var snapshots: Array[Dictionary] = []
 	var next_snapshot: float = 60.0
+	var pacing_trace: Array[Dictionary] = []
+	var route_trace: Array[Dictionary] = []
+	var route := preload("res://tests/route_observer.gd").new()
+	var next_trace: float = 0.0
 	var wall_start := Time.get_ticks_usec()
 	while steps < int(duration / DT) + 1000 and game.state != game.State.RESULTS and game.combat.director.elapsed < duration:
 		if game.state == game.State.UPGRADING and game.combat.corruption.available(game.progress.level) and link_policy != "clean":
@@ -65,8 +100,15 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 				game.select_corruption(id)
 				bot.choices.append({"at": snappedf(game.combat.director.elapsed, 0.01), "id": "corruption:" + id})
 		bot.tick(game, DT)
+		if trace_route:
+			route.begin_step(game.player.position, game.input_router.stick, game.input_router.dash_requested, game.player.dash_cooldown, game.state == game.State.PLAYING)
 		var start := Time.get_ticks_usec()
 		game._physics_process(DT)
+		if trace_route:
+			route.end_step(game.player.position, game.player.dash_cooldown, DT)
+		if diagnostics:
+			# Synthetic FPS drives the real read-only sampling path; not device data.
+			game._sample_performance(steps * 17, 60.0)
 		samples.append(float(Time.get_ticks_usec() - start) / 1000.0)
 		steps += 1
 		max_enemies = maxi(max_enemies, game.combat.active_enemies)
@@ -79,6 +121,11 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		if game.combat.director.elapsed >= next_snapshot:
 			snapshots.append({"time": int(next_snapshot), "hp": snappedf(game.player.health.current, 0.01), "level": game.progress.level, "kills": game.combat.kills})
 			next_snapshot += 60.0
+		if trace_pacing and game.combat.director.elapsed >= next_trace:
+			pacing_trace.append(_pacing_sample(game))
+			if trace_route:
+				route_trace.append(route.snapshot(game.combat.director.elapsed))
+			next_trace += 5.0
 		_check(is_finite(game.player.position.x) and is_finite(game.player.health.current), "non-finite player state")
 		_check(absf(game.player.position.x) <= 47.01 and absf(game.player.position.z) <= 47.01, "movement escaped arena")
 		_check(game.progress.equipped() <= Arsenal.MAX_SLOTS, "bot obtained too many weapons")
@@ -111,15 +158,33 @@ func simulate(seed_value: int, profile: String, kit: String, duration: float = M
 		"damage_events": bot.damage_events, "first_level_seconds": snappedf(first_level, 0.01), "first_new_weapon_seconds": snappedf(bot.first_new_weapon, 0.01),
 		"xp_collected": game.pickups.total_collected, "uncollected_xp": uncollected_xp, "uncollected_pickups": game.pickups.items.size(),
 		"longest_upgrade_gap_seconds": snappedf(longest_gap, 0.01), "last_upgrade_seconds": last_upgrade,
-		"weapons_and_ranks": game.progress.ranks.duplicate(), "mutations": mutation_times, "damage_by_weapon": game.combat.damage_by_weapon.duplicate(),
+		"gravity_fields": {"activations": game.combat.gravity.activations, "pulses": game.combat.gravity.pulses_fired, "pull_distance": game.combat.gravity.pull_distance}, "weapons_and_ranks": game.progress.ranks.duplicate(), "mutations": mutation_times, "damage_by_weapon": game.combat.damage_by_weapon.duplicate(),
 		"warden_spawned": game.combat.encounters.mini_spawned, "warden_defeated": game._warden_down(), "architect_spawned": game.combat.encounters.boss_spawned,
 		"architect_defeated": game._architect_down(), "max_enemies": max_enemies, "max_projectiles": max_shots,
 		"adaptations": game.combat.adaptation.history.duplicate(true), "spawned_by_type": game.combat.spawned_by_type.duplicate(), "resisted_hits": game.combat.resisted_hits,
 		"corruption": game.combat.corruption.accepted.duplicate(), "link_policy": link_policy,
 		"banked_salvage": int(game.save.data["ledger"].get("awarded", 0)), "upgrade_choices": bot.choices, "minute_snapshots": snapshots,
 		"simulation_step_p95_ms": QAReport.percentile(samples, 0.95), "wall_seconds": (Time.get_ticks_usec() - wall_start) / 1000000.0}
+	if kit == "engineer":
+		result["field_sentry"] = {"activations": game.combat.sentry.activations, "shots": game.combat.sentry.shots}
+	if bot_policy == "detour":
+		result["detours"] = {"started": bot.get("detours_started"), "cancelled": bot.get("detours_cancelled")}
 	if result["outcome"] == "victory":
 		_check(result["architect_defeated"] and float(result["survived_seconds"]) >= 600.0, "invalid victory")
+	if trace_pacing:
+		pacing_trace.append(_pacing_sample(game))
+		if trace_route:
+			route_trace.append(route.snapshot(game.combat.director.elapsed))
+			result["route_trace"] = route_trace
+		result["pacing_trace"] = pacing_trace
+		for sample in pacing_trace:
+			_check(sample["dropped"] == sample["collected"] + sample["cold_xp"] + sample["attracted_xp"], "pacing trace lost XP accounting")
+			var completed_levels: int = int(sample["level"]) - 1
+			var spent_xp: int = completed_levels * 18 + 5 * completed_levels * (completed_levels - 1)
+			_check(sample["collected"] == spent_xp + sample["xp"], "pacing trace disagrees with accumulated level costs")
+	if diagnostics:
+		diagnostic_observations = game.performance_history.samples.size()
+		_check(diagnostic_observations > 0 and diagnostic_observations <= 120, "diagnostic replay failed to sustain a bounded observation window")
 	game.audio.shutdown()
 	game.queue_free()
 	await process_frame
@@ -134,6 +199,53 @@ func fingerprint(result: Dictionary) -> String:
 	return JSON.stringify(clean).sha256_text()
 
 func run() -> void:
+	if "--diagnostics-parity" in OS.get_cmdline_user_args():
+		var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/diagnostic-baseline.json"))
+		var disabled: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
+		var enabled: Dictionary = await simulate(909, "halo", "vanguard", 180.0, "local", "cautious", "clean", false, true)
+		_check(fingerprint(disabled) == fingerprint(enabled), "diagnostics changed seeded gameplay or upgrade choices")
+		_check(fingerprint(disabled) == baseline["fingerprint"], "diagnostic replay differs from the previously accepted baseline")
+		var report := QAReport.metadata("diagnostic observation gameplay parity")
+		report.merge({"cases": [disabled, enabled], "fingerprint": fingerprint(disabled), "diagnostic_observations": diagnostic_observations, "failures": failures,
+			"limits": "Synthetic supplied 60FPS forces sampler execution during the seeded normal-rules replay; not a rendered/device FPS measurement or human balance test."})
+		QAReport.write("res://builds/qa/diagnostics-parity.json", report)
+		print("DIAGNOSTICS_PARITY_RESULT cases=2 failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--pacing-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("Singularity upgrade-gap navigation comparison")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202]:
+			for policy in ["cautious", "value_aware"]:
+				var result: Dictionary = await simulate(seed_value, "singularity", "vanguard", MAX_SECONDS, "local", policy, "clean", true)
+				cases.append(result)
+				print("PACING_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " level=", result["level"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Same normal combat and upgrade policy; only collection navigation differs.", "Five-second samples explain availability, not exact human visibility, safety or balance.", "No injected XP, forced kills, altered spawn rules or granted upgrades."]
+		QAReport.write("res://builds/qa/pacing-probe.json", report)
+		var markdown := "# Upgrade pacing investigation\n\nNormal rules; same Singularity upgrade preferences. Navigation changes only. Fixed seeds and geometric sensors do not establish human balance.\n\n| Seed | Collector | Outcome | Level | XP recovered | Longest gap |\n|---:|---|---|---:|---:|---:|\n"
+		for result in cases:
+			markdown += "| %d | %s | %s | %d | %d | %.2fs |\n" % [result["seed"], result["bot_policy"], result["outcome"], result["level"], result["xp_collected"], result["longest_upgrade_gap_seconds"]]
+		markdown += "\nTrace samples include banked/uncollected XP, nearby packet distance, attraction state and player position. Cautious and value-aware policies are preserved.\n\nFailures: %d. No global XP/spawn/damage changes.\n" % failures.size()
+		QAReport.text_file("res://builds/qa/PACING_REPORT.md", markdown)
+		print("PACING_REPORT cases=", cases.size(), " failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--engineer-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules earned Engineer sessions")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202]:
+			var result: Dictionary = await simulate(seed_value, "engineer", "engineer")
+			cases.append(result)
+			_check(int(result["field_sentry"]["activations"]) > 0 and int(result["field_sentry"]["shots"]) > 0, "Engineer bot never exercised an actual dash sentry")
+			print("ENGINEER_CASE seed=", seed_value, " outcome=", result["outcome"], " sentry=", result["field_sentry"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["limitations"] = ["Architect milestone is an explicit earned-kit starting fixture; no research, combat-stat, XP or damage immunity grants.", "Existing cautious navigation dashes for danger, not optimal sentry placement. Two seeds do not establish human balance."]
+		QAReport.write("res://builds/qa/engineer-probe.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--corruption-probe" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("normal-rules corruption choices")
 		var cases: Array[Dictionary] = []
@@ -148,6 +260,21 @@ func run() -> void:
 		QAReport.write("res://builds/qa/corruption-probe.json", report)
 		quit(0 if failures.is_empty() else 1)
 		return
+	if "--singularity-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules Singularity build sessions")
+		var cases: Array[Dictionary] = []
+		var exercised: bool = false
+		for seed_value in [101, 202]:
+			var result: Dictionary = await simulate(seed_value, "singularity", "vanguard")
+			cases.append(result)
+			exercised = exercised or (result["mutations"].has("singularity") and int(result["gravity_fields"]["pulses"]) > 0)
+			print("SINGULARITY_CASE seed=", seed_value, " outcome=", result["outcome"], " fields=", result["gravity_fields"])
+		_check(exercised, "Singularity sessions never reached a working evolved field")
+		report["cases"] = cases
+		report["failures"] = failures
+		QAReport.write("res://builds/qa/singularity-probe.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
 	if "--extended-seeds" in OS.get_cmdline_user_args():
 		var report := QAReport.metadata("additional fixed-seed normal-rules sessions")
 		var cases: Array[Dictionary] = []
@@ -159,6 +286,47 @@ func run() -> void:
 		report["failures"] = failures
 		report["limitations"] = ["Additional fixed seeds, not random exploration or human balance evidence.", "Same cautious navigation and normal combat; earned kits have no research grants."]
 		QAReport.write("res://builds/qa/extended-seeds.json", report)
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--detour-probe" in OS.get_cmdline_user_args() or "--detour-holdout" in OS.get_cmdline_user_args():
+		var holdout: bool = "--detour-holdout" in OS.get_cmdline_user_args()
+		var report := QAReport.metadata("normal-rules detour holdout" if holdout else "normal-rules detour experiment")
+		var cases: Array[Dictionary] = []
+		for profile in (["arcstorm", "halo", "kinetic"] if holdout else ["arcstorm"]):
+			for seed_value in ([606, 707] if holdout else [101, 202, 303, 404]):
+				for policy in ["value_aware", "detour"]:
+					var result: Dictionary = await simulate(seed_value, profile, "vanguard", MAX_SECONDS, "local", policy, "clean", true, false, true)
+					cases.append(result)
+					print("DETOUR_CASE profile=", profile, " seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["route_schema"] = 1
+		report["limitations"] = ["Explicit experimental five-metre waypoint commitment after sixteen decisions with low net travel. Existing reference policies unchanged.", "Normal stick input, inherited danger dashes and upgrade preferences only; no stat grants, immunity, teleporting or RNG writes.", "Path clearance is a limited prediction within existing sensors, not a safety guarantee. Movement changes adaptation, offers and subsequent upgrades.", "Four fixed seed pairs; defeats and mixed results remain observations, not failed balance tests or human-fun estimates."]
+		if holdout:
+			report["candidate_source_sha256"] = FileAccess.get_file_as_string("res://tests/detour_bot.gd").sha256_text()
+			var policy_sources: Dictionary = {}
+			for path in ["tests/detour_bot.gd", "tests/value_aware_bot.gd", "tests/bot_driver.gd"]:
+				policy_sources[path] = FileAccess.get_file_as_string("res://" + path).sha256_text()
+			report["policy_sources_sha256"] = policy_sources
+			report["limitations"] = ["Two previously unused seeds across Arcstorm, Halo and Kinetic. Candidate and reference sources frozen from the preceding experiment; no tuning after observing these cases.", "Normal new-player stats, stick/dash controls and inherited upgrade preferences. No grants, immunity, teleporting or RNG writes.", "Different movement changes enemies, offers and later choices. Two seeds per profile cannot establish population win rates, human fun or safe paths.", "Original design cases and canonical gameplay matrices remain separate; mixed outcomes are observations, not balance failures."]
+		QAReport.write("res://builds/qa/detour-holdout.json" if holdout else "res://builds/qa/detour-probe.json", report)
+		print("DETOUR_HOLDOUT_RESULT" if holdout else "DETOUR_RESULT", " cases=", cases.size(), " failures=", failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
+	if "--arcstorm-collection-probe" in OS.get_cmdline_user_args():
+		var report := QAReport.metadata("normal-rules Arcstorm collection probe")
+		var cases: Array[Dictionary] = []
+		for seed_value in [101, 202, 303, 404]:
+			for policy in ["cautious", "value_aware"]:
+				var result: Dictionary = await simulate(seed_value, "arcstorm", "vanguard", MAX_SECONDS, "local", policy, "clean", true, false, true)
+				cases.append(result)
+				print("ARCSTORM_COLLECTION_CASE seed=", seed_value, " policy=", policy, " outcome=", result["outcome"], " gap=", result["longest_upgrade_gap_seconds"])
+		report["cases"] = cases
+		report["failures"] = failures
+		report["route_schema"] = 1
+		report["limitations"] = ["Same combat rules, starting stats and upgrade preferences; navigation/dash policies differ.", "Adaptive enemies, combat, offers and actual selections may diverge normally after movement changes.", "Five-second XP proximity samples do not establish safety, human visibility or causal balance effects.", "Four fixed seeds; defeats remain observations. No XP, immunity or upgrade grants."]
+		QAReport.write("res://builds/qa/arcstorm-collection-probe.json", report)
+		print("ARCSTORM_COLLECTION_RESULT cases=", cases.size(), " failures=", failures.size())
 		quit(0 if failures.is_empty() else 1)
 		return
 	if "--collector-probe" in OS.get_cmdline_user_args():
@@ -198,6 +366,11 @@ func run() -> void:
 			print("BOT_CASE ", profile, " seed=", seed_value, " outcome=", result["outcome"], " time=", result["survived_seconds"], " kills=", result["kills"])
 	for kit in ["conductor", "sentinel"]:
 		cases.append(await simulate(101, "electric" if kit == "conductor" else "halo", kit))
+	var gravity_covered: bool = false
+	for result in cases:
+		if result["profile"] == "singularity" and result["mutations"].has("singularity"):
+			gravity_covered = gravity_covered or int(result["gravity_fields"]["pulses"]) > 0
+	_check(gravity_covered, "normal-rules sessions never activated and pulsed Singularity")
 	var repeat_a: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
 	var repeat_b: Dictionary = await simulate(909, "halo", "vanguard", 180.0)
 	_check(fingerprint(repeat_a) == fingerprint(repeat_b), "seeded bot replay diverged")

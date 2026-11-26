@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "method": "Every complete UI snapshot in five actual Android transcripts is checked. Mobile and both lifecycle transcripts include full paused UI: no visible chain or gameplay buttons, modal controls available; playing restores both HUD actions. Ordinary/latched gameplay transcripts only retain complete playing UI, with condensed pause snapshots covered separately by existing touch regressions. UI headless tests separately cover hints and nested settings/build.",
+  "samples": {
+    "mobile/android-mobile.json": {
+      "playing": 10,
+      "upgrading": 13,
+      "paused": 16
+    },
+    "android/android-runtime.json": {
+      "playing": 1,
+      "paused": 2
+    },
+    "lifecycle/android-lifecycle.json": {
+      "playing": 36,
+      "paused": 36
+    },
+    "latched/lifecycle/android-lifecycle.json": {
+      "playing": 36,
+      "paused": 36
+    },
+    "latched/gameplay/android-runtime.json": {
+      "playing": 1,
+      "paused": 2
+    }
+  }
+}

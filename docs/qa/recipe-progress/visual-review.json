@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "captures/mutation_offers.png",
+      "sha256": "b6c62be6617ea3bd1a30e08fb277d71e2aac54bc614cc951a634d30759a1744a"
+    },
+    {
+      "path": "captures/mutation_halo_offers.png",
+      "sha256": "b7cdec9cdfddc2dbd372215e887997cac972b5693ab439ddebd51e9da1412b6b"
+    },
+    {
+      "path": "captures/singularity_offer.png",
+      "sha256": "f65731b18d91bfb63020d7b7f002dfa60c7ee0e17d9d03ef45b64614c6acd155"
+    },
+    {
+      "path": "mobile/mobile-upgrade-01.png",
+      "sha256": "9398e1e2af2e098d403c151658ce2787ac8d7100834f375992cbfb868a4814a5"
+    },
+    {
+      "path": "mobile/mobile-corruption-trigger.png",
+      "sha256": "8b8cfa960ab96f912d646abc5195651cc7ee4308a07913066065a1cd964ce59a"
+    }
+  ],
+  "observation": "Staged native cards show current Pulse/Arc, Orbitals/Thermal and Rail/Tether counters beside correct gold completion previews, with readable descriptions and touch actions. These are synthetic recipe fixtures, not earned mutation acceptance. No clipping seen in reviewed captures. Actual earned Mobile level-two and level-five offers also inspected: readable zero-progress Halo counters match this Drone/passive build. Nonzero progression and all finisher combinations are covered by engine/render fixtures; Mobile nonzero counters are not claimed for this sample."
+}

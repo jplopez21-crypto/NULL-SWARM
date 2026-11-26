@@ -1,0 +1,172 @@
+{
+  "verified_game_and_test_code": "d2320dfc3d697275ebc6362e53a3e8545a4dacf8",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 50,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 447,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1708,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "ui_layouts": 120,
+  "native": {
+    "code": "d2320dfc3d697275ebc6362e53a3e8545a4dacf8",
+    "native_run": 40795851224,
+    "artifact": 12863458226,
+    "zip_sha256": "c586bf360b38ab98345a431fe698f9552d1bfde1841db5372d532e354b574a2c",
+    "apk_sha256": "3325a52b74b535f6abedb5258299e1d813dc5f515bb14ab1b440f5af23bd979a",
+    "apk_bytes": 27761162,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "hashes_crc_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "compiled_modules_changed": [
+      "assets/ui/game_ui.gdc",
+      "assets/scripts/main.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/systems/android_qa_probe.gdc"
+    ],
+    "status": "passed"
+  },
+  "android": {
+    "run": 40795851425,
+    "artifact": 12863957564,
+    "status": "passed",
+    "checks": 25,
+    "zip_sha256": "4aa48738ed0e2ae0540d1db4e8a8b518f7fbeb7d0b3c186793e01a7f70e25f90",
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "checkpoint": {
+      "kills": 37,
+      "simulation_seconds": 30.5333333333329,
+      "earned_salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.41648558597711,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    }
+  },
+  "gameplay_qa": {
+    "run": 40795851350,
+    "artifact": 12864426097,
+    "status": "passed",
+    "zip_sha256": "3df4d2f0f7a18660880f6c92ee013da787bbc5d17fd317fe5940b7caf2d87ac8",
+    "standard_corruption_extended_sessions": 22,
+    "pacing_probes": 4,
+    "xp_comparisons": 6,
+    "stress_cases": 18,
+    "full_report_comparison": {
+      "normal_sessions": 22,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 18
+      },
+      "unchanged_normal_and_xp_cases_except_timings": 28,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 18,
+      "ui_checks": 1708,
+      "ui_layouts": 120,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_headless_matches_native_and_local": true
+    }
+  },
+  "visual_review": {
+    "inspected": true,
+    "source": "Actual native Godot staged build_overview.png transmitted via bounded CI log preview",
+    "width": 1280,
+    "height": 720,
+    "observations": [
+      "Four weapon cards retain actual/evolved titles and ranks.",
+      "Three mutation cards display requirements, active status and blocked slots without clipping.",
+      "Back-to-pause control is clearly visible."
+    ],
+    "android_inspected": true,
+    "android_source": "Actual Android build-overview.png after real touch input; initial unmodified VANGUARD build"
+  },
+  "limits": [
+    "Staged full-build screenshots are fixtures; they do not prove human-earned progression.",
+    "Physical ARM64 Mobile performance, Android 10, cutouts, thermals, touch comfort and human balance remain unverified.",
+    "CI Android uses x86_64 Compatibility and SWANGLE software rendering, with opt-in read-only telemetry; it does not establish phone FPS.",
+    "Persistent owner signing has not been provisioned/verified in this session; diagnostic keys rotate. Preserve existing installations/saves.",
+    "No release AAB or final commercial artwork/audio is claimed."
+  ],
+  "failures": []
+}

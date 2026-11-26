@@ -12,9 +12,17 @@ SaveStore writes versioned JSON through a temporary file and retains a verified 
 
 The completion test uses explicit invulnerability to isolate lifecycle and schedule correctness from bot skill. It is not evidence of balance or human survivability. Physical-device gameplay, touch feel, safe areas and performance remain acceptance gates.
 
+The pause build guide queries `Arsenal.MUTATIONS`, current ranks and active combat mutations without updating the build. Slot feasibility counts all missing weapon prerequisites against remaining slots; passive ranks consume no slot. Main only opens it in the paused state. Its GUI lifecycle follows the existing deferred panel retirement, and opt-in Android telemetry reads actual visible labels for touchscreen acceptance.
+
 ## Foundry progression
 
+Engineer adds a fourth earned starting kit. `Research.apply` enables one `FieldSentry` on its fresh combat world; other kits allocate no sentry model. Main deploys it only when `SwarmPlayer.tick` accepts a dash, using the pre-move position. CombatWorld ticks it through the same paused simulation gate and damage/spatial/effect systems as other weapons. It has independent bounded lifetime/cooldown and reuses its model on refresh. No save schema change is needed: existing Architect milestones unlock the new kit and current v2 validation already checks earned selections.
+
 Research describes capped upgrades and starting-kit sidegrades independently of combat. SaveStore v2 migrates v1 data and owns the tokenized salvage ledger. Checkpoints award only the positive difference from the already-banked total; settlement closes a token once. Purchases persist immediately with in-memory rollback on write failure. Main composes research at deployment and checkpoints periodically and at lifecycle/encounter boundaries. Combat damage attribution records actual HP removed, excluding overkill; it is displayed in results and performs no online telemetry.
+
+## Overclock feedback
+
+CombatWorld owns the three-second chain gap, 20-kill threshold, six-second Overclock duration and 1.6 cycle multiplier as shared constants. The HUD reads those simulation clocks; it never advances them or uses wall time for reward feedback. Its fixed row avoids layout jumps, and fresh deployments update HUD state before first presentation. Staged native captures remain desktop-debug-only; Android telemetry observes the rendered label/gauge without granting rewards.
 
 ## Memory guidance
 

@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-24",
+  "status": "local Python/YAML/shell checks passed; new hosted Android jobs pending",
+  "python_tests": 127,
+  "new_retry_tests": 6,
+  "emulator_pin": {
+    "version": "37.3.10.0",
+    "build": 16970787,
+    "sha256": "a4405349d8a9c52136ab7861e5331dc40e85574bd91cb8889a298a2ff4c52e26",
+    "official_channel": "stable channel-0",
+    "verified_local_archive_size_sha1_sha256_zip_crc": true,
+    "version_banner_matches": true,
+    "local_warning": "setsockopt Operation not permitted while printing version; no emulator boot/device test claimed"
+  },
+  "system_image": {
+    "api": 35,
+    "abi": "x86_64",
+    "variant": "google_apis",
+    "official_current_revision": 9,
+    "revision_guard_preserved": true
+  },
+  "retry_policy": {
+    "attempt_limit": 3,
+    "wait_seconds": [
+      30,
+      60
+    ],
+    "only": "Nonzero debug export with Maven Central Received status code 429, excluding script/parse/load failures",
+    "retained": "Every attempt log and final export.json; signing and APK validation remain separate mandatory steps"
+  },
+  "source_sha256": {
+    "tools/export_android_debug.py": "48d4120ce3e946be5ae8258f5b49b8a332b604e628e9d0855ec688ff28681221",
+    "tests/test_android_export_retry.py": "3977891cca855ffc6ce593785a11d964dce7c6e17f4ba82af3b636502a943bb3"
+  },
+  "local_validation": [
+    "127 Python tests passed",
+    "Four edited workflows parse as YAML",
+    "All edited workflow shell blocks pass bash -n",
+    "Official Google emulator archive verified and version banner inspected"
+  ],
+  "limits": [
+    "No local ADB/KVM or Android emulator boot",
+    "Local actionlint not installed; hosted actionlint gate remains mandatory",
+    "No actual successful 429 recovery yet; retries validated with explicitly synthetic subprocess outcomes",
+    "New pinned emulator requires fresh full runtime/renderer acceptance; earlier tests do not establish its behavior"
+  ]
+}

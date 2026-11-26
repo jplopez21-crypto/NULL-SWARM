@@ -1,0 +1,251 @@
+{
+  "verified_date": "2026-11-21",
+  "execution_dates": "2026-11-17 through 2026-11-18",
+  "status": "five workflows passed first attempt; reviewed downloaded evidence",
+  "source_commit": "6499f36ae547d73ac99df1919a6d2344df6ed0ea",
+  "source_tree": "f222785fff662c7cf4153e8e4a37e881750fcab0",
+  "main_commit_unchanged": "28a563e3b262d09296e52635a30d29289bccacf5",
+  "publication": "All seven preserved commits reapplied to actual remote parent 1895252; identical tested tree; non-force CLI push succeeded through permitted network access. Original local history remains archived. Backend connector write cause was not diagnosed.",
+  "runs": [
+    {
+      "id": 44203815959,
+      "name": "Validate and build Android",
+      "attempt": 1,
+      "conclusion": "success",
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203815959",
+      "jobs": [
+        {
+          "id": 134464487547,
+          "name": "android",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 44203815909,
+      "name": "Repeatable gameplay QA",
+      "attempt": 1,
+      "conclusion": "success",
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203815909",
+      "jobs": [
+        {
+          "id": 134464486924,
+          "name": "gameplay-qa",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 44203815934,
+      "name": "Android Mobile renderer smoke",
+      "attempt": 1,
+      "conclusion": "success",
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203815934",
+      "jobs": [
+        {
+          "id": 134464487696,
+          "name": "mobile-smoke",
+          "conclusion": "success"
+        },
+        {
+          "id": 134464487856,
+          "name": "mobile-mutation",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 44203815917,
+      "name": "Android emulator runtime",
+      "attempt": 1,
+      "conclusion": "success",
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203815917",
+      "jobs": [
+        {
+          "id": 134464487666,
+          "name": "android-runtime (gameplay)",
+          "conclusion": "success"
+        },
+        {
+          "id": 134464488042,
+          "name": "android-runtime (lifecycle)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 44203816000,
+      "name": "Android Surface recovery investigation",
+      "attempt": 1,
+      "conclusion": "success",
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203816000",
+      "jobs": [
+        {
+          "id": 134464487499,
+          "name": "android-runtime (latched)",
+          "conclusion": "success"
+        },
+        {
+          "id": 134464487891,
+          "name": "android-runtime (control)",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "python": 121,
+    "strict_godot_suites": 15,
+    "gui_checks": 160,
+    "headless_ui_checks": 2892,
+    "rendered_ui_checks": 2893,
+    "layouts": 200,
+    "normal_runs": 26,
+    "normal_cohorts": 19,
+    "normal_outcomes": {
+      "victory": 22,
+      "defeat": 4
+    },
+    "stress_fingerprints_preserved": 24,
+    "android": {
+      "null-swarm-android-mobile": {
+        "checks": 42,
+        "cycles_passed": 0,
+        "recovered_bad_surface_warnings": 0,
+        "sha256": "5eb844286bf69c4cec9ef16c89f063a935201c73c282f794048fb20b5b5b9e8e"
+      },
+      "null-swarm-android-runtime": {
+        "checks": 59,
+        "cycles_passed": 0,
+        "recovered_bad_surface_warnings": 0,
+        "sha256": "3de35777af889c547ae1aedcb95977154034c894f58e914532926d4c02087c48"
+      },
+      "null-swarm-android-lifecycle": {
+        "checks": 56,
+        "cycles_passed": 18,
+        "recovered_bad_surface_warnings": 11,
+        "sha256": "c6f8a80e33d87742d6f54b42be2a9dc16b138f93281b4c6e6794c1207591ec39"
+      },
+      "null-swarm-surface-results-latched": {
+        "checks": 56,
+        "cycles_passed": 18,
+        "recovered_bad_surface_warnings": 12,
+        "sha256": "6e513707a2c2cfac7cb89733fc9c78fd3b4c962b962cf07358af95403a773da0"
+      },
+      "unpatched_control": {
+        "status": "expected persistent failure reproduced during cycle 8",
+        "passed_cycles": 7,
+        "passed_checks": 22,
+        "bad_surface_warnings": 5
+      }
+    }
+  },
+  "archives": [
+    {
+      "id": 14382823234,
+      "name": "null-swarm-development-apk",
+      "bytes": 29144589,
+      "digest": "sha256:ea7a87d251fd9bda2d92af7272bebf96bb8f3bdf6dc11aba7149aa958642f9fd",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14382114361,
+      "name": "null-swarm-headless-results",
+      "bytes": 746168,
+      "digest": "sha256:38cb51b42c23aa4a99d8f3fc24138f4f74e08a20861e6869454d8c2c07a9cb42",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14384066816,
+      "name": "null-swarm-gameplay-qa",
+      "bytes": 21072332,
+      "digest": "sha256:059c8da050dc89b051113720a5523529be28393aaeee336a90f6c567cf76fa05",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14383911836,
+      "name": "null-swarm-android-mutation",
+      "bytes": 3101298,
+      "digest": "sha256:351998db092c783fcdc6bd029e0f71dcf82dc0aed9935e4518c91aef7baef9ff",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14382672946,
+      "name": "null-swarm-android-mobile",
+      "bytes": 2533255,
+      "digest": "sha256:8531320452068365a8209ed549f6d107c00df23ee0dcfbee6b6c23ddd3b15bad",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14383880415,
+      "name": "null-swarm-android-runtime",
+      "bytes": 3513949,
+      "digest": "sha256:56301db6237980b1969a6a3a493ef744acd192bcf4870da1515326e7b349342d",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14383291675,
+      "name": "null-swarm-android-lifecycle",
+      "bytes": 3154310,
+      "digest": "sha256:b83d3aaa097e1d3f159a94ef4801f622d7109081de2c3ee428cfedae6cc9c10c",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14383655531,
+      "name": "null-swarm-surface-results-control",
+      "bytes": 1511065,
+      "digest": "sha256:ececc4b8585d8e2e53ae64bdb0bb142ba56c5c294428baf0fd97e00a2431d9a2",
+      "download_hash_size_zip_crc": "passed"
+    },
+    {
+      "id": 14383343108,
+      "name": "null-swarm-surface-results-latched",
+      "bytes": 4522897,
+      "digest": "sha256:e38ca8ca1811006506868bd51124b73aa338cdb017ce9d65ddf896900c23f68e",
+      "download_hash_size_zip_crc": "passed"
+    }
+  ],
+  "native_apk": {
+    "artifact_id": 14382823234,
+    "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/44203815959/artifacts/14382823234",
+    "extracted_path": "android/null-swarm-development-debug.apk",
+    "bytes": 79522078,
+    "sha256": "6ea9c682ff711d16e0bf610869d7531cef81d217b47ae7324f221691462d038a",
+    "package": "com.nullswarm.game.development",
+    "abi": "arm64-v8a",
+    "signature": "CI build-tools 35.0.1 apksigner verify passed; not independently rerun locally",
+    "exact_assets_smoke": "passed locally and in CI",
+    "native_runtime_probe": "disabled; project.binary identical to previous verified native export",
+    "changed_compiled_game_modules": [
+      "scripts/main.gdc",
+      "ui/game_ui.gdc"
+    ],
+    "other_compiled_game_modules_unchanged": 36
+  },
+  "inspected_screenshots": {
+    "critical-hull-960x600.png": {
+      "sha256": "e4a774f1ed8eabe29192d14ef27fef68a668a0cb83cda0af8037fe849fd51d43",
+      "scope": "Linux Compatibility staged fixture"
+    },
+    "android-arcstorm-card.png": {
+      "sha256": "ab44dba8061492019e6cc450d241e54b0536dc5bd0f4d0643ed5ee99948a16d4",
+      "scope": "actual Android 35 software Mobile emulator"
+    },
+    "android-arcstorm-build.png": {
+      "sha256": "10dffecd3801a6fa2d29f3111644ff575388fc2868652e65b05a8f35ed82a323",
+      "scope": "actual Android 35 software Mobile emulator"
+    },
+    "android-arcstorm-resumed.png": {
+      "sha256": "4b58239072a171dddbb567906c7629d97e1e29707cec6a0ab9e662d583153ae0",
+      "scope": "actual Android 35 software Mobile emulator"
+    }
+  },
+  "limits": [
+    "Software x86_64 emulators do not validate physical S23/ARM64 FPS, thermals, audio or cutouts.",
+    "Critical-hull render is a staged Linux fixture; physical keyboard and on-device critical HUD acceptance remain open.",
+    "One actual earned Arcstorm run does not cover every mutation/build or human balance.",
+    "Earlier intermittent Settings-return/ADB-loss causes remain open; no unrelated repair claimed.",
+    "Protected release signing/AAB and Play release requirements are not cleared.",
+    "Debug signing keys rotate; preserve progression before replacing older debug installations."
+  ]
+}

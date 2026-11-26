@@ -1,0 +1,10 @@
+{
+  "previous_remote_source": "bc54a9468c39b457d8b9623a2e67faad41f82356",
+  "function_sha256": {
+    "tick": "a878b41ea0293fa9d48205d95546fc6d85b6fc013dd13725b9b299b1b5363d01",
+    "outstanding_xp": "da6c4c232e7dd5c32037ed17d94b5cf6c831920a1c04a2ddb68031e072ae04b7",
+    "vacuum": "88e406fd09802de3226f7cf0f2577acfe521cee03fdb280efda89d7941f7321d",
+    "memory_target": "7c2cf4e1f43cdfac5edbfa21141605cf740467a00decc4c9b6a0e8a6eaf3eca1"
+  },
+  "comparison": "identical source bodies; drop changes only node mesh setup and _present changes only visual resources"
+}

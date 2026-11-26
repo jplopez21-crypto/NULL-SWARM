@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "date": "2026-11-17",
+  "base_local_commit": "3ab119d2f196983dcf10482b1c9b7e7b3d33a49f",
+  "problem": "A consistent log of an Arc Emitter card tap with an actual damage-rank increment incorrectly passed the mutation history checker. This is a test acceptance flaw, not an observed app misrouting bug.",
+  "regression_before_fix": {
+    "failed_as_expected": true,
+    "test": "test_history_rejects_a_different_visible_card_applying_the_recorded_rank",
+    "log_sha256": "39cdfecd0ac9725404531f3add750c0f5095337269f8a1bc9abb6adb8000bf5d"
+  },
+  "after_fix": {
+    "python_tests": 112,
+    "strict_godot_suites": 15,
+    "all_passed": true,
+    "four_new_tests": "Visible selected-card effect, all passive/base/evolved/repair labels, missing/disabled/unknown cards, ambiguous duplicate buttons."
+  },
+  "archived_android_replay": "Three real prior transactions map to the selected card effect; synthetic Plasma Orbitals claim with actual speed increment is rejected. No new device run.",
+  "source_file_sha256": {
+    "tools/android_runtime_smoke.py": "cbeb731dcfe12ea5f03b9f63f2301cff7800ca8487e9d402f4b32d4b57577c7a",
+    "tools/mutation_observation.py": "d02ed3e07cc0a1fd8a42c24cfba5700102f5e2229c54fa47cbb15dca6eb604c4",
+    "tests/test_mutation_observation.py": "e000abed14fc760e80f686683b465ad0547a20158d60f48e5977d6f80c7de5fb"
+  },
+  "mutation_verified": false,
+  "new_apk": "not produced",
+  "publication": "blocked; bounded no-op tree probe returned no result within 45 seconds"
+}

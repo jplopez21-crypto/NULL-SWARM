@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "captures/dash_near_ready.png",
+      "sha256": "69e0e027f4fd5fb89276f3884c47498178575e23d7688a9dd716024959c3253c"
+    },
+    {
+      "path": "qa/ui/1280x720-combat.png",
+      "sha256": "942fe82aadaa7618d440133c1cb2f01ecb3ecabd42d23a448d290ffde5ddd3fe"
+    },
+    {
+      "path": "mobile/mobile-build-resumed.png",
+      "sha256": "2974c7038b40e49b65e322b1be90fceef91ae4f566595ab0fff3b21106539c40"
+    }
+  ],
+  "observation": "Native labelled cooldown and rendered long-mutation-message boards are synthetic fixtures. Actual Mobile resumes with earned Memory Tether and a visible upgrade banner. All three show the banner below the operative and above the touch row, clear of the joystick/dash and central combat area. Exact Android read-time quantification is not exposed by the probe; GUI dispatch tests cover lifetime/fade."
+}

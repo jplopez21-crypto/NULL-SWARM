@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "date": "2026-11-17",
+  "phase": "driver completion and failure-state acceptance",
+  "base_local_head": "7668d4ff26d3f23281d27d9e827beb0628179002",
+  "problem": "The previous flow could save status failed with mutation_verified true after a resume/capture/final-crash-check failure. This was reproduced with synthetic I/O, not an observed app failure.",
+  "before_fix": {
+    "expected_failures": 3,
+    "modes": [
+      "resume",
+      "capture",
+      "fatal"
+    ],
+    "log_sha256": "52c785ae8de58bd1ee17e3aaa924166c6d3115deca4626ee3966daa70eafb376"
+  },
+  "after_fix": {
+    "python_tests": 121,
+    "strict_godot_suites": 15,
+    "all_passed": true,
+    "new_synthetic_tests": 9,
+    "synthetic_flow_invocations": 11,
+    "coverage": [
+      "complete success",
+      "ordinary death",
+      "partial budget",
+      "eligible with no damage",
+      "24-choice cap",
+      "renderer fallback",
+      "late resume/capture/crash failure",
+      "pause/upgrade race",
+      "unexpected state"
+    ],
+    "acceptance": "Set only after resume/capture/crash checks succeed; any exception clears acceptance and marks coverage unverified while retaining snapshots.",
+    "stdout": "Synthetic result markers are captured inside unit tests and not printed as real Android results."
+  },
+  "source_file_sha256": {
+    "tools/android_runtime_smoke.py": "3741baa4f2620024967d93cadc2486a84f850d88a0525aaa9b29344507cd5bb5",
+    "tools/mobile_mutation_flow.py": "80db49b9ffc5b13e1a4b5a4d106d3308a1a41ec72ecdf5f98107ceeca5eb7093",
+    "tests/test_mobile_mutation_flow.py": "01f8fbb7d27d416173bd63ee7f88430560ffd9019cf11b1b8b79c7f49393e139",
+    "tools/mutation_observation.py": "d02ed3e07cc0a1fd8a42c24cfba5700102f5e2229c54fa47cbb15dca6eb604c4"
+  },
+  "new_android_run": false,
+  "mutation_verified": false,
+  "new_apk": "not produced",
+  "publication": "blocked; no-op publishing probe produced no result within 45 seconds, no ref change requested"
+}

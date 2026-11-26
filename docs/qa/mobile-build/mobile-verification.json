@@ -1,0 +1,738 @@
+{
+  "status": "passed",
+  "renderer": "mobile",
+  "checks": 21,
+  "upgrade_transactions": 1,
+  "earned_upgrade": {
+    "transactions": [
+      {
+        "offered": {
+          "architects": 0,
+          "attack_lanes": {
+            "charge": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 12,
+              "width": 1.08000004291534
+            },
+            "sentry": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 7,
+              "width": 0.800000011920929
+            }
+          },
+          "backup_code_length": 0,
+          "backup_recovery_available": false,
+          "build_text": "",
+          "buttons": [
+            {
+              "disabled": false,
+              "rect": [
+                165.0,
+                245.0,
+                341.0,
+                255.0
+              ],
+              "text": "01\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nMUTATION: Arc 3 + Amplified Pulse 3"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                518.0,
+                245.0,
+                292.0,
+                255.0
+              ],
+              "text": "02\n\nRAPID CYCLER\nCooldown 0.42s \u2192 0.37s\nFaster automatic fire."
+            },
+            {
+              "disabled": false,
+              "rect": [
+                822.0,
+                245.0,
+                292.0,
+                255.0
+              ],
+              "text": "03\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks."
+            },
+            {
+              "disabled": false,
+              "rect": [
+                965.0,
+                512.0,
+                149.0,
+                57.0
+              ],
+              "text": "REROLL  /  2"
+            }
+          ],
+          "canvas": [
+            1280.0,
+            720.0
+          ],
+          "chain_feedback": {
+            "text": "CHAIN 6 // 14 KILLS TO OVERCLOCK // BREAKS IN 1.8s",
+            "value": 30.0,
+            "visible": false
+          },
+          "combat_rng": "4436250093987314336",
+          "damage_by_weapon": {
+            "pulse": 182.841071428571
+          },
+          "dash_readiness": 100.0,
+          "dashes": 1,
+          "destruction_feedback": {
+            "fragment_triangles": 8,
+            "fragments_live": 0,
+            "kill_cue_last_dispatch_ms": 93173,
+            "kill_cue_pcm_bytes": 6174,
+            "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+          },
+          "drags": 51,
+          "edit_fields": [],
+          "engine": "4.6.3-stable (official)",
+          "hp": 100.0,
+          "kills": 6,
+          "level": 2,
+          "lifecycle": {
+            "background_events": 0,
+            "foreground_generation": 0,
+            "rendered_generation": 0
+          },
+          "memory_audio_plays": 3,
+          "operative_visible": true,
+          "operative_visuals": {
+            "instances": 5,
+            "surfaces": 6,
+            "triangles": 296
+          },
+          "panel": 240199405977,
+          "pending": 1,
+          "performance_copy_status": "",
+          "performance_report_text": "",
+          "performance_stats_text": "",
+          "performance_stats_visible": false,
+          "position": [
+            8.27853012084961,
+            36.6020584106445
+          ],
+          "process": 3771,
+          "ranks": {},
+          "rendered_frames": 141,
+          "rendered_panel": 240199405977,
+          "rendered_state": "upgrading",
+          "renderer": "mobile",
+          "results_title": "",
+          "run_analysis_text": "",
+          "salvage": 0,
+          "sample_ticks": 130911,
+          "schema": 1,
+          "selected_kit": "vanguard",
+          "sentry": {
+            "activations": 0,
+            "enabled": false,
+            "position": [
+              0.0,
+              0.0
+            ],
+            "remaining": 0.0,
+            "shots": 0,
+            "status": ""
+          },
+          "settings": {
+            "flashes": true,
+            "master": 0.8,
+            "music": 0.35,
+            "performance_stats": false,
+            "quality": 1,
+            "sfx": 0.65,
+            "shake": true,
+            "ui": 0.65
+          },
+          "shield_status": "SHIELD ONLINE",
+          "state": "upgrading",
+          "targets": [
+            [
+              16.2140941619873,
+              -6.69887924194336
+            ],
+            [
+              -7.64650821685791,
+              23.1388339996338
+            ]
+          ],
+          "time": 12.9333333333336,
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "touches": 63,
+          "xp": 20
+        },
+        "frozen": {
+          "architects": 0,
+          "attack_lanes": {
+            "charge": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 12,
+              "width": 1.08000004291534
+            },
+            "sentry": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 7,
+              "width": 0.800000011920929
+            }
+          },
+          "backup_code_length": 0,
+          "backup_recovery_available": false,
+          "build_text": "",
+          "buttons": [
+            {
+              "disabled": false,
+              "rect": [
+                165.0,
+                245.0,
+                341.0,
+                255.0
+              ],
+              "text": "01\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nMUTATION: Arc 3 + Amplified Pulse 3"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                518.0,
+                245.0,
+                292.0,
+                255.0
+              ],
+              "text": "02\n\nRAPID CYCLER\nCooldown 0.42s \u2192 0.37s\nFaster automatic fire."
+            },
+            {
+              "disabled": false,
+              "rect": [
+                822.0,
+                245.0,
+                292.0,
+                255.0
+              ],
+              "text": "03\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks."
+            },
+            {
+              "disabled": false,
+              "rect": [
+                965.0,
+                512.0,
+                149.0,
+                57.0
+              ],
+              "text": "REROLL  /  2"
+            }
+          ],
+          "canvas": [
+            1280.0,
+            720.0
+          ],
+          "chain_feedback": {
+            "text": "CHAIN 6 // 14 KILLS TO OVERCLOCK // BREAKS IN 1.8s",
+            "value": 30.0,
+            "visible": false
+          },
+          "combat_rng": "4436250093987314336",
+          "damage_by_weapon": {
+            "pulse": 182.841071428571
+          },
+          "dash_readiness": 100.0,
+          "dashes": 1,
+          "destruction_feedback": {
+            "fragment_triangles": 8,
+            "fragments_live": 0,
+            "kill_cue_last_dispatch_ms": 93173,
+            "kill_cue_pcm_bytes": 6174,
+            "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+          },
+          "drags": 51,
+          "edit_fields": [],
+          "engine": "4.6.3-stable (official)",
+          "hp": 100.0,
+          "kills": 6,
+          "level": 2,
+          "lifecycle": {
+            "background_events": 0,
+            "foreground_generation": 0,
+            "rendered_generation": 0
+          },
+          "memory_audio_plays": 3,
+          "operative_visible": true,
+          "operative_visuals": {
+            "instances": 5,
+            "surfaces": 6,
+            "triangles": 296
+          },
+          "panel": 240199405977,
+          "pending": 1,
+          "performance_copy_status": "",
+          "performance_report_text": "",
+          "performance_stats_text": "",
+          "performance_stats_visible": false,
+          "position": [
+            8.27853012084961,
+            36.6020584106445
+          ],
+          "process": 3771,
+          "ranks": {},
+          "rendered_frames": 143,
+          "rendered_panel": 240199405977,
+          "rendered_state": "upgrading",
+          "renderer": "mobile",
+          "results_title": "",
+          "run_analysis_text": "",
+          "salvage": 0,
+          "sample_ticks": 132147,
+          "schema": 1,
+          "selected_kit": "vanguard",
+          "sentry": {
+            "activations": 0,
+            "enabled": false,
+            "position": [
+              0.0,
+              0.0
+            ],
+            "remaining": 0.0,
+            "shots": 0,
+            "status": ""
+          },
+          "settings": {
+            "flashes": true,
+            "master": 0.8,
+            "music": 0.35,
+            "performance_stats": false,
+            "quality": 1,
+            "sfx": 0.65,
+            "shake": true,
+            "ui": 0.65
+          },
+          "shield_status": "SHIELD ONLINE",
+          "state": "upgrading",
+          "targets": [
+            [
+              16.2140941619873,
+              -6.69887924194336
+            ],
+            [
+              -7.64650821685791,
+              23.1388339996338
+            ]
+          ],
+          "time": 12.9333333333336,
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "touches": 63,
+          "xp": 20
+        },
+        "selected": {
+          "architects": 0,
+          "attack_lanes": {
+            "charge": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 12,
+              "width": 1.08000004291534
+            },
+            "sentry": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 7,
+              "width": 0.800000011920929
+            }
+          },
+          "backup_code_length": 0,
+          "backup_recovery_available": false,
+          "build_text": "",
+          "buttons": [
+            {
+              "disabled": false,
+              "rect": [
+                1133.0,
+                18.0,
+                121.0,
+                75.0
+              ],
+              "text": "II  PAUSE"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                1074.0,
+                607.0,
+                180.0,
+                95.0
+              ],
+              "text": "DASH / READY"
+            }
+          ],
+          "canvas": [
+            1280.0,
+            720.0
+          ],
+          "chain_feedback": {
+            "text": "CHAIN 6 // 14 KILLS TO OVERCLOCK // BREAKS IN 1.4s",
+            "value": 30.0,
+            "visible": true
+          },
+          "combat_rng": "-8083613144863592940",
+          "damage_by_weapon": {
+            "pulse": 182.841071428571
+          },
+          "dash_readiness": 100.0,
+          "dashes": 1,
+          "destruction_feedback": {
+            "fragment_triangles": 8,
+            "fragments_live": 0,
+            "kill_cue_last_dispatch_ms": 93173,
+            "kill_cue_pcm_bytes": 6174,
+            "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+          },
+          "drags": 51,
+          "edit_fields": [],
+          "engine": "4.6.3-stable (official)",
+          "hp": 100.0,
+          "kills": 6,
+          "level": 2,
+          "lifecycle": {
+            "background_events": 0,
+            "foreground_generation": 0,
+            "rendered_generation": 0
+          },
+          "memory_audio_plays": 3,
+          "operative_visible": true,
+          "operative_visuals": {
+            "instances": 5,
+            "surfaces": 6,
+            "triangles": 296
+          },
+          "panel": 0,
+          "pending": 0,
+          "performance_copy_status": "",
+          "performance_report_text": "",
+          "performance_stats_text": "",
+          "performance_stats_visible": false,
+          "position": [
+            8.27853012084961,
+            36.6020584106445
+          ],
+          "process": 3771,
+          "ranks": {
+            "arc": 1
+          },
+          "rendered_frames": 147,
+          "rendered_panel": 0,
+          "rendered_state": "playing",
+          "renderer": "mobile",
+          "results_title": "",
+          "run_analysis_text": "",
+          "salvage": 0,
+          "sample_ticks": 134620,
+          "schema": 1,
+          "selected_kit": "vanguard",
+          "sentry": {
+            "activations": 0,
+            "enabled": false,
+            "position": [
+              0.0,
+              0.0
+            ],
+            "remaining": 0.0,
+            "shots": 0,
+            "status": ""
+          },
+          "settings": {
+            "flashes": true,
+            "master": 0.8,
+            "music": 0.35,
+            "performance_stats": false,
+            "quality": 1,
+            "sfx": 0.65,
+            "shake": true,
+            "ui": 0.65
+          },
+          "shield_status": "SHIELD ONLINE",
+          "state": "playing",
+          "targets": [
+            [
+              16.2140941619873,
+              -6.69887924194336
+            ],
+            [
+              -7.64650821685791,
+              23.1388339996338
+            ]
+          ],
+          "time": 13.3333333333336,
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "touches": 64,
+          "xp": 20
+        },
+        "chosen_text": "01\n\nARC EMITTER\nNEW WEAPON // CHAIN\n\nLightning jumps between\nclustered targets.\nMUTATION: Arc 3 + Amplified Pulse 3",
+        "changed_rank": "arc"
+      }
+    ],
+    "resumed": {
+      "architects": 0,
+      "attack_lanes": {
+        "charge": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 12,
+          "width": 1.08000004291534
+        },
+        "sentry": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 7,
+          "width": 0.800000011920929
+        }
+      },
+      "backup_code_length": 0,
+      "backup_recovery_available": false,
+      "build_text": "",
+      "buttons": [
+        {
+          "disabled": false,
+          "rect": [
+            1133.0,
+            18.0,
+            121.0,
+            75.0
+          ],
+          "text": "II  PAUSE"
+        },
+        {
+          "disabled": false,
+          "rect": [
+            1074.0,
+            607.0,
+            180.0,
+            95.0
+          ],
+          "text": "DASH / READY"
+        }
+      ],
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "chain_feedback": {
+        "text": "CHAIN 6 // 14 KILLS TO OVERCLOCK // BREAKS IN 1.4s",
+        "value": 30.0,
+        "visible": true
+      },
+      "combat_rng": "-8083613144863592940",
+      "damage_by_weapon": {
+        "pulse": 182.841071428571
+      },
+      "dash_readiness": 100.0,
+      "dashes": 1,
+      "destruction_feedback": {
+        "fragment_triangles": 8,
+        "fragments_live": 0,
+        "kill_cue_last_dispatch_ms": 93173,
+        "kill_cue_pcm_bytes": 6174,
+        "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+      },
+      "drags": 51,
+      "edit_fields": [],
+      "engine": "4.6.3-stable (official)",
+      "hp": 100.0,
+      "kills": 6,
+      "level": 2,
+      "lifecycle": {
+        "background_events": 0,
+        "foreground_generation": 0,
+        "rendered_generation": 0
+      },
+      "memory_audio_plays": 3,
+      "operative_visible": true,
+      "operative_visuals": {
+        "instances": 5,
+        "surfaces": 6,
+        "triangles": 296
+      },
+      "panel": 0,
+      "pending": 0,
+      "performance_copy_status": "",
+      "performance_report_text": "",
+      "performance_stats_text": "",
+      "performance_stats_visible": false,
+      "position": [
+        8.27853012084961,
+        36.6020584106445
+      ],
+      "process": 3771,
+      "ranks": {
+        "arc": 1
+      },
+      "rendered_frames": 147,
+      "rendered_panel": 0,
+      "rendered_state": "playing",
+      "renderer": "mobile",
+      "results_title": "",
+      "run_analysis_text": "",
+      "salvage": 0,
+      "sample_ticks": 134620,
+      "schema": 1,
+      "selected_kit": "vanguard",
+      "sentry": {
+        "activations": 0,
+        "enabled": false,
+        "position": [
+          0.0,
+          0.0
+        ],
+        "remaining": 0.0,
+        "shots": 0,
+        "status": ""
+      },
+      "settings": {
+        "flashes": true,
+        "master": 0.8,
+        "music": 0.35,
+        "performance_stats": false,
+        "quality": 1,
+        "sfx": 0.65,
+        "shake": true,
+        "ui": 0.65
+      },
+      "shield_status": "SHIELD ONLINE",
+      "state": "playing",
+      "targets": [
+        [
+          16.2140941619873,
+          -6.69887924194336
+        ],
+        [
+          -7.64650821685791,
+          23.1388339996338
+        ]
+      ],
+      "time": 13.3333333333336,
+      "touch_controls": {
+        "dash_enabled": true,
+        "dash_id": -1,
+        "joystick_id": -1,
+        "pause_enabled": true,
+        "pause_id": -1,
+        "stick": [
+          0.0,
+          0.0
+        ]
+      },
+      "touches": 64,
+      "xp": 20
+    },
+    "method": "Ordinary kills and memory pickups, real joystick/card touches. No fixture or stat grant."
+  },
+  "graphics_log": [
+    "11-08 13:38:20.004  3771  3771 D Godot   : usesVulkan(): true",
+    "11-08 13:38:20.604  3771  3818 I godot   : Vulkan 1.3.0 - Forward Mobile - Using Device #0: Unknown - SwiftShader Device (Subzero)"
+  ],
+  "combat": {
+    "kills": 1,
+    "time": 4.53333333333332,
+    "damage_by_weapon": {
+      "pulse": 30.075
+    }
+  },
+  "captures": {
+    "mobile-menu": 0.9900173611111112,
+    "multitouch-joystick-first": 0.9887152777777778,
+    "multitouch-paused": 0.9917534722222222,
+    "mobile-combat": 0.9813368055555556,
+    "mobile-upgrade-01": 0.9631076388888888,
+    "mobile-upgrade-applied": 0.9713541666666666,
+    "mobile-build-earned": 0.9717881944444444,
+    "mobile-build-resumed": 0.9717881944444444,
+    "mobile-returned": 0.9830729166666666
+  },
+  "same_process_fresh_paused_return": true,
+  "frozen_fields": [
+    "time",
+    "position",
+    "hp",
+    "kills",
+    "xp",
+    "ranks",
+    "combat_rng",
+    "damage_by_weapon",
+    "salvage"
+  ],
+  "resumed_combat_advances": true,
+  "mobile_emulator_swappy": false,
+  "native_phone_swappy_default": true,
+  "same_38_game_modules": true,
+  "native_engine_same_as_previous_user_build": true,
+  "scope": "Android 35 x86_64 Mobile/Vulkan software emulator smoke with explicit Swappy override. Shipping frame pacing, ARM64 runtime, phone FPS/thermals and full Mobile runs are not validated. Ordinary XP/upgrade touch validated without stat grants.",
+  "earned_build": {
+    "ranks": {
+      "arc": 1
+    },
+    "guide_text": "DEPLOYMENT BUILD\nCombat paused. Mutations activate automatically when both ranks are reached.\nWEAPONS 2/4\n01 // PULSE RIFLE\nAMPLIFIED PULSE RANK 0\n02 // ARC EMITTER\nRANK 1 / 5\n03 // EMPTY SLOT\nNew weapons fill empty slots.\n04 // EMPTY SLOT\nNew weapons fill empty slots.\nMUTATION PATHS\nARCSTORM RIFLE // IN PROGRESS\nAMPLIFIED PULSE 0/3 + ARC EMITTER 1/3\nROUNDS NOW CHAIN\nSOLAR HALO // IN PROGRESS\nPLASMA ORBITALS 0/3 + THERMAL BURST 0/3\nORBITALS RADIATE HEAT\nSINGULARITY LANCE // IN PROGRESS\nRAIL LANCE 0/3 + MEMORY TETHER 0/3\nRAIL IMPACTS LEAVE GRAVITY FIELDS\nWeapon mutations keep their slot. Run upgrades reset on redeployment.",
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage",
+      "level",
+      "pending",
+      "settings",
+      "selected_kit",
+      "dash_readiness",
+      "dashes"
+    ],
+    "fresh_navigation": true,
+    "resumed_time": 13.7333333333336,
+    "frozen_time": 13.4666666666669,
+    "scope": "One actual earned early build: pause/build/back/Resume; no full-run or earned mutation claim."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "checks": 160,
+  "failures": [
+    "critical text and bar remain readable with impact flashes disabled"
+  ]
+}

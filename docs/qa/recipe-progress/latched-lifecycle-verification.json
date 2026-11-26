@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "cycles": 18,
+  "checks": 56,
+  "background_seconds": [
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0,
+    0.25,
+    1.0,
+    3.0
+  ],
+  "same_process_fresh_foreground_frames": true,
+  "readable_captures": 19,
+  "frozen_fields": [
+    "time",
+    "position",
+    "hp",
+    "kills",
+    "xp",
+    "ranks",
+    "combat_rng",
+    "damage_by_weapon",
+    "salvage"
+  ],
+  "resumed_combat_advances": true,
+  "app_egl_bad_surface_warnings": 8,
+  "warning_lines": [
+    "11-09 18:49:07.565  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:49:34.907  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:50:12.843  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:50:19.254  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:50:33.193  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:50:39.365  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:50:52.490  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+    "11-09 18:50:58.697  3343  3422 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+  ],
+  "scope": "Bounded startup-run Compatibility emulator recovery checks. Actual callbacks, readable returned screens, frozen gameplay and advancing resumed combat. No production Surface fix or physical-device clearance established."
+}

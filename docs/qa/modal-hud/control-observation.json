@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "cycles_recorded": 10,
+  "completed_cycles": 9,
+  "checks_recorded": 28,
+  "checks_passed": 28,
+  "scope": "Unpatched diagnostic control failed recovery on cycle 10; collection workflow success is not a recovery pass. Failed transcript/screenshots/logs retained in the control artifact. Development APK uses the previously validated shared repair."
+}

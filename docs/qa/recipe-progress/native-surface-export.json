@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "apk_sha256": "11e29e8af3d33e3f6e9738f02044536e149e64eb86d84f80aac9cb75886c75e9",
+  "apk_bytes": 79520810,
+  "abi": "arm64-v8a",
+  "patched_dex": true,
+  "native_libraries_sha256": {
+    "lib/arm64-v8a/libc++_shared.so": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b",
+    "lib/arm64-v8a/libgodot_android.so": "63bd0563274e0d373aac91ee3e46691fa33bdca9a491eb2994e3d4c29f38f5de"
+  },
+  "native_engine_unchanged": true,
+  "attribution": "passed",
+  "scope": "Development debug export; runtime recovery/physical testing recorded separately."
+}

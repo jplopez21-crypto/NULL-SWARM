@@ -1,0 +1,18 @@
+{
+  "checks": 32,
+  "failures": [],
+  "memory_cue": {
+    "combat_voices": 12,
+    "dc_offset": -0.000000692182971585181,
+    "dedicated_memory_voices": 1,
+    "duration_seconds": 0.0899773242630385,
+    "largest_sample_step": 0.0362548828125,
+    "limits": "Offline PCM/playback/routing and game integration checks; no human listening or phone speaker mix acceptance.",
+    "minimum_interval_ms": 140,
+    "mono": true,
+    "peak": 0.145111083984375,
+    "raw_pcm_sha256": "391986f7ecfebb4a1b09706b1c9a649e3d2a360bd29152e2aed4f2f96bca178f",
+    "rms": 0.0477058508263352,
+    "sample_rate": 22050
+  }
+}

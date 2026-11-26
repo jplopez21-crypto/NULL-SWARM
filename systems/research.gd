@@ -9,7 +9,8 @@ const UPGRADES: Dictionary = {
 const KITS: Dictionary = {
  "vanguard": {"title": "VANGUARD", "description": "Balanced rifle. 100 HP. 1/4 slots.", "damage": 18.0, "cooldown": 0.42, "health": 100.0, "speed": 7.0, "weapon": ""},
  "conductor": {"title": "CONDUCTOR", "description": "Arc Emitter + weak rifle. 85 HP. 2/4 slots.", "damage": 9.0, "cooldown": 0.65, "health": 85.0, "speed": 7.0, "weapon": "arc"},
- "sentinel": {"title": "SENTINEL", "description": "Orbitals + slow rifle. 110 HP. Speed 6.5. 2/4 slots.", "damage": 12.0, "cooldown": 0.65, "health": 110.0, "speed": 6.5, "weapon": "orbit"}
+ "sentinel": {"title": "SENTINEL", "description": "Orbitals + slow rifle. 110 HP. Speed 6.5. 2/4 slots.", "damage": 12.0, "cooldown": 0.65, "health": 110.0, "speed": 6.5, "weapon": "orbit"},
+ "engineer": {"title": "ENGINEER", "description": "Drone Hive + weak rifle. 80 HP. 2/4 slots.\nDash leaves one sentry for 3s. Cannot stack.", "damage": 9.0, "cooldown": 0.65, "health": 80.0, "speed": 7.0, "weapon": "drone"}
 }
 
 static func unlocked(data: Dictionary) -> Array[String]:
@@ -18,6 +19,8 @@ static func unlocked(data: Dictionary) -> Array[String]:
 		result.append("conductor")
 	if int(data.get("wardens", 0)) >= 1:
 		result.append("sentinel")
+	if int(data.get("architects", 0)) >= 1:
+		result.append("engineer")
 	return result
 
 static func cost(data: Dictionary, id: String) -> int:
@@ -42,6 +45,7 @@ static func apply(data: Dictionary, player: SwarmPlayer, combat: CombatWorld, pr
 	player.magnet = 2.6 + int(data.get("research", {}).get("tether", 0)) * 0.25
 	combat.weapon.damage = kit["damage"]
 	combat.weapon.interval = kit["cooldown"]
+	combat.sentry.configure(id == "engineer")
 	progress.rerolls = 2 + int(data.get("research", {}).get("logistics", 0))
 	if kit["weapon"] != "":
 		progress.ranks[kit["weapon"]] = 1

@@ -1,0 +1,282 @@
+{
+  "source": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+  "source_tree": "fd6560dac1cc6a1b52a122d2f463279be45db94d",
+  "local_feature": "72ab8a9",
+  "runs": [
+    {
+      "id": 42413052619,
+      "name": "Android Mobile renderer smoke",
+      "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+      "conclusion": "success",
+      "status": "completed",
+      "run_attempt": 1
+    },
+    {
+      "id": 42413052611,
+      "name": "Android emulator runtime",
+      "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+      "conclusion": "success",
+      "status": "completed",
+      "run_attempt": 1
+    },
+    {
+      "id": 42413052609,
+      "name": "Repeatable gameplay QA",
+      "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+      "conclusion": "success",
+      "status": "completed",
+      "run_attempt": 1
+    },
+    {
+      "id": 42413052592,
+      "name": "Validate and build Android",
+      "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+      "conclusion": "success",
+      "status": "completed",
+      "run_attempt": 1
+    },
+    {
+      "id": 42413052578,
+      "name": "Android Surface recovery investigation",
+      "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1",
+      "conclusion": "success",
+      "status": "completed",
+      "run_attempt": 1
+    }
+  ],
+  "local": {
+    "godot_suites": 15,
+    "python_tests": 27,
+    "workflow_syntax_files": 6,
+    "status": "passed"
+  },
+  "mobile": {
+    "run": 42413052619,
+    "job": 128525102319,
+    "status": "passed",
+    "checks": 13,
+    "actual_renderer": "Mobile",
+    "driver": "Vulkan 1.3 / SwiftShader software emulator",
+    "emulator_swappy": false,
+    "phone_swappy_default": true,
+    "captures": 5,
+    "scope": "Startup, actual two-finger dash/pause, ordinary kills/effective damage, one same-process fresh paused return, frozen fields and advancing resumed combat. Not Mobile XP/upgrades/full runs, shipping Swappy, ARM64 runtime or phone performance."
+  },
+  "initial_default_pacing_failure": {
+    "source": "87573a6c5d4e4471af20252aeb7bc9a6478b1ead",
+    "run": 42411937890,
+    "job": 128521865852,
+    "status": "failed",
+    "checks": 0,
+    "rendered_frames": 1,
+    "error": "QueuePresentKHR failed with error: 5",
+    "scope": "Retained failed Mobile emulator attempt with shipping-default Swappy. Successful override is emulator-only, not phone certification."
+  },
+  "ordinary_android": {
+    "run": 42413052611,
+    "gameplay_job": 128525102634,
+    "gameplay_checks": 58,
+    "lifecycle_job": 128525102373,
+    "lifecycle_cycles": 18,
+    "lifecycle_checks": 56,
+    "recovered_swap_warnings": 11,
+    "status": "passed"
+  },
+  "diagnostic": {
+    "run": 42413052578,
+    "candidate_job": 128525102385,
+    "candidate_cycles": 18,
+    "candidate_checks": 56,
+    "candidate_gameplay_checks": 58,
+    "recovered_swap_warnings": 11,
+    "candidate_status": "passed",
+    "control_job": 128525102491,
+    "control_collection_status": "passed",
+    "control_recovery_status": "failed",
+    "control_failed_cycle": 14
+  },
+  "native": {
+    "run": 42413052592,
+    "job": 128525102425,
+    "artifact": 13590870676,
+    "apk_sha256": "dd4d7511fe6cc26d1e1ba3143240276a356c64b309a6c3665535fb74b45c2770",
+    "apk_bytes": 79516058,
+    "abi": "arm64-v8a",
+    "renderer": "Mobile",
+    "probe": false,
+    "signature": "CI apksigner passed; independent integrity/config/repair/native checks pass, signature not rerun locally."
+  },
+  "phone_code_and_project_settings_match_previous_user_apk": true,
+  "matching_selected_executable_and_project_entries": 44,
+  "unchanged_game_modules": 38,
+  "archives": [
+    {
+      "id": 13590870676,
+      "name": "null-swarm-development-apk",
+      "size_in_bytes": 29138718,
+      "digest": "sha256:0a2663d3e119f8752cc02b1b261151b62bfa4030acf1fb7c2ad8a7e195f81cac",
+      "created_at": "2026-11-07T20:55:38Z",
+      "workflow_run": {
+        "id": 42413052592,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590681436,
+      "name": "null-swarm-presentation-captures",
+      "size_in_bytes": 5588591,
+      "digest": "sha256:0407ce343a803f23c2fce73730b9ed08d46cc4eb8c0aab549746fe8047201ad6",
+      "created_at": "2026-11-07T20:55:39Z",
+      "workflow_run": {
+        "id": 42413052592,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590032434,
+      "name": "null-swarm-headless-results",
+      "size_in_bytes": 746095,
+      "digest": "sha256:3d3fa0d5177c97a62309c933a57abd90d69dbbf832b3f2ef493b1ab247c00220",
+      "created_at": "2026-11-07T20:55:40Z",
+      "workflow_run": {
+        "id": 42413052592,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13591115031,
+      "name": "null-swarm-android-mobile",
+      "size_in_bytes": 1269670,
+      "digest": "sha256:78aa394afade3091cd1c851e1c545b0438f89b40203d79b713d457a3f0415f51",
+      "created_at": "2026-11-07T20:57:19Z",
+      "workflow_run": {
+        "id": 42413052619,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590985438,
+      "name": "null-swarm-mobile-emulator-apk",
+      "size_in_bytes": 31530979,
+      "digest": "sha256:6fd44dce74f292e9233fc60f49744f670bb904f89f21127a861b31d40ac92d13",
+      "created_at": "2026-11-07T20:57:22Z",
+      "workflow_run": {
+        "id": 42413052619,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590522356,
+      "name": "null-swarm-android-lifecycle",
+      "size_in_bytes": 4052501,
+      "digest": "sha256:8c4d69111856997bddee48204d4cafdec684bb5b0398dd0b4d651d0d0c8a2120",
+      "created_at": "2026-11-07T20:58:38Z",
+      "workflow_run": {
+        "id": 42413052611,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590512582,
+      "name": "null-swarm-android-runtime",
+      "size_in_bytes": 4019041,
+      "digest": "sha256:220ff2872817b43f7b67dcb7a032d485d2e6b2d3daaf98e6b4eef7e45732e67e",
+      "created_at": "2026-11-07T21:00:09Z",
+      "workflow_run": {
+        "id": 42413052611,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590082618,
+      "name": "null-swarm-surface-results-control",
+      "size_in_bytes": 3175342,
+      "digest": "sha256:bf37da8f82ca8e59c8eecee935b122db2d02ef5a72bedb16469c96f7bb35ec79",
+      "created_at": "2026-11-07T20:59:02Z",
+      "workflow_run": {
+        "id": 42413052578,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590911713,
+      "name": "null-swarm-surface-results-latched",
+      "size_in_bytes": 5554824,
+      "digest": "sha256:9ec028563c5ae264552e752c885b3ce86ee58ec1972b2cfc995236c5dc575321",
+      "created_at": "2026-11-07T21:03:12Z",
+      "workflow_run": {
+        "id": 42413052578,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13590548336,
+      "name": "null-swarm-gameplay-qa",
+      "size_in_bytes": 22337934,
+      "digest": "sha256:5f738a067135946180243fcd86ad4f9c678ec94e26c822d37887c5a50f95909e",
+      "created_at": "2026-11-07T21:06:13Z",
+      "workflow_run": {
+        "id": 42413052609,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "ebe0cf7e4bd2a4a8268b22f0b4af80eaaa620ed1"
+      }
+    },
+    {
+      "id": 13589863568,
+      "name": "null-swarm-android-mobile",
+      "size_in_bytes": 801390,
+      "digest": "sha256:b4827fb6c99eb954131dc8674b4d72de55a98c0900576859c84c1fc87d473db2",
+      "created_at": "2026-11-07T20:44:39Z",
+      "workflow_run": {
+        "id": 42411937890,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "87573a6c5d4e4471af20252aeb7bc9a6478b1ead"
+      }
+    }
+  ],
+  "integrity": "All eleven listed API SHA256/size/CRC validations pass, including retained initial failure. Only listed archives independently downloaded.",
+  "images_reviewed": [
+    "Mobile mobile-combat.png",
+    "Mobile mobile-returned.png"
+  ],
+  "main_unmerged": true,
+  "protected_preview_executed": false,
+  "release_aab_produced": false,
+  "physical_android_executed": false,
+  "limitations": [
+    "Shipping Swappy remains unvalidated by the successful software-emulator smoke.",
+    "No physical S23/ARM64 runtime, audio, FPS/thermals, Android-10/cutout certification.",
+    "No new phone installation needed for this testing-only change. Debug signatures/container bytes can differ."
+  ]
+}

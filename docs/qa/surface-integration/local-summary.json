@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "godot_suites": 15,
+  "python_tests": 22,
+  "workflow_yaml_bash_files": 5,
+  "scope": "Godot/Python/workflow syntax local. Java host and actual Android run in hosted CI; no local SDK/adb/KVM."
+}

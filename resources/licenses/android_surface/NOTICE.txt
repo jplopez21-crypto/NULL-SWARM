@@ -1,0 +1,4 @@
+GLSurfaceView: Copyright (C) 2008 The Android Open Source Project. Apache License 2.0.
+Godot 4.6.3 source blob 8b25fdfeceb6dcc273646005137a92f161755558.
+Modified by NULL//SWARM: nonblocking surface lifecycle-edge recovery, November 2026.
+Original source notices retained. Native engine libraries unchanged.

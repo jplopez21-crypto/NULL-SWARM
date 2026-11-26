@@ -27,7 +27,10 @@ func handle(event: InputEvent, viewport_size: Vector2) -> void:
 			origin = event.position
 			stick = Vector2.ZERO
 		elif not event.pressed and event.index == touch_id:
-			reset()
+			# A dash from another finger can arrive in the same physics frame.
+			# Releasing movement must not discard that independent request.
+			touch_id = -1
+			stick = Vector2.ZERO
 	if event is InputEventScreenDrag and event.index == touch_id:
 		stick = ((event.position - origin) / 75.0).limit_length()
 	if event.is_action_pressed("dash"):

@@ -1,0 +1,205 @@
+{
+  "verified_game_and_test_code": "738a047978ce53b61a6d64f8bfbfe89862f6bf98",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 36,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 8,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 55,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 870,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2244,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "8b154cf4d9183272c45642c2deec60f4b59e9f5e5f93cba4aa2ce4754bbcbaa3",
+    "apk_bytes": 27769513,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "code": "738a047978ce53b61a6d64f8bfbfe89862f6bf98",
+    "run": 40880997525,
+    "artifact": 12899947548,
+    "zip_sha256": "43f50be45bc88fb56728df2f085247226bd691a904d4f1bce3fd4c4ec8864a96",
+    "updated_production_bytecode": {
+      "assets/systems/combat_world.gdc": "b6ab5b2728303a9394404df17d03ba990fe425a586ffb402dec6e44a6436439c",
+      "assets/systems/spatial_grid.gdc": "6c64ed43e48761b5ba06df7b2d26093cb3b19c10a2893c06b0787590bb2952c2",
+      "assets/resources/enemy_definition.gdc": "46e6396b9005afb13f0d218687bed9aef62f6329a69e8b4b41e18f959ec88d00"
+    },
+    "status": "passed"
+  },
+  "android": {
+    "run": 40880997456,
+    "artifact": 12900258188,
+    "zip_sha256": "8777a0d5b55482675a35813745dfd4479baaa1f8b48c7cb6a65e9fec854a4533",
+    "status": "passed",
+    "checks": 33,
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "chain_feedback_sample": {
+      "text": "CHAIN 1 // 19 KILLS TO OVERCLOCK // BREAKS IN 2.9s",
+      "value": 5.0,
+      "visible": true,
+      "kills": 1
+    },
+    "ordinary_checkpoint": {
+      "kills": 36,
+      "simulation_seconds": 30.6166666666662,
+      "salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "engineer_fixture": {
+      "method": "Synthetic earned-kit backup restored through normal GUI after ordinary progression/update checks; no progress grant by Android game/probe",
+      "sentry": {
+        "activations": 2,
+        "enabled": true,
+        "position": [
+          9.18402671813965,
+          -2.41144466400146
+        ],
+        "remaining": 2.46666666666667,
+        "shots": 1,
+        "status": "FIELD SENTRY 2.5s // NEXT DASH REPOSITIONS IT"
+      },
+      "simulation_seconds": 3.61666666666666,
+      "hp": 80.0,
+      "kills": 1
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.41068495107492176,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "archive_hash_crc_and_logcat_scans": "passed"
+  },
+  "gameplay_qa": {
+    "run": 40880997533,
+    "artifact": 12899984556,
+    "zip_sha256": "2fead91e2739736d064f7efcda099bdcd1e557a9e9eaa961dab8589bb077d7a9",
+    "status": "passed",
+    "archive_hash_crc": "passed",
+    "full_report_comparison": {
+      "normal_sessions": 26,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 22
+      },
+      "unchanged_gameplay_and_xp_cases_except_timings": 32,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 24,
+      "ui_checks": 2244,
+      "ui_layouts": 160,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_summary_matches_local_native_qa": true,
+      "kernel_parity_cases": 6,
+      "profiled_engineer_cases": 6
+    }
+  },
+  "local_paired_comparison": {
+    "report": "refined-combat-comparison.json",
+    "cases": 6,
+    "serial_runs": 4,
+    "all_fingerprints_match": true,
+    "mean_cpu_observations": "600-enemy samples about 13\u201314% lower; smaller loads mixed, including slowdowns. Two samples/version on a shared host; no confidence interval or general speedup claim."
+  },
+  "visual_review": {
+    "inspected": true,
+    "sources": [
+      "native overclock.png (staged)",
+      "actual Android chain-feedback.png after ordinary kill"
+    ],
+    "observations": [
+      "HUD/gauges remain readable with stable placement; no presentation changes intended.",
+      "Android displayed actual 5% first-kill feedback/countdown."
+    ]
+  },
+  "limits": [
+    "Synthetic phase timings exclude rendering and surrounding fixture work, and include instrumentation overhead.",
+    "Android x86_64 Compatibility/SWANGLE software rendering remains below targets (quiet median 4 FPS); no phone or causal FPS improvement established.",
+    "Engineer mobile tests restore a labelled Architect fixture after ordinary earned-progress checks; they do not prove earning the unlock on-device.",
+    "Physical ARM64 Mobile FPS, Android 10, cutouts, thermals and human fun remain unverified.",
+    "Diagnostic signing rotates. Preserve installations/saves; persistent Preview signing remains blocked on protected owner credentials.",
+    "Main remains unmerged; no release AAB or final commercial artwork/audio claimed."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "code_commit": "9fcd304bc232c6014ab9533bb45960bb70a992d0",
+  "bytes": 27732329,
+  "sha256": "a35e5ca7186a937b6ed79a6b97c79453325a73d2b8c5a0f8a3241d9bbe887d45",
+  "run": 40535254881,
+  "artifact": 12747577938,
+  "package": "com.nullswarm.game.development",
+  "architecture": "arm64-v8a",
+  "renderer": "Mobile (built; not device-tested)",
+  "debug_probe_enabled": false,
+  "signature_verification": "CI apksigner 35.0.1"
+}

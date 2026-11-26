@@ -1,0 +1,8 @@
+{
+  "status": "inspected",
+  "artifact_id": 13727620227,
+  "path": "mobile-corruption-declined.png",
+  "sha256": "f326351608f7568b90eebe70794e8375b18e592086d4292d93978e4db59e1db7",
+  "observed": "Actual level-five restored upgrade screen: Rail 0/3 + Tether 1/3 and Pulse 0/3 + Arc 1/3 are readable and agree with the earned ranks in the same fresh panel. Reroll and optional link remain visible.",
+  "scope": "One actual Mobile emulator capture, not physical-device or saturated recipe/mutation acceptance."
+}

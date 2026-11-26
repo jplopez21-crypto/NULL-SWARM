@@ -7,7 +7,11 @@ Open `project.godot` in Godot 4.6.3 and press F6 on `scenes/main.tscn` or F5. De
 - Move: WASD/arrows, controller left stick, or touch the left side and drag.
 - Dash: Space, controller A, or the onscreen button.
 - Pause: Escape, controller Start, or onscreen Pause.
+- **Pause → End Deployment** opens banked results; **Run Analysis** shows actual damage channels and shares, loadout and corruption. Drone Systems combines Hive/sentry fire; support effects are not scored. Back returns to the same results.
+- Build guide: **Pause → Build // Mutations** shows current weapons, ranks and slot-aware evolution paths while combat is paused. See [guide](docs/BUILD_GUIDE.md).
+- Engineer: defeat The Architect once, then select it in the Foundry. Successful dashes leave one temporary sentry; it starts with Drone Hive and lower health. See [mechanics and test scope](docs/ENGINEER.md).
 - Performance overlay: F3.
+- Overclock: chain 20 kills with gaps under three seconds for six seconds of faster firing. The HUD shows the remaining kills, chain deadline and bonus duration. See [feedback rules](docs/OVERCLOCK.md).
 
 ## Verification
 
@@ -29,9 +33,9 @@ godot --headless --export-debug Android builds/android/null-swarm-corruption-0.5
 adb install -r builds/android/null-swarm-corruption-0.5-debug.apk
 ```
 
-The GitHub Actions workflow installs dependencies, imports resources, tests, renders staged presentation captures, exports, verifies APK signing, and uploads `null-swarm-corruption-0.5-apk`. [Download the verified 0.5 APK artifact](https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/40504064445/artifacts/12734700412) (sign into GitHub, extract the ZIP, install the APK in `android/`). Physical-device testing and balance remain required for this new version.
+The current GitHub Actions workflow configures the development identity, installs dependencies, imports resources, tests, renders staged captures, exports, verifies APK signing and uploads `null-swarm-development-apk`. [Get the current verified development APK ZIP](TEST_RESULTS.md) (sign into GitHub and extract `android/null-swarm-development-debug.apk`). It installs as **NULL SWARM Development** (`com.nullswarm.game.development`). Exact executed revision, test results and limits: [TEST_RESULTS.md](TEST_RESULTS.md). Physical-device performance and human balance remain unverified.
 
-The 0.5 build installs separately as **NULL SWARM Corruption** (`com.nullswarm.game.corruption`). Debug keys are ephemeral per CI run; persistent signing must be configured before future in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
+The local export command above retains the earlier **NULL SWARM Corruption** identity (`com.nullswarm.game.corruption`). CI development builds install separately. Debug keys are ephemeral per CI run; preserve existing installations/saves, and configure persistent signing before relying on cross-run in-place updates. See [Foundry notes](docs/FOUNDRY.md) and [combat slice notes](docs/COMBAT_SLICE.md) for weapons, mutations and playtest goals.
 
 The Android Release preset targets AAB through Godot's Gradle build. Install the matching Android build template and configure protected signing credentials before release export. No release credentials or live billing are included. Windows Desktop is an additional export preset; its export has not been tested.
 
@@ -55,3 +59,17 @@ Adaptive formations begin analysis at 02:00, announce eight seconds before chang
 The 0.4.1 memory cue points from the operative toward stationary uncollected XP and displays distance. It does not identify a safe path or automatically collect packets. Human readability and pacing improvement remain to be tested.
 
 Corruption links become an optional alternate level-up choice from level 5. Review current/projected effects and lasting costs, or return to the exact same ordinary upgrade cards. See [Corruption Protocol rules](docs/CORRUPTION.md).
+
+## Development Android validation
+
+Check the resources actually shipped in an APK with Godot 4.6.3 and Python 3:
+
+```sh
+python3 tools/run_export_smoke.py path/to/debug.apk
+```
+
+The check launches only APK assets in an isolated headless project and save directory. It catches startup dependencies on excluded test files; native publication and emulator boot require it to pass. Android rendering, touch and lifecycle checks run separately.
+
+[TEST_RESULTS.md](TEST_RESULTS.md) records current pass/fail/unavailable checks. Run `python3 tools/run_headless_checks.py` for isolated movement, system, corruption, UI and startup checks with strict completion/error detection. The Android runtime workflow builds a separate x86_64 Compatibility APK with read-only opt-in telemetry, installs it on Android 35, drives actual touchscreen input through ADB, and captures Android screenshots/logcat. It does not change combat stats. ARM64 Mobile export is a separate gate; phone performance and that renderer/ABI still require device testing. Weekly emulator scheduling takes effect on the default branch after merge.
+
+The development pipeline now passes real Android 35 emulator checks alongside native ARM64 export and strict headless/normal-gameplay suites. [Verified results and APK](TEST_RESULTS.md) distinguish emulator Compatibility coverage from untested physical ARM64/Mobile performance. CI development APKs install as NULL SWARM Development, separately from earlier builds. Debug keys remain ephemeral.

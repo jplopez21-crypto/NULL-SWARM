@@ -1,0 +1,24 @@
+{
+  "previous_remote": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+  "unchanged_enemy_functions": [
+    "_build_legacy_body",
+    "activate",
+    "deactivate",
+    "think",
+    "tick",
+    "hit"
+  ],
+  "only_configure_statement_changed": "Replace the warning box factory with directional mesh factory; other archetypes use original box.",
+  "unchanged_other_behavior_files": {
+    "scripts/player.gd": "2020ce19e044385eb838ad288a407811a3f0e797d5aeef702a540be855a20bd0",
+    "systems/input_router.gd": "2d18e067aede1283bd6040b5ff3f424be00017869ea3427cc24a8dbf2c2edd3a",
+    "systems/combat_world.gd": "db94d72738ac632f3613addc5294a1c13e97fa159adb2e4862d184a9d9b17f39",
+    "bosses/encounter_director.gd": "938eee78af923b5ddaeb868ee5a023706717a8fe74f9a8f284dc3908d8782687",
+    "systems/swarm_adaptation.gd": "9793105e5dc13622a7b9fcf34b57d539ab1d856e4a591c0dd6fe7947e215f102",
+    "systems/corruption_protocol.gd": "e8e79b67275b420f98f793edc0b3cd64b106385ce4b1fdb0d46e1f5e462d2b77",
+    "systems/save_store.gd": "461fcbb68e8e80dc035f7d87e3ba5b57429493640d0b27c41183e05861573be7",
+    "ui/game_ui.gd": "e4284b980dc6d59bf86e635acd8186bcb1d7b7e207b2808caa573d4072143901",
+    "ui/dash_button.gd": "2fe94a07fd2a369a5824174a89cf5c62895e184f27577cd0780e895beabbed7d",
+    "ui/touch_action_button.gd": "e49fa84a814540db093238eb12a3e34ef8cab932d8d077c84eacdffb3119dc5c"
+  }
+}

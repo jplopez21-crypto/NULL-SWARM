@@ -1,0 +1,113 @@
+{
+  "source": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081",
+  "failures": [
+    {
+      "run_id": 42398894150,
+      "job_id": 128482263968,
+      "variant": "official-gameplay",
+      "driver_status": "failed",
+      "passed_checks_before_timeout": 21,
+      "completed_cycles": 0,
+      "timeout": "Runtime condition timed out waiting for a fresh foreground/paused frame",
+      "last_state": {
+        "state": "paused",
+        "time": 30.9666666666662,
+        "rendered_frames": 296,
+        "sample_ticks": 115780,
+        "lifecycle": {
+          "background_events": 2,
+          "foreground_generation": 0,
+          "rendered_generation": 0
+        },
+        "process": 3709
+      },
+      "app_egl_warnings": [
+        "11-07 18:03:45.917  3709  3749 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+      ]
+    },
+    {
+      "run_id": 42398894150,
+      "job_id": 128482264257,
+      "variant": "official-lifecycle",
+      "driver_status": "failed",
+      "passed_checks_before_timeout": 16,
+      "completed_cycles": 5,
+      "timeout": "Runtime condition timed out waiting for a fresh foreground/paused frame",
+      "last_state": {
+        "state": "playing",
+        "time": 3.46666666666666,
+        "rendered_frames": 140,
+        "sample_ticks": 53391,
+        "lifecycle": {
+          "background_events": 10,
+          "foreground_generation": 10,
+          "rendered_generation": 10
+        },
+        "process": 3563
+      },
+      "app_egl_warnings": [
+        "11-07 18:02:04.368  3563  3622 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+        "11-07 18:02:13.728  3563  3622 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+        "11-07 18:02:31.654  3563  3622 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+        "11-07 18:02:43.650  3563  3622 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+      ],
+      "failure_image_extrema": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "failure_image_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6"
+    },
+    {
+      "run_id": 42398894125,
+      "job_id": 128482185528,
+      "variant": "control/lifecycle",
+      "driver_status": "failed",
+      "passed_checks_before_timeout": 22,
+      "completed_cycles": 7,
+      "timeout": "Runtime condition timed out waiting for a fresh foreground/paused frame",
+      "last_state": {
+        "state": "playing",
+        "time": 3.24999999999999,
+        "rendered_frames": 160,
+        "sample_ticks": 84012,
+        "lifecycle": {
+          "background_events": 14,
+          "foreground_generation": 14,
+          "rendered_generation": 14
+        },
+        "process": 3433
+      },
+      "app_egl_warnings": [
+        "11-07 18:04:11.482  3433  3555 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+        "11-07 18:04:20.911  3433  3555 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE",
+        "11-07 18:04:44.352  3433  3555 W GLThread: eglSwapBuffers failed: EGL_BAD_SURFACE"
+      ],
+      "failure_image_extrema": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "failure_image_sha256": "527f19e0c37f93a2060574f4162d7eafc016fafb91db4b3b7a1fbbf8fa6669a6"
+    }
+  ],
+  "scope": "Failed observations retained. Diagnostic control job success means collection succeeded; its recovery driver failed. No unchanged retry performed."
+}

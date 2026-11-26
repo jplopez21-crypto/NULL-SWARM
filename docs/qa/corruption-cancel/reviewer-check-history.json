@@ -1,0 +1,8 @@
+{
+  "status": "corrected",
+  "stage": "Independent post-download reviewer",
+  "initial_result": "failed",
+  "reason": "Reviewer incorrectly required the initial level-up entry snapshot to have already rendered. It records upgrading with the previous playing frame; the driver captures the offer before tapping.",
+  "correction": "Still compare all seventeen fields entry-to-picker and all exact actions. Require fresh rendered panels/process/counters throughout actual opened -> declined -> reopened path, matching the intended runtime predicates.",
+  "shipping_or_ci_source_changed": false
+}

@@ -1,0 +1,162 @@
+{
+  "verified_game_and_test_code": "000dd701a5ffc4dd7d6b365e23d677a302d42ab3",
+  "report_checkpoint_only": true,
+  "headless": {
+    "suites": [
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 30,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 6,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 50,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 21,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 438,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1188,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed",
+    "local_summary_matches_final_native_and_qa": true
+  },
+  "ui_layouts": 104,
+  "native": {
+    "run": 40783288386,
+    "artifact": 12857714529,
+    "status": "passed",
+    "variant": "ARM64 Mobile debug export",
+    "zip_sha256": "16e6e7d2f779efc6739f975e729b5b4b2a664a447c1363c75c48e3b6e19a2da3",
+    "apk_sha256": "e959b36411cefbd438652f052e0b10cf7df09c8a87bcd8040741b7db8e258316",
+    "package": "com.nullswarm.game.development",
+    "signature": "CI apksigner verification passed",
+    "independent_checks": "Archive/APK hashes and CRCs, package, ARM64 libraries, excluded QA assets and disabled native probe verified",
+    "unchanged_compiled_modules_from_first_implementation": 28
+  },
+  "android": {
+    "run": 40783288421,
+    "artifact": 12859125092,
+    "status": "passed",
+    "checks": 22,
+    "zip_sha256": "db257fca8916e5e5010e1ab037306d3f717789ee349747d1f4b924fab6b741fc",
+    "variant": "x86_64 Android 35 Compatibility / SWANGLE software rendering",
+    "checkpoint": {
+      "kills": 35,
+      "simulation_seconds": 30.15,
+      "earned_salvage": 1
+    },
+    "update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1
+    },
+    "quiet_observation": {
+      "sample_count": 9,
+      "all_states": "playing",
+      "median_fps": 5,
+      "fps_range": [
+        3,
+        5
+      ],
+      "simulation_seconds_per_wall_second": 0.5637850983860248,
+      "method": "2s warm-up then 5s without touch/screencap; read-only telemetry, audio and software rendering remain active",
+      "workload": "Unseeded fresh deployment, 2\u20136 enemies and 0\u20132 shots in HUD samples; differs from earlier capture-heavy smoke",
+      "acceptance": "Observation only; below phone 30/60 FPS targets. No physical-phone or causal speedup claim."
+    }
+  },
+  "gameplay_qa": {
+    "run": 40783288378,
+    "artifact": 12858522682,
+    "status": "passed",
+    "zip_sha256": "c4a795aef7c4fba2df3d924e35edbd02a8c38ec9fd964a9a3ed614081b79728e",
+    "standard_corruption_extended_sessions": 22,
+    "pacing_probes": 4,
+    "xp_comparisons": 6,
+    "stress_cases": 18,
+    "full_report_comparison": {
+      "normal_sessions": 22,
+      "outcomes": {
+        "defeat": 4,
+        "victory": 18
+      },
+      "unchanged_normal_and_xp_cases_except_timings": 28,
+      "pacing_cases_match_except_timings": 4,
+      "stress_fingerprints_match": 18,
+      "ui_checks": 1188,
+      "ui_layouts": 104,
+      "deterministic_replay": {
+        "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+        "matches": true,
+        "seconds": 180,
+        "seed": 909
+      },
+      "strict_headless_matches_native_and_local": true
+    }
+  },
+  "visual_review": {
+    "inspected": true,
+    "source": "Downloaded actual Android performance-stats.png and performance-restored.png; first implementation settings capture",
+    "observations": [
+      "Diagnostic text fits above playfield.",
+      "No extra touch obstruction."
+    ]
+  },
+  "limits": [
+    "Physical ARM64 Mobile performance, Android 10, phone cutouts, thermals and human balance remain unverified.",
+    "Local SDK/emulator/KVM are absent; hosted CI supplies Android runtime coverage.",
+    "Persistent owner Preview signing is unconfigured; diagnostic keys rotate and cross-run phone updates are not guaranteed. Preserve existing installations/saves.",
+    "No release AAB or final commercial artwork/audio is claimed."
+  ],
+  "failures": []
+}

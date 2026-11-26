@@ -1,0 +1,76 @@
+{
+  "source": "2f6361c5e4ee7aa3c3401766bff3278e50a7e651",
+  "native": {
+    "run": 45385963840,
+    "status": "success"
+  },
+  "quality": {
+    "run": 45385963803,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "failures": [
+    {
+      "job": 138416804055,
+      "lines": [
+        "2026-11-24T11:41:31.0921290Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+        "2026-11-24T11:41:31.1418294Z AssertionError: Emulator version drift: update the reviewed pin deliberately",
+        "2026-11-24T11:41:31.1528043Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job": 138416804418,
+      "lines": [
+        "2026-11-24T11:41:56.7695515Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+        "2026-11-24T11:41:56.9415838Z AssertionError: Emulator version drift: update the reviewed pin deliberately",
+        "2026-11-24T11:41:56.9536518Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job": 138416803568,
+      "lines": [
+        "2026-11-24T11:43:02.1892112Z             > Could not GET 'https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.1894131Z             > Could not GET 'https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.1990825Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.1992605Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.1994266Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.1997492Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.1999057Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.2000588Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:02.2002406Z BUILD FAILED in 3m 47s",
+        "2026-11-24T11:43:02.8209351Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job": 138416804232,
+      "lines": [
+        "2026-11-24T11:41:50.5901217Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+        "2026-11-24T11:41:50.6531080Z AssertionError: Emulator version drift: update the reviewed pin deliberately",
+        "2026-11-24T11:41:50.6705992Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job": 138416804099,
+      "lines": [
+        "2026-11-24T11:41:51.5717920Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+        "2026-11-24T11:41:51.7505898Z AssertionError: Emulator version drift: update the reviewed pin deliberately",
+        "2026-11-24T11:41:51.7635265Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job": 138416804637,
+      "lines": [
+        "2026-11-24T11:43:11.0785674Z             > Could not GET 'https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0787379Z             > Could not GET 'https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0790584Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0792206Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0793743Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0796860Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0798464Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0800052Z             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom'. Received status code 429 from server: Too Many Requests",
+        "2026-11-24T11:43:11.0802274Z BUILD FAILED in 3m 48s",
+        "2026-11-24T11:43:11.7370917Z ##[error]Process completed with exit code 1."
+      ]
+    }
+  ]
+}

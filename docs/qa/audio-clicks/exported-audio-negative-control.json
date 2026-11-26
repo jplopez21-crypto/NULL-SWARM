@@ -1,0 +1,16 @@
+{
+  "apk_sha256": "03d840c4b30242fcafab8187f34ffcddd809b9fcfc1f513edd58163809cef76c",
+  "scope": "Headless desktop fixture using exact APK assets, an external driver, isolated user data and actual production damage/GUI/joypad/key handling. Explicit frozen enemy/HP fixture; not an Android device, earned run, audio listening or performance acceptance.",
+  "exit_code": 1,
+  "result": {
+    "checks": 11,
+    "failures": [
+      "actual exported score has no beat-edge waveform discontinuity"
+    ],
+    "music_largest_sample_step": 0.2901611328125
+  },
+  "errors": [
+    "ERROR: actual exported score has no beat-edge waveform discontinuity"
+  ],
+  "status": "failed"
+}

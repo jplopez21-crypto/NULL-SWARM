@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "initial_untraced_cases": 8,
+  "traced_cases": 8,
+  "overlapping_arcstorm_cases_unchanged": 4,
+  "comparison_excludes": [
+    "wall_seconds",
+    "simulation_step_p95_ms",
+    "pacing_trace"
+  ],
+  "source_sha256": {
+    "tests/run_playtests.gd": "e23b08df8b4162dbafc0935c799f14a6b34d5b8c3c8e93f877229153671b70f6",
+    "tools/report_collection_pacing.py": "284471723570d6f37f79ccb6bb2266d4904c67a92de8f46c5d12ff3963ca5fb7"
+  },
+  "raw_sha256": {
+    "initial-collector-probe.json": "01d1ef634684bed39f202126706966355b9ab1e9caff724f08f1fd260919b429",
+    "local-arcstorm-probe.json": "36bc435a53a469bbb5832f3e14aa1bfc0b883bbcf9ee152496b7afb7a7948169"
+  },
+  "scope": "Two actually executed local normal-rule probes: original eight-case Arcstorm/Kinetic sample and new eight-case four-seed Arcstorm trace. Only four Arcstorm/seed/policy combinations overlap; their full non-timing observations match."
+}

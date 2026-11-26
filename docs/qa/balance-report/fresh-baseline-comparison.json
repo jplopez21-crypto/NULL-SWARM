@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "status": "observed",
+  "sources": {
+    "bot-report.json": {
+      "sha256": "8cff100b4fba915c9d4c2780d1f77cf54dc12b2185719ff09c9b9c13f175831e",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules bot playtests"
+    },
+    "extended-seeds.json": {
+      "sha256": "e61b05dd0160a83be7e0e604e4b2bda82b243ac65b08f2a43612ccab0ba6e9c5",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "additional fixed-seed normal-rules sessions"
+    },
+    "corruption-probe.json": {
+      "sha256": "6721d4ab5c094c8b5654e5f6886eba481be51d6632381c6be8f485906474b24e",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules corruption choices"
+    },
+    "engineer-probe.json": {
+      "sha256": "8f70900e57b6cb27da6738d31c55a4aeede5269f5eee8923874974c646e03147",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules earned Engineer sessions"
+    }
+  },
+  "baseline_sources": {
+    "bot-report.json": {
+      "sha256": "253fc1c2ccf36be248cc54206357a8830a335ae61e8a82762a29893f04079ab6",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules bot playtests"
+    },
+    "extended-seeds.json": {
+      "sha256": "1c34b55642efc0d1f7032e72cb2a07afe7e03e1dba48a870c6cb8eb5fb917d43",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "additional fixed-seed normal-rules sessions"
+    },
+    "corruption-probe.json": {
+      "sha256": "5358ce016bf50d15e7f685a5044ab074410de059d61ee2edeb5fa881279405ff",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules corruption choices"
+    },
+    "engineer-probe.json": {
+      "sha256": "955c1eb67beb11d6c9401b1c7c3c295b8d01f5aa6295a1173c86a34bdd860687",
+      "schema": 1,
+      "godot": "4.6.3-stable (official)",
+      "fixed_step": 0.0166666666666667,
+      "kind": "normal-rules earned Engineer sessions"
+    }
+  },
+  "comparison": {
+    "matched": 26,
+    "changed_observations": 0,
+    "changes": [],
+    "added": [],
+    "removed": []
+  },
+  "limitations": [
+    "Fixed-seed bot observations, not human enjoyment, retention or population win-rate estimates.",
+    "Suites, kits, fixtures, policies and research remain separate; medians describe only the recorded seeds.",
+    "Missing first-level/weapon events are unobserved, not zero seconds. Mutation times include reached runs only.",
+    "Comparison covers selected balance observations. Full gameplay determinism is checked separately.",
+    "Host CPU timings are excluded. No Android rendering, phone FPS, touch-latency or thermal claim.",
+    "Victories, defeats and time limits are observations; valid balance changes do not fail this tool."
+  ]
+}

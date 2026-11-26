@@ -1,0 +1,68 @@
+{
+  "status": "publication_blocked",
+  "verified_date": "2026-11-14",
+  "local_feature_commit": "8b4f80f59748a0a3032dae9b88a376bb10e99189",
+  "local_feature_tree": "7190edc61360abe779aa5b2651ed6039e1364b66",
+  "remote_development": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+  "remote_main": "28a563e3b262d09296e52635a30d29289bccacf5",
+  "remote_staging_ref_observed": false,
+  "read_access": "verified",
+  "new_hosted_validation": "not run",
+  "new_apk": "not produced",
+  "mutation_verified": false,
+  "attempts": [
+    {
+      "tool": "github_create_tree",
+      "result": "no result before interruption",
+      "elapsed_seconds_reported": 7173.7
+    },
+    {
+      "tool": "github_create_tree",
+      "result": "no result before interruption",
+      "elapsed_seconds_reported": 5135.5
+    },
+    {
+      "tool": "github_create_branch",
+      "result": "no result before interruption",
+      "elapsed_seconds_reported": 18614.4
+    }
+  ],
+  "cause": "Unconfirmed. These observations do not establish a permission rejection or backend failure reason. Unreferenced objects, if any, are not considered published.",
+  "next": "Preserve local work; resume publication once connected GitHub writes respond, then execute actual hosted Android tests.",
+  "latest_recheck": {
+    "date": "2026-11-15",
+    "connected_read": "verified",
+    "development_ref": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "main_ref": "28a563e3b262d09296e52635a30d29289bccacf5",
+    "write_probe": {
+      "kind": "no-op tree request using the existing project.godot blob; no ref/branch update requested",
+      "result": "no result within 45-second observation; outcome unconfirmed"
+    },
+    "cli_network_probe": {
+      "default_sandbox": "proxy connection blocked: socket operation not permitted",
+      "additional_network_read_check": "unresolved within 45-second observation; no permission rejection established"
+    },
+    "docker": "installed but socket connection blocked by sandbox; daemon health unverified",
+    "credentials": "CLI authentication not verified because network access was blocked; no credential values inspected or printed",
+    "new_hosted_validation": "not run",
+    "new_apk": "not produced"
+  },
+  "nov17_recheck": {
+    "date": "2026-11-17",
+    "read_access": "verified",
+    "development_ref": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "main_ref": "28a563e3b262d09296e52635a30d29289bccacf5",
+    "bounded_write_probe": "No-op tree using the existing project.godot blob, no result within 45 seconds. No ref/branch mutation requested.",
+    "cause": "Unconfirmed; no permission rejection established. Earlier CLI network limitation remains unresolved.",
+    "new_hosted_validation": "not run",
+    "new_apk": "not produced"
+  },
+  "latest_driver_flow_recheck": {
+    "date": "2026-11-17",
+    "read_access": "verified",
+    "development_ref": "189525255657af69c150b4b8d3e5b4b2b53dfc6f",
+    "probe": "No-op existing-tree request produced no result within 45 seconds; no ref mutation requested.",
+    "cause": "Unconfirmed. No permission rejection or authentication failure established.",
+    "new_android_run": false
+  }
+}

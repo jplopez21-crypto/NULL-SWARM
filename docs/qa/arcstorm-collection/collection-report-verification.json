@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "pairs": 4,
+  "seeds": [
+    101,
+    202,
+    303,
+    404
+  ],
+  "local_ci_non_timing_case_and_trace_parity": true,
+  "canonical_cautious_cases_match": 2,
+  "analysis_parity": true,
+  "raw_sha256": "7fdd1ff943291ad932b12d6f90078e25dd4d5cdf4e359a8a33c47cc92678f18e",
+  "longest_gap_samples": 468,
+  "nearby_cold_xp_samples": 467,
+  "only_outside_sensor_samples": 1,
+  "outcomes": {
+    "cautious": {
+      "victory": 2,
+      "defeat": 2,
+      "time_limit": 0
+    },
+    "value_aware": {
+      "victory": 4,
+      "defeat": 0,
+      "time_limit": 0
+    }
+  },
+  "scope": "Fresh CI eight cases and complete five-second traces equal executed local data except host timings. Two overlapping canonical cautious cases remain unchanged. Proximity is not safe reachability; four seeds do not establish human balance or cause."
+}

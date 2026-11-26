@@ -1,0 +1,26 @@
+{
+  "source": "87573a6c5d4e4471af20252aeb7bc9a6478b1ead",
+  "run_id": 42411937890,
+  "job_id": 128521865852,
+  "status": "failed",
+  "checks": 0,
+  "frame_pacing": "shipping project default (Swappy enabled)",
+  "last_observation": {
+    "renderer": "mobile",
+    "state": "menu",
+    "rendered_frames": 1,
+    "sample_ticks": 20175,
+    "process": 3570
+  },
+  "presentation_errors": [
+    "11-07 20:42:39.381  3570  3668 E godot   : ERROR: QueuePresentKHR failed with error: 5",
+    "11-07 20:42:44.257  3570  3668 E godot   : ERROR: QueuePresentKHR failed with error: 5",
+    "11-07 20:42:44.295  3570  3668 E godot   : ERROR: QueuePresentKHR failed with error: 5"
+  ],
+  "actual_renderer_log": [
+    "11-07 20:42:32.693  3570  3668 I godot   : Vulkan 1.3.0 - Forward Mobile - Using Device #0: Unknown - SwiftShader Device (Subzero)"
+  ],
+  "upstream_related_report": "https://github.com/godotengine/godot/issues/105598",
+  "source_evidence": "Godot 4.6.3 rendering_device_driver_vulkan.cpp wraps presentation in SwappyVk_queuePresent when display/window/frame_pacing/android/enable_frame_pacing is true. Default true in ProjectSettings.xml.",
+  "next_experiment": "Disable frame pacing only in disposable Mobile emulator config, preserve renderer/logic/fatal gates and phone settings. Suspected presentation-path issue; not established root cause yet."
+}

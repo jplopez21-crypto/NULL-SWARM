@@ -1,0 +1,60 @@
+{
+  "accepted_source": "ea3fdea9c19e91a037d9631da2c380e5717de848",
+  "cases": [
+    {
+      "fingerprint": "8836872d5aba179f75833e19b7dd846751cb71ec3dae7fb69c2ad69284053dbf",
+      "flashes": false,
+      "frames": 180,
+      "next_random": 0.452393,
+      "peak": 40,
+      "quality": 0,
+      "recycled": true
+    },
+    {
+      "fingerprint": "ed2d00896c95057a7bfb42e4fadc72750ba50328ed79e90c4c7e3dd444163108",
+      "flashes": true,
+      "frames": 180,
+      "next_random": 0.517894,
+      "peak": 40,
+      "quality": 0,
+      "recycled": true
+    },
+    {
+      "fingerprint": "3df807474db58fea0130e5858e92d2740c6555b09cbd332635715de7ce9dd7e1",
+      "flashes": false,
+      "frames": 180,
+      "next_random": 0.673953,
+      "peak": 85,
+      "quality": 1,
+      "recycled": true
+    },
+    {
+      "fingerprint": "0d21c8be28f9f2c046fd25e9239118b0cdb444a2c27199eb10fd8e58e5583ab2",
+      "flashes": true,
+      "frames": 180,
+      "next_random": 0.526996,
+      "peak": 85,
+      "quality": 1,
+      "recycled": true
+    },
+    {
+      "fingerprint": "375e050cbb32fa204381de6ccda02fac0199124598d91c0a35d1d29f1295db3c",
+      "flashes": false,
+      "frames": 180,
+      "next_random": 0.512134,
+      "peak": 150,
+      "quality": 2,
+      "recycled": true
+    },
+    {
+      "fingerprint": "1a4a620ac249ef7351cb980fde8ff94b60ce31ef6290fb7cc48b0087d14f33f1",
+      "flashes": true,
+      "frames": 180,
+      "next_random": 0.666231,
+      "peak": 150,
+      "quality": 2,
+      "recycled": true
+    }
+  ],
+  "scope": "Six 180-frame seeded synthetic cap/flight/recycling/RNG cases before debris geometry changes. Not device performance."
+}

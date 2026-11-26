@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "mobile/mobile-build-earned.png",
+      "sha256": "1c7d8e20515055fd5bc943ef96bf132900e4d3ee6102383a4087a89228b79fa2"
+    },
+    {
+      "path": "mobile/mobile-build-resumed.png",
+      "sha256": "f1292a0a36f3907269283b950bb79c5e90e5b1065354dc1a162b29d63bb3a4dc"
+    }
+  ],
+  "observation": "Actual Mobile earned Arc Emitter rank 1 appears in WEAPONS 2/4 and mutation requirement 1/3. Guide is readable without background HUD; resumed capture shows Arc Emitter HUD and both touch controls. This is an early earned build, not an earned mutation."
+}

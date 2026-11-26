@@ -1,0 +1,541 @@
+{
+  "verified_game_test_ci_source": "c6836def022cb5dd80e49293f7b3368230e732fd",
+  "report_only_checkpoint": true,
+  "previous_verified_game": "cb797257a911d775e9df352fbdaae1d08781da3f",
+  "workflows": [
+    {
+      "id": 41321365333,
+      "name": "Validate and build Android",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "c6836def022cb5dd80e49293f7b3368230e732fd",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41321365333"
+    },
+    {
+      "id": 41321365273,
+      "name": "Android emulator runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "c6836def022cb5dd80e49293f7b3368230e732fd",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41321365273"
+    },
+    {
+      "id": 41321365180,
+      "name": "Repeatable gameplay QA",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "c6836def022cb5dd80e49293f7b3368230e732fd",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41321365180"
+    }
+  ],
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 47,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 33,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 18,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 75,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 23,
+        "errors": []
+      },
+      {
+        "suite": "touch-dash",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 69,
+        "errors": []
+      },
+      {
+        "suite": "touch-pause",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 97,
+        "errors": []
+      },
+      {
+        "suite": "operative",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "destruction",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 59,
+        "errors": []
+      },
+      {
+        "suite": "attack-lanes",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 67,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1059,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2492,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "native": {
+    "apk_sha256": "2b225760d689b5aae5abf0b73c65c63fecb0f70af5c238e7d56164973dfed9eb",
+    "apk_bytes": 27820132,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "unchanged_previous_compiled_modules": [
+      "assets/bosses/encounter_director.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/systems/performance_history.gdc",
+      "assets/ui/touch_action_button.gdc",
+      "assets/systems/spawn_director.gdc",
+      "assets/effects/memory_crystals.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/systems/research.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/effects/operative_model.gdc",
+      "assets/ui/dash_button.gdc",
+      "assets/systems/pickup_system.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/scripts/player.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/components/health.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/enemies/chassis_models.gdc",
+      "assets/effects/debris_fragment.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/enemies/attack_lanes.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/weapons/weapon_rig.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/systems/android_qa_probe.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/systems/combat_world.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/enemies/enemy.gdc",
+      "assets/systems/input_router.gdc"
+    ],
+    "changed_module_sha256": {
+      "assets/scripts/main.gdc": "4c1a8842dc22a7985a2f4dd3cbc666c3dad737ae2c6fa910d9dd516f1badd57b",
+      "assets/ui/game_ui.gdc": "2dd219101d1b39bea7379f00a68acb9ef5819eb18838b376b7062b13866d969b",
+      "assets/systems/progression.gdc": "7c1956b7d6e17617bc24281dbd223f41159a06d98851f732547e3021507f49ec"
+    }
+  },
+  "android": {
+    "status": "passed",
+    "checks": 53,
+    "pause_samples": {
+      "multitouch_pause": true,
+      "injection": "shell UID / real Android two-pointer MotionEvent",
+      "samples": {
+        "walking": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": 7,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              1.0,
+              0.0
+            ]
+          },
+          "position": [
+            0.933333396911621,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.6,
+          "state": "playing"
+        },
+        "paused_while_fingers_held": {
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            0.933333396911621,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.6,
+          "state": "paused"
+        },
+        "resumed": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            0.933333396911621,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 0.900000000000001,
+          "state": "playing"
+        }
+      }
+    },
+    "apk_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "ordinary_checkpoint": {
+      "time": 30.0333333333329,
+      "kills": 37,
+      "level": 4,
+      "xp": 110,
+      "salvage": 1
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.4317599707281361,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "isolated_export": {
+      "apk_sha256": "6a7d20da3695d6aac0fa889266bc949aae7ea45307bd999ea2c52bcc706858da",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "logcat_scans": "passed",
+    "scope": "Ordinary Android controls/progression/lifecycle acceptance; no claimed earned-on-device mutation-finisher preview. Engineer touch cases use labelled permanent-progress fixture after ordinary progression checks."
+  },
+  "gameplay_comparison": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2493,
+    "ui_layouts": 176,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_receipt_matches_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "exports": {
+    "native_ci": {
+      "apk_sha256": "2b225760d689b5aae5abf0b73c65c63fecb0f70af5c238e7d56164973dfed9eb",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "native_independent": {
+      "apk_sha256": "2b225760d689b5aae5abf0b73c65c63fecb0f70af5c238e7d56164973dfed9eb",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    },
+    "android_ci": {
+      "apk_sha256": "6a7d20da3695d6aac0fa889266bc949aae7ea45307bd999ea2c52bcc706858da",
+      "scope": "Headless launch of exact APK assets in an isolated ZIP and user directory; no source files or excluded tests available. Not Android rendering/device acceptance.",
+      "asset_files": 100,
+      "exit_code": 0,
+      "scene_smoke_marker": true,
+      "errors": [],
+      "status": "passed"
+    }
+  },
+  "capture": {
+    "samples": [
+      {
+        "case": "pulse-rail",
+        "ranks": {
+          "arc": 3,
+          "damage": 2,
+          "magnet": 3,
+          "rail": 2
+        },
+        "texts": [
+          "01\nMUTATES: ARCSTORM RIFLE\nAMPLIFIED PULSE\nDamage 30 \u2192 36\nSynergy: Pulse 3 + Arc 3",
+          "02\nMUTATES: SINGULARITY LANCE\nRAIL LANCE\nRANK 2 \u2192 3 // DMG 83 \u2192 101\n\nA piercing beam drills\nthrough the whole line.\nEVOLVE: Singularity Lance\nRail 3 + Tether 3\nPull field; bosses stay anchored.",
+          "03\n\nSERVO OVERDRIVE\nSpeed 7.0 \u2192 7.7\nOutrun the machine tide."
+        ]
+      },
+      {
+        "case": "halo-pulse",
+        "ranks": {
+          "arc": 3,
+          "damage": 2,
+          "orbit": 2,
+          "thermal": 3
+        },
+        "texts": [
+          "01\nMUTATES: SOLAR HALO\nPLASMA ORBITALS\nRANK 2 \u2192 3 // DMG 16 \u2192 20\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3",
+          "02\nMUTATES: ARCSTORM RIFLE\nAMPLIFIED PULSE\nDamage 30 \u2192 36\nSynergy: Pulse 3 + Arc 3",
+          "03\n\nREINFORCED CHASSIS\nMax HP 100 \u2192 120\nAlso restores 25 health."
+        ]
+      }
+    ],
+    "scope": "Explicit synthetic ranks/offers in a frozen desktop presentation fixture; no earned-on-device mutation claim."
+  },
+  "source_preservation": {
+    "before_remote": "cb797257a911d775e9df352fbdaae1d08781da3f",
+    "unchanged_functions": {
+      "scripts/main.gd": [
+        "_ready",
+        "_build_arena",
+        "start_run",
+        "_physics_process",
+        "_process",
+        "_sample_performance",
+        "open_performance_report",
+        "copy_performance_report",
+        "_input",
+        "_notification",
+        "pause_run",
+        "resume_run",
+        "open_build",
+        "go_menu",
+        "_record_result",
+        "finish_run",
+        "show_upgrade",
+        "show_corruption",
+        "return_upgrades",
+        "select_corruption",
+        "upgrade_description",
+        "select_upgrade",
+        "change_setting",
+        "_exit_tree",
+        "reroll_upgrades",
+        "_weapon_sound",
+        "_warden_down",
+        "_architect_down",
+        "_checkpoint_progress",
+        "show_results",
+        "open_lab",
+        "_return_from_lab",
+        "purchase_research",
+        "select_kit",
+        "open_backup",
+        "export_backup",
+        "preview_backup",
+        "restore_backup",
+        "preview_recovery"
+      ],
+      "systems/progression.gd": [
+        "threshold",
+        "add_xp",
+        "equipped",
+        "eligible",
+        "choices",
+        "select"
+      ],
+      "ui/game_ui.gd": [
+        "_ready",
+        "label_at",
+        "button_at",
+        "_safe_area",
+        "_bar",
+        "_build_hud",
+        "_panel",
+        "show_menu",
+        "set_hud",
+        "hide_panel",
+        "show_pause",
+        "_build_card",
+        "show_build",
+        "visible_build_text",
+        "show_results",
+        "show_corruption",
+        "show_settings",
+        "show_performance_report",
+        "visible_performance_report",
+        "set_performance_copy_status",
+        "set_performance_copy_pending",
+        "update_hud",
+        "set_performance_stats",
+        "_update_overclock",
+        "add_damage",
+        "_process",
+        "update_memory",
+        "_draw_memory",
+        "_draw_feedback",
+        "toast",
+        "_draw_brand",
+        "show_lab",
+        "show_backup",
+        "show_backup_confirmation"
+      ]
+    },
+    "unchanged_files": {
+      "weapons/arsenal.gd": "b58f1dcb018a61d584ceeed352ae0e222c6e3551ee2b71f963cece8c0447a482",
+      "systems/combat_world.gd": "db94d72738ac632f3613addc5294a1c13e97fa159adb2e4862d184a9d9b17f39",
+      "scripts/player.gd": "2020ce19e044385eb838ad288a407811a3f0e797d5aeef702a540be855a20bd0",
+      "systems/input_router.gd": "2d18e067aede1283bd6040b5ff3f424be00017869ea3427cc24a8dbf2c2edd3a",
+      "systems/save_store.gd": "461fcbb68e8e80dc035f7d87e3ba5b57429493640d0b27c41183e05861573be7",
+      "systems/corruption_protocol.gd": "e8e79b67275b420f98f793edc0b3cd64b106385ce4b1fdb0d46e1f5e462d2b77",
+      "bosses/encounter_director.gd": "06af81be0645dbea445cde554641afbcfb6ca91593ca85d33e8fc317cf1552c0",
+      "systems/audio_system.gd": "b71f77f76f02434bc11d4b78935bb0bea0a35a6dd788bb5f5f3dafb324970ec6",
+      "ui/touch_action_button.gd": "e49fa84a814540db093238eb12a3e34ef8cab932d8d077c84eacdffb3119dc5c"
+    }
+  },
+  "initial_render_review": {
+    "source": "aeb73d547f69855bf8fffd49d5a52d0bf9e5e569",
+    "native_run": 41320672451,
+    "capture_artifact": 13089416162,
+    "observation": "Names fit and card geometry remains readable, but default focused font state turns the first mutation-finishing card white. Normal unfocused finisher is gold.",
+    "correction": "Per-button focus/hover/pressed font colors retain gold only for mutation finishers. Cyan focus outline and all ordinary-card states/controls remain unchanged.",
+    "method": "Actual native mutation_offers.png inspected from independently hashed/CRC-checked artifact.",
+    "corrected_acceptance": "Passed at c6836def022cb5dd80e49293f7b3368230e732fd: focused first card remains gold with cyan focus outline; both actual final mutation PNGs inspected; native/Android/full QA passed."
+  },
+  "artifacts": [
+    {
+      "id": 13089825790,
+      "name": "null-swarm-presentation-captures",
+      "digest": "sha256:b995b97893b30018ccbe2e2ee55c0704f6871426d55ad9665a6237f8b6cc0fca",
+      "size_in_bytes": 5526448,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13089562701,
+      "name": "null-swarm-headless-results",
+      "digest": "sha256:8b003e97ede30d83c3360bb7991025c1e8d3ee4e4ea53fb1e41fccd685f7d67c",
+      "size_in_bytes": 405801,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13089124078,
+      "name": "null-swarm-development-apk",
+      "digest": "sha256:64ac3d7c6dd83e164c80ccc8847ddf0281bf33efed744ebbfab0d751c6414bdf",
+      "size_in_bytes": 27898245,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13089174823,
+      "name": "null-swarm-android-runtime",
+      "digest": "sha256:650ce521e7e05549e291d77f6d12fed015962363b28513719150e8fe9b00459b",
+      "size_in_bytes": 3663556,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13089434994,
+      "name": "null-swarm-gameplay-qa",
+      "digest": "sha256:a6372aca8fd6c4566f4fa73237f74471dd9af022e0f3acee47cf7238ed5a5193",
+      "size_in_bytes": 21024965,
+      "hash_crc": "passed"
+    }
+  ],
+  "apk_zip": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41321365333/artifacts/13089124078",
+  "visual_review": "Actual final mutation_offers.png and mutation_halo_offers.png inspected: three evolved names fit, focused/unfocused finishers are gold, cyan focus outline and ordinary card colors remain. Explicit frozen rank fixtures, not earned-on-device mutation proof.",
+  "limits": [
+    "Actual Android runtime is API 35 x86_64 Compatibility/SWANGLE software rendering with audio disabled; isolated APK startup is a separate headless resource/scene gate.",
+    "Existing 53 Android controls/progression/lifecycle checks pass. This checkpoint does not claim earning a mutation-finishing offer on-device; specific near-completion offers are engine GUI/render fixtures.",
+    "Unseeded emulator observations establish no causal performance gain or phone FPS. Physical S23 Ultra Mobile FPS/thermals/touch latency, Android 10/cutouts and human fun/readability/audio mix remain unverified.",
+    "CI signature passed; not independently rerun locally. Download hashes/package/ABI/probe-disabled/exclusions/startup independently checked.",
+    "Diagnostic signing rotates; preserve backups. Protected stable Preview/release signing unconfigured, no release AAB claimed. Main remains unmerged."
+  ]
+}

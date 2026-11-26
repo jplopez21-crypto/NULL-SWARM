@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-26",
+  "status": "local tests passed; publication pending",
+  "python_tests": 136,
+  "new_publication_tests": 9,
+  "workflow_yaml_and_shell": "passed",
+  "source_sha256": {
+    "tools/publish_development_download.py": "b16399a0e26579633dee7cfa35b2d4e7e7dd7411c2ce78113fb26de9658539d4",
+    "tests/test_development_download.py": "2c96420fa2165e791166e4942b85da010acdfcf8d2cd4768e0a4d82ec687efa9",
+    ".github/development-download.json": "4b1e60adbb7b71c4ea970967a229271f3b83d260c16b990ab17fc23d3a4afe27",
+    ".github/workflows/development-download.yml": "e06bbc41a41f7557c273899344be3d65ef5764d26902c60ec76448f49bff9131"
+  },
+  "limits": [
+    "Synthetic guard tests; no new APK build/signature/device acceptance.",
+    "Game payload source remains 2b42f9b; workflow publication pending."
+  ]
+}

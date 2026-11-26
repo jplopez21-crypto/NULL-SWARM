@@ -1,0 +1,21 @@
+{
+  "editor_import": "Imported resources but strict local acceptance blocked by four TCP socket/listen sandbox errors; additional network request was canceled, not granted. No project script/parse/resource load error. Hosted strict import remains required.",
+  "initial_editor_errors": [
+    "ERROR: Condition \"_sock == -1\" is true. Returning: FAILED",
+    "ERROR: Condition \"err != OK\" is true. Returning: ERR_CANT_CREATE",
+    "ERROR: Condition \"_sock == -1\" is true. Returning: FAILED",
+    "ERROR: Condition \"err != OK\" is true. Returning: ERR_CANT_CREATE"
+  ],
+  "local_android": "SDK/ADB/emulator unavailable. Hosted pipeline supplies Android build/runtime verification.",
+  "initial_harness": [
+    "all warning triangles face above the floor with finite opaque geometry and no degenerate faces",
+    "all warning triangles face above the floor with finite opaque geometry and no degenerate faces",
+    "pool starts with identical warning transform and hidden state for crawler",
+    "pool starts with identical warning transform and hidden state for striker",
+    "pool starts with identical warning transform and hidden state for sentry",
+    "pool starts with identical warning transform and hidden state for bulwark",
+    "pool starts with identical warning transform and hidden state for skimmer",
+    "pool starts with identical warning transform and hidden state for insulator"
+  ],
+  "correction": "Bound decoded octahedral normal error below 0.00003; inactive tree visibility equals accepted parent/child state. No production behavior change for harness."
+}

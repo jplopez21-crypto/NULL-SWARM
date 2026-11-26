@@ -1,0 +1,25 @@
+{
+  "diagnostics_replay_matches_previous_baseline": true,
+  "diagnostic_observations": 120,
+  "diagnostics_cases": 2,
+  "normal_sessions": 26,
+  "outcomes": {
+    "defeat": 4,
+    "victory": 22
+  },
+  "unchanged_gameplay_and_xp_cases_except_timings": 32,
+  "pacing_cases_match_except_timings": 4,
+  "stress_fingerprints_match": 24,
+  "ui_checks": 2349,
+  "ui_layouts": 188,
+  "deterministic_replay": {
+    "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+    "matches": true,
+    "seconds": 180,
+    "seed": 909
+  },
+  "strict_summary_matches_local_native_qa": true,
+  "audio_checks_validated_local_native_qa": true,
+  "kernel_parity_cases": 9,
+  "profiled_engineer_cases": 6
+}

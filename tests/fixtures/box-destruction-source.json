@@ -1,0 +1,5 @@
+{
+  "accepted_source": "ea3fdea9c19e91a037d9631da2c380e5717de848",
+  "source_sha256": "2cc915e12fb598eb3b6b70a7f67b883e52125841c6d054aaf5fd940e18754883",
+  "fixture_rule": "Frozen complete accepted emitter; only class_name declaration removed to avoid duplicate registration. Excluded from APK."
+}

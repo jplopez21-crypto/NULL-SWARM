@@ -1,0 +1,5 @@
+{
+  "status": "corrected_and_passed",
+  "scope": "Independent evidence-review helper, not a game/CI failure; no source changes or retries resulted.",
+  "initial_failed_assumption": "Inherited reviewer asserted card 01. Updated it to require the recorded chosen index and exact enabled button from the frozen offer. Actual new test deliberately chooses passive card 03."
+}

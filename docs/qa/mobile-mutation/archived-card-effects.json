@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "date": "2026-11-17",
+  "mode": "offline real-trace compatibility and synthetic wrong-card replay; no new device execution",
+  "source_run": 43322607040,
+  "source_artifact": 13992201255,
+  "input_sha256": "e96af8d3bd93b7e19709232efa97a3b3676374f4e05bf191e3b7d28b5a53a52e",
+  "matched_actual_transactions": [
+    {
+      "title": "SERVO OVERDRIVE",
+      "rank": "speed"
+    },
+    {
+      "title": "THERMAL BURST",
+      "rank": "thermal"
+    },
+    {
+      "title": "DRONE HIVE",
+      "rank": "drone"
+    }
+  ],
+  "wrong_card_replay_rejected": true,
+  "synthetic_mismatch": {
+    "claimed_card": "PLASMA ORBITALS",
+    "actual_observed_rank": "speed"
+  },
+  "mutation_verified": false,
+  "source_snapshot_unchanged": true
+}

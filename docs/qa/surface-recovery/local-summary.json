@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "godot_suites": 15,
+  "python_tests": 15,
+  "scope": "Local headless and Python tests only. Emulator results recorded separately."
+}

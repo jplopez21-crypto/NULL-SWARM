@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-26",
+  "source": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+  "runs": [
+    {
+      "id": 45395018684,
+      "name": "Validate and build Android",
+      "head": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/45395018684"
+    },
+    {
+      "id": 45395018352,
+      "name": "Repeatable gameplay QA",
+      "head": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/45395018352"
+    },
+    {
+      "id": 45395018484,
+      "name": "Android Mobile renderer smoke",
+      "head": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/45395018484"
+    },
+    {
+      "id": 45395018436,
+      "name": "Android emulator runtime",
+      "head": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/45395018436"
+    },
+    {
+      "id": 45395018389,
+      "name": "Android Surface recovery investigation",
+      "head": "2b42f9bb091d77de3b3dc0a807facfc65febcf74",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/45395018389"
+    }
+  ],
+  "native_apk": {
+    "artifact_id": 14920916753,
+    "artifact_sha256": "58acabec334a87a960d0a8533853a92a141ddf34ae0a0e013554cf9a951361b9",
+    "sha256": "d7740178893ec2802559e81ac01d795dde53ba79c8b78a14d183aad34759ed7a",
+    "bytes": 79522986,
+    "signature": "Verified by the original CI job; no local verification claimed after workspace reset."
+  },
+  "observed_job_markers": {
+    "138448351728": [
+      "2026-11-24T12:36:49.5607355Z HEADLESS_RESULT passed",
+      "2026-11-24T12:41:53.0923917Z UI_RESULT checks=2933 layouts=204 failures=0"
+    ],
+    "138448352763": [
+      "2026-11-24T12:39:27.7671574Z /tmp/emulator.zip: OK",
+      "2026-11-24T12:39:48.7651210Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+      "2026-11-24T12:44:25.1170538Z ANDROID_MOBILE_RESULT passed checks= 42"
+    ],
+    "138448353231": [
+      "2026-11-24T12:39:27.7524649Z /tmp/emulator.zip: OK",
+      "2026-11-24T12:39:51.9544959Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+      "2026-11-24T12:46:54.6188949Z ANDROID_MUTATION_RESULT observed coverage= active_and_damaged checks= 8"
+    ],
+    "138448351791": [
+      "2026-11-24T12:39:16.2119627Z /tmp/emulator.zip: OK",
+      "2026-11-24T12:39:31.9347101Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+      "2026-11-24T12:44:15.0458477Z ANDROID_RUNTIME_RESULT passed checks= 59"
+    ],
+    "138448352119": [
+      "2026-11-24T12:39:30.7229783Z /tmp/emulator.zip: OK",
+      "2026-11-24T12:39:53.4891751Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+      "2026-11-24T12:44:03.4510072Z ANDROID_LIFECYCLE_RESULT passed checks= 56"
+    ],
+    "138448354065": [
+      "2026-11-24T12:39:50.3419646Z /tmp/emulator.zip: OK",
+      "2026-11-24T12:40:07.2944080Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+      "2026-11-24T12:42:26.9317818Z ANDROID_LIFECYCLE_RESULT failed checks= 10"
+    ],
+    "138448354507": [
+      "2026-11-24T12:39:54.2903559Z /tmp/emulator.zip: OK",
+      "2026-11-24T12:40:09.7355969Z Android emulator version 37.3.10.0 (build_id 16970787) (CL:N/A)",
+      "2026-11-24T12:44:16.8830335Z ANDROID_LIFECYCLE_RESULT passed checks= 56",
+      "2026-11-24T12:47:57.6856775Z ANDROID_RUNTIME_RESULT passed checks= 59"
+    ]
+  },
+  "limits": [
+    "Job statuses and logs inspected through connected GitHub reads; artifact payload has not yet been retrieved into this restarted workspace.",
+    "Original source has 127 Python tests/15 Godot suites, 167 GUI checks, and 204 layouts; rendered UI reports 2933 checks.",
+    "Physical S23/ARM64 FPS/audio and a dedicated ordinary Android reroll transaction remain unverified."
+  ]
+}

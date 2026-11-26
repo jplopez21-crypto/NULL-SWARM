@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "android/background-resumed.png",
+      "sha256": "b8bb51a4a2cd371f3125a8eead89d39cb1364250e96a48b5552e6dfc2f37f0f6"
+    },
+    {
+      "path": "android/settings-changed.png",
+      "sha256": "644e05eeac550c5efb6b67d46ddef607af9eb2789b40058099a9795282af6e4f"
+    }
+  ],
+  "observation": "Actual post-return pause menu and actual subsequent Settings panel are readable, with combat HUD/touch actions suppressed. Camera shake toggle changes in the standard existing test. The new independent delivery trace separately proves exactly one target press/release opened this menu; no repair or physical-latency claim."
+}

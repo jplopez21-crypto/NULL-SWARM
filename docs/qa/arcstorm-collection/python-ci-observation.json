@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "source_sha": "19abd777d680a9f489cf528d4abd0f77b7c2c1be",
+  "run_id": 42734484077,
+  "job_id": 129560220818,
+  "markers": [
+    "2026-11-10T01:16:13.7256069Z Ran 79 tests in 2.683s",
+    "2026-11-10T01:16:13.7256457Z OK"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "status": "corrected_and_passed",
+  "scope": "Independent evidence-review helper, not a game/CI failure; no source changes or retries resulted.",
+  "initial_failed_assumption": "Exact equipped-row check initially assumed no blank spacer after upgrade-card index. Card title extraction now skips blank lines and compares the uppercase title plus actual final rank against the equipped row, rather than accepting a name appearing only in recipes."
+}

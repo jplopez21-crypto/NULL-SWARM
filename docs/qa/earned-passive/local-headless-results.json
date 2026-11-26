@@ -1,0 +1,110 @@
+{
+  "suites": [
+    {
+      "suite": "engineer",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 27,
+      "errors": []
+    },
+    {
+      "suite": "gui-input",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 77,
+      "errors": []
+    },
+    {
+      "suite": "audio",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 59,
+      "errors": []
+    },
+    {
+      "suite": "android-probe",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 26,
+      "errors": []
+    },
+    {
+      "suite": "resources",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 75,
+      "errors": []
+    },
+    {
+      "suite": "input",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 23,
+      "errors": []
+    },
+    {
+      "suite": "touch-dash",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 69,
+      "errors": []
+    },
+    {
+      "suite": "touch-pause",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 97,
+      "errors": []
+    },
+    {
+      "suite": "operative",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 41,
+      "errors": []
+    },
+    {
+      "suite": "destruction",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 59,
+      "errors": []
+    },
+    {
+      "suite": "attack-lanes",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 67,
+      "errors": []
+    },
+    {
+      "suite": "systems",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 1079,
+      "errors": []
+    },
+    {
+      "suite": "corruption",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 41,
+      "errors": []
+    },
+    {
+      "suite": "ui-headless",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": 2384,
+      "errors": []
+    },
+    {
+      "suite": "scene-smoke",
+      "status": "passed",
+      "exit_code": 0,
+      "checks": null,
+      "errors": []
+    }
+  ],
+  "status": "passed"
+}

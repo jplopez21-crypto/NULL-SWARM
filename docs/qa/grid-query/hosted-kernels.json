@@ -1,0 +1,169 @@
+{
+  "cases": [
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 0.986979166666667,
+      "kind": "query",
+      "legacy_median_us": 0.996527777777778,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          0.984375,
+          0.989583333333333,
+          0.973958333333333,
+          1.00520833333333
+        ],
+        "legacy": [
+          1.0,
+          0.994791666666667,
+          0.998263888888889,
+          0.977430555555556
+        ]
+      },
+      "speedup": 1.00967458223395
+    },
+    {
+      "allocated_targets": 0,
+      "checksum": 0,
+      "current_median_us": 14.9409722222222,
+      "kind": "nearest",
+      "legacy_median_us": 20.9305555555556,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          14.9114583333333,
+          14.9479166666667,
+          15.0815972222222,
+          14.9340277777778
+        ],
+        "legacy": [
+          20.9392361111111,
+          20.8975694444444,
+          20.921875,
+          21.03125
+        ]
+      },
+      "speedup": 1.4008831048106
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 72,
+      "current_median_us": 1.23524305555556,
+      "kind": "query",
+      "legacy_median_us": 1.23177083333333,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          1.234375,
+          1.23611111111111,
+          1.23958333333333,
+          1.20833333333333
+        ],
+        "legacy": [
+          1.24652777777778,
+          1.21875,
+          1.23611111111111,
+          1.22743055555556
+        ]
+      },
+      "speedup": 0.997189037245257
+    },
+    {
+      "allocated_targets": 100,
+      "checksum": 27711,
+      "current_median_us": 21.7638888888889,
+      "kind": "nearest",
+      "legacy_median_us": 28.6961805555556,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          21.7569444444444,
+          21.7274305555556,
+          21.7708333333333,
+          22.0
+        ],
+        "legacy": [
+          28.6614583333333,
+          28.6805555555556,
+          28.9288194444444,
+          28.7118055555556
+        ]
+      },
+      "speedup": 1.31852265475431
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 4488,
+      "current_median_us": 7.80381944444444,
+      "kind": "query",
+      "legacy_median_us": 7.93489583333333,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 2.0,
+      "rounds_us_per_query": {
+        "current": [
+          7.77777777777778,
+          7.76388888888889,
+          7.82986111111111,
+          7.88715277777778
+        ],
+        "legacy": [
+          7.94618055555556,
+          7.91145833333333,
+          7.92361111111111,
+          7.98611111111111
+        ]
+      },
+      "speedup": 1.01679644048943
+    },
+    {
+      "allocated_targets": 600,
+      "checksum": 175506,
+      "current_median_us": 117.65625,
+      "kind": "nearest",
+      "legacy_median_us": 127.262152777778,
+      "ordered_parity": true,
+      "queries_per_round": 576,
+      "radius": 24.0,
+      "rounds_us_per_query": {
+        "current": [
+          117.317708333333,
+          117.717013888889,
+          117.748263888889,
+          117.595486111111
+        ],
+        "legacy": [
+          127.463541666667,
+          126.819444444444,
+          127.060763888889,
+          135.442708333333
+        ]
+      },
+      "speedup": 1.08164379518961
+    }
+  ],
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "failures": [],
+  "fixed_step": 0.0166666666666667,
+  "godot": "4.6.3-stable (official)",
+  "kind": "paired spatial-query kernel timing",
+  "limitations": [
+    "Same-process alternating AB/BA, four timing rounds after ordered-result warm-up.",
+    "Static deterministic targets (including inactive entries), not whole combat, rendering or Android FPS.",
+    "Includes Callable/checksum overhead; timings are observations without a hardware-dependent pass threshold.",
+    "Allocated targets include intentionally inactive units; this is not the sustained-enemy combat fixture."
+  ],
+  "logical_cpus": 4,
+  "os": "Linux",
+  "rendering": "headless / no GPU frame measurements",
+  "schema": 1
+}

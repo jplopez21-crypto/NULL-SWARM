@@ -1,0 +1,1440 @@
+{
+  "status": "passed",
+  "renderer": "mobile",
+  "checks": 42,
+  "upgrade_transactions": 1,
+  "earned_upgrade": {
+    "transactions": [
+      {
+        "offered": {
+          "architects": 0,
+          "attack_lanes": {
+            "charge": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 12,
+              "width": 1.08000004291534
+            },
+            "sentry": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 7,
+              "width": 0.800000011920929
+            }
+          },
+          "backup_code_length": 0,
+          "backup_recovery_available": false,
+          "build_text": "",
+          "buttons": [
+            {
+              "disabled": false,
+              "rect": [
+                174.0,
+                245.0,
+                292.0,
+                255.0
+              ],
+              "text": "01\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks."
+            },
+            {
+              "disabled": false,
+              "rect": [
+                478.0,
+                245.0,
+                321.0,
+                255.0
+              ],
+              "text": "02\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                811.0,
+                245.0,
+                295.0,
+                255.0
+              ],
+              "text": "03\n\nMEMORY TETHER\nRANK 0 \u2192 1\nAttraction 2.6m \u2192 3.8m\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                957.0,
+                512.0,
+                149.0,
+                57.0
+              ],
+              "text": "REROLL  /  2"
+            }
+          ],
+          "canvas": [
+            1280.0,
+            720.0
+          ],
+          "chain_feedback": {
+            "text": "CHAIN 10 // 10 KILLS TO OVERCLOCK // BREAKS IN 2.5s",
+            "value": 50.0,
+            "visible": false
+          },
+          "combat_rng": "3361249925026671130",
+          "corruption": {
+            "accepted": [],
+            "cycle_rate": 1.0,
+            "enemy_pace": 1.0,
+            "extra_drones": 0,
+            "extra_rounds": 0,
+            "next_level": 5,
+            "walk_rate": 1.0
+          },
+          "damage_by_weapon": {
+            "pulse": 305.825
+          },
+          "dash_readiness": 100.0,
+          "dashes": 1,
+          "destruction_feedback": {
+            "fragment_triangles": 8,
+            "fragments_live": 4,
+            "kill_cue_last_dispatch_ms": 148051,
+            "kill_cue_pcm_bytes": 6174,
+            "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+          },
+          "drags": 80,
+          "edit_fields": [],
+          "engine": "4.6.3-stable (official)",
+          "health": {
+            "current": 100.0,
+            "max_shield": 30.0,
+            "maximum": 100.0,
+            "shield": 30.0
+          },
+          "hp": 100.0,
+          "input_delivery": {
+            "presses": 92,
+            "recent": [
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 177,
+                "ticks": 178472
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 178,
+                "ticks": 179394
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 179,
+                "ticks": 179394
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 180,
+                "ticks": 180339
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 181,
+                "ticks": 180339
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 182,
+                "ticks": 181229
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 183,
+                "ticks": 181229
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 184,
+                "ticks": 182118
+              }
+            ],
+            "releases": 92,
+            "window_focused": true
+          },
+          "kills": 10,
+          "level": 2,
+          "lifecycle": {
+            "background_events": 0,
+            "foreground_generation": 0,
+            "rendered_generation": 0
+          },
+          "memory_audio_plays": 3,
+          "operative_visible": true,
+          "operative_visuals": {
+            "instances": 5,
+            "surfaces": 6,
+            "triangles": 296
+          },
+          "panel": 248973889912,
+          "pending": 1,
+          "performance_copy_status": "",
+          "performance_report_text": "",
+          "performance_stats_text": "",
+          "performance_stats_visible": false,
+          "position": [
+            15.4934301376343,
+            25.5137252807617
+          ],
+          "process": 3578,
+          "ranks": {},
+          "rendered_frames": 159,
+          "rendered_panel": 248973889912,
+          "rendered_state": "upgrading",
+          "renderer": "mobile",
+          "results_title": "",
+          "run_analysis_text": "",
+          "salvage": 0,
+          "sample_ticks": 182950,
+          "schema": 1,
+          "selected_kit": "vanguard",
+          "sentry": {
+            "activations": 0,
+            "enabled": false,
+            "position": [
+              0.0,
+              0.0
+            ],
+            "remaining": 0.0,
+            "shots": 0,
+            "status": ""
+          },
+          "settings": {
+            "flashes": true,
+            "master": 0.8,
+            "music": 0.35,
+            "performance_stats": false,
+            "quality": 1,
+            "sfx": 0.65,
+            "shake": true,
+            "ui": 0.65
+          },
+          "shield_status": "SHIELD ONLINE",
+          "state": "upgrading",
+          "targets": [
+            [
+              -3.14189529418945,
+              -16.9708042144775
+            ],
+            [
+              -4.28165912628174,
+              20.889347076416
+            ],
+            [
+              -12.7285871505737,
+              9.08090496063232
+            ],
+            [
+              -5.72757577896118,
+              15.575493812561
+            ],
+            [
+              31.1169528961182,
+              22.615608215332
+            ],
+            [
+              4.98421287536621,
+              19.3878269195557
+            ]
+          ],
+          "time": 15.1500000000003,
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "touches": 92,
+          "xp": 20
+        },
+        "frozen": {
+          "architects": 0,
+          "attack_lanes": {
+            "charge": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 12,
+              "width": 1.08000004291534
+            },
+            "sentry": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 7,
+              "width": 0.800000011920929
+            }
+          },
+          "backup_code_length": 0,
+          "backup_recovery_available": false,
+          "build_text": "",
+          "buttons": [
+            {
+              "disabled": false,
+              "rect": [
+                174.0,
+                245.0,
+                292.0,
+                255.0
+              ],
+              "text": "01\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks."
+            },
+            {
+              "disabled": false,
+              "rect": [
+                478.0,
+                245.0,
+                321.0,
+                255.0
+              ],
+              "text": "02\n\nPLASMA ORBITALS\nNEW WEAPON // DEFENSE\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                811.0,
+                245.0,
+                295.0,
+                255.0
+              ],
+              "text": "03\n\nMEMORY TETHER\nRANK 0 \u2192 1\nAttraction 2.6m \u2192 3.8m\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                957.0,
+                512.0,
+                149.0,
+                57.0
+              ],
+              "text": "REROLL  /  2"
+            }
+          ],
+          "canvas": [
+            1280.0,
+            720.0
+          ],
+          "chain_feedback": {
+            "text": "CHAIN 10 // 10 KILLS TO OVERCLOCK // BREAKS IN 2.5s",
+            "value": 50.0,
+            "visible": false
+          },
+          "combat_rng": "3361249925026671130",
+          "corruption": {
+            "accepted": [],
+            "cycle_rate": 1.0,
+            "enemy_pace": 1.0,
+            "extra_drones": 0,
+            "extra_rounds": 0,
+            "next_level": 5,
+            "walk_rate": 1.0
+          },
+          "damage_by_weapon": {
+            "pulse": 305.825
+          },
+          "dash_readiness": 100.0,
+          "dashes": 1,
+          "destruction_feedback": {
+            "fragment_triangles": 8,
+            "fragments_live": 4,
+            "kill_cue_last_dispatch_ms": 148051,
+            "kill_cue_pcm_bytes": 6174,
+            "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+          },
+          "drags": 80,
+          "edit_fields": [],
+          "engine": "4.6.3-stable (official)",
+          "health": {
+            "current": 100.0,
+            "max_shield": 30.0,
+            "maximum": 100.0,
+            "shield": 30.0
+          },
+          "hp": 100.0,
+          "input_delivery": {
+            "presses": 92,
+            "recent": [
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 177,
+                "ticks": 178472
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 178,
+                "ticks": 179394
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 179,
+                "ticks": 179394
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 180,
+                "ticks": 180339
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 181,
+                "ticks": 180339
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 182,
+                "ticks": 181229
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 183,
+                "ticks": 181229
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 184,
+                "ticks": 182118
+              }
+            ],
+            "releases": 92,
+            "window_focused": true
+          },
+          "kills": 10,
+          "level": 2,
+          "lifecycle": {
+            "background_events": 0,
+            "foreground_generation": 0,
+            "rendered_generation": 0
+          },
+          "memory_audio_plays": 3,
+          "operative_visible": true,
+          "operative_visuals": {
+            "instances": 5,
+            "surfaces": 6,
+            "triangles": 296
+          },
+          "panel": 248973889912,
+          "pending": 1,
+          "performance_copy_status": "",
+          "performance_report_text": "",
+          "performance_stats_text": "",
+          "performance_stats_visible": false,
+          "position": [
+            15.4934301376343,
+            25.5137252807617
+          ],
+          "process": 3578,
+          "ranks": {},
+          "rendered_frames": 161,
+          "rendered_panel": 248973889912,
+          "rendered_state": "upgrading",
+          "renderer": "mobile",
+          "results_title": "",
+          "run_analysis_text": "",
+          "salvage": 0,
+          "sample_ticks": 184756,
+          "schema": 1,
+          "selected_kit": "vanguard",
+          "sentry": {
+            "activations": 0,
+            "enabled": false,
+            "position": [
+              0.0,
+              0.0
+            ],
+            "remaining": 0.0,
+            "shots": 0,
+            "status": ""
+          },
+          "settings": {
+            "flashes": true,
+            "master": 0.8,
+            "music": 0.35,
+            "performance_stats": false,
+            "quality": 1,
+            "sfx": 0.65,
+            "shake": true,
+            "ui": 0.65
+          },
+          "shield_status": "SHIELD ONLINE",
+          "state": "upgrading",
+          "targets": [
+            [
+              -3.14189529418945,
+              -16.9708042144775
+            ],
+            [
+              -4.28165912628174,
+              20.889347076416
+            ],
+            [
+              -12.7285871505737,
+              9.08090496063232
+            ],
+            [
+              -5.72757577896118,
+              15.575493812561
+            ],
+            [
+              31.1169528961182,
+              22.615608215332
+            ],
+            [
+              4.98421287536621,
+              19.3878269195557
+            ]
+          ],
+          "time": 15.1500000000003,
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "touches": 92,
+          "xp": 20
+        },
+        "selected": {
+          "architects": 0,
+          "attack_lanes": {
+            "charge": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 12,
+              "width": 1.08000004291534
+            },
+            "sentry": {
+              "ground_mesh": true,
+              "length": 7.0,
+              "surfaces": 1,
+              "triangles": 7,
+              "width": 0.800000011920929
+            }
+          },
+          "backup_code_length": 0,
+          "backup_recovery_available": false,
+          "build_text": "",
+          "buttons": [
+            {
+              "disabled": false,
+              "rect": [
+                1133.0,
+                18.0,
+                121.0,
+                75.0
+              ],
+              "text": "II  PAUSE"
+            },
+            {
+              "disabled": false,
+              "rect": [
+                1074.0,
+                607.0,
+                180.0,
+                95.0
+              ],
+              "text": "DASH / READY"
+            }
+          ],
+          "canvas": [
+            1280.0,
+            720.0
+          ],
+          "chain_feedback": {
+            "text": "CHAIN 10 // 10 KILLS TO OVERCLOCK // BREAKS IN 2.2s",
+            "value": 50.0,
+            "visible": true
+          },
+          "combat_rng": "-9052497915565350610",
+          "corruption": {
+            "accepted": [],
+            "cycle_rate": 1.0,
+            "enemy_pace": 1.0,
+            "extra_drones": 0,
+            "extra_rounds": 0,
+            "next_level": 5,
+            "walk_rate": 1.0
+          },
+          "damage_by_weapon": {
+            "pulse": 305.825
+          },
+          "dash_readiness": 100.0,
+          "dashes": 1,
+          "destruction_feedback": {
+            "fragment_triangles": 8,
+            "fragments_live": 0,
+            "kill_cue_last_dispatch_ms": 148051,
+            "kill_cue_pcm_bytes": 6174,
+            "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+          },
+          "drags": 80,
+          "edit_fields": [],
+          "engine": "4.6.3-stable (official)",
+          "health": {
+            "current": 100.0,
+            "max_shield": 30.0,
+            "maximum": 100.0,
+            "shield": 30.0
+          },
+          "hp": 100.0,
+          "input_delivery": {
+            "presses": 93,
+            "recent": [
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 179,
+                "ticks": 179394
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 180,
+                "ticks": 180339
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 181,
+                "ticks": 180339
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 182,
+                "ticks": 181229
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  120.0,
+                  610.0009765625
+                ],
+                "pressed": true,
+                "sequence": 183,
+                "ticks": 181229
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  80.0,
+                  668.0
+                ],
+                "pressed": false,
+                "sequence": 184,
+                "ticks": 182118
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  958.0,
+                  371.9990234375
+                ],
+                "pressed": true,
+                "sequence": 185,
+                "ticks": 185644
+              },
+              {
+                "canceled": false,
+                "index": 0,
+                "position": [
+                  958.0,
+                  371.9990234375
+                ],
+                "pressed": false,
+                "sequence": 186,
+                "ticks": 185645
+              }
+            ],
+            "releases": 93,
+            "window_focused": true
+          },
+          "kills": 10,
+          "level": 2,
+          "lifecycle": {
+            "background_events": 0,
+            "foreground_generation": 0,
+            "rendered_generation": 0
+          },
+          "memory_audio_plays": 3,
+          "operative_visible": true,
+          "operative_visuals": {
+            "instances": 5,
+            "surfaces": 6,
+            "triangles": 296
+          },
+          "panel": 0,
+          "pending": 0,
+          "performance_copy_status": "",
+          "performance_report_text": "",
+          "performance_stats_text": "",
+          "performance_stats_visible": false,
+          "position": [
+            15.4934301376343,
+            25.5137252807617
+          ],
+          "process": 3578,
+          "ranks": {
+            "magnet": 1
+          },
+          "rendered_frames": 163,
+          "rendered_panel": 0,
+          "rendered_state": "playing",
+          "renderer": "mobile",
+          "results_title": "",
+          "run_analysis_text": "",
+          "salvage": 0,
+          "sample_ticks": 186554,
+          "schema": 1,
+          "selected_kit": "vanguard",
+          "sentry": {
+            "activations": 0,
+            "enabled": false,
+            "position": [
+              0.0,
+              0.0
+            ],
+            "remaining": 0.0,
+            "shots": 0,
+            "status": ""
+          },
+          "settings": {
+            "flashes": true,
+            "master": 0.8,
+            "music": 0.35,
+            "performance_stats": false,
+            "quality": 1,
+            "sfx": 0.65,
+            "shake": true,
+            "ui": 0.65
+          },
+          "shield_status": "SHIELD ONLINE",
+          "state": "playing",
+          "targets": [
+            [
+              -3.14189529418945,
+              -16.9708042144775
+            ],
+            [
+              -4.28165912628174,
+              20.889347076416
+            ],
+            [
+              -12.7285871505737,
+              9.08090496063232
+            ],
+            [
+              -5.72757577896118,
+              15.575493812561
+            ],
+            [
+              31.1169528961182,
+              22.615608215332
+            ],
+            [
+              4.98421287536621,
+              19.3878269195557
+            ]
+          ],
+          "time": 15.416666666667,
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "touches": 93,
+          "xp": 20
+        },
+        "chosen_text": "03\n\nMEMORY TETHER\nRANK 0 \u2192 1\nAttraction 2.6m \u2192 3.8m\nCollect tech from farther away.\nMUTATION: Rail 3 + Tether 3",
+        "chosen_index": "03",
+        "changed_rank": "magnet"
+      }
+    ],
+    "resumed": {
+      "architects": 0,
+      "attack_lanes": {
+        "charge": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 12,
+          "width": 1.08000004291534
+        },
+        "sentry": {
+          "ground_mesh": true,
+          "length": 7.0,
+          "surfaces": 1,
+          "triangles": 7,
+          "width": 0.800000011920929
+        }
+      },
+      "backup_code_length": 0,
+      "backup_recovery_available": false,
+      "build_text": "",
+      "buttons": [
+        {
+          "disabled": false,
+          "rect": [
+            1133.0,
+            18.0,
+            121.0,
+            75.0
+          ],
+          "text": "II  PAUSE"
+        },
+        {
+          "disabled": false,
+          "rect": [
+            1074.0,
+            607.0,
+            180.0,
+            95.0
+          ],
+          "text": "DASH / READY"
+        }
+      ],
+      "canvas": [
+        1280.0,
+        720.0
+      ],
+      "chain_feedback": {
+        "text": "CHAIN 10 // 10 KILLS TO OVERCLOCK // BREAKS IN 2.2s",
+        "value": 50.0,
+        "visible": true
+      },
+      "combat_rng": "-9052497915565350610",
+      "corruption": {
+        "accepted": [],
+        "cycle_rate": 1.0,
+        "enemy_pace": 1.0,
+        "extra_drones": 0,
+        "extra_rounds": 0,
+        "next_level": 5,
+        "walk_rate": 1.0
+      },
+      "damage_by_weapon": {
+        "pulse": 305.825
+      },
+      "dash_readiness": 100.0,
+      "dashes": 1,
+      "destruction_feedback": {
+        "fragment_triangles": 8,
+        "fragments_live": 0,
+        "kill_cue_last_dispatch_ms": 148051,
+        "kill_cue_pcm_bytes": 6174,
+        "kill_cue_pcm_sha256": "320e9be9a4f09020e9299af42322baa6f8e084542546b88b2391b9f35f178bbe"
+      },
+      "drags": 80,
+      "edit_fields": [],
+      "engine": "4.6.3-stable (official)",
+      "health": {
+        "current": 100.0,
+        "max_shield": 30.0,
+        "maximum": 100.0,
+        "shield": 30.0
+      },
+      "hp": 100.0,
+      "input_delivery": {
+        "presses": 93,
+        "recent": [
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              120.0,
+              610.0009765625
+            ],
+            "pressed": true,
+            "sequence": 179,
+            "ticks": 179394
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              80.0,
+              668.0
+            ],
+            "pressed": false,
+            "sequence": 180,
+            "ticks": 180339
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              120.0,
+              610.0009765625
+            ],
+            "pressed": true,
+            "sequence": 181,
+            "ticks": 180339
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              80.0,
+              668.0
+            ],
+            "pressed": false,
+            "sequence": 182,
+            "ticks": 181229
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              120.0,
+              610.0009765625
+            ],
+            "pressed": true,
+            "sequence": 183,
+            "ticks": 181229
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              80.0,
+              668.0
+            ],
+            "pressed": false,
+            "sequence": 184,
+            "ticks": 182118
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              958.0,
+              371.9990234375
+            ],
+            "pressed": true,
+            "sequence": 185,
+            "ticks": 185644
+          },
+          {
+            "canceled": false,
+            "index": 0,
+            "position": [
+              958.0,
+              371.9990234375
+            ],
+            "pressed": false,
+            "sequence": 186,
+            "ticks": 185645
+          }
+        ],
+        "releases": 93,
+        "window_focused": true
+      },
+      "kills": 10,
+      "level": 2,
+      "lifecycle": {
+        "background_events": 0,
+        "foreground_generation": 0,
+        "rendered_generation": 0
+      },
+      "memory_audio_plays": 3,
+      "operative_visible": true,
+      "operative_visuals": {
+        "instances": 5,
+        "surfaces": 6,
+        "triangles": 296
+      },
+      "panel": 0,
+      "pending": 0,
+      "performance_copy_status": "",
+      "performance_report_text": "",
+      "performance_stats_text": "",
+      "performance_stats_visible": false,
+      "position": [
+        15.4934301376343,
+        25.5137252807617
+      ],
+      "process": 3578,
+      "ranks": {
+        "magnet": 1
+      },
+      "rendered_frames": 163,
+      "rendered_panel": 0,
+      "rendered_state": "playing",
+      "renderer": "mobile",
+      "results_title": "",
+      "run_analysis_text": "",
+      "salvage": 0,
+      "sample_ticks": 186554,
+      "schema": 1,
+      "selected_kit": "vanguard",
+      "sentry": {
+        "activations": 0,
+        "enabled": false,
+        "position": [
+          0.0,
+          0.0
+        ],
+        "remaining": 0.0,
+        "shots": 0,
+        "status": ""
+      },
+      "settings": {
+        "flashes": true,
+        "master": 0.8,
+        "music": 0.35,
+        "performance_stats": false,
+        "quality": 1,
+        "sfx": 0.65,
+        "shake": true,
+        "ui": 0.65
+      },
+      "shield_status": "SHIELD ONLINE",
+      "state": "playing",
+      "targets": [
+        [
+          -3.14189529418945,
+          -16.9708042144775
+        ],
+        [
+          -4.28165912628174,
+          20.889347076416
+        ],
+        [
+          -12.7285871505737,
+          9.08090496063232
+        ],
+        [
+          -5.72757577896118,
+          15.575493812561
+        ],
+        [
+          31.1169528961182,
+          22.615608215332
+        ],
+        [
+          4.98421287536621,
+          19.3878269195557
+        ]
+      ],
+      "time": 15.416666666667,
+      "touch_controls": {
+        "dash_enabled": true,
+        "dash_id": -1,
+        "joystick_id": -1,
+        "pause_enabled": true,
+        "pause_id": -1,
+        "stick": [
+          0.0,
+          0.0
+        ]
+      },
+      "touches": 93,
+      "xp": 20
+    },
+    "method": "Ordinary kills and memory pickups, real joystick/card touches. No fixture or stat grant.",
+    "selection_strategy": "Prefer a visible passive; otherwise choose first and earn another offer. At most eight choices and a 300-second collection deadline; no rerolls."
+  },
+  "graphics_log": [
+    "11-09 17:06:44.392  3578  3578 D Godot   : usesVulkan(): true",
+    "11-09 17:06:45.263  3578  3622 I godot   : Vulkan 1.3.0 - Forward Mobile - Using Device #0: Unknown - SwiftShader Device (Subzero)"
+  ],
+  "combat": {
+    "kills": 1,
+    "time": 4.53333333333332,
+    "damage_by_weapon": {
+      "pulse": 30.075
+    }
+  },
+  "captures": {
+    "mobile-menu": 0.9900173611111112,
+    "multitouch-joystick-first": 0.9852430555555556,
+    "multitouch-paused": 0.9917534722222222,
+    "mobile-combat": 0.9822048611111112,
+    "mobile-upgrade-01": 0.9535590277777778,
+    "mobile-upgrade-applied": 0.9748263888888888,
+    "mobile-build-earned": 0.9717881944444444,
+    "mobile-corruption-review": 0.9704861111111112,
+    "mobile-build-resumed": 0.9730902777777778,
+    "mobile-link-progression-01": 0.9379340277777778,
+    "mobile-link-progression-02": 0.9631076388888888,
+    "mobile-corruption-trigger": 0.9552951388888888,
+    "mobile-corruption-declined": 0.9344618055555556,
+    "mobile-redline-offer": 0.9900173611111112,
+    "mobile-linked-build-earned": 0.9674479166666666,
+    "mobile-linked-corruption-review": 0.9722222222222222,
+    "mobile-linked-build-resumed": 0.9600694444444444,
+    "mobile-returned": 0.9835069444444444
+  },
+  "same_process_fresh_paused_return": true,
+  "frozen_fields": [
+    "time",
+    "position",
+    "hp",
+    "kills",
+    "xp",
+    "ranks",
+    "combat_rng",
+    "damage_by_weapon",
+    "salvage"
+  ],
+  "resumed_combat_advances": true,
+  "mobile_emulator_swappy": false,
+  "native_phone_swappy_default": true,
+  "same_38_game_modules": true,
+  "native_engine_same_as_previous_user_build": true,
+  "scope": "Android 35 x86_64 Mobile/Vulkan software emulator smoke with explicit Swappy override. Shipping frame pacing, ARM64 runtime, phone FPS/thermals and full Mobile runs are not validated. Ordinary XP/upgrade touch validated without stat grants.",
+  "earned_build": {
+    "ranks": {
+      "magnet": 1
+    },
+    "guide_text": "DEPLOYMENT BUILD\nCombat paused. Mutations activate automatically when both ranks are reached.\nWEAPONS 1/4\n01 // PULSE RIFLE\nAMPLIFIED PULSE RANK 0\n02 // EMPTY SLOT\nNew weapons fill empty slots.\n03 // EMPTY SLOT\nNew weapons fill empty slots.\n04 // EMPTY SLOT\nNew weapons fill empty slots.\nMUTATION PATHS\nARCSTORM RIFLE // IN PROGRESS\nAMPLIFIED PULSE 0/3 + ARC EMITTER 0/3\nROUNDS NOW CHAIN\nSOLAR HALO // IN PROGRESS\nPLASMA ORBITALS 0/3 + THERMAL BURST 0/3\nORBITALS RADIATE HEAT\nSINGULARITY LANCE // IN PROGRESS\nRAIL LANCE 0/3 + MEMORY TETHER 1/3\nRAIL IMPACTS LEAVE GRAVITY FIELDS\nPASSIVE UPLINKS // MEMORY TETHER 1/5\nWeapon mutations keep their slot. Run upgrades reset on redeployment.",
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage",
+      "level",
+      "pending",
+      "settings",
+      "selected_kit",
+      "dash_readiness",
+      "dashes",
+      "health",
+      "corruption"
+    ],
+    "fresh_navigation": true,
+    "resumed_time": 15.816666666667,
+    "frozen_time": 15.5500000000004,
+    "scope": "One actual earned early build: pause/build/back/Resume; no full-run or earned mutation claim."
+  },
+  "earned_passive": {
+    "ranks": {
+      "magnet": 1
+    },
+    "summary": "PASSIVE UPLINKS // MEMORY TETHER 1/5",
+    "observed_caps": {
+      "MEMORY TETHER": 5
+    },
+    "choices": 1,
+    "chosen_indices": [
+      "03"
+    ],
+    "retained_through_background_return": true,
+    "scope": "Actually earned passive selection and dedicated display; exact caps remain the engine/UI regression contract. Not all seven passive effects or a full Mobile run."
+  },
+  "corruption_review": {
+    "clean_text": "ACTIVE CORRUPTION\n0/3 UNSTABLE LINKS\nCLEAN SIGNAL // NO ACTIVE LINKS\nAn optional link can replace one level-up choice.\nEach link grants power with a lasting cost for this deployment.\nNEXT OPTIONAL LINK // LEVEL 5\nLinks reset after this deployment. Dash speed, bosses and warning times stay unchanged.",
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage",
+      "level",
+      "pending",
+      "settings",
+      "selected_kit",
+      "dash_readiness",
+      "dashes",
+      "health",
+      "corruption"
+    ],
+    "fresh_paused_navigation": true,
+    "identical_build_return": true,
+    "only_back_action": true,
+    "scope": "Clean early-run subsection; actually earned Redline is separately recorded below."
+  },
+  "earned_corruption": {
+    "level": 5,
+    "total_xp": 136,
+    "kills": 41,
+    "card_text": "REDLINE SYNC\n\nGAIN: Weapon cycles +30%\nRifle 0.42s -> 0.32s\n\nCOST: Maximum HP 100 -> 80\nCurrent HP capped, no healing.",
+    "before_max": 100,
+    "after_max": 80,
+    "cycle_gain_percent": 30,
+    "next_level": 10,
+    "pending_before": 1,
+    "pending_after": 0,
+    "normal_progression_choices": 2,
+    "queued_choices": 0,
+    "active_review_text": "ACTIVE CORRUPTION\n1/3 UNSTABLE LINKS\nREDLINE SYNC\nGAIN // Weapon cycles +30%\nCOST // Maximum HP -20\nNEXT OPTIONAL LINK // LEVEL 10\nLinks reset after this deployment. Dash speed, bosses and warning times stay unchanged.",
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage",
+      "level",
+      "pending",
+      "settings",
+      "selected_kit",
+      "dash_readiness",
+      "dashes",
+      "health",
+      "corruption"
+    ],
+    "no_repeated_cost": true,
+    "same_process_background_cost_retention": true,
+    "scope": "One ordinary earned Redline transaction/active review/return, not all corruption paths or full Mobile runs."
+  },
+  "corruption_cancel": {
+    "status": "passed",
+    "level": 5,
+    "xp": 136,
+    "frozen_fields": [
+      "time",
+      "position",
+      "hp",
+      "kills",
+      "xp",
+      "ranks",
+      "combat_rng",
+      "damage_by_weapon",
+      "salvage",
+      "level",
+      "pending",
+      "settings",
+      "selected_kit",
+      "dash_readiness",
+      "dashes",
+      "health",
+      "corruption"
+    ],
+    "original_upgrade_actions": [
+      [
+        "01\n\nTHERMAL BURST\nNEW WEAPON // AREA\n\nA close-range blast\npushes the swarm back.\nMUTATION: Orbitals 3 + Thermal 3",
+        false
+      ],
+      [
+        "02\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks.",
+        false
+      ],
+      [
+        "03\n\nPLASMA ORBITALS\nRANK 1 \u2192 2 // DMG 13 \u2192 16\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3",
+        false
+      ],
+      [
+        "REROLL  /  2",
+        false
+      ],
+      [
+        "UNSTABLE LINK // OPTIONAL POWER + COST FOR THIS RUN",
+        false
+      ]
+    ],
+    "restored_upgrade_actions": [
+      [
+        "01\n\nTHERMAL BURST\nNEW WEAPON // AREA\n\nA close-range blast\npushes the swarm back.\nMUTATION: Orbitals 3 + Thermal 3",
+        false
+      ],
+      [
+        "02\n\nDRONE HIVE\nNEW WEAPON // SUPPORT\n\nAutonomous escorts fire\nfrom your flanks.",
+        false
+      ],
+      [
+        "03\n\nPLASMA ORBITALS\nRANK 1 \u2192 2 // DMG 13 \u2192 16\n\nRotating plasma guards\nstrike enemies near you.\nMUTATION: Orbitals 3 + Thermal 3",
+        false
+      ],
+      [
+        "REROLL  /  2",
+        false
+      ],
+      [
+        "UNSTABLE LINK // OPTIONAL POWER + COST FOR THIS RUN",
+        false
+      ]
+    ],
+    "original_link_actions": [
+      [
+        "REDLINE SYNC\n\nGAIN: Weapon cycles +30%\nRifle 0.42s -> 0.32s\n\nCOST: Maximum HP 100 -> 80\nCurrent HP capped, no healing.",
+        false
+      ],
+      [
+        "FRACTURED CHAMBER\n\nGAIN: Rifle rounds 1 -> 2\nExtra round can also chain.\n\nCOST: Regular enemy pace\n100% -> 115% (incl. charges)\nBosses and warning times unchanged.",
+        false
+      ],
+      [
+        "PARASITIC HIVE\n\nREQUIRES DRONE HIVE\n\nGAIN: One additional escort\nCOST: Walking speed -12%\nDash speed stays unchanged.",
+        true
+      ],
+      [
+        "KEEP MY UPGRADE CHOICES // BACK",
+        false
+      ]
+    ],
+    "reopened_link_actions": [
+      [
+        "REDLINE SYNC\n\nGAIN: Weapon cycles +30%\nRifle 0.42s -> 0.32s\n\nCOST: Maximum HP 100 -> 80\nCurrent HP capped, no healing.",
+        false
+      ],
+      [
+        "FRACTURED CHAMBER\n\nGAIN: Rifle rounds 1 -> 2\nExtra round can also chain.\n\nCOST: Regular enemy pace\n100% -> 115% (incl. charges)\nBosses and warning times unchanged.",
+        false
+      ],
+      [
+        "PARASITIC HIVE\n\nREQUIRES DRONE HIVE\n\nGAIN: One additional escort\nCOST: Walking speed -12%\nDash speed stays unchanged.",
+        true
+      ],
+      [
+        "KEEP MY UPGRADE CHOICES // BACK",
+        false
+      ]
+    ],
+    "same_process": true,
+    "fresh_panel_round_trip": true,
+    "scope": "Actual earned optional-link decline/reopen with unchanged full offers, rerolls and seventeen observed fields before Redline selection."
+  }
+}

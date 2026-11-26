@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "selected_native_dex_game_code_and_project_config_entries": 44,
+  "all_selected_entries_identical_to_previous_user_build": true,
+  "different": [],
+  "scope": "Executable libraries/DEX/GDScript and exported project settings. Debug signing/container bytes can differ; this is not physical runtime validation."
+}

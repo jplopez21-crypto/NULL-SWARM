@@ -1,0 +1,12 @@
+{
+  "bounds": "0.32m cube before value scaling",
+  "cached_materials": 3,
+  "cached_meshes": 3,
+  "limits": "Structural counts only; no GPU draw-call, FPS or phone readability claim.",
+  "new_triangles_per_tier": [
+    8,
+    12,
+    16
+  ],
+  "previous_triangles_per_packet": 80
+}

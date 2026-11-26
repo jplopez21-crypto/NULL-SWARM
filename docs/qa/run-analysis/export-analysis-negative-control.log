@@ -1,0 +1,22 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: exported B/Escape returns to the same completed run
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:10)
+       [1] run (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:74)
+       [2] settle (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:13)
+ERROR: missing actual exported control: RUN ANALYSIS
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:10)
+       [1] click (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:32)
+       [2] run (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:54)
+       [3] settle (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:13)
+ERROR: exported B/Escape returns to the same completed run
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:10)
+       [1] run (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:74)
+       [2] settle (/tmp/null-swarm-export-analysis-r35388bp/driver.gd:13)
+EXPORTED_ANALYSIS_RESULT {"checks":10,"failures":["exported B/Escape returns to the same completed run","missing actual exported control: RUN ANALYSIS","exported B/Escape returns to the same completed run"]}

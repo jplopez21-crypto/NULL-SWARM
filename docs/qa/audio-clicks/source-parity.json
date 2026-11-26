@@ -1,0 +1,8 @@
+{
+  "changed_runtime_modules": [
+    "systems/android_qa_probe.gd",
+    "systems/audio_system.gd"
+  ],
+  "combat_input_save_progression_and_ui_unchanged": true,
+  "audio_random_draw_budget_preserved_by_saturation_test": true
+}

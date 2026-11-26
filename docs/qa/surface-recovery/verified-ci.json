@@ -1,0 +1,194 @@
+{
+  "source": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081",
+  "source_tree": "6f7064bff59615ba2d3f3882fe95693f07e29c53",
+  "local_feature_commit": "2a18993",
+  "local_tests": {
+    "godot_suites": 15,
+    "python_tests": 15,
+    "status": "passed"
+  },
+  "native": {
+    "run": 42398894139,
+    "job": 128482185404,
+    "status": "passed"
+  },
+  "full_qa": {
+    "run": 42398894164,
+    "job": 128482245863,
+    "status": "passed"
+  },
+  "ordinary_android": {
+    "run": 42398894150,
+    "gameplay_job": 128482263968,
+    "gameplay_status": "failed",
+    "lifecycle_job": 128482264257,
+    "lifecycle_status": "failed",
+    "reason": "Unmodified Compatibility engine timed out returning foreground with EGL_BAD_SURFACE. Failures retained; no rerun."
+  },
+  "diagnostic_matrix": {
+    "run": 42398894125,
+    "candidate_job": 128482185261,
+    "candidate_status": "passed",
+    "candidate_lifecycle_cycles": 18,
+    "candidate_lifecycle_checks": 56,
+    "candidate_recovered_swap_warnings": 11,
+    "candidate_gameplay_checks": 58,
+    "control_job": 128482185528,
+    "control_collection_status": "passed",
+    "control_recovery_status": "failed",
+    "control_passed_cycles": 7,
+    "control_failed_cycle": 8,
+    "control_failure_image": "all black; SHA in failed-controls.json"
+  },
+  "initial_compilation_failure": {
+    "run": 42398675304,
+    "jobs": [
+      128481501120,
+      128481501278
+    ],
+    "status": "failed",
+    "corrected": "Added official unchanged classes.jar containing EGLLogWrapper to javac/host classpath."
+  },
+  "archives": [
+    {
+      "id": 13585120253,
+      "name": "null-swarm-headless-results",
+      "size_in_bytes": 727997,
+      "digest": "sha256:0d84336a67864421b7bdd68b88d950207a4aa7fafd63afa7f63c86f51ce416b4",
+      "workflow_run": {
+        "id": 42398894139,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584960789,
+      "name": "null-swarm-development-apk",
+      "size_in_bytes": 27901272,
+      "digest": "sha256:5dd4d7e877203b6e304a90b4d594b1c73127c70c3b55a9aa44325082a2130fe2",
+      "workflow_run": {
+        "id": 42398894139,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584891017,
+      "name": "null-swarm-presentation-captures",
+      "size_in_bytes": 5619854,
+      "digest": "sha256:57f1772a9b2562d0989556ffb792f0d4ee9f6cff285e50187415fe87318307e8",
+      "workflow_run": {
+        "id": 42398894139,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13585180884,
+      "name": "null-swarm-surface-results-control",
+      "size_in_bytes": 2123023,
+      "digest": "sha256:fb75479fa94060a5ee4dbbad9f77a8b97225dbd8a223cb6e83e32b047e61e7a5",
+      "workflow_run": {
+        "id": 42398894125,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584023903,
+      "name": "null-swarm-surface-apk-control",
+      "size_in_bytes": 31530984,
+      "digest": "sha256:49a17189806cf2d79933325bbf40ab8b8aba2ed6b3b4a1eb52abb082e7a774c8",
+      "workflow_run": {
+        "id": 42398894125,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584866747,
+      "name": "null-swarm-android-runtime",
+      "size_in_bytes": 2132997,
+      "digest": "sha256:0d34a39dcc2a3678ae88f084a5c129b36f0db8b54b689e39d9bbb8d7c1a63f77",
+      "workflow_run": {
+        "id": 42398894150,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584921467,
+      "name": "null-swarm-android-lifecycle",
+      "size_in_bytes": 2050032,
+      "digest": "sha256:fca3f3664bb86afe123ddb9665b2ff06dec3556d14fcf0860d5e9fcd701521cd",
+      "workflow_run": {
+        "id": 42398894150,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584114269,
+      "name": "null-swarm-surface-results-latched",
+      "size_in_bytes": 5968051,
+      "digest": "sha256:5b8d32e4d3b89c660455d16451ade61d08d2ba345f8df14bdf30afdda42ec1b8",
+      "workflow_run": {
+        "id": 42398894125,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13584024283,
+      "name": "null-swarm-surface-apk-latched",
+      "size_in_bytes": 31530918,
+      "digest": "sha256:77af4372e5f78358dd83b9aaa47ba74552e3d2ec948827862e894af842e9bfc3",
+      "workflow_run": {
+        "id": 42398894125,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    },
+    {
+      "id": 13585067452,
+      "name": "null-swarm-gameplay-qa",
+      "size_in_bytes": 22325597,
+      "digest": "sha256:51161de0d303aad9835ce0dac31241995370a51cb1faf3a373651de014fbddc0",
+      "workflow_run": {
+        "id": 42398894164,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "3824e19a7fd530c8f947faeb7a59bd5f31bd3081"
+      }
+    }
+  ],
+  "archive_integrity": "All ten listed byte counts, API SHA256 digests and ZIP CRCs independently verified. Only listed archives downloaded.",
+  "actual_images_reviewed": [
+    "control/lifecycle/lifecycle-failure.png",
+    "latched/lifecycle/lifecycle-18-returned.png",
+    "latched/gameplay/earned-analysis.png"
+  ],
+  "production_engine_templates_changed": false,
+  "production_game_modules_changed": false,
+  "main_unmerged": true,
+  "scope": "Diagnostic Compatibility Java lifecycle repair only. Controlled fields and bounded emulator evidence; no physical phone, Vulkan/Mobile recovery or performance certification. Stock Android gates remain failed; not ready to merge as a production recovery fix."
+}

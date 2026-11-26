@@ -1,0 +1,17 @@
+{
+  "code_commit": "9fcd304bc232c6014ab9533bb45960bb70a992d0",
+  "normal_policy_cases": 20,
+  "outcomes": {
+    "victory": 16,
+    "defeat": 4
+  },
+  "replay": {
+    "fingerprint": "2006a63ed24e2cfedb0917c24c7d7b962b2d54bbd1be84b35173485795d36078",
+    "matches": true,
+    "seconds": 180,
+    "seed": 909
+  },
+  "pickup_cases": 6,
+  "clean_stress_cases": 6,
+  "corrupted_stress_cases": 6
+}

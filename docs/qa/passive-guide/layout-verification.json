@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "layouts": 188,
+  "previous_checks": 2349,
+  "checks": 2385,
+  "additional_checks": 36,
+  "same_viewport_canvas_stage_and_button_metadata": true,
+  "fixtures": "Synthetic full-rank Vanguard and maximum-height Engineer: seven capped passives, four weapon slots, blocked Halo recipe. Same 188 requested layouts; new label bounds and content checks added. These are UI fixtures, not earned Android builds."
+}

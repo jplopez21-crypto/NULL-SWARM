@@ -3,6 +3,8 @@ extends RefCounted
 
 signal changed
 signal depleted
+var last_absorbed: float = 0.0
+var last_hull_loss: float = 0.0
 var maximum: float = 100.0
 var current: float = 100.0
 var shield: float = 30.0
@@ -20,6 +22,8 @@ func take_damage(amount: float) -> bool:
 	if invulnerable > 0.0 or current <= 0.0 or amount <= 0.0:
 		return false
 	var absorbed: float = minf(shield, amount)
+	last_absorbed = absorbed
+	last_hull_loss = minf(current, amount - absorbed)
 	shield -= absorbed
 	current = maxf(0.0, current - (amount - absorbed))
 	invulnerable = 0.8

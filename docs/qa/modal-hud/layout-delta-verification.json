@@ -1,0 +1,622 @@
+{
+  "status": "passed",
+  "layouts": 188,
+  "old_checks": 2624,
+  "new_checks": 2348,
+  "changed_layouts": 68,
+  "explanation": "Two hidden background actions in each of 68 modal layouts remove 272 viewport/touch-size checks; four report layouts also hide the enabled performance label. Remaining geometry/configuration and control counts match.",
+  "changes": [
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "pause",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "performance-report-filled",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "build-empty",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "build-progress",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "build-active-full",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "build-halo",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "upgrades",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "upgrades-two",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "upgrades-one",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "unstable_offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "corruption",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "corruption-queued",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "mutation-pulse-rail",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "mutation-halo-pulse",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "singularity-offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "singularity-upgrade",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        720
+      ],
+      "stage": "engineer-build",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "pause",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "performance-report-filled",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "build-empty",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "build-progress",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "build-active-full",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "build-halo",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "upgrades",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "upgrades-two",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "upgrades-one",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "unstable_offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "corruption",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "corruption-queued",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "mutation-pulse-rail",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "mutation-halo-pulse",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "singularity-offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "singularity-upgrade",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1600,
+        720
+      ],
+      "stage": "engineer-build",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "pause",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "performance-report-filled",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "build-empty",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "build-progress",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "build-active-full",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "build-halo",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "upgrades",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "upgrades-two",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "upgrades-one",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "unstable_offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "corruption",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "corruption-queued",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "mutation-pulse-rail",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "mutation-halo-pulse",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "singularity-offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "singularity-upgrade",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        1280,
+        960
+      ],
+      "stage": "engineer-build",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "pause",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "performance-report-filled",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "build-empty",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "build-progress",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "build-active-full",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "build-halo",
+      "old": 3,
+      "new": 1
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "upgrades",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "upgrades-two",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "upgrades-one",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "unstable_offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "corruption",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "corruption-queued",
+      "old": 6,
+      "new": 4
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "mutation-pulse-rail",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "mutation-halo-pulse",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "singularity-offer",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "singularity-upgrade",
+      "old": 7,
+      "new": 5
+    },
+    {
+      "window": [
+        960,
+        600
+      ],
+      "stage": "engineer-build",
+      "old": 3,
+      "new": 1
+    }
+  ]
+}

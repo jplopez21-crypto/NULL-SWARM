@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "completed_cycles": 18,
+  "checks_recorded": 56,
+  "checks_passed": 56,
+  "scope": "Unpatched diagnostic observation only. This sample completed; one clean sample does not establish reliable recovery."
+}

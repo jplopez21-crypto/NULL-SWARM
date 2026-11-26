@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "input_sha256": "c2f9b98e957a7c317a3a2eada5fe6feda0748d2b4d1fef52fbbb2dbf7bc729e3",
+  "outputs": {
+    "route-analysis.json": {
+      "byte_identical": true,
+      "sha256": "d7bd10a72a7ff930e57a5cc20e5b2a14cee0b87572824f6c631f92dfd9e952e7",
+      "bytes": 67035
+    },
+    "ROUTE_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "9b3e59a179ef1a4626ebefccba4e41666044ad8b95d03d330a46b4777bf60f75",
+      "bytes": 1646
+    },
+    "arcstorm-collection-analysis.json": {
+      "byte_identical": true,
+      "sha256": "8ad2e52bcbc441266ef34204ecd04ca7ef2a8b31c96ab7bfe1fbbe454dc01ec1",
+      "bytes": 6468
+    },
+    "ARCSTORM_COLLECTION_REPORT.md": {
+      "byte_identical": true,
+      "sha256": "a492613d3ac7f7ba154c4cd30ff886cbded7ddfbd1a0a761d5a0930fdb2221cf",
+      "bytes": 2108
+    }
+  }
+}

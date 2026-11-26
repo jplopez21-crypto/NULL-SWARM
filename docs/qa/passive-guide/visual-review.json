@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "reviewed": [
+    {
+      "path": "captures/build_overview.png",
+      "sha256": "2059dce1c9096f119f2d59743921e9cea5ed8fe463b393cdf780e3d15e091db6"
+    },
+    {
+      "path": "qa/ui/1280x720-build-active-full.png",
+      "sha256": "83d31476ba858234ea0c05b2fad0a8ff0917ad18fb9bdd1c06b7d75493192722"
+    },
+    {
+      "path": "qa/ui/1280x720-engineer-build.png",
+      "sha256": "c51e53ee335492271be034a0fa0632110a81cd7e9c99227c93e7d84bd9e0c22c"
+    },
+    {
+      "path": "mobile/mobile-build-earned.png",
+      "sha256": "df45ad554b0e831aeff664a7cf20edc737eee1361b072759b38b8be6c8ab680d"
+    },
+    {
+      "path": "mobile/mobile-build-resumed.png",
+      "sha256": "0bec1dc13fbaa6379377ecd1e952e6e5fbf24ef135953c830d14629d29b945f6"
+    }
+  ],
+  "observation": "Native fixture shows two owned passives and correct caps. Full Vanguard/Engineer fixtures show all seven passives wrapped within the panel and reachable Back. Actual Mobile guide shows the honest empty passive row after an earned weapon choice; Resume restores combat/HUD. Positive passive acquisition is synthetic engine/UI coverage, not claimed as earned Android coverage."
+}

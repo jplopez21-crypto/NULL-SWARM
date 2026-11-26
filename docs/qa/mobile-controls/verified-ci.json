@@ -1,0 +1,576 @@
+{
+  "verified_game_and_test_code": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+  "report_checkpoint_only": true,
+  "previous_verified_game_code": "77675f86015ec8a1a1b1cc06ea03e3093fffef17",
+  "workflows": [
+    {
+      "id": 41245028368,
+      "name": "Validate and build Android",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41245028368"
+    },
+    {
+      "id": 41245028813,
+      "name": "Android emulator runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41245028813"
+    },
+    {
+      "id": 41245028670,
+      "name": "Repeatable gameplay QA",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a8187ecece5b6db5937ad55e88863ad3a5582537",
+      "html_url": "https://github.com/jplopez21-crypto/NULL-SWARM/actions/runs/41245028670"
+    }
+  ],
+  "headless": {
+    "suites": [
+      {
+        "suite": "engineer",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 27,
+        "errors": []
+      },
+      {
+        "suite": "gui-input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 43,
+        "errors": []
+      },
+      {
+        "suite": "audio",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 33,
+        "errors": []
+      },
+      {
+        "suite": "android-probe",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 16,
+        "errors": []
+      },
+      {
+        "suite": "resources",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 72,
+        "errors": []
+      },
+      {
+        "suite": "input",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 23,
+        "errors": []
+      },
+      {
+        "suite": "touch-dash",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 69,
+        "errors": []
+      },
+      {
+        "suite": "touch-pause",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 97,
+        "errors": []
+      },
+      {
+        "suite": "operative",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "destruction",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 59,
+        "errors": []
+      },
+      {
+        "suite": "systems",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 1030,
+        "errors": []
+      },
+      {
+        "suite": "corruption",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 41,
+        "errors": []
+      },
+      {
+        "suite": "ui-headless",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": 2340,
+        "errors": []
+      },
+      {
+        "suite": "scene-smoke",
+        "status": "passed",
+        "exit_code": 0,
+        "checks": null,
+        "errors": []
+      }
+    ],
+    "status": "passed"
+  },
+  "touch_pause": {
+    "checks": 97,
+    "engine_mouse_emulation": true,
+    "failures": [],
+    "layouts": 3,
+    "scope": "Actual engine input/GUI and controlled physics; no physical phone latency claim."
+  },
+  "audio": {
+    "checks": 33,
+    "failures": [],
+    "memory_cue": {
+      "combat_voices": 12,
+      "dc_offset": -6.92182971585181e-07,
+      "dedicated_memory_voices": 1,
+      "duration_seconds": 0.0899773242630385,
+      "largest_sample_step": 0.0362548828125,
+      "limits": "Offline PCM/playback/routing and game integration checks; no human listening or phone speaker mix acceptance.",
+      "minimum_interval_ms": 140,
+      "mono": true,
+      "peak": 0.145111083984375,
+      "raw_pcm_sha256": "391986f7ecfebb4a1b09706b1c9a649e3d2a360bd29152e2aed4f2f96bca178f",
+      "rms": 0.0477058508263352,
+      "sample_rate": 22050
+    },
+    "teardown_release_verified": true
+  },
+  "audio_release_diagnostics": {
+    "headless": {
+      "lingering": [],
+      "released": true,
+      "scope": "Per-process resource ownership after queued-free; engine IDs are not device/account identifiers.",
+      "watched_instances": 75
+    },
+    "qa": {
+      "lingering": [],
+      "released": true,
+      "scope": "Per-process resource ownership after queued-free; engine IDs are not device/account identifiers.",
+      "watched_instances": 75
+    }
+  },
+  "reproduction": {
+    "before": {
+      "accepted_source": "77675f86015ec8a1a1b1cc06ea03e3093fffef17",
+      "actual_cooldown": 0.001,
+      "moving_pause_state": 1,
+      "near_ready_gauge": 99.96,
+      "near_ready_label": "DASH / 0.0s",
+      "scope": "Synthetic engine input/HUD reproduction, no physical phone claim.",
+      "stopped_pause_state": 3,
+      "phase": "before"
+    },
+    "after": {
+      "accepted_source": "77675f86015ec8a1a1b1cc06ea03e3093fffef17",
+      "actual_cooldown": 0.001,
+      "moving_pause_state": 3,
+      "near_ready_gauge": 99.96,
+      "near_ready_label": "DASH / 0.1s",
+      "scope": "Synthetic engine input/HUD reproduction, no physical phone claim.",
+      "stopped_pause_state": 3,
+      "phase": "after",
+      "local_uncommitted_fix": true
+    },
+    "scope": "Measured before/after engine input/HUD reproduction; enum 1=PLAYING, 3=PAUSED; synthetic near-ready timer does not alter gameplay balance."
+  },
+  "unchanged_behavior_sources": {
+    "accepted_source": "77675f86015ec8a1a1b1cc06ea03e3093fffef17",
+    "shared_touch_code_canonical_sha256": "13d795fc3b0ad0581bfe8f0ba75d8161178692ebff5ab779fc687e94d4a9e761",
+    "shared_handler_rule": "Original dash script moved unchanged apart from class placement/comments; named TouchDashButton inherits it.",
+    "files": {
+      "scripts/main.gd": {
+        "changed_bodies": [
+          "_capture_session"
+        ],
+        "unchanged_body_sha256": {
+          "_ready": "6eae57ba486cafc208655cd63f13862e7f3b81beab3472889236727043037760",
+          "_build_arena": "3efc43d8437716acc87e3b5e3e68e31f7a86abfc8286b30825a71704bc7d047d",
+          "start_run": "61a2aff47902845be7170134d4dbfcba8748391b2e4d7239c87dd9fc280a1f0f",
+          "_physics_process": "43a59a0137d5382702e57ee905499f5aae62b65ce3e02630651396b3a083ab20",
+          "_process": "2c6977f76c5327e9ec8c5daaaee0acb7907723874194975e67d38403482ee7b1",
+          "_sample_performance": "6bfe3ebe5435ac2ec4a1ccb5d0975cf506c861e1e454fa438faeeb4ae8c820ea",
+          "open_performance_report": "c2401635a1801093ab0d3808016859106889a5b07f8ba3a2e94f09d9123a0cfc",
+          "copy_performance_report": "bbf436c03ef535eaa12db77f30f09795d043f0ea6a8f67d0cb324aa198559bc2",
+          "_input": "5c7efe4bcc8bdc5efe1ec07534894ea02b68bc3a6dfb4a577772a915a7b12ba3",
+          "_notification": "be8b5c34280387d2b67e559aab244bf675fb28bfbc955e49b867439957caeef1",
+          "pause_run": "0956b2ba0e17fbde960f13a7ecb42716e1edde4961b346486f57dff18df9cc4b",
+          "resume_run": "bf19f28bbacf20f55fe7adeb39731531c9531b2ba19bcc9617c8db303f83b6cc",
+          "open_build": "068cea761e9e5c812b8079384f713c404679ea52418f532cd115b954c37da169",
+          "go_menu": "7b1e844dd6d8bed09ec1a19596bdfb079b02ba7a64c58faea5481ad94b3f8a58",
+          "_record_result": "8e89e1d546caff9fe93f560d2cffd114490f3a8f365a77a2834858d6cfeef1c6",
+          "finish_run": "10fd1d3cbb2984aa4a448f7caa25eabc11fc8883c7c6ba4f171c9e689f54bd7e",
+          "show_upgrade": "49df49b41b77061d4396584f44086d274e412ef99703e56d92e067cf12716a92",
+          "_render_upgrades": "e05306a0931f3a4a98246651466f207acf605cb426f99cf23be2d1f3f75a3f64",
+          "show_corruption": "12663c5ad1647426302d7cd0ba99250b2b54e9a889e7322e5d326dc779b82d29",
+          "return_upgrades": "ced4e9f3581be1660619efa800e7725924964fe4114b4c821539ed7588c134f4",
+          "select_corruption": "6610eb2e31d4baeb7a1ce5820cf896dc35b6ebd3c2521a63d1fee76bf72a1f59",
+          "upgrade_description": "7d259c2cabbb66f9116d9a4b941abd1ffb0d4e80d5216f3e35f7043940dab0fe",
+          "select_upgrade": "33d94677aed1b926c70849f7b0e4ac8a5c1ce115fadc942834bb83721f3a7f67",
+          "change_setting": "cfa2cc61509de1d0f59e6d455c71a8b80ca5d1e95ae7477ba9ed646627128509",
+          "_exit_tree": "88d9ded6f70e42efb09cc9c6fc24b37dadfa4b213f208873716ae8433178bc88",
+          "reroll_upgrades": "d4197562798439d8a766e9fb303ef77862454725c040d6675a511c8d80a0d0f2",
+          "_weapon_sound": "7305523100f4de69d2b06ecfe58d39892083dba6261282722de57dbce05adea8",
+          "_warden_down": "bd8928ab08e4624e4beeee6c69eb8e21fc7ae755e4ae486c20465f719c9e235c",
+          "_architect_down": "9f9b523b904a2751c46da52c6f63e5e936c0471ef6fce3777a489a085ed1a324",
+          "_checkpoint_progress": "22a1994370db77260043f98f940b0e08a1c8768d9b76c55fbbc3cbf3d33fb1a6",
+          "show_results": "17434ef844345cec62d522e629d07d8918d0d231666d3098b63e27100f8dd3ed",
+          "open_lab": "a7f6714bdf6c62d20dbf3d8ad6a59be74476339de9333459219abd7de888db14",
+          "_return_from_lab": "643d0d4bc8b21fb96e58cd8b5633b7950f6fa3fb0d64bf4f13c1c317ba66751b",
+          "purchase_research": "e5d475d32661dfce3b3b471619a46bd01681bb027e78230df4fca13d03775657",
+          "select_kit": "86aac61d8ef33be51e15b1eb1144136c1bc753bef09a913181235e50a06a4104",
+          "open_backup": "ad57f0dd3b361da7c256b85738fde3d98b84f8e768c04ebb095631a8b23d5556",
+          "export_backup": "dd38402381e72feaca0ce880be5aaf230e5d1677c539dca79b04cbd71fb08eec",
+          "preview_backup": "af4797703b60fc9f75265848689e02804c94ffb6c50f146a641978833e9ac284",
+          "restore_backup": "ef5881fd82cd63d0e64baa3e9a4cd54ef30bf6f52396a916965eac1096c702fe",
+          "preview_recovery": "d7249c0796e3c17184805e87b49bd390e9ca92410f04edcfca5f2e212d847e55"
+        }
+      },
+      "ui/game_ui.gd": {
+        "changed_bodies": [
+          "_build_hud",
+          "_panel",
+          "hide_panel",
+          "set_hud",
+          "update_hud"
+        ],
+        "unchanged_body_sha256": {
+          "_ready": "c980daa085aec9d369fc11055ae45851e50440495afb9ff5fb570f1185f9a655",
+          "label_at": "347e5afde924b6d7111b4c31334c4112b68d8870251ce6045de80ec3e563e31a",
+          "button_at": "fa7310aa7d74135b473d02e7e096866cd00ff2d3a9e9ab593505eaadde6e55d8",
+          "_safe_area": "28e629261db43bf69d9d979638e902fcc8900718486441cc24bb78a589f07707",
+          "_bar": "d9dae431fbfef972ec31284d62deffda8707578f5e39f55fff80664023e0c398",
+          "show_menu": "244cc922cd5c5f15ccb53eebd38b78ef725e9f239eb68bd4502384e8a437db27",
+          "show_pause": "cbe19f8f5937afaaada3158a6e0817c46332475acec8bd46b2a3323d520f3a6a",
+          "_build_card": "3324100be2e2517115a79f558e935c7287aad9bf0bc62a26f3fdd14a2376a896",
+          "show_build": "ce2c2aca3a6b0ce4c86e10d4c4dbffa60f44a2d307b67c9884abec107007e08d",
+          "visible_build_text": "336b585cd449ad8e65cd501243815901db741a238fa29f18e4ad8f6a575d02e2",
+          "show_results": "31a4af8265f15085217622f3bdcf68830b784faf745ecbbb31db3fab5fee291c",
+          "show_upgrades": "a8199ac8cac2ee0ab67b517d21c2299adf02edb4e0aa3697b1feca0227cffaa7",
+          "show_corruption": "7bf79a70f77032aafcaa91cd8fa38bd16dc4bf178c720c647469e2f38c059878",
+          "show_settings": "49edaab52d98bb1eea7c9fc6cd4875305d745d5e0636090765170a0264982e36",
+          "show_performance_report": "6cdf46f3834b061044ea84f64518940c36318b76e53199eed77a6c636a30c7b4",
+          "visible_performance_report": "8288b45db771f62aeb0ef95df486843d57e5d373bb7013104dc048b42e488f30",
+          "set_performance_copy_status": "8585489c32a2992edbf49bed096be55f5506fd41cb15ebea4e64cb4212c4c9e7",
+          "set_performance_copy_pending": "e5570e4a8b532cc73ede53e3634a73fa6344fe258ba5d9a293fe0f0fb539dc62",
+          "set_performance_stats": "606dd776228f487703f11c4924f93ac9b944273e6236f5743449012a9e740d2c",
+          "_update_overclock": "41ce73babfbacbc8cb207cd05602040af995fe14f913ebde6d9982e717774bee",
+          "add_damage": "7ce3c9290b011f2bd4b4bda4c59b07e938786199e46d0f261748b9fab638e58a",
+          "_process": "7ea1fff24bbac0a53c1655f1357674973b3d7e9d7eee46a6439e537f3650762f",
+          "update_memory": "2374cc9949e77fe959644568268ef4c1e962bbf3a2be6e4dffb608deefd797be",
+          "_draw_memory": "38f1f0b1bbbf6cb45aa4d8af9d27f2691bab52c3e067b1e747d13236c93769c3",
+          "_draw_feedback": "58c1df89461395d7b05291e5b37ea2d6e90096179bd4331fd139d3d3dfd22499",
+          "toast": "006683a39d53b9e39508edb415c506ba618daf20e2619a685a42963e11cd482b",
+          "_draw_brand": "32e199f9dfa71f5ccc704631fe4a07262cb73a8970c8fbc871f68f86d55d1da0",
+          "show_lab": "0747f8379917ddaef3c6e7ec658ea355b26abff034922859f31a16f216a834f8",
+          "show_backup": "44f5f71960fced002b15e78ef0038dd481295a26069a3637cf1856b78d434c37",
+          "show_backup_confirmation": "b2c5503106269eb8e37f36648e4692dade76ad32c273f883b9a59c5e3bbf016f"
+        }
+      }
+    }
+  },
+  "native": {
+    "apk_sha256": "5e8ec84e7a48ad976d9365e90002d6cd1587e19f423b807f9f665d35cab40a23",
+    "apk_bytes": 27811781,
+    "package": "com.nullswarm.game.development",
+    "architecture": "arm64-v8a",
+    "native_probe_enabled": false,
+    "archive_hashes_crcs_package_exclusions": "passed",
+    "signature": "CI apksigner passed; not independently rerun locally",
+    "unchanged_previous_compiled_modules": [
+      "assets/bosses/encounter_director.gdc",
+      "assets/systems/save_store.gdc",
+      "assets/systems/swarm_adaptation.gdc",
+      "assets/systems/spawn_director.gdc",
+      "assets/systems/performance_history.gdc",
+      "assets/systems/spatial_grid.gdc",
+      "assets/effects/memory_crystals.gdc",
+      "assets/systems/research.gdc",
+      "assets/systems/progression.gdc",
+      "assets/environments/reactor_arena.gdc",
+      "assets/systems/pickup_system.gdc",
+      "assets/effects/debris_fragment.gdc",
+      "assets/environments/deck_panels.gdc",
+      "assets/weapons/weapon_rig.gdc",
+      "assets/scripts/visuals.gdc",
+      "assets/systems/combat_world.gdc",
+      "assets/systems/field_sentry.gdc",
+      "assets/resources/weapon_definition.gdc",
+      "assets/components/health.gdc",
+      "assets/systems/gravity_field.gdc",
+      "assets/scripts/player.gdc",
+      "assets/weapons/weapon_controller.gdc",
+      "assets/effects/combat_effects.gdc",
+      "assets/enemies/enemy.gdc",
+      "assets/systems/input_router.gdc",
+      "assets/weapons/projectile.gdc",
+      "assets/resources/enemy_definition.gdc",
+      "assets/systems/corruption_protocol.gdc",
+      "assets/systems/audio_system.gdc",
+      "assets/effects/operative_model.gdc",
+      "assets/weapons/arsenal.gdc",
+      "assets/enemies/chassis_models.gdc"
+    ],
+    "changed_module_sha256": {
+      "assets/scripts/main.gdc": "2e5930677cdc71f85406b5aa4d33c32bd4f14e59f94a4b71ee5cebae093d3f02",
+      "assets/ui/game_ui.gdc": "33239065e441607be6e408884cada18f1e5094c25abf68f9b59e1c8580ad5ca7",
+      "assets/ui/dash_button.gdc": "bb3fbb795145e176340a878f59476266a6c0d052db1b3f8d59bdf87e6bab3f3b",
+      "assets/systems/android_qa_probe.gdc": "afb8626037aabe8d5acda9ceedf62e14d85d0a485e7802dcaceba711b3acf3bf"
+    },
+    "shared_touch_module_sha256": "47d2f20919b870c20850f5f6bf1aad6ae5dc25eda306502633950a1065d1d442"
+  },
+  "native_downloads": [
+    {
+      "id": 13059590644,
+      "name": "null-swarm-headless-results",
+      "digest": "sha256:e12be838e10e055c7e33a3a1fd612185fa3b562d446696c0ed3028cf9e82d79b",
+      "size_in_bytes": 402806,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13059152157,
+      "name": "null-swarm-presentation-captures",
+      "digest": "sha256:b776eebe74dae2e78bda97ff8f36455da76fe933b8f7d06b0f3159ebfe7c57f7",
+      "size_in_bytes": 4721934,
+      "hash_crc": "passed"
+    },
+    {
+      "id": 13058887678,
+      "name": "null-swarm-development-apk",
+      "digest": "sha256:4f71f54748d92762c15dc222422975c446c8f215416a9b33dec234ca98d63b42",
+      "size_in_bytes": 27888439,
+      "hash_crc": "passed"
+    }
+  ],
+  "android": {
+    "run": 41245028813,
+    "artifact": 13058953335,
+    "zip_sha256": "4db790820f7c280e6200529bce3b75fa1baec9e715c59d2e15c7b7a0a81972b4",
+    "checks": 52,
+    "status": "passed",
+    "variant": "x86_64 Android 35 / Compatibility / read-only opt-in probe",
+    "actual_multitouch_pause": {
+      "multitouch_pause": true,
+      "injection": "shell UID / real Android two-pointer MotionEvent",
+      "samples": {
+        "walking": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": 7,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              1.0,
+              0.0
+            ]
+          },
+          "position": [
+            1.86666679382324,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 1.0,
+          "state": "playing"
+        },
+        "paused_while_fingers_held": {
+          "touch_controls": {
+            "dash_enabled": false,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": false,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            2.21666669845581,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 1.05,
+          "state": "paused"
+        },
+        "resumed": {
+          "touch_controls": {
+            "dash_enabled": true,
+            "dash_id": -1,
+            "joystick_id": -1,
+            "pause_enabled": true,
+            "pause_id": -1,
+            "stick": [
+              0.0,
+              0.0
+            ]
+          },
+          "position": [
+            2.21666669845581,
+            0.0
+          ],
+          "dashes": 2,
+          "dash_readiness": 100.0,
+          "time": 1.41666666666667,
+          "state": "playing"
+        }
+      }
+    },
+    "new_checks": [
+      {
+        "name": "active Android dash cooldown text agrees with unavailable readiness",
+        "passed": true
+      },
+      {
+        "name": "held joystick plus second-finger Pause freezes and clears both HUD actions",
+        "passed": true
+      },
+      {
+        "name": "two-finger Pause keeps actual simulation and dash frozen",
+        "passed": true
+      },
+      {
+        "name": "touch Resume restores controls without stale walking or deferred dash",
+        "passed": true
+      }
+    ],
+    "ordinary_checkpoint": {
+      "kills": 36,
+      "time": 30.3833333333329,
+      "salvage": 1,
+      "xp": 130,
+      "level": 4
+    },
+    "same_signer_update": {
+      "from_version": 7,
+      "to_version": 8,
+      "settings_retained": true,
+      "salvage": 1.0
+    },
+    "quiet_observation": {
+      "method": "2s warm-up then 5s without input/screencap; read-only telemetry sampled about twice per second",
+      "variant": "CI x86_64 Android 35 / Compatibility / SWANGLE software rendering",
+      "median_fps": 4,
+      "simulation_seconds_per_wall_second": 0.4025105744303439,
+      "limits": [
+        "Unseeded fresh deployment; not the earlier capture-heavy combat workload.",
+        "Observational emulator data; no phone-FPS acceptance threshold or CPU/GPU timing claim."
+      ]
+    },
+    "hash_crc_logcat": "passed"
+  },
+  "gameplay_comparison": {
+    "diagnostics_replay_matches_previous_baseline": true,
+    "diagnostic_observations": 120,
+    "diagnostics_cases": 2,
+    "normal_sessions": 26,
+    "outcomes": {
+      "defeat": 4,
+      "victory": 22
+    },
+    "unchanged_gameplay_and_xp_cases_except_timings": 32,
+    "pacing_cases_match_except_timings": 4,
+    "stress_fingerprints_match": 24,
+    "ui_checks": 2341,
+    "ui_layouts": 168,
+    "deterministic_replay": {
+      "fingerprint": "cb82b9ca9166dab425afa856f4c8e4012d691a45f3ccd92acba702589e19154a",
+      "matches": true,
+      "seconds": 180,
+      "seed": 909
+    },
+    "strict_summary_matches_local_native_qa": true,
+    "audio_receipt_matches_local_native_qa": true,
+    "kernel_parity_cases": 9,
+    "profiled_engineer_cases": 6
+  },
+  "qa_download": {
+    "run": 41245028670,
+    "artifact": {
+      "id": 13059293155,
+      "name": "null-swarm-gameplay-qa",
+      "size_in_bytes": 19948652,
+      "url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13059293155",
+      "archive_download_url": "https://api.github.com/repos/jplopez21-crypto/NULL-SWARM/actions/artifacts/13059293155/zip",
+      "expired": false,
+      "created_at": "2026-10-31T21:58:00Z",
+      "expires_at": "2026-11-14T21:57:58Z",
+      "updated_at": "2026-10-31T21:58:00Z",
+      "digest": "sha256:319b6392606bee4f21245a8f550a0f5a92e7dfe59fb34631482bb78552f1b207",
+      "workflow_run": {
+        "id": 41245028670,
+        "repository_id": 1427713669,
+        "head_repository_id": 1427713669,
+        "head_branch": "development/android-validation",
+        "head_sha": "a8187ecece5b6db5937ad55e88863ad3a5582537"
+      }
+    },
+    "zip_sha256": "319b6392606bee4f21245a8f550a0f5a92e7dfe59fb34631482bb78552f1b207",
+    "bytes": 19948652,
+    "hash_crc": "passed"
+  },
+  "initial_ci_failure": {
+    "source": "554b92c73cbd9d8e969509a801d31c96a52b962b",
+    "native_run": 41244412904,
+    "job": 124664746943,
+    "artifact": 13059061159,
+    "zip_sha256": "cbe54e4f6309b8df79287e5848102683b2df0338b7626b04f4ee0cc5ec3a0fcc",
+    "status": "failure",
+    "cause_observed": "Audio assertions all passed (32/0); strict runner rejected ObjectDB instances leaked at process exit. Other thirteen suites, including new touch Pause, passed. Original nonverbose log does not identify leaked class.",
+    "audio_report": {
+      "checks": 32,
+      "failures": [],
+      "memory_cue": {
+        "combat_voices": 12,
+        "dc_offset": -6.92182971585181e-07,
+        "dedicated_memory_voices": 1,
+        "duration_seconds": 0.0899773242630385,
+        "largest_sample_step": 0.0362548828125,
+        "limits": "Offline PCM/playback/routing and game integration checks; no human listening or phone speaker mix acceptance.",
+        "minimum_interval_ms": 140,
+        "mono": true,
+        "peak": 0.145111083984375,
+        "raw_pcm_sha256": "391986f7ecfebb4a1b09706b1c9a649e3d2a360bd29152e2aed4f2f96bca178f",
+        "rms": 0.0477058508263352,
+        "sample_rate": 22050
+      }
+    },
+    "local_reproduction": "Six separate verbose original-suite runs were clean. No claim of a reproduced hardware/backend root cause.",
+    "correction": "Test-only explicit tracking of audio stream/playback IDs and bounded post-free mixer drain, new release assertion and always-verbose audio CI logs. Production audio/game code unchanged; no ignored leak messages.",
+    "corrected_local": "Audio 33/0, all 14 strict suites pass, tracked audio instances released; hosted acceptance pending."
+  },
+  "visual_review": {
+    "native": "Inspected labelled dash_near_ready.png: synthetic timer 0.001s displays DASH / 0.1s; ordinary camera/layout. Not a real device-timing benchmark.",
+    "android": "Inspected actual multitouch-paused.png and ordinary/two-finger dash captures; actual joystick/Pause/Resume telemetry and no-stale-state checks pass."
+  },
+  "limits": [
+    "Android API 35 x86_64 Compatibility/SWANGLE software rendering remains below target; unseeded samples do not establish causal FPS changes or phone performance. Audio output disabled.",
+    "The initial nonverbose ObjectDB warning did not identify leaked class; six local verbose reproductions were clean. Added explicit bounded post-free stream/playback ownership verification and kept strict leak rejection; production audio unchanged.",
+    "Physical S23 Ultra Mobile FPS/thermals/touch latency, Android 10/cutouts, human art/readability/fun and audio mix remain unverified.",
+    "Engineer Android touch cases follow a labelled Architect backup fixture restored through normal GUI after ordinary progression checks, not on-device earned-unlock proof.",
+    "Diagnostic signing rotates; preserve backups. Protected stable Preview/release signing remains unconfigured; no release AAB claimed."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "recorded_cycles": 18,
+  "completed_cycles": 18,
+  "passing_checks": 56,
+  "outcome": {
+    "driver_exit_code": 0,
+    "driver_status": "passed",
+    "outcome": "no_persistent_failure_observed",
+    "scope": "Control collection outcome, not a passing recovery test when driver_status is failed."
+  },
+  "scope": "Deliberately unpatched control completes this sample without persistent failure; earlier reproductions remain evidence of intermittent failure. This sample does not establish reliable recovery."
+}

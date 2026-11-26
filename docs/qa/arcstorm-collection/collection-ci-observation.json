@@ -1,0 +1,8 @@
+{
+  "run_id": 42734484384,
+  "job_id": 129560225707,
+  "markers": [
+    "2026-11-10T01:32:00.7261226Z ARCSTORM_COLLECTION_RESULT cases=8 failures=0",
+    "2026-11-10T01:32:00.8119765Z COLLECTION_REPORT observed cases=8 pairs=4"
+  ]
+}

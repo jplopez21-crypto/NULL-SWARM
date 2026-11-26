@@ -46,6 +46,27 @@ func status() -> String:
 		names.append(TITLES[id])
 	return "CORRUPTION %d/3 // " % accepted.size() + " + ".join(names)
 
+func active_links() -> Array[Dictionary]:
+	# Read-only presentation of active modifiers, using their gameplay accessors.
+	var result: Array[Dictionary] = []
+	for id in IDS:
+		if not accepted.has(id):
+			continue
+		var gain: String = ""
+		var cost: String = ""
+		match id:
+			"redline":
+				gain = "Weapon cycles +%d%%" % roundi((cycle_rate() - 1.0) * 100.0)
+				cost = "Maximum HP -%d" % int(HEALTH_COST)
+			"fracture":
+				gain = "Rifle / Arcstorm rounds +%d" % extra_rounds()
+				cost = "Regular enemy walking / charge pace +%d%%" % roundi((enemy_pace() - 1.0) * 100.0)
+			"hive":
+				gain = "Drone escorts +%d" % extra_drones()
+				cost = "Walking speed -%d%%" % roundi((1.0 - walk_rate()) * 100.0)
+		result.append({"id": id, "title": TITLES[id], "gain": gain, "cost": cost})
+	return result
+
 func description(id: String, player: SwarmPlayer, combat: CombatWorld, ranks: Dictionary) -> String:
 	var title: String = TITLES.get(id, "UNKNOWN LINK")
 	if accepted.has(id):
